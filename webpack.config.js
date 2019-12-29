@@ -11,7 +11,7 @@ const bundlePath = path.resolve(__dirname, 'dist/');
 module.exports = (_env, argv) => {
 	let entryPoints = {
 		VideoOverlay: {
-			path: '.\\src\\views\\VideoOverlay.tsx',
+			path: './src/views/VideoOverlay.tsx',
 			outputHtml: 'video_overlay.html',
 			build: true,
 		},
@@ -62,7 +62,7 @@ module.exports = (_env, argv) => {
 				},
 				{
 					test: /\.(jpe?g|png|gif|svg)$/i,
-					loader: 'file-loader',
+					loader: 'file-loader?name=/assets/spritesheet[name].[ext]',
 				},
 				{
 					test: /\.(eot|ttf|woff|woff2)$/i,
@@ -74,7 +74,9 @@ module.exports = (_env, argv) => {
 				},
 			],
 		},
-		resolve: { extensions: ['*', '.js', '.jsx', '.ts', '.tsx'] },
+		resolve: {
+			extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+		},
 		output: {
 			filename: '[name].bundle.js',
 			path: bundlePath,

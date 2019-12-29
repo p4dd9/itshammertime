@@ -1,0 +1,37 @@
+{
+	"name": "ludecattwitchextension",
+	"version": "1.0.0",
+	"description": "",
+	"main": "webpack.config.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "webpack --mode production",
+		"start": "webpack-dev-server --mode development --hot"
+	},
+	"devDependencies": {
+		"@types/react": "^16.9.17",
+		"@types/react-dom": "^16.9.4",
+		"webpack": "^4.41.5",
+		"webpack-cli": "^3.3.10",
+		"webpack-dev-server": "^3.10.1",
+		"awesome-typescript-loader": "^5.2.1",
+		"clean-webpack-plugin": "^3.0.0",
+		"html-webpack-plugin": "^3.2.0",
+		"typescript": "^3.7.4",
+		"typestyle": "^2.0.4"
+	},
+	"dependencies": {
+		"react": "^16.11.0",
+		"react-dom": "^16.11.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/p4dd9/ludecattwitchextension.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/p4dd9/ludecattwitchextension/issues"
+	},
+	"homepage": "https://github.com/p4dd9/ludecattwitchextension#readme"
+}

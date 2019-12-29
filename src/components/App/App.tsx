@@ -1,14 +1,13 @@
 import React from 'react';
 
 import idleBlinktailWhipheadSpriteSheet from '../../assets/spritesheet/idle_blinktailwhiphead.png';
+import GamepadManager from '../GamepadManager';
 
 const spriteSheetWidth = 2100;
 const spriteSheetHeight = 2400;
 
 const spriteSheetRowCount = 12;
 const spriteSheetColumCount = 12;
-
-// const scaleSpriteSheetSubRectangleCount = 1;
 
 const spriteSheetSubRetangleWidth = spriteSheetWidth / spriteSheetColumCount;
 const spriteSheetSubRetangleHeight = spriteSheetHeight / spriteSheetRowCount;
@@ -17,6 +16,7 @@ export default class App extends React.Component<{}, {}> {
 	private canvasRef: null | React.RefObject<HTMLCanvasElement> = null;
 	private canvasContext: null | CanvasRenderingContext2D = null;
 	private img: null | HTMLImageElement = null;
+	private gamepadManager: null | GamepadManager = null;
 
 	constructor(props: {}) {
 		super(props);
@@ -25,6 +25,9 @@ export default class App extends React.Component<{}, {}> {
 		this.step = this.step.bind(this);
 		this.drawFrame = this.drawFrame.bind(this);
 	}
+
+	private x = 0;
+	private y = 0;
 
 	private drawFrame(
 		context: CanvasRenderingContext2D,
@@ -38,14 +41,32 @@ export default class App extends React.Component<{}, {}> {
 			return;
 		}
 
+		const gamepad = this.gamepadManager;
+		if (gamepad!.axesStatus[0] > 0.5) {
+			console.log('Left axe: right');
+			this.x += 50;
+		}
+		if (gamepad!.axesStatus[0] < -0.5) {
+			console.log('Left axe: left');
+			this.x += -50;
+		}
+		if (gamepad!.axesStatus[1] > 0.5) {
+			console.log('Left axe: down');
+			this.y += 50;
+		}
+		if (gamepad!.axesStatus[1] < -0.5) {
+			console.log('Left axe: up');
+			this.y += -50;
+		}
+
 		context.drawImage(
 			this.img,
 			columIndex * spriteSheetSubRetangleWidth,
 			rowIndex * spriteSheetSubRetangleHeight,
 			spriteSheetSubRetangleWidth,
 			spriteSheetSubRetangleHeight,
-			canvasX,
-			canvasY,
+			canvasX + this.x,
+			canvasY + this.y,
 			spriteSheetSubRetangleWidth,
 			spriteSheetSubRetangleHeight
 		);
@@ -88,7 +109,12 @@ export default class App extends React.Component<{}, {}> {
 			this.rowIndex = 0;
 			this.colIndex = 0;
 		}
+
 		window.requestAnimationFrame(this.step);
+	}
+
+	private supportsGamepads() {
+		return !!navigator.getGamepads;
 	}
 
 	public componentDidMount() {
@@ -108,8 +134,17 @@ export default class App extends React.Component<{}, {}> {
 					window.requestAnimationFrame(this.step);
 				};
 			}
+
+			if (this.supportsGamepads()) {
+				console.log('Gamepad API supported! Yey!');
+				const gamepadManager = new GamepadManager();
+				this.gamepadManager = gamepadManager;
+			} else {
+				console.log('Gamepad API not supported.');
+			}
 		}
 	}
+
 	public render() {
 		return (
 			<div>

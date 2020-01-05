@@ -38,7 +38,7 @@ export default class App extends React.Component<{}, {}> {
 		canvasX: number = 0,
 		canvasY: number = 0
 	) {
-		if (this.images[0] === null) {
+		if (this.images[1] === null) {
 			return;
 		}
 
@@ -61,7 +61,7 @@ export default class App extends React.Component<{}, {}> {
 		}
 
 		context.drawImage(
-			this.images[0],
+			this.images[1],
 			columIndex * spriteSheetSubRetangleWidth,
 			rowIndex * spriteSheetSubRetangleHeight,
 			spriteSheetSubRetangleWidth,

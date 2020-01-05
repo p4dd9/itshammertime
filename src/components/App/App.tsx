@@ -9,6 +9,8 @@ const spriteSheetHeight = 2400;
 const spriteSheetRowCount = 12;
 const spriteSheetColumCount = 12;
 
+const moveDistance = 25;
+
 const spriteSheetSubRetangleWidth = spriteSheetWidth / spriteSheetColumCount;
 const spriteSheetSubRetangleHeight = spriteSheetHeight / spriteSheetRowCount;
 
@@ -45,19 +47,19 @@ export default class App extends React.Component<{}, {}> {
 		const gamepad = this.gamepadManager;
 		if (gamepad!.axesStatus[0] > 0.5) {
 			console.log('Left axe: right');
-			this.x += 50;
+			this.x += moveDistance;
 		}
 		if (gamepad!.axesStatus[0] < -0.5) {
 			console.log('Left axe: left');
-			this.x += -50;
+			this.x += -moveDistance;
 		}
 		if (gamepad!.axesStatus[1] > 0.5) {
 			console.log('Left axe: down');
-			this.y += 50;
+			this.y += moveDistance;
 		}
 		if (gamepad!.axesStatus[1] < -0.5) {
 			console.log('Left axe: up');
-			this.y += -50;
+			this.y += -moveDistance;
 		}
 
 		context.drawImage(
@@ -124,14 +126,15 @@ export default class App extends React.Component<{}, {}> {
 	}
 
 	public componentDidMount() {
-		const canvas: HTMLElement | null = document.getElementById('canvas');
-		if (canvas !== null) {
+		if (this.canvasRef !== null) {
 			const context: CanvasRenderingContext2D | null = (this.canvasRef
-				?.current as HTMLCanvasElement).getContext('2d');
+				.current as HTMLCanvasElement).getContext('2d');
 
 			if (context !== null) {
 				this.canvasContext = context;
 				Preloader.loadImages(this.initAnimationStart);
+			} else {
+				console.log('CanvasRenderingContext2D is null.');
 			}
 
 			if (this.supportsGamepads()) {
@@ -141,6 +144,8 @@ export default class App extends React.Component<{}, {}> {
 			} else {
 				console.log('Gamepad API not supported.');
 			}
+		} else {
+			console.log('HTMLCanvasElement is null.');
 		}
 	}
 

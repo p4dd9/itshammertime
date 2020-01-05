@@ -1,7 +1,7 @@
 import React from 'react';
 
-import idleBlinktailWhipheadSpriteSheet from '../../assets/spritesheet/idle_blinktailwhiphead.png';
 import GamepadManager from '../GamepadManager';
+import { Preloader } from './Preloader';
 
 const spriteSheetWidth = 2100;
 const spriteSheetHeight = 2400;
@@ -15,7 +15,7 @@ const spriteSheetSubRetangleHeight = spriteSheetHeight / spriteSheetRowCount;
 export default class App extends React.Component<{}, {}> {
 	private canvasRef: null | React.RefObject<HTMLCanvasElement> = null;
 	private canvasContext: null | CanvasRenderingContext2D = null;
-	private img: null | HTMLImageElement = null;
+	private images: HTMLImageElement[] = new Array() as HTMLImageElement[];
 	private gamepadManager: null | GamepadManager = null;
 
 	constructor(props: {}) {
@@ -24,6 +24,7 @@ export default class App extends React.Component<{}, {}> {
 
 		this.step = this.step.bind(this);
 		this.drawFrame = this.drawFrame.bind(this);
+		this.initAnimationStart = this.initAnimationStart.bind(this);
 	}
 
 	private x = 0;
@@ -37,7 +38,7 @@ export default class App extends React.Component<{}, {}> {
 		canvasX: number = 0,
 		canvasY: number = 0
 	) {
-		if (this.img === null) {
+		if (this.images[0] === null) {
 			return;
 		}
 
@@ -60,7 +61,7 @@ export default class App extends React.Component<{}, {}> {
 		}
 
 		context.drawImage(
-			this.img,
+			this.images[0],
 			columIndex * spriteSheetSubRetangleWidth,
 			rowIndex * spriteSheetSubRetangleHeight,
 			spriteSheetSubRetangleWidth,
@@ -117,6 +118,11 @@ export default class App extends React.Component<{}, {}> {
 		return !!navigator.getGamepads;
 	}
 
+	private initAnimationStart(images: HTMLImageElement[]) {
+		this.images = images;
+		window.requestAnimationFrame(this.step);
+	}
+
 	public componentDidMount() {
 		const canvas: HTMLElement | null = document.getElementById('canvas');
 		if (canvas !== null) {
@@ -125,14 +131,7 @@ export default class App extends React.Component<{}, {}> {
 
 			if (context !== null) {
 				this.canvasContext = context;
-				const img = new Image();
-				img.src = idleBlinktailWhipheadSpriteSheet;
-				img.onload = () => {
-					this.img = img;
-
-					// Animationstart
-					window.requestAnimationFrame(this.step);
-				};
+				Preloader.loadImages(this.initAnimationStart);
 			}
 
 			if (this.supportsGamepads()) {

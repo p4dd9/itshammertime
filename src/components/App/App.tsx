@@ -46,20 +46,43 @@ export default class App extends React.Component<{}, {}> {
 
 		const gamepad = this.gamepadManager;
 		if (gamepad!.axesStatus[0] > 0.5) {
-			console.log('Left axe: right');
-			this.x += moveDistance;
+			const destinationX =
+				this.x + spriteSheetSubRetangleWidth + moveDistance;
+			if (destinationX <= this.canvasRef!.current!.width) {
+				console.log('Left axe: right');
+				this.x += moveDistance;
+			} else {
+				console.log('Moved out right');
+			}
 		}
 		if (gamepad!.axesStatus[0] < -0.5) {
-			console.log('Left axe: left');
-			this.x += -moveDistance;
+			const destinationX = this.x - moveDistance;
+			if (destinationX >= 0) {
+				console.log('Left axe: left');
+				this.x += -moveDistance;
+			} else {
+				console.log('Moved out left');
+			}
 		}
 		if (gamepad!.axesStatus[1] > 0.5) {
-			console.log('Left axe: down');
-			this.y += moveDistance;
+			const destinationY =
+				this.y + spriteSheetSubRetangleHeight + moveDistance;
+			if (destinationY < this.canvasRef!.current!.height) {
+				console.log('Left axe: down');
+				this.y += moveDistance;
+			} else {
+				console.log('Moved out bottom.');
+			}
 		}
 		if (gamepad!.axesStatus[1] < -0.5) {
-			console.log('Left axe: up');
-			this.y += -moveDistance;
+			const destinationY = this.y - moveDistance;
+
+			if (destinationY >= 0) {
+				console.log('Left axe: up');
+				this.y += -moveDistance;
+			} else {
+				console.log('Moed out top.');
+			}
 		}
 
 		context.drawImage(
@@ -88,7 +111,12 @@ export default class App extends React.Component<{}, {}> {
 			window.requestAnimationFrame(this.step);
 			return;
 		}
-		this.canvasContext!.clearRect(0, 0, 750, 900);
+		this.canvasContext!.clearRect(
+			0,
+			0,
+			this.canvasRef!.current!.width,
+			this.canvasRef!.current!.height
+		);
 
 		this.frameSpeed = 0;
 		this.drawFrame(
@@ -154,9 +182,8 @@ export default class App extends React.Component<{}, {}> {
 			<div>
 				<canvas
 					ref={this.canvasRef}
-					style={{ border: '2px solid black' }}
-					height='750px'
-					width='900px'
+					height={window.innerHeight}
+					width={window.innerWidth}
 					id='canvas'
 				></canvas>
 			</div>

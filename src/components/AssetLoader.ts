@@ -1,5 +1,5 @@
-import idleBlinktailWhipheadSpriteSheet from '../../assets/spritesheet/idle_blinktailwhiphead.png';
-import idleBlinkHead from '../../assets/spritesheet/idle_blinkhead.png';
+import idleBlinktailWhipheadSpriteSheet from '../assets/spritesheet/idle_blinktailwhiphead.png';
+import idleBlinkHead from '../assets/spritesheet/idle_blinkhead.png';
 
 export default class AssetLoader {
 	public static loadImages(callback: (images: HTMLImageElement[]) => void) {

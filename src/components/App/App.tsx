@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GamepadManager from '../GamepadManager';
-import AssetLoader from './AssetLoader';
+import AssetLoader from '../AssetLoader';
 import BrowserUtil from '../../util/BrowserUtil';
 import Controller from '../Controller';
 import LudeCat from '../LudeCat';

@@ -8,6 +8,21 @@ import nyaSound from '../assets/audio/nya.wav';
 import IAudioAsset from '../interfaces/IAudioAsset';
 
 export default class AssetLoader {
+	public static audio: IAudioAsset = {
+		meow: {
+			id: 'meow',
+			track: meowSound,
+		},
+		nya: {
+			id: 'nya',
+			track: nyaSound,
+		},
+		meow2: {
+			id: 'meow2',
+			track: meow2Sound,
+		},
+	};
+
 	public static loadImages(callback: (images: HTMLImageElement[]) => void) {
 		let loadedImageCount: number = 0;
 		const images: HTMLImageElement[] = new Array() as HTMLImageElement[];
@@ -31,21 +46,6 @@ export default class AssetLoader {
 			}
 		}
 	}
-
-	public static audio: IAudioAsset = {
-		meow: {
-			id: 'meow',
-			track: meowSound,
-		},
-		nya: {
-			id: 'nya',
-			track: nyaSound,
-		},
-		meow2: {
-			id: 'meow2',
-			track: meow2Sound,
-		},
-	};
 
 	public static loadAudio() {
 		for (const audioAsset in AssetLoader.audio) {

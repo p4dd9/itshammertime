@@ -35,9 +35,25 @@ export default class Controller {
 	public set controls(controls: CONTROLS) {
 		this._controls = controls;
 	}
-	private handleGamepadControls() {
-		const { gamepadManager, ludeCat, axeStatusThreshold } = this;
 
+	public handleAxesInput() {
+		const { gamepadManager, axeStatusThreshold } = this;
+		if (gamepadManager!.axesStatus[0] > axeStatusThreshold) {
+			this.moveRight();
+		}
+		if (gamepadManager!.axesStatus[0] < -axeStatusThreshold) {
+			this.moveLeft();
+		}
+		if (gamepadManager!.axesStatus[1] < -axeStatusThreshold) {
+			this.moveUp();
+		}
+		if (gamepadManager!.axesStatus[1] > axeStatusThreshold) {
+			this.moveDown();
+		}
+	}
+
+	private handleButtons() {
+		const { gamepadManager, ludeCat } = this;
 		if (gamepadManager?.gamepad?.buttons[0].pressed) {
 			ludeCat.spritesheet = ludeCat.spritesheets[0];
 			AudioManager.meow();
@@ -54,6 +70,10 @@ export default class Controller {
 		if (gamepadManager?.gamepad?.buttons[2].pressed) {
 			ludeCat.spritesheet = ludeCat.spritesheets[1];
 		}
+	}
+
+	private checkMovingCharacterByGamepad() {
+		const { gamepadManager, ludeCat, axeStatusThreshold } = this;
 
 		if (
 			gamepadManager!.axesStatus[0] > axeStatusThreshold ||
@@ -65,30 +85,39 @@ export default class Controller {
 		} else {
 			ludeCat.moving = false;
 		}
+	}
 
-		if (gamepadManager!.axesStatus[0] > axeStatusThreshold) {
-			this.moveRight();
-		}
-		if (gamepadManager!.axesStatus[0] < -axeStatusThreshold) {
-			this.moveLeft();
-		}
-		if (gamepadManager!.axesStatus[1] < -axeStatusThreshold) {
-			this.moveUp();
-		}
-		if (gamepadManager!.axesStatus[1] > axeStatusThreshold) {
-			this.moveDown();
+	public handleControllerInput() {
+		if (this._controls === CONTROLS.GAMEPAG) {
+			this.checkMovingCharacterByGamepad();
+			this.handleButtons();
+			this.handleAxesInput();
 		}
 	}
 
 	public handleKeyBoardControls(keyCode: number) {
+		if (this._controls === CONTROLS.KEYBOARD) {
+			this.handleKeyBoardArrows(keyCode);
+		}
+	}
+
+	private handleKeyBoardArrows(keyCode: number) {
+		const { ludeCat } = this;
+
 		if (keyCode === KEYCODES.RIGHT_ARROW) {
+			ludeCat.moving = true;
 			this.moveRight();
 		} else if (keyCode === KEYCODES.LEFT_ARROW) {
+			ludeCat.moving = true;
 			this.moveLeft();
 		} else if (keyCode === KEYCODES.UP_ARROW) {
+			ludeCat.moving = true;
 			this.moveUp();
 		} else if (keyCode === KEYCODES.DOWN_ARROW) {
 			this.moveDown();
+			ludeCat.moving = true;
+		} else {
+			ludeCat.moving = false;
 		}
 	}
 
@@ -140,12 +169,6 @@ export default class Controller {
 			ludeCat.catPosition.y += moveDistance;
 		} else {
 			console.log('Moved out bottom.');
-		}
-	}
-
-	public handleControllerInput() {
-		if (this._controls === CONTROLS.GAMEPAG) {
-			this.handleGamepadControls();
 		}
 	}
 }

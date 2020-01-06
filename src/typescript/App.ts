@@ -1,18 +1,18 @@
-import React from 'react';
-
-import AssetLoader from '../AssetLoader';
-import Controller from '../Controller';
-import LudeCat from '../LudeCat';
+import AssetLoader from './AssetLoader';
+import Controller from './Controller';
+import LudeCat from './LudeCat';
 import {
 	spriteSheetSubRetangleWidth,
 	spriteSheetSubRetangleHeight,
 	frameCount,
-} from '../../config/ludeCatConfig';
-import CONTROLS from '../../enums/controls';
-import KeyboardManager from '../KeyboardManager';
+} from '../config/ludeCatConfig';
+import CONTROLS from '../enums/controls';
+import KeyboardManager from './KeyboardManager';
 
-export default class App extends React.Component<{}, {}> {
-	private _canvasRef: null | React.RefObject<HTMLCanvasElement> = null;
+export default class App {
+	private canvas: null | HTMLCanvasElement = document.getElementById('canvas')
+		? (document.getElementById('canvas') as HTMLCanvasElement)
+		: null;
 	private _canvasContext: null | CanvasRenderingContext2D = null;
 
 	// Spritesheet Stuff to render
@@ -21,10 +21,9 @@ export default class App extends React.Component<{}, {}> {
 	private _colIndex = 0;
 	private _frameSpeed = 0;
 
-	constructor(props: {}) {
-		super(props);
-		this._canvasRef = React.createRef();
-
+	constructor(canvasHeight: number, canvasWidth: number) {
+		Controller.getInstance().canvasHeight = canvasHeight;
+		Controller.getInstance().canvasWidth = canvasWidth;
 		this.step = this.step.bind(this);
 		this.drawFrame = this.drawFrame.bind(this);
 		this.initAnimationStart = this.initAnimationStart.bind(this);
@@ -71,8 +70,8 @@ export default class App extends React.Component<{}, {}> {
 		this._canvasContext!.clearRect(
 			0,
 			0,
-			this._canvasRef!.current!.width,
-			this._canvasRef!.current!.height
+			this.canvas!.width,
+			this.canvas!.height
 		);
 
 		this._frameSpeed = 0;
@@ -107,17 +106,11 @@ export default class App extends React.Component<{}, {}> {
 		window.requestAnimationFrame(this.step);
 	}
 
-	public componentDidMount() {
-		if (this._canvasRef !== null) {
-			const context: CanvasRenderingContext2D | null = (this._canvasRef
-				.current as HTMLCanvasElement).getContext('2d');
-
-			window.onload = () => {
-				this._canvasRef!.current!.height = window.innerHeight;
-				this._canvasRef!.current!.width = window.innerWidth;
-				Controller.getInstance().canvasHeight = window.innerHeight;
-				Controller.getInstance().canvasWidth = window.innerWidth;
-			};
+	public initialize() {
+		if (this.canvas !== null) {
+			const context: CanvasRenderingContext2D | null = this.canvas.getContext(
+				'2d'
+			);
 
 			if (context !== null) {
 				this._canvasContext = context;
@@ -132,13 +125,5 @@ export default class App extends React.Component<{}, {}> {
 		} else {
 			console.log('HTMLCanvasElement is null.');
 		}
-	}
-
-	public render() {
-		return (
-			<div>
-				<canvas ref={this._canvasRef} id='canvas'></canvas>
-			</div>
-		);
 	}
 }

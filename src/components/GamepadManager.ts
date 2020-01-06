@@ -1,18 +1,22 @@
 export default class GamepadManager {
 	private static _instance: GamepadManager;
-	private controller: null | Gamepad = null;
-	private buttonsCache = new Array() as number[];
-	// XBOX 360 MAPPING
-	private buttons = ['A', 'B', 'X', 'Y'];
 
-	public axesStatus: any = [];
-	public buttonsStatus: any = [];
+	// The actualy gamepad from the browser API
+	private _gamepad: null | Gamepad = null;
+
+	// XBOX 360 MAPPING
+	private _buttons = ['A', 'B', 'X', 'Y'];
+
+	// State of the Controll Joystick Axes
+	private _axesStatus: number[] = new Array(4) as number[];
+
+	// State of buttons
+	private _buttonsStatus: string[] = new Array() as string[];
 
 	private constructor() {
 		this.gamepadConntectedListener();
 		this.gamepadDisconnectedListener();
 		this.listenToGamepad = this.listenToGamepad.bind(this);
-		this.buttonPressed = this.buttonPressed.bind(this);
 		setInterval(this.listenToGamepad, 100);
 	}
 
@@ -24,47 +28,33 @@ export default class GamepadManager {
 		return GamepadManager._instance;
 	}
 
-	private buttonPressed(button: any, hold?: any) {
-		let newPress = false;
-		// loop through pressed buttons
-		for (let i = 0, s = this.buttonsStatus.length; i < s; i++) {
-			// if we found the button we're looking for...
-			if (this.buttonsStatus[i] === button) {
-				// set the boolean variable to true
-				newPress = true;
-				// if we want to check the single press
-				if (!hold) {
-					// loop through the cached states from the previous frame
-					for (let j = 0, p = this.buttonsCache.length; j < p; j++) {
-						// if the button was already pressed, ignore new press
-						if (this.buttonsCache[j] === button) {
-							newPress = false;
-						}
-					}
-				}
-			}
-		}
-		return newPress;
+	public get axesStatus(): number[] {
+		return this._axesStatus;
+	}
+
+	public set axesStatus(axesStatus: number[]) {
+		this._axesStatus = axesStatus;
+	}
+
+	public get buttonStatus(): string[] {
+		return this._buttonsStatus;
+	}
+
+	public set buttonStatus(buttonStatus: string[]) {
+		this._buttonsStatus = buttonStatus;
 	}
 
 	private listenToGamepad() {
-		this.buttonsCache = [];
-		for (
-			let buttonCacheIndex = 0;
-			buttonCacheIndex < this.buttonsStatus.length;
-			buttonCacheIndex++
-		) {
-			this.buttonsCache[buttonCacheIndex] = this.buttonsStatus[
-				buttonCacheIndex
-			];
-		}
-		this.buttonsStatus = [];
-		if (this.controller === null) {
+		if (this._gamepad === null) {
 			return;
 		}
-		const { buttons, axes } = this.controller;
+		const { buttons, axes } = this._gamepad;
 
+		// Reset everything
+		this._buttonsStatus = [];
 		const pressed = [];
+
+		// Buttons
 		if (buttons) {
 			for (
 				let buttonIndex = 0, buttnCount = buttons.length;
@@ -72,11 +62,12 @@ export default class GamepadManager {
 				buttonIndex++
 			) {
 				if (buttons[buttonIndex].pressed) {
-					pressed.push(this.buttons[buttonIndex]);
+					pressed.push(this._buttons[buttonIndex]);
 				}
 			}
 		}
 
+		// Axes
 		const newAxes = [];
 		if (axes) {
 			for (let a = 0, x = axes.length; a < x; a++) {
@@ -84,39 +75,29 @@ export default class GamepadManager {
 			}
 		}
 
-		this.axesStatus = newAxes;
-		this.buttonsStatus = pressed;
-
-		this.controller = navigator.getGamepads()[0] || new Gamepad();
+		this._axesStatus = newAxes.map(Number);
+		this._buttonsStatus = pressed;
+		this._gamepad = navigator.getGamepads()[0];
 	}
 
 	private gamepadConntectedListener() {
-		const that = this;
-
 		window.addEventListener('gamepadconnected', (e: any) => {
-			that.controller = e.gamepad;
-			console.log(e.gamepad.buttons);
+			GamepadManager.getInstance()._gamepad = e.gamepad;
+			const { index, id, buttons, axes } = e.gamepad;
 			console.log(
-				'Gamepad connected at index %d: %s. %d buttons, %d axes.',
-				e.gamepad.index,
-				e.gamepad.id,
-				e.gamepad.buttons.length,
-				e.gamepad.axes.length
+				`Gamepad connected at index ${index}: ${id}. ${buttons.length} buttons, ${axes.length} axes.`
 			);
 		});
 	}
 	private gamepadDisconnectedListener() {
 		window.addEventListener('gamepaddisconnected', (e: any) => {
-			delete this.controller;
-			console.log(
-				'Gamepad disconnected from index %d: %s',
-				e.gamepad.index,
-				e.gamepad.id
-			);
+			delete this._gamepad;
+			const { index, id } = e.gamepad;
+			console.log(`Gamepad disconnected from index ${index}: ${id}. `);
 		});
 	}
 
 	public getGamepad() {
-		return this.controller;
+		return this._gamepad;
 	}
 }

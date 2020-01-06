@@ -18,7 +18,6 @@ export default class Controller {
 
 		if (gamepadManager?.getGamepad()?.buttons[0].pressed) {
 			AudioManager.meow();
-			console.log('AAAAAAAAAAAAAAAA');
 		}
 
 		if (gamepadManager!.axesStatus[0] > 0.5) {

@@ -16,7 +16,7 @@ export default class Controller {
 		const gamepadManager = GamepadManager.getInstance();
 		const ludeCat = LudeCat.getInstance();
 
-		if (gamepadManager?.getGamepad()?.buttons[0].pressed) {
+		if (gamepadManager?.gamepad?.buttons[0].pressed) {
 			AudioManager.meow();
 		}
 

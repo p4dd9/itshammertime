@@ -44,6 +44,10 @@ export default class GamepadManager {
 		this._buttonsStatus = buttonStatus;
 	}
 
+	public get gamepad(): Gamepad | null {
+		return this._gamepad;
+	}
+
 	private listenToGamepad() {
 		if (this._gamepad === null) {
 			return;
@@ -95,9 +99,5 @@ export default class GamepadManager {
 			const { index, id } = e.gamepad;
 			console.log(`Gamepad disconnected from index ${index}: ${id}. `);
 		});
-	}
-
-	public getGamepad() {
-		return this._gamepad;
 	}
 }

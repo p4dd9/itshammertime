@@ -8,3 +8,5 @@ export const spriteSheetSubRetangleWidth =
 	spriteSheetWidth / spriteSheetColumCount;
 export const spriteSheetSubRetangleHeight =
 	spriteSheetHeight / spriteSheetRowCount;
+
+export const frameCount = spriteSheetRowCount * spriteSheetColumCount;

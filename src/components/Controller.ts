@@ -6,7 +6,7 @@ import {
 } from '../config/ludeCatConfig';
 import AudioManager from './AudioManager';
 
-const moveDistance = 25;
+const moveDistance = 20;
 
 export default class Controller {
 	public static handleControllerInput(
@@ -17,6 +17,7 @@ export default class Controller {
 		const ludeCat = LudeCat.getInstance();
 
 		if (gamepadManager?.gamepad?.buttons[0].pressed) {
+			ludeCat.spritesheet = ludeCat.spritesheets[0];
 			AudioManager.meow();
 		}
 
@@ -26,6 +27,21 @@ export default class Controller {
 
 		if (gamepadManager?.gamepad?.buttons[2].pressed) {
 			AudioManager.meow2();
+		}
+
+		if (gamepadManager?.gamepad?.buttons[2].pressed) {
+			ludeCat.spritesheet = ludeCat.spritesheets[1];
+		}
+
+		if (
+			gamepadManager!.axesStatus[0] > 0.5 ||
+			gamepadManager!.axesStatus[0] < -0.5 ||
+			gamepadManager!.axesStatus[1] > 0.5 ||
+			gamepadManager!.axesStatus[1] < -0.5
+		) {
+			ludeCat.moving = true;
+		} else {
+			ludeCat.moving = false;
 		}
 
 		if (gamepadManager!.axesStatus[0] > 0.5) {

@@ -8,16 +8,15 @@ import LudeCat from '../LudeCat';
 import {
 	spriteSheetSubRetangleWidth,
 	spriteSheetSubRetangleHeight,
+	frameCount,
 } from '../../config/ludeCatConfig';
 
 export default class App extends React.Component<{}, {}> {
 	private canvasRef: null | React.RefObject<HTMLCanvasElement> = null;
 	private canvasContext: null | CanvasRenderingContext2D = null;
-	private images: HTMLImageElement[] = new Array() as HTMLImageElement[];
 
 	// Spritesheet Stuff to render
 	private frameIndex = 0;
-	private frameCount = 144;
 	private rowIndex = 0;
 	private colIndex = 0;
 	private frameSpeed = 0;
@@ -39,19 +38,19 @@ export default class App extends React.Component<{}, {}> {
 		canvasX: number = 0,
 		canvasY: number = 0
 	) {
-		if (this.images[1] === null) {
+		// SpriteImage
+		const image = LudeCat.getInstance().spritesheet;
+		if (image === null) {
 			return;
 		}
 
 		const ludeCat = LudeCat.getInstance();
-
 		Controller.handleControllerInput(
 			this.canvasRef!.current!.height,
 			this.canvasRef!.current!.width
 		);
-
 		context.drawImage(
-			this.images[1],
+			image,
 			columIndex * spriteSheetSubRetangleWidth,
 			rowIndex * spriteSheetSubRetangleHeight,
 			spriteSheetSubRetangleWidth,
@@ -65,6 +64,7 @@ export default class App extends React.Component<{}, {}> {
 
 	private step() {
 		// Clear canvas
+
 		this.frameSpeed++;
 		if (this.frameSpeed < 2) {
 			window.requestAnimationFrame(this.step);
@@ -94,7 +94,7 @@ export default class App extends React.Component<{}, {}> {
 		}
 		this.frameIndex++;
 
-		if (this.frameIndex >= this.frameCount) {
+		if (this.frameIndex >= frameCount) {
 			this.frameIndex = 0;
 			this.rowIndex = 0;
 			this.colIndex = 0;
@@ -104,7 +104,8 @@ export default class App extends React.Component<{}, {}> {
 	}
 
 	private initAnimationStart(images: HTMLImageElement[]) {
-		this.images = images;
+		LudeCat.getInstance().spritesheets = images;
+		LudeCat.getInstance().spritesheet = images[0];
 		window.requestAnimationFrame(this.step);
 	}
 

@@ -1,7 +1,8 @@
 import IPosition from '../interfaces/IPosition';
 
 export default class LudeCat {
-	private static instance: LudeCat;
+	private static _instance: LudeCat;
+
 	private _moving = false;
 	private _spritesheets: HTMLImageElement[] = new Array() as HTMLImageElement[];
 	private _spritesheet: HTMLImageElement = this._spritesheets[0];
@@ -13,11 +14,11 @@ export default class LudeCat {
 	private constructor() {}
 
 	public static getInstance(): LudeCat {
-		if (!LudeCat.instance) {
-			LudeCat.instance = new LudeCat();
+		if (!LudeCat._instance) {
+			LudeCat._instance = new LudeCat();
 		}
 
-		return LudeCat.instance;
+		return LudeCat._instance;
 	}
 
 	public get catPosition(): IPosition {

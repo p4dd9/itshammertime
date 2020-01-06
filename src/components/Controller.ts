@@ -6,8 +6,6 @@ import {
 } from '../config/ludeCatConfig';
 import AudioManager from './AudioManager';
 
-const moveDistance = 20;
-
 export default class Controller {
 	public static handleControllerInput(
 		canvasHeight: number,
@@ -15,6 +13,7 @@ export default class Controller {
 	) {
 		const gamepadManager = GamepadManager.getInstance();
 		const ludeCat = LudeCat.getInstance();
+		const moveDistance = 20;
 
 		if (gamepadManager?.gamepad?.buttons[0].pressed) {
 			ludeCat.spritesheet = ludeCat.spritesheets[0];

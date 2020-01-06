@@ -12,18 +12,18 @@ import {
 } from '../../config/ludeCatConfig';
 
 export default class App extends React.Component<{}, {}> {
-	private canvasRef: null | React.RefObject<HTMLCanvasElement> = null;
-	private canvasContext: null | CanvasRenderingContext2D = null;
+	private _canvasRef: null | React.RefObject<HTMLCanvasElement> = null;
+	private _canvasContext: null | CanvasRenderingContext2D = null;
 
 	// Spritesheet Stuff to render
-	private frameIndex = 0;
-	private rowIndex = 0;
-	private colIndex = 0;
-	private frameSpeed = 0;
+	private _frameIndex = 0;
+	private _rowIndex = 0;
+	private _colIndex = 0;
+	private _frameSpeed = 0;
 
 	constructor(props: {}) {
 		super(props);
-		this.canvasRef = React.createRef();
+		this._canvasRef = React.createRef();
 
 		this.step = this.step.bind(this);
 		this.drawFrame = this.drawFrame.bind(this);
@@ -46,8 +46,8 @@ export default class App extends React.Component<{}, {}> {
 
 		const ludeCat = LudeCat.getInstance();
 		Controller.handleControllerInput(
-			this.canvasRef!.current!.height,
-			this.canvasRef!.current!.width
+			this._canvasRef!.current!.height,
+			this._canvasRef!.current!.width
 		);
 		context.drawImage(
 			image,
@@ -65,40 +65,40 @@ export default class App extends React.Component<{}, {}> {
 	private step() {
 		// Clear canvas
 
-		this.frameSpeed++;
+		this._frameSpeed++;
 		// yeah this needs to be improved
-		if (this.frameSpeed < 1) {
+		if (this._frameSpeed < 1) {
 			window.requestAnimationFrame(this.step);
 			return;
 		}
-		this.canvasContext!.clearRect(
+		this._canvasContext!.clearRect(
 			0,
 			0,
-			this.canvasRef!.current!.width,
-			this.canvasRef!.current!.height
+			this._canvasRef!.current!.width,
+			this._canvasRef!.current!.height
 		);
 
-		this.frameSpeed = 0;
+		this._frameSpeed = 0;
 		this.drawFrame(
-			this.canvasContext as CanvasRenderingContext2D,
-			this.frameIndex,
-			this.colIndex,
-			this.rowIndex
+			this._canvasContext as CanvasRenderingContext2D,
+			this._frameIndex,
+			this._colIndex,
+			this._rowIndex
 		);
 
 		// Update Rows or Col Index only
-		if (this.colIndex >= 11) {
-			this.colIndex = 0;
-			this.rowIndex++;
+		if (this._colIndex >= 11) {
+			this._colIndex = 0;
+			this._rowIndex++;
 		} else {
-			this.colIndex++;
+			this._colIndex++;
 		}
-		this.frameIndex++;
+		this._frameIndex++;
 
-		if (this.frameIndex >= frameCount) {
-			this.frameIndex = 0;
-			this.rowIndex = 0;
-			this.colIndex = 0;
+		if (this._frameIndex >= frameCount) {
+			this._frameIndex = 0;
+			this._rowIndex = 0;
+			this._colIndex = 0;
 		}
 
 		window.requestAnimationFrame(this.step);
@@ -111,17 +111,17 @@ export default class App extends React.Component<{}, {}> {
 	}
 
 	public componentDidMount() {
-		if (this.canvasRef !== null) {
-			const context: CanvasRenderingContext2D | null = (this.canvasRef
+		if (this._canvasRef !== null) {
+			const context: CanvasRenderingContext2D | null = (this._canvasRef
 				.current as HTMLCanvasElement).getContext('2d');
 
 			window.onload = () => {
-				this.canvasRef!.current!.height = window.innerHeight;
-				this.canvasRef!.current!.width = window.innerWidth;
+				this._canvasRef!.current!.height = window.innerHeight;
+				this._canvasRef!.current!.width = window.innerWidth;
 			};
 
 			if (context !== null) {
-				this.canvasContext = context;
+				this._canvasContext = context;
 				AssetLoader.loadAudio();
 				AssetLoader.loadImages(this.initAnimationStart);
 			} else {
@@ -142,7 +142,7 @@ export default class App extends React.Component<{}, {}> {
 	public render() {
 		return (
 			<div>
-				<canvas ref={this.canvasRef} id='canvas'></canvas>
+				<canvas ref={this._canvasRef} id='canvas'></canvas>
 			</div>
 		);
 	}

@@ -51,12 +51,12 @@ module.exports = (_env, argv) => {
 		module: {
 			rules: [
 				{
-					test: /\.(js|jsx)$/,
+					test: /\.(js)$/,
 					exclude: /(node_modules)/,
 					loader: 'babel-loader',
 				},
 				{
-					test: /\.(ts|tsx)$/,
+					test: /\.(ts)$/,
 					exclude: /(node_modules)/,
 					loader: 'awesome-typescript-loader',
 				},
@@ -76,7 +76,7 @@ module.exports = (_env, argv) => {
 			],
 		},
 		resolve: {
-			extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+			extensions: ['*', '.js', '.ts'],
 		},
 		output: {
 			filename: '[name].bundle.js',

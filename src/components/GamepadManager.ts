@@ -1,28 +1,13 @@
 // Inspired by https://gist.github.com/vankasteelj/50b59c61dd04ff27f5bbb59746c21ad1
 
 export default class GamepadManager {
-	private controller: Gamepad | null = null;
+	private controller: Gamepad = new Gamepad();
 	private buttonsCache = new Array() as number[];
-	private buttons = [
-		'DPad-Up',
-		'DPad-Down',
-		'DPad-Left',
-		'DPad-Right',
-		'Start',
-		'Back',
-		'Axis-Left',
-		'Axis-Right',
-		'LB',
-		'RB',
-		'Power',
-		'A',
-		'B',
-		'X',
-		'Y',
-	];
+	// XBOX 360 MAPPINg
+	private buttons = ['A', 'B', 'X', 'Y'];
 
 	public axesStatus: any = [];
-	private buttonsStatus: any = [];
+	public buttonsStatus: any = [];
 
 	constructor() {
 		this.gamepadConntectedListener();
@@ -95,7 +80,7 @@ export default class GamepadManager {
 		this.axesStatus = newAxes;
 		this.buttonsStatus = pressed;
 
-		this.controller = navigator.getGamepads()[0];
+		this.controller = navigator.getGamepads()[0] || new Gamepad();
 	}
 
 	private gamepadConntectedListener() {
@@ -103,6 +88,7 @@ export default class GamepadManager {
 
 		window.addEventListener('gamepadconnected', (e: any) => {
 			that.controller = e.gamepad;
+			console.log(e.gamepad.buttons);
 			console.log(
 				'Gamepad connected at index %d: %s. %d buttons, %d axes.',
 				e.gamepad.index,

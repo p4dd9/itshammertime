@@ -2,6 +2,7 @@ import React from 'react';
 
 import GamepadManager from '../GamepadManager';
 import { Preloader } from './Preloader';
+import IPosition from '../../interfaces/IPosition';
 
 const spriteSheetWidth = 2100;
 const spriteSheetHeight = 2400;
@@ -29,8 +30,10 @@ export default class App extends React.Component<{}, {}> {
 		this.initAnimationStart = this.initAnimationStart.bind(this);
 	}
 
-	private x = 0;
-	private y = 0;
+	private catPosition: IPosition = {
+		x: 0,
+		y: 0,
+	};
 
 	private drawFrame(
 		context: CanvasRenderingContext2D,
@@ -45,41 +48,48 @@ export default class App extends React.Component<{}, {}> {
 		}
 
 		const gamepad = this.gamepadManager;
+
+		if (gamepad?.getGamepad()?.buttons[0].pressed) {
+			console.log('AAAAAAAAAAAAAAAA');
+		}
+
 		if (gamepad!.axesStatus[0] > 0.5) {
 			const destinationX =
-				this.x + spriteSheetSubRetangleWidth + moveDistance;
+				this.catPosition.x + spriteSheetSubRetangleWidth + moveDistance;
 			if (destinationX <= this.canvasRef!.current!.width) {
 				console.log('Left axe: right');
-				this.x += moveDistance;
+				this.catPosition.x += moveDistance;
 			} else {
 				console.log('Moved out right');
 			}
 		}
 		if (gamepad!.axesStatus[0] < -0.5) {
-			const destinationX = this.x - moveDistance;
+			const destinationX = this.catPosition.x - moveDistance;
 			if (destinationX >= 0) {
 				console.log('Left axe: left');
-				this.x += -moveDistance;
+				this.catPosition.x += -moveDistance;
 			} else {
 				console.log('Moved out left');
 			}
 		}
 		if (gamepad!.axesStatus[1] > 0.5) {
 			const destinationY =
-				this.y + spriteSheetSubRetangleHeight + moveDistance;
+				this.catPosition.y +
+				spriteSheetSubRetangleHeight +
+				moveDistance;
 			if (destinationY < this.canvasRef!.current!.height) {
 				console.log('Left axe: down');
-				this.y += moveDistance;
+				this.catPosition.y += moveDistance;
 			} else {
 				console.log('Moved out bottom.');
 			}
 		}
 		if (gamepad!.axesStatus[1] < -0.5) {
-			const destinationY = this.y - moveDistance;
+			const destinationY = this.catPosition.y - moveDistance;
 
 			if (destinationY >= 0) {
 				console.log('Left axe: up');
-				this.y += -moveDistance;
+				this.catPosition.y += -moveDistance;
 			} else {
 				console.log('Moed out top.');
 			}
@@ -91,8 +101,8 @@ export default class App extends React.Component<{}, {}> {
 			rowIndex * spriteSheetSubRetangleHeight,
 			spriteSheetSubRetangleWidth,
 			spriteSheetSubRetangleHeight,
-			canvasX + this.x,
-			canvasY + this.y,
+			canvasX + this.catPositionX,
+			canvasY + this.catPositionY,
 			spriteSheetSubRetangleWidth,
 			spriteSheetSubRetangleHeight
 		);

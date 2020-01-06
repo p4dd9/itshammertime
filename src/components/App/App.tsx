@@ -1,8 +1,6 @@
 import React from 'react';
 
-import GamepadManager from '../GamepadManager';
 import AssetLoader from '../AssetLoader';
-import BrowserUtil from '../../util/BrowserUtil';
 import Controller from '../Controller';
 import LudeCat from '../LudeCat';
 import {
@@ -10,6 +8,8 @@ import {
 	spriteSheetSubRetangleHeight,
 	frameCount,
 } from '../../config/ludeCatConfig';
+import CONTROLS from '../../enums/controls';
+import KeyboardManager from '../KeyboardManager';
 
 export default class App extends React.Component<{}, {}> {
 	private _canvasRef: null | React.RefObject<HTMLCanvasElement> = null;
@@ -45,10 +45,7 @@ export default class App extends React.Component<{}, {}> {
 		}
 
 		const ludeCat = LudeCat.getInstance();
-		Controller.handleControllerInput(
-			this._canvasRef!.current!.height,
-			this._canvasRef!.current!.width
-		);
+		Controller.getInstance().handleControllerInput();
 		context.drawImage(
 			image,
 			columIndex * spriteSheetSubRetangleWidth,
@@ -118,6 +115,8 @@ export default class App extends React.Component<{}, {}> {
 			window.onload = () => {
 				this._canvasRef!.current!.height = window.innerHeight;
 				this._canvasRef!.current!.width = window.innerWidth;
+				Controller.getInstance().canvasHeight = window.innerHeight;
+				Controller.getInstance().canvasWidth = window.innerWidth;
 			};
 
 			if (context !== null) {
@@ -128,12 +127,8 @@ export default class App extends React.Component<{}, {}> {
 				console.log('CanvasRenderingContext2D is null.');
 			}
 
-			if (BrowserUtil.supportsGamepads()) {
-				console.log('Gamepad API supported! Yey!');
-				GamepadManager.getInstance();
-			} else {
-				console.log('Gamepad API not supported.');
-			}
+			Controller.getInstance().controls = CONTROLS.KEYBOARD;
+			KeyboardManager.getInstance();
 		} else {
 			console.log('HTMLCanvasElement is null.');
 		}

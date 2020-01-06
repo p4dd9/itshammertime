@@ -1,3 +1,7 @@
+import Controller from './Controller';
+import CONTROLS from '../enums/controls';
+import BrowserUtil from '../util/BrowserUtil';
+
 export default class GamepadManager {
 	private static _instance: GamepadManager;
 
@@ -13,11 +17,12 @@ export default class GamepadManager {
 	// State of buttons
 	private _buttonsStatus: string[] = new Array() as string[];
 
+	public intervalId: number = -1;
+
 	private constructor() {
 		this.gamepadConntectedListener();
 		this.gamepadDisconnectedListener();
 		this.listenToGamepad = this.listenToGamepad.bind(this);
-		setInterval(this.listenToGamepad, 100);
 	}
 
 	public static getInstance(): GamepadManager {
@@ -85,19 +90,32 @@ export default class GamepadManager {
 	}
 
 	private gamepadConntectedListener() {
-		window.addEventListener('gamepadconnected', (e: any) => {
-			GamepadManager.getInstance()._gamepad = e.gamepad;
-			const { index, id, buttons, axes } = e.gamepad;
-			console.log(
-				`Gamepad connected at index ${index}: ${id}. ${buttons.length} buttons, ${axes.length} axes.`
-			);
-		});
+		if (BrowserUtil.supportsGamepads()) {
+			window.addEventListener('gamepadconnected', (e: any) => {
+				Controller.getInstance().controls = CONTROLS.GAMEPAG;
+				GamepadManager.getInstance().intervalId = window.setInterval(
+					GamepadManager.getInstance().listenToGamepad,
+					100
+				);
+				GamepadManager.getInstance()._gamepad = e.gamepad;
+				const { index, id, buttons, axes } = e.gamepad;
+				console.log(
+					`Gamepad connected at index ${index}: ${id}. ${buttons.length} buttons, ${axes.length} axes.`
+				);
+			});
+		}
 	}
 	private gamepadDisconnectedListener() {
-		window.addEventListener('gamepaddisconnected', (e: any) => {
-			delete this._gamepad;
-			const { index, id } = e.gamepad;
-			console.log(`Gamepad disconnected from index ${index}: ${id}. `);
-		});
+		if (BrowserUtil.supportsGamepads()) {
+			window.addEventListener('gamepaddisconnected', (e: any) => {
+				clearInterval(GamepadManager.getInstance().intervalId);
+				Controller.getInstance().controls = CONTROLS.KEYBOARD;
+				delete this._gamepad;
+				const { index, id } = e.gamepad;
+				console.log(
+					`Gamepad disconnected from index ${index}: ${id}. `
+				);
+			});
+		}
 	}
 }

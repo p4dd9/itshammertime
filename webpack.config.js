@@ -62,7 +62,8 @@ module.exports = (_env, argv) => {
 				},
 				{
 					test: /\.(jpe?g|png|gif|svg)$/i,
-					loader: 'file-loader?name=/assets/spritesheet[name].[ext]',
+					loader: 'file-loader',
+					// loader: 'file-loader?name=/assets/spritesheet[name].[ext]',
 				},
 				{
 					test: /\.(eot|ttf|woff|woff2)$/i,

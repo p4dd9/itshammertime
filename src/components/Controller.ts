@@ -4,6 +4,7 @@ import {
 	spriteSheetSubRetangleWidth,
 	spriteSheetSubRetangleHeight,
 } from '../config/ludeCatConfig';
+import AudioManager from './AudioManager';
 
 const moveDistance = 25;
 
@@ -16,6 +17,7 @@ export default class Controller {
 		const ludeCat = LudeCat.getInstance();
 
 		if (gamepadManager?.getGamepad()?.buttons[0].pressed) {
+			AudioManager.meow();
 			console.log('AAAAAAAAAAAAAAAA');
 		}
 

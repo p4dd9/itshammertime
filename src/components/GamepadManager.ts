@@ -1,20 +1,27 @@
-// Inspired by https://gist.github.com/vankasteelj/50b59c61dd04ff27f5bbb59746c21ad1
-
 export default class GamepadManager {
-	private controller: Gamepad = new Gamepad();
+	private static _instance: GamepadManager;
+	private controller: null | Gamepad = null;
 	private buttonsCache = new Array() as number[];
-	// XBOX 360 MAPPINg
+	// XBOX 360 MAPPING
 	private buttons = ['A', 'B', 'X', 'Y'];
 
 	public axesStatus: any = [];
 	public buttonsStatus: any = [];
 
-	constructor() {
+	private constructor() {
 		this.gamepadConntectedListener();
 		this.gamepadDisconnectedListener();
 		this.listenToGamepad = this.listenToGamepad.bind(this);
 		this.buttonPressed = this.buttonPressed.bind(this);
 		setInterval(this.listenToGamepad, 100);
+	}
+
+	public static getInstance(): GamepadManager {
+		if (!GamepadManager._instance) {
+			GamepadManager._instance = new GamepadManager();
+		}
+
+		return GamepadManager._instance;
 	}
 
 	private buttonPressed(button: any, hold?: any) {

@@ -2,24 +2,25 @@ import React from 'react';
 
 import GamepadManager from '../GamepadManager';
 import { Preloader } from './Preloader';
-import IPosition from '../../interfaces/IPosition';
-
-const spriteSheetWidth = 2100;
-const spriteSheetHeight = 2400;
-
-const spriteSheetRowCount = 12;
-const spriteSheetColumCount = 12;
-
-const moveDistance = 25;
-
-const spriteSheetSubRetangleWidth = spriteSheetWidth / spriteSheetColumCount;
-const spriteSheetSubRetangleHeight = spriteSheetHeight / spriteSheetRowCount;
+import BrowserUtil from '../../util/BrowserUtil';
+import Controller from '../Controller';
+import LudeCat from '../LudeCat';
+import {
+	spriteSheetSubRetangleWidth,
+	spriteSheetSubRetangleHeight,
+} from '../../config/ludeCatConfig';
 
 export default class App extends React.Component<{}, {}> {
 	private canvasRef: null | React.RefObject<HTMLCanvasElement> = null;
 	private canvasContext: null | CanvasRenderingContext2D = null;
 	private images: HTMLImageElement[] = new Array() as HTMLImageElement[];
-	private gamepadManager: null | GamepadManager = null;
+
+	// Spritesheet Stuff to render
+	private frameIndex = 0;
+	private frameCount = 144;
+	private rowIndex = 0;
+	private colIndex = 0;
+	private frameSpeed = 0;
 
 	constructor(props: {}) {
 		super(props);
@@ -29,11 +30,6 @@ export default class App extends React.Component<{}, {}> {
 		this.drawFrame = this.drawFrame.bind(this);
 		this.initAnimationStart = this.initAnimationStart.bind(this);
 	}
-
-	private catPosition: IPosition = {
-		x: 0,
-		y: 0,
-	};
 
 	private drawFrame(
 		context: CanvasRenderingContext2D,
@@ -47,53 +43,12 @@ export default class App extends React.Component<{}, {}> {
 			return;
 		}
 
-		const gamepad = this.gamepadManager;
+		const ludeCat = LudeCat.getInstance();
 
-		if (gamepad?.getGamepad()?.buttons[0].pressed) {
-			console.log('AAAAAAAAAAAAAAAA');
-		}
-
-		if (gamepad!.axesStatus[0] > 0.5) {
-			const destinationX =
-				this.catPosition.x + spriteSheetSubRetangleWidth + moveDistance;
-			if (destinationX <= this.canvasRef!.current!.width) {
-				console.log('Left axe: right');
-				this.catPosition.x += moveDistance;
-			} else {
-				console.log('Moved out right');
-			}
-		}
-		if (gamepad!.axesStatus[0] < -0.5) {
-			const destinationX = this.catPosition.x - moveDistance;
-			if (destinationX >= 0) {
-				console.log('Left axe: left');
-				this.catPosition.x += -moveDistance;
-			} else {
-				console.log('Moved out left');
-			}
-		}
-		if (gamepad!.axesStatus[1] > 0.5) {
-			const destinationY =
-				this.catPosition.y +
-				spriteSheetSubRetangleHeight +
-				moveDistance;
-			if (destinationY < this.canvasRef!.current!.height) {
-				console.log('Left axe: down');
-				this.catPosition.y += moveDistance;
-			} else {
-				console.log('Moved out bottom.');
-			}
-		}
-		if (gamepad!.axesStatus[1] < -0.5) {
-			const destinationY = this.catPosition.y - moveDistance;
-
-			if (destinationY >= 0) {
-				console.log('Left axe: up');
-				this.catPosition.y += -moveDistance;
-			} else {
-				console.log('Moed out top.');
-			}
-		}
+		Controller.handleControllerInput(
+			this.canvasRef!.current!.height,
+			this.canvasRef!.current!.width
+		);
 
 		context.drawImage(
 			this.images[1],
@@ -101,18 +56,12 @@ export default class App extends React.Component<{}, {}> {
 			rowIndex * spriteSheetSubRetangleHeight,
 			spriteSheetSubRetangleWidth,
 			spriteSheetSubRetangleHeight,
-			canvasX + this.catPositionX,
-			canvasY + this.catPositionY,
+			canvasX + ludeCat.catPosition.x,
+			canvasY + ludeCat.catPosition.y,
 			spriteSheetSubRetangleWidth,
 			spriteSheetSubRetangleHeight
 		);
 	}
-
-	private frameIndex = 0;
-	private frameCount = 144;
-	private rowIndex = 0;
-	private colIndex = 0;
-	private frameSpeed = 0;
 
 	private step() {
 		// Clear canvas
@@ -154,10 +103,6 @@ export default class App extends React.Component<{}, {}> {
 		window.requestAnimationFrame(this.step);
 	}
 
-	private supportsGamepads() {
-		return !!navigator.getGamepads;
-	}
-
 	private initAnimationStart(images: HTMLImageElement[]) {
 		this.images = images;
 		window.requestAnimationFrame(this.step);
@@ -175,10 +120,9 @@ export default class App extends React.Component<{}, {}> {
 				console.log('CanvasRenderingContext2D is null.');
 			}
 
-			if (this.supportsGamepads()) {
+			if (BrowserUtil.supportsGamepads()) {
 				console.log('Gamepad API supported! Yey!');
-				const gamepadManager = new GamepadManager();
-				this.gamepadManager = gamepadManager;
+				GamepadManager.getInstance();
 			} else {
 				console.log('Gamepad API not supported.');
 			}

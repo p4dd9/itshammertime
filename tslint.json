@@ -3,6 +3,7 @@
 	"extends": ["tslint:recommended"],
 	"jsRules": {},
 	"rules": {
+		"variable-name": { "options": ["allow-leading-underscore"] },
 		"no-unused-variable": [true, { "ignore-pattern": "^_" }],
 		"indent": [true, "tabs", 4],
 		"no-console": false,

@@ -66,7 +66,8 @@ export default class App extends React.Component<{}, {}> {
 		// Clear canvas
 
 		this.frameSpeed++;
-		if (this.frameSpeed < 2) {
+		// yeah this needs to be improved
+		if (this.frameSpeed < 1) {
 			window.requestAnimationFrame(this.step);
 			return;
 		}

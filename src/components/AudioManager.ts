@@ -1,9 +1,7 @@
-import meowSound from '../assets/audio/meow.mp3';
+import AssetLoader from './AssetLoader';
 
 export default class AudioManager {
-	private static volume = 0.5;
-
-	private static async playSound(elementId: string, track: string) {
+	private static async playSound(elementId: string) {
 		const htmlElement: HTMLElement | null = document.getElementById(
 			elementId
 		);
@@ -12,15 +10,19 @@ export default class AudioManager {
 			return;
 		} else {
 			const audioHTMLElement = htmlElement as HTMLAudioElement;
-			if (audioHTMLElement.src.length === 0) {
-				audioHTMLElement.src = track;
-				audioHTMLElement.volume = AudioManager.volume;
-			}
 			audioHTMLElement.play();
 		}
 	}
 
 	public static meow() {
-		AudioManager.playSound('meow-sound', meowSound);
+		AudioManager.playSound(AssetLoader.audio.meow.id);
+	}
+
+	public static nya() {
+		AudioManager.playSound(AssetLoader.audio.nya.id);
+	}
+
+	public static meow2() {
+		AudioManager.playSound(AssetLoader.audio.meow2.id);
 	}
 }

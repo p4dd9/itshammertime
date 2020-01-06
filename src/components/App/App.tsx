@@ -113,8 +113,14 @@ export default class App extends React.Component<{}, {}> {
 			const context: CanvasRenderingContext2D | null = (this.canvasRef
 				.current as HTMLCanvasElement).getContext('2d');
 
+			window.onload = () => {
+				this.canvasRef!.current!.height = window.innerHeight;
+				this.canvasRef!.current!.width = window.innerWidth;
+			};
+
 			if (context !== null) {
 				this.canvasContext = context;
+				AssetLoader.loadAudio();
 				AssetLoader.loadImages(this.initAnimationStart);
 			} else {
 				console.log('CanvasRenderingContext2D is null.');
@@ -134,12 +140,7 @@ export default class App extends React.Component<{}, {}> {
 	public render() {
 		return (
 			<div>
-				<canvas
-					ref={this.canvasRef}
-					height={window.innerHeight}
-					width={window.innerWidth}
-					id='canvas'
-				></canvas>
+				<canvas ref={this.canvasRef} id='canvas'></canvas>
 			</div>
 		);
 	}

@@ -20,6 +20,14 @@ export default class Controller {
 			AudioManager.meow();
 		}
 
+		if (gamepadManager?.gamepad?.buttons[1].pressed) {
+			AudioManager.nya();
+		}
+
+		if (gamepadManager?.gamepad?.buttons[2].pressed) {
+			AudioManager.meow2();
+		}
+
 		if (gamepadManager!.axesStatus[0] > 0.5) {
 			const destinationX =
 				ludeCat.catPosition.x +

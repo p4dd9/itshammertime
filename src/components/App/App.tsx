@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GamepadManager from '../GamepadManager';
-import { Preloader } from './Preloader';
+import AssetLoader from './AssetLoader';
 import BrowserUtil from '../../util/BrowserUtil';
 import Controller from '../Controller';
 import LudeCat from '../LudeCat';
@@ -115,7 +115,7 @@ export default class App extends React.Component<{}, {}> {
 
 			if (context !== null) {
 				this.canvasContext = context;
-				Preloader.loadImages(this.initAnimationStart);
+				AssetLoader.loadImages(this.initAnimationStart);
 			} else {
 				console.log('CanvasRenderingContext2D is null.');
 			}

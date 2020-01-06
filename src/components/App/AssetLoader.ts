@@ -1,7 +1,7 @@
 import idleBlinktailWhipheadSpriteSheet from '../../assets/spritesheet/idle_blinktailwhiphead.png';
 import idleBlinkHead from '../../assets/spritesheet/idle_blinkhead.png';
 
-export class Preloader {
+export default class AssetLoader {
 	public static loadImages(callback: (images: HTMLImageElement[]) => void) {
 		let loadedImageCount: number = 0;
 		const images: HTMLImageElement[] = new Array() as HTMLImageElement[];

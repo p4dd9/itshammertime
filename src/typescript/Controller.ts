@@ -7,6 +7,7 @@ import {
 import AudioManager from './AudioManager';
 import CONTROLS from '../enums/controls';
 import KEYCODES from '../enums/keycodes';
+import { XBOX360_AXIS, XBOX360_BUTTONS } from '../enums/xbox360controls';
 
 export default class Controller {
 	private _controls: CONTROLS = CONTROLS.KEYBOARD;
@@ -24,7 +25,6 @@ export default class Controller {
 		if (!Controller._instance) {
 			Controller._instance = new Controller();
 		}
-
 		return Controller._instance;
 	}
 
@@ -38,36 +38,44 @@ export default class Controller {
 
 	public handleAxesInput() {
 		const { gamepadManager, axeStatusThreshold } = this;
-		if (gamepadManager!.axesStatus[0] > axeStatusThreshold) {
+		if (
+			gamepadManager!.axesStatus[XBOX360_AXIS.LS_X] > axeStatusThreshold
+		) {
 			this.moveRight();
 		}
-		if (gamepadManager!.axesStatus[0] < -axeStatusThreshold) {
+		if (
+			gamepadManager!.axesStatus[XBOX360_AXIS.LS_X] < -axeStatusThreshold
+		) {
 			this.moveLeft();
 		}
-		if (gamepadManager!.axesStatus[1] < -axeStatusThreshold) {
+		if (
+			gamepadManager!.axesStatus[XBOX360_AXIS.LS_Y] < -axeStatusThreshold
+		) {
 			this.moveUp();
 		}
-		if (gamepadManager!.axesStatus[1] > axeStatusThreshold) {
+		if (
+			gamepadManager!.axesStatus[XBOX360_AXIS.LS_Y] > axeStatusThreshold
+		) {
 			this.moveDown();
 		}
 	}
 
 	private handleButtons() {
 		const { gamepadManager, ludeCat } = this;
-		if (gamepadManager?.gamepad?.buttons[0].pressed) {
+		if (gamepadManager?.gamepad?.buttons[XBOX360_BUTTONS.A].pressed) {
 			ludeCat.spritesheet = ludeCat.spritesheets[0];
 			AudioManager.meow();
 		}
 
-		if (gamepadManager?.gamepad?.buttons[1].pressed) {
+		if (gamepadManager?.gamepad?.buttons[XBOX360_BUTTONS.B].pressed) {
 			AudioManager.nya();
 		}
 
-		if (gamepadManager?.gamepad?.buttons[2].pressed) {
+		if (gamepadManager?.gamepad?.buttons[XBOX360_BUTTONS.X].pressed) {
 			AudioManager.meow2();
 		}
 
-		if (gamepadManager?.gamepad?.buttons[2].pressed) {
+		if (gamepadManager?.gamepad?.buttons[XBOX360_BUTTONS.X].pressed) {
 			ludeCat.spritesheet = ludeCat.spritesheets[1];
 		}
 	}

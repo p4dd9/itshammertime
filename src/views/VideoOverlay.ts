@@ -14,7 +14,9 @@ window.onload = (onLoadEvent: Event) => {
 	if (root !== null) {
 		root.insertAdjacentHTML('beforeend', canvasDOMString);
 
-		const app: App = new App(height, width);
+		const app: App = new App();
+		Controller.getInstance().canvasHeight = height;
+		Controller.getInstance().canvasWidth = width;
 		app.initialize();
 	} else {
 		console.log('root element not found.');
@@ -31,9 +33,9 @@ window.onresize = (onResize: Event) => {
 			window.innerHeight - bodyMarginVerticalHorizontal;
 
 		Controller.getInstance().canvasHeight =
-			window.innerWidth - bodyMarginVerticalHorizontal;
-		Controller.getInstance().canvasWidth =
 			window.innerHeight - bodyMarginVerticalHorizontal;
+		Controller.getInstance().canvasWidth =
+			window.innerWidth - bodyMarginVerticalHorizontal;
 	} else {
 		console.log('canvas element not found.');
 	}

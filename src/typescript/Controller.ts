@@ -16,8 +16,8 @@ export default class Controller {
 	private ludeCat = LudeCat.getInstance();
 	private moveDistance = 12;
 	private axeStatusThreshold = 0.3;
-	public canvasHeight: number = 0;
-	public canvasWidth: number = 0;
+	private _canvasHeight: number = 0;
+	private _canvasWidth: number = 0;
 
 	private static _instance: Controller;
 	private constructor() {}
@@ -27,6 +27,22 @@ export default class Controller {
 			Controller._instance = new Controller();
 		}
 		return Controller._instance;
+	}
+
+	public get canvasHeight(): number {
+		return this.canvasHeight;
+	}
+
+	public set canvasHeight(canvasHeight: number) {
+		this._canvasHeight = canvasHeight;
+	}
+
+	public get canvasWidth(): number {
+		return this._canvasWidth;
+	}
+
+	public set canvasWidth(canvasHeight: number) {
+		this._canvasWidth = canvasHeight;
 	}
 
 	public get controls(): CONTROLS {
@@ -137,7 +153,10 @@ export default class Controller {
 			ludeCat.catPosition.x +
 			ludeCat.spritesheet.width / spriteSheetColumCount +
 			moveDistance;
-		if (destinationX <= this.canvasWidth) {
+		console.log(destinationX);
+		console.log(this._canvasWidth);
+
+		if (destinationX <= this._canvasWidth) {
 			console.log('Left axe: right');
 			ludeCat.catPosition.x += moveDistance;
 		} else {
@@ -177,7 +196,7 @@ export default class Controller {
 			ludeCat.catPosition.y +
 			ludeCat.spritesheet.height / spriteSheetRowCount +
 			moveDistance;
-		if (destinationY < this.canvasHeight) {
+		if (destinationY < this._canvasHeight) {
 			console.log('Left axe: down');
 			ludeCat.catPosition.y += moveDistance;
 		} else {

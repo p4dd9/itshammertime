@@ -22,9 +22,7 @@ export default class App {
 	private _colIndex = 0;
 	private _frameSpeed = 0;
 
-	constructor(canvasHeight: number, canvasWidth: number) {
-		Controller.getInstance().canvasHeight = canvasHeight;
-		Controller.getInstance().canvasWidth = canvasWidth;
+	constructor() {
 		this.step = this.step.bind(this);
 		this.drawFrame = this.drawFrame.bind(this);
 		this.initAnimationStart = this.initAnimationStart.bind(this);

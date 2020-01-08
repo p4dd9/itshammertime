@@ -1,10 +1,11 @@
 import IPosition from '../interfaces/IPosition';
 import ANIMATION from '../enums/spritesheets';
+import LUDECATSTATE from '../enums/ludecatstate';
 
 export default class LudeCat {
 	private static _instance: LudeCat;
 
-	private _moving = false;
+	private _moving: LUDECATSTATE = LUDECATSTATE.IDLE;
 	private _spritesheets: HTMLImageElement[] = new Array() as HTMLImageElement[];
 	private _spritesheet: HTMLImageElement = this._spritesheets[ANIMATION.IDLE];
 	private _catPosition: IPosition = {
@@ -30,17 +31,30 @@ export default class LudeCat {
 		this._catPosition = value;
 	}
 
-	public get moving(): boolean {
-		return this._moving;
-	}
-
-	public set moving(moving: boolean) {
+	public moving(moving: LUDECATSTATE) {
 		if (moving !== this._moving) {
 			this._moving = moving;
 			if (moving) {
-				this._spritesheet = this._spritesheets[ANIMATION.WALK_RIGHT];
+				if (this._moving === LUDECATSTATE.IDLE) {
+					this._spritesheet = this._spritesheets[ANIMATION.IDLE];
+					return;
+				} else if (this._moving === LUDECATSTATE.WALKING_LEFT) {
+					this._spritesheet = this._spritesheets[ANIMATION.WALK_LEFT];
+					return;
+				} else if (this._moving === LUDECATSTATE.WALKING_RIGHT) {
+					this._spritesheet = this._spritesheets[
+						ANIMATION.WALK_RIGHT
+					];
+					return;
+				} else if (this._moving === LUDECATSTATE.WALKING_DOWN) {
+					this._spritesheet = this._spritesheets[ANIMATION.IDLE];
+					return;
+				} else if (this._moving === LUDECATSTATE.WALKING_UP) {
+					this._spritesheet = this._spritesheets[ANIMATION.IDLE];
+					return;
+				}
 			} else {
-				// this._spritesheet = this._spritesheets[ANIMATION.IDLE];
+				this._spritesheet = this._spritesheets[ANIMATION.IDLE];
 			}
 		}
 	}

@@ -9,6 +9,7 @@ import CONTROLS from '../enums/controls';
 import KEYCODES from '../enums/keycodes';
 import { XBOX360_AXIS, XBOX360_BUTTONS } from '../enums/xbox360controls';
 import ANIMATION from '../enums/spritesheets';
+import LUDECATSTATE from '../enums/ludecatstate';
 
 export default class Controller {
 	private _controls: CONTROLS = CONTROLS.KEYBOARD;
@@ -101,14 +102,14 @@ export default class Controller {
 		const { gamepadManager, ludeCat, axeStatusThreshold } = this;
 
 		if (
-			gamepadManager!.axesStatus[0] > axeStatusThreshold ||
-			gamepadManager!.axesStatus[0] < -axeStatusThreshold ||
-			gamepadManager!.axesStatus[1] > axeStatusThreshold ||
-			gamepadManager!.axesStatus[1] < -axeStatusThreshold
+			!(
+				gamepadManager!.axesStatus[0] > axeStatusThreshold ||
+				gamepadManager!.axesStatus[0] < -axeStatusThreshold ||
+				gamepadManager!.axesStatus[1] > axeStatusThreshold ||
+				gamepadManager!.axesStatus[1] < -axeStatusThreshold
+			)
 		) {
-			ludeCat.moving = true;
-		} else {
-			ludeCat.moving = false;
+			ludeCat.moving(LUDECATSTATE.IDLE);
 		}
 	}
 
@@ -130,19 +131,15 @@ export default class Controller {
 		const { ludeCat } = this;
 
 		if (keyCode === KEYCODES.RIGHT_ARROW) {
-			ludeCat.moving = true;
 			this.moveRight();
 		} else if (keyCode === KEYCODES.LEFT_ARROW) {
-			ludeCat.moving = true;
 			this.moveLeft();
 		} else if (keyCode === KEYCODES.UP_ARROW) {
-			ludeCat.moving = true;
 			this.moveUp();
 		} else if (keyCode === KEYCODES.DOWN_ARROW) {
 			this.moveDown();
-			ludeCat.moving = true;
 		} else {
-			ludeCat.moving = false;
+			ludeCat.moving(LUDECATSTATE.IDLE);
 		}
 	}
 
@@ -153,11 +150,10 @@ export default class Controller {
 			ludeCat.catPosition.x +
 			ludeCat.spritesheet.width / spriteSheetColumCount +
 			moveDistance;
-		console.log(destinationX);
-		console.log(this._canvasWidth);
 
 		if (destinationX <= this._canvasWidth) {
 			console.log('Left axe: right');
+			ludeCat.moving(LUDECATSTATE.WALKING_RIGHT);
 			ludeCat.catPosition.x += moveDistance;
 		} else {
 			console.log('Moved out right');
@@ -170,6 +166,7 @@ export default class Controller {
 		const destinationX = ludeCat.catPosition.x - moveDistance;
 		if (destinationX >= 0) {
 			console.log('Left axe: left');
+			ludeCat.moving(LUDECATSTATE.WALKING_LEFT);
 			ludeCat.catPosition.x += -moveDistance;
 		} else {
 			console.log('Moved out left');
@@ -183,6 +180,7 @@ export default class Controller {
 
 		if (destinationY >= 0) {
 			console.log('Left axe: up');
+			ludeCat.moving(LUDECATSTATE.WALKING_UP);
 			ludeCat.catPosition.y += -moveDistance;
 		} else {
 			console.log('Moed out top.');
@@ -198,6 +196,7 @@ export default class Controller {
 			moveDistance;
 		if (destinationY < this._canvasHeight) {
 			console.log('Left axe: down');
+			ludeCat.moving(LUDECATSTATE.WALKING_UP);
 			ludeCat.catPosition.y += moveDistance;
 		} else {
 			console.log('Moved out bottom.');

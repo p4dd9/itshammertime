@@ -1,11 +1,14 @@
 import idleBlinktailWhipheadSpriteSheet from '../assets/spritesheet/idle_blinktailwhiphead.png';
-import idleBlinkHead from '../assets/spritesheet/idle_blinkhead.png';
+import catWalkRight from '../assets/spritesheet/sp_ludecat_right.png';
+import catWalkLeft from '../assets/spritesheet/sp_ludecat_left.png';
 
 import meowSound from '../assets/audio/meow.mp3';
 import meow2Sound from '../assets/audio/meow2.wav';
 import nyaSound from '../assets/audio/nya.wav';
 
 import IAudioAsset from '../interfaces/IAudioAsset';
+import LudeCat from './LudeCat';
+import ANIMATION from '../enums/spritesheets';
 
 export default class AssetLoader {
 	public static audio: IAudioAsset = {
@@ -23,13 +26,15 @@ export default class AssetLoader {
 		},
 	};
 
-	public static loadImages(callback: (images: HTMLImageElement[]) => void) {
+	public static loadImages(callback: () => void) {
 		let loadedImageCount: number = 0;
 		const images: HTMLImageElement[] = new Array() as HTMLImageElement[];
 
+		// Update enum ANIMATION
 		const imagePaths: string[] = [
 			idleBlinktailWhipheadSpriteSheet,
-			idleBlinkHead,
+			catWalkRight,
+			catWalkLeft,
 		];
 		for (const imagePath of imagePaths) {
 			const image: HTMLImageElement = new Image();
@@ -42,7 +47,9 @@ export default class AssetLoader {
 			loadedImageCount++;
 			if (loadedImageCount >= imagePaths.length) {
 				console.log(`All images (${imagePaths.length}) loaded.`);
-				callback(images);
+				LudeCat.getInstance().spritesheets = images;
+				LudeCat.getInstance().spritesheet = images[ANIMATION.IDLE];
+				callback();
 			}
 		}
 	}

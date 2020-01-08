@@ -2,9 +2,10 @@ import AssetLoader from './AssetLoader';
 import Controller from './Controller';
 import LudeCat from './LudeCat';
 import {
-	spriteSheetSubRetangleWidth,
-	spriteSheetSubRetangleHeight,
 	frameCount,
+	scaleOnCanvas,
+	spriteSheetColumCount,
+	spriteSheetRowCount,
 } from '../config/ludeCatConfig';
 import CONTROLS from '../enums/controls';
 import KeyboardManager from './KeyboardManager';
@@ -45,16 +46,22 @@ export default class App {
 
 		const ludeCat = LudeCat.getInstance();
 		Controller.getInstance().handleControllerInput();
+
+		const frameWidth = image.width / spriteSheetColumCount;
+		const frameHeight = image.height / spriteSheetRowCount;
+		context.strokeStyle = '#f00';
+		context.lineWidth = 2;
+		context.strokeRect(0, 0, context.canvas.width, context.canvas.height);
 		context.drawImage(
 			image,
-			columIndex * spriteSheetSubRetangleWidth,
-			rowIndex * spriteSheetSubRetangleHeight,
-			spriteSheetSubRetangleWidth,
-			spriteSheetSubRetangleHeight,
+			columIndex * frameWidth,
+			rowIndex * frameHeight,
+			frameWidth,
+			frameHeight,
 			canvasX + ludeCat.catPosition.x,
 			canvasY + ludeCat.catPosition.y,
-			spriteSheetSubRetangleWidth,
-			spriteSheetSubRetangleHeight
+			frameWidth / scaleOnCanvas,
+			frameHeight / scaleOnCanvas
 		);
 	}
 
@@ -63,7 +70,7 @@ export default class App {
 
 		this._frameSpeed++;
 		// yeah this needs to be improved
-		if (this._frameSpeed < 1) {
+		if (this._frameSpeed < 4) {
 			window.requestAnimationFrame(this.step);
 			return;
 		}
@@ -100,9 +107,7 @@ export default class App {
 		window.requestAnimationFrame(this.step);
 	}
 
-	private initAnimationStart(images: HTMLImageElement[]) {
-		LudeCat.getInstance().spritesheets = images;
-		LudeCat.getInstance().spritesheet = images[0];
+	private initAnimationStart() {
 		window.requestAnimationFrame(this.step);
 	}
 

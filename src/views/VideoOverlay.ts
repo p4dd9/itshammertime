@@ -1,11 +1,13 @@
 import App from '../typescript/App';
 import Controller from '../typescript/Controller';
 
+const bodyMarginVerticalHorizontal = 16;
+
 window.onload = (onLoadEvent: Event) => {
 	const root: HTMLElement | null = document.getElementById('root');
 
-	const height = window.innerHeight;
-	const width = window.innerWidth;
+	const height = window.innerHeight - bodyMarginVerticalHorizontal;
+	const width = window.innerWidth - bodyMarginVerticalHorizontal;
 
 	const canvasDOMString = `<canvas id='canvas' width=${width} height=${height}></canvas>`;
 
@@ -23,11 +25,15 @@ window.onresize = (onResize: Event) => {
 	const canvas: HTMLElement | null = document.getElementById('canvas');
 
 	if (canvas !== null) {
-		(canvas as HTMLCanvasElement).width = window.innerWidth;
-		(canvas as HTMLCanvasElement).height = window.innerHeight;
+		(canvas as HTMLCanvasElement).width =
+			window.innerWidth - bodyMarginVerticalHorizontal;
+		(canvas as HTMLCanvasElement).height =
+			window.innerHeight - bodyMarginVerticalHorizontal;
 
-		Controller.getInstance().canvasHeight = window.innerWidth;
-		Controller.getInstance().canvasWidth = window.innerHeight;
+		Controller.getInstance().canvasHeight =
+			window.innerWidth - bodyMarginVerticalHorizontal;
+		Controller.getInstance().canvasWidth =
+			window.innerHeight - bodyMarginVerticalHorizontal;
 	} else {
 		console.log('canvas element not found.');
 	}

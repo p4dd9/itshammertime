@@ -1,13 +1,14 @@
 import GamepadManager from './GamepadManager';
 import LudeCat from './LudeCat';
 import {
-	spriteSheetSubRetangleWidth,
-	spriteSheetSubRetangleHeight,
+	spriteSheetColumCount,
+	spriteSheetRowCount,
 } from '../config/ludeCatConfig';
 import AudioManager from './AudioManager';
 import CONTROLS from '../enums/controls';
 import KEYCODES from '../enums/keycodes';
 import { XBOX360_AXIS, XBOX360_BUTTONS } from '../enums/xbox360controls';
+import ANIMATION from '../enums/spritesheets';
 
 export default class Controller {
 	private _controls: CONTROLS = CONTROLS.KEYBOARD;
@@ -63,7 +64,7 @@ export default class Controller {
 	private handleButtons() {
 		const { gamepadManager, ludeCat } = this;
 		if (gamepadManager?.gamepad?.buttons[XBOX360_BUTTONS.A].pressed) {
-			ludeCat.spritesheet = ludeCat.spritesheets[0];
+			ludeCat.spritesheet = ludeCat.spritesheets[ANIMATION.IDLE];
 			AudioManager.meow();
 		}
 
@@ -76,7 +77,7 @@ export default class Controller {
 		}
 
 		if (gamepadManager?.gamepad?.buttons[XBOX360_BUTTONS.X].pressed) {
-			ludeCat.spritesheet = ludeCat.spritesheets[1];
+			// ludeCat.spritesheet = ludeCat.spritesheets[1];
 		}
 	}
 
@@ -133,7 +134,9 @@ export default class Controller {
 		const { ludeCat, moveDistance } = this;
 
 		const destinationX =
-			ludeCat.catPosition.x + spriteSheetSubRetangleWidth + moveDistance;
+			ludeCat.catPosition.x +
+			ludeCat.spritesheet.width / spriteSheetColumCount +
+			moveDistance;
 		if (destinationX <= this.canvasWidth) {
 			console.log('Left axe: right');
 			ludeCat.catPosition.x += moveDistance;
@@ -171,7 +174,9 @@ export default class Controller {
 		const { ludeCat, moveDistance } = this;
 
 		const destinationY =
-			ludeCat.catPosition.y + spriteSheetSubRetangleHeight + moveDistance;
+			ludeCat.catPosition.y +
+			ludeCat.spritesheet.height / spriteSheetRowCount +
+			moveDistance;
 		if (destinationY < this.canvasHeight) {
 			console.log('Left axe: down');
 			ludeCat.catPosition.y += moveDistance;

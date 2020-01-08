@@ -1,11 +1,12 @@
 import IPosition from '../interfaces/IPosition';
+import ANIMATION from '../enums/spritesheets';
 
 export default class LudeCat {
 	private static _instance: LudeCat;
 
 	private _moving = false;
 	private _spritesheets: HTMLImageElement[] = new Array() as HTMLImageElement[];
-	private _spritesheet: HTMLImageElement = this._spritesheets[0];
+	private _spritesheet: HTMLImageElement = this._spritesheets[ANIMATION.IDLE];
 	private _catPosition: IPosition = {
 		x: 0,
 		y: 0,
@@ -37,9 +38,9 @@ export default class LudeCat {
 		if (moving !== this._moving) {
 			this._moving = moving;
 			if (moving) {
-				this._spritesheet = this._spritesheets[1];
+				this._spritesheet = this._spritesheets[ANIMATION.WALK_RIGHT];
 			} else {
-				this._spritesheet = this._spritesheets[0];
+				// this._spritesheet = this._spritesheets[ANIMATION.IDLE];
 			}
 		}
 	}

@@ -1,5 +1,4 @@
-import App from '../typescript/App';
-import Controller from '../typescript/Controller';
+import Game from '../typescript/Game';
 
 const bodyMarginVerticalHorizontal = 16;
 
@@ -9,39 +8,23 @@ window.onload = (onLoadEvent: Event) => {
 	const height = window.innerHeight - bodyMarginVerticalHorizontal;
 	const width = window.innerWidth - bodyMarginVerticalHorizontal;
 
-	// TODO: create actual domelement
-	const canvasDOMString = `<canvas id='canvas' width=${width} height=${height}></canvas>`;
+	const canvasDOMElement = document.createElement('canvas');
+	canvasDOMElement.width = width;
+	canvasDOMElement.height = height;
 
-	// root cannot be null
-	root!.insertAdjacentHTML('beforeend', canvasDOMString);
+	root!.appendChild(canvasDOMElement);
 
-	const canvas: HTMLElement | null = document.getElementById('canvas');
-	const context: CanvasRenderingContext2D | null = (canvas as HTMLCanvasElement).getContext(
+	const context: CanvasRenderingContext2D | null = canvasDOMElement.getContext(
 		'2d'
 	);
 
-	// TODO: Rename to game
-	const app: App = new App(context!);
+	const game: Game = new Game(context!);
+	game.start();
 
-	Controller.getInstance().canvasHeight = height;
-	Controller.getInstance().canvasWidth = width;
-	app.initialize();
-};
+	window.onresize = (onResize: Event) => {
+		const resizeWidth = window.innerWidth - bodyMarginVerticalHorizontal;
+		const resizeHeight = window.innerHeight - bodyMarginVerticalHorizontal;
 
-window.onresize = (onResize: Event) => {
-	const canvas: HTMLElement | null = document.getElementById('canvas');
-
-	if (canvas !== null) {
-		(canvas as HTMLCanvasElement).width =
-			window.innerWidth - bodyMarginVerticalHorizontal;
-		(canvas as HTMLCanvasElement).height =
-			window.innerHeight - bodyMarginVerticalHorizontal;
-
-		Controller.getInstance().canvasHeight =
-			window.innerHeight - bodyMarginVerticalHorizontal;
-		Controller.getInstance().canvasWidth =
-			window.innerWidth - bodyMarginVerticalHorizontal;
-	} else {
-		console.log('canvas element not found.');
-	}
+		game.resize(resizeWidth, resizeHeight);
+	};
 };

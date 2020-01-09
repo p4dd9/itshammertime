@@ -1,6 +1,6 @@
 enum CONTROLS {
 	'KEYBOARD',
-	'GAMEPAG',
+	'GAMEPAD',
 }
 
 export default CONTROLS;

@@ -7,8 +7,6 @@ import meow2Sound from '../assets/audio/meow2.wav';
 import nyaSound from '../assets/audio/nya.wav';
 
 import IAudioAsset from '../interfaces/IAudioAsset';
-import LudeCat from './LudeCat';
-import ANIMATION from '../enums/spritesheets';
 
 export default class AssetLoader {
 	public static audio: IAudioAsset = {
@@ -26,14 +24,9 @@ export default class AssetLoader {
 		},
 	};
 
-	// TODO: Could use promises here, chain em
-	// TODO: return images to cat in contructor / Promises
-	// TODO: Game.characters
-	public static loadImages(callback: () => void) {
-		let loadedImageCount: number = 0;
-		const images: HTMLImageElement[] = new Array() as HTMLImageElement[];
+	public static async loadImages(): Promise<HTMLImageElement[]> {
+		const imagePromises = new Array() as Array<Promise<HTMLImageElement>>;
 
-		// Update enum ANIMATION
 		const imagePaths: string[] = [
 			idleBlinktailWhipheadSpriteSheet,
 			catWalkRight,
@@ -42,24 +35,21 @@ export default class AssetLoader {
 
 		for (const imagePath of imagePaths) {
 			const image: HTMLImageElement = new Image();
-			image.onload = imageLoaded;
 			image.src = imagePath;
-			images.push(image);
+			const nP = new Promise<HTMLImageElement>(resolve => {
+				image.onload = () => {
+					resolve(image);
+				};
+			});
+			imagePromises.push(nP);
 		}
-
-		function imageLoaded(e: Event) {
-			loadedImageCount++;
-			if (loadedImageCount >= imagePaths.length) {
-				console.log(`All images (${imagePaths.length}) loaded.`);
-				LudeCat.getInstance().spritesheets = images;
-				LudeCat.getInstance().spritesheet = images[ANIMATION.IDLE];
-				callback();
-			}
-		}
+		return Promise.all(imagePromises);
 	}
 
-	// TODO: use audio instance, avoid dom
-	public static loadAudio() {
+	public static async loadAudio(): Promise<HTMLAudioElement[]> {
+		const audioPromises = new Array() as Array<Promise<HTMLAudioElement>>;
+		const root = document.getElementById('root');
+
 		for (const audioAsset in AssetLoader.audio) {
 			if (AssetLoader.audio.hasOwnProperty(audioAsset)) {
 				const audioItem = AssetLoader.audio[audioAsset];
@@ -67,9 +57,16 @@ export default class AssetLoader {
 				audio.volume = 0.5;
 				audio.id = audioItem.id;
 
-				const root = document.getElementById('root');
-				root?.append(audio);
+				const nP = new Promise<HTMLAudioElement>(resolve => {
+					audio.addEventListener('loadeddata', () => {
+						root!.append(audio);
+						resolve(audio);
+					});
+				});
+				audioPromises.push(nP);
 			}
 		}
+
+		return Promise.all(audioPromises);
 	}
 }

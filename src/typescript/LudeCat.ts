@@ -1,26 +1,50 @@
 import IPosition from '../interfaces/IPosition';
 import ANIMATION from '../enums/spritesheets';
 import LUDECATSTATE from '../enums/ludecatstate';
+import {
+	spriteSheetColumCount,
+	spriteSheetRowCount,
+	scaleOnCanvas,
+	frameCount,
+} from '../config/ludeCatConfig';
+import AssetLoader from './AssetLoader';
 
 export default class LudeCat {
-	private static _instance: LudeCat;
-
+	private moveDistance = 12;
 	private _moving: LUDECATSTATE = LUDECATSTATE.IDLE;
-	private _spritesheets: HTMLImageElement[] = new Array() as HTMLImageElement[];
-	private _spritesheet: HTMLImageElement = this._spritesheets[ANIMATION.IDLE];
 	private _catPosition: IPosition = {
 		x: 0,
 		y: 0,
 	};
+	private _canvasWidth: number;
+	private _canvasHeight: number;
 
-	private constructor() {}
+	// Spritesheet Stuff to render
+	private _frameIndex = 0;
+	private _rowIndex = 0;
+	private _colIndex = 0;
+	private _context: CanvasRenderingContext2D;
 
-	public static getInstance(): LudeCat {
-		if (!LudeCat._instance) {
-			LudeCat._instance = new LudeCat();
-		}
+	private _spritesheet: HTMLImageElement | null = null;
+	private _spritesheets: HTMLImageElement[] | null = null;
+	public _audio: HTMLAudioElement[] | null = null;
 
-		return LudeCat._instance;
+	constructor(context: CanvasRenderingContext2D) {
+		this._context = context;
+		this._canvasWidth = context.canvas.width;
+		this._canvasHeight = context.canvas.height;
+
+		this.loadAssets();
+	}
+
+	private async loadAssets() {
+		const audio = await AssetLoader.loadAudio();
+		const spritesheets = await AssetLoader.loadImages();
+
+		console.log('Assets loaded...');
+		this._audio = audio;
+		this._spritesheets = spritesheets;
+		this._spritesheet = spritesheets[ANIMATION.IDLE];
 	}
 
 	public get catPosition(): IPosition {
@@ -31,7 +55,58 @@ export default class LudeCat {
 		this._catPosition = value;
 	}
 
+	public draw() {
+		// SpriteImage
+		const {
+			_context,
+			_canvasWidth,
+			_canvasHeight,
+			_colIndex,
+			_rowIndex,
+			catPosition,
+		} = this;
+		const image = this._spritesheet;
+		if (image === null) {
+			return;
+		}
+
+		const frameWidth = image.width / spriteSheetColumCount;
+		const frameHeight = image.height / spriteSheetRowCount;
+		_context.strokeStyle = '#f00';
+		_context.lineWidth = 2;
+		_context.strokeRect(0, 0, _canvasWidth, _canvasHeight);
+		_context.drawImage(
+			image,
+			_colIndex * frameWidth,
+			_rowIndex * frameHeight,
+			frameWidth,
+			frameHeight,
+			catPosition.x,
+			catPosition.y,
+			frameWidth / scaleOnCanvas,
+			frameHeight / scaleOnCanvas
+		);
+
+		// Update Rows or Col Index only
+		if (this._colIndex >= 11) {
+			this._colIndex = 0;
+			this._rowIndex++;
+		} else {
+			this._colIndex++;
+		}
+		this._frameIndex++;
+
+		if (this._frameIndex >= frameCount) {
+			this._frameIndex = 0;
+			this._rowIndex = 0;
+			this._colIndex = 0;
+		}
+	}
+
 	public moving(moving: LUDECATSTATE) {
+		if (this._spritesheets === null) {
+			return;
+		}
 		const movingState = {
 			[LUDECATSTATE.IDLE]: ANIMATION.IDLE,
 			[LUDECATSTATE.WALKING_LEFT]: ANIMATION.WALK_LEFT,
@@ -43,7 +118,7 @@ export default class LudeCat {
 		if (moving !== this._moving) {
 			this._moving = moving;
 			if (moving) {
-				this._spritesheet = this.spritesheets[
+				this._spritesheet = this._spritesheets[
 					movingState[this._moving]
 				];
 			} else {
@@ -52,17 +127,68 @@ export default class LudeCat {
 		}
 	}
 
-	public get spritesheet(): HTMLImageElement {
-		return this._spritesheet;
-	}
-	public set spritesheet(image: HTMLImageElement) {
-		this._spritesheet = image;
+	public resizeCanvas(canvasWidth: number, canvasHeight: number) {
+		this._canvasWidth = canvasWidth;
+		this._canvasHeight = canvasHeight;
 	}
 
-	public get spritesheets(): HTMLImageElement[] {
-		return this._spritesheets;
+	public moveRight() {
+		const { catPosition, _spritesheet, moveDistance } = this;
+
+		const destinationX =
+			catPosition.x +
+			_spritesheet!.width / spriteSheetColumCount +
+			moveDistance;
+
+		if (destinationX <= this._canvasWidth) {
+			console.log('Left axe: right');
+			this.moving(LUDECATSTATE.WALKING_RIGHT);
+			catPosition.x += moveDistance;
+		} else {
+			console.log('Moved out right');
+		}
 	}
-	public set spritesheets(image: HTMLImageElement[]) {
-		this._spritesheets = image;
+
+	public moveLeft() {
+		const { catPosition, moveDistance } = this;
+
+		const destinationX = catPosition.x - moveDistance;
+		if (destinationX >= 0) {
+			console.log('Left axe: left');
+			this.moving(LUDECATSTATE.WALKING_LEFT);
+			catPosition.x += -moveDistance;
+		} else {
+			console.log('Moved out left');
+		}
+	}
+
+	public moveUp() {
+		const { catPosition, moveDistance } = this;
+
+		const destinationY = catPosition.y - moveDistance;
+
+		if (destinationY >= 0) {
+			console.log('Left axe: up');
+			this.moving(LUDECATSTATE.WALKING_UP);
+			catPosition.y += -moveDistance;
+		} else {
+			console.log('Moed out top.');
+		}
+	}
+
+	public moveDown() {
+		const { catPosition, moveDistance, _spritesheet } = this;
+
+		const destinationY =
+			catPosition.y +
+			_spritesheet!.height / spriteSheetRowCount +
+			moveDistance;
+		if (destinationY < this._canvasHeight) {
+			console.log('Left axe: down');
+			this.moving(LUDECATSTATE.WALKING_UP);
+			catPosition.y += moveDistance;
+		} else {
+			console.log('Moved out bottom.');
+		}
 	}
 }

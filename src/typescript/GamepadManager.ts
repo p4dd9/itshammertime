@@ -1,10 +1,8 @@
 import Controller from './Controller';
-import CONTROLS from '../enums/controls';
 import BrowserUtil from '../util/BrowserUtil';
+import CONTROLS from '../enums/controls';
 
 export default class GamepadManager {
-	private static _instance: GamepadManager;
-
 	// The actualy gamepad from the browser API
 	private _gamepad: null | Gamepad = null;
 
@@ -19,18 +17,13 @@ export default class GamepadManager {
 
 	public intervalId: number = -1;
 
-	private constructor() {
+	private _controller: Controller;
+
+	constructor(controller: Controller) {
+		this.listenToGamepad = this.listenToGamepad.bind(this);
 		this.gamepadConntectedListener();
 		this.gamepadDisconnectedListener();
-		this.listenToGamepad = this.listenToGamepad.bind(this);
-	}
-
-	public static getInstance(): GamepadManager {
-		if (!GamepadManager._instance) {
-			GamepadManager._instance = new GamepadManager();
-		}
-
-		return GamepadManager._instance;
+		this._controller = controller;
 	}
 
 	public get axesStatus(): number[] {
@@ -94,12 +87,9 @@ export default class GamepadManager {
 			window.addEventListener('gamepadconnected', (e: any) => {
 				console.log(e.gamepad.buttons);
 
-				Controller.getInstance().controls = CONTROLS.GAMEPAG;
-				GamepadManager.getInstance().intervalId = window.setInterval(
-					GamepadManager.getInstance().listenToGamepad,
-					100
-				);
-				GamepadManager.getInstance()._gamepad = e.gamepad;
+				this._controller.controls = CONTROLS.GAMEPAD;
+				this.intervalId = window.setInterval(this.listenToGamepad, 100);
+				this._gamepad = e.gamepad;
 				const { index, id, buttons, axes } = e.gamepad;
 				console.log(
 					`Gamepad connected at index ${index}: ${id}. ${buttons.length} buttons, ${axes.length} axes.`
@@ -107,11 +97,12 @@ export default class GamepadManager {
 			});
 		}
 	}
+
 	private gamepadDisconnectedListener() {
 		if (BrowserUtil.supportsGamepads()) {
 			window.addEventListener('gamepaddisconnected', (e: any) => {
-				clearInterval(GamepadManager.getInstance().intervalId);
-				Controller.getInstance().controls = CONTROLS.KEYBOARD;
+				clearInterval(this.intervalId);
+				this._controller.controls = CONTROLS.KEYBOARD;
 				delete this._gamepad;
 				const { index, id } = e.gamepad;
 				console.log(

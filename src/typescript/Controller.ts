@@ -1,53 +1,21 @@
 import GamepadManager from './GamepadManager';
-import LudeCat from './LudeCat';
-import {
-	spriteSheetColumCount,
-	spriteSheetRowCount,
-} from '../config/ludeCatConfig';
 import AudioManager from './AudioManager';
 import CONTROLS from '../enums/controls';
 import KEYCODES from '../enums/keycodes';
 import { XBOX360_AXIS, XBOX360_BUTTONS } from '../enums/xbox360controls';
-import ANIMATION from '../enums/spritesheets';
 import LUDECATSTATE from '../enums/ludecatstate';
+import LudeCat from './LudeCat';
 
 export default class Controller {
 	private _controls: CONTROLS = CONTROLS.KEYBOARD;
-	private gamepadManager = GamepadManager.getInstance();
-	private ludeCat = LudeCat.getInstance();
-	private moveDistance = 12;
-	private axeStatusThreshold = 0.3;
-	private _canvasHeight: number = 0;
-	private _canvasWidth: number = 0;
+	private _gamepadManager: GamepadManager;
+	private _axeStatusThreshold = 0.3;
+	private _ludeCat: LudeCat;
 
-	private static _instance: Controller;
-	private constructor() {}
-
-	public static getInstance(): Controller {
-		if (!Controller._instance) {
-			Controller._instance = new Controller();
-		}
-		return Controller._instance;
-	}
-
-	public get canvasHeight(): number {
-		return this.canvasHeight;
-	}
-
-	public set canvasHeight(canvasHeight: number) {
-		this._canvasHeight = canvasHeight;
-	}
-
-	public get canvasWidth(): number {
-		return this._canvasWidth;
-	}
-
-	public set canvasWidth(canvasHeight: number) {
-		this._canvasWidth = canvasHeight;
-	}
-
-	public get controls(): CONTROLS {
-		return this._controls;
+	constructor(ludeCat: LudeCat) {
+		this.addKeyboardListenerToDocument();
+		this._gamepadManager = new GamepadManager(this);
+		this._ludeCat = ludeCat;
 	}
 
 	public set controls(controls: CONTROLS) {
@@ -55,33 +23,36 @@ export default class Controller {
 	}
 
 	public handleAxesInput() {
-		const { gamepadManager, axeStatusThreshold } = this;
+		const {
+			_gamepadManager: gamepadManager,
+			_axeStatusThreshold: axeStatusThreshold,
+			_ludeCat: ludeCat,
+		} = this;
 		if (
 			gamepadManager!.axesStatus[XBOX360_AXIS.LS_X] > axeStatusThreshold
 		) {
-			this.moveRight();
+			ludeCat.moveRight();
 		}
 		if (
 			gamepadManager!.axesStatus[XBOX360_AXIS.LS_X] < -axeStatusThreshold
 		) {
-			this.moveLeft();
+			ludeCat.moveLeft();
 		}
 		if (
 			gamepadManager!.axesStatus[XBOX360_AXIS.LS_Y] < -axeStatusThreshold
 		) {
-			this.moveUp();
+			ludeCat.moveUp();
 		}
 		if (
 			gamepadManager!.axesStatus[XBOX360_AXIS.LS_Y] > axeStatusThreshold
 		) {
-			this.moveDown();
+			ludeCat.moveDown();
 		}
 	}
 
 	private handleButtons() {
-		const { gamepadManager, ludeCat } = this;
+		const { _gamepadManager: gamepadManager } = this;
 		if (gamepadManager?.gamepad?.buttons[XBOX360_BUTTONS.A].pressed) {
-			ludeCat.spritesheet = ludeCat.spritesheets[ANIMATION.IDLE];
 			AudioManager.meow();
 		}
 
@@ -92,14 +63,14 @@ export default class Controller {
 		if (gamepadManager?.gamepad?.buttons[XBOX360_BUTTONS.X].pressed) {
 			AudioManager.meow2();
 		}
-
-		if (gamepadManager?.gamepad?.buttons[XBOX360_BUTTONS.X].pressed) {
-			// ludeCat.spritesheet = ludeCat.spritesheets[1];
-		}
 	}
 
 	private checkMovingCharacterByGamepad() {
-		const { gamepadManager, ludeCat, axeStatusThreshold } = this;
+		const {
+			_gamepadManager: gamepadManager,
+			_ludeCat: ludeCat,
+			_axeStatusThreshold: axeStatusThreshold,
+		} = this;
 
 		if (
 			!(
@@ -114,7 +85,7 @@ export default class Controller {
 	}
 
 	public handleControllerInput() {
-		if (this._controls === CONTROLS.GAMEPAG) {
+		if (this._controls === CONTROLS.GAMEPAD) {
 			this.checkMovingCharacterByGamepad();
 			this.handleButtons();
 			this.handleAxesInput();
@@ -128,79 +99,24 @@ export default class Controller {
 	}
 
 	private handleKeyBoardArrows(keyCode: number) {
-		const { ludeCat } = this;
+		const { _ludeCat: ludeCat } = this;
 
 		if (keyCode === KEYCODES.RIGHT_ARROW) {
-			this.moveRight();
+			ludeCat.moveRight();
 		} else if (keyCode === KEYCODES.LEFT_ARROW) {
-			this.moveLeft();
+			ludeCat.moveLeft();
 		} else if (keyCode === KEYCODES.UP_ARROW) {
-			this.moveUp();
+			ludeCat.moveUp();
 		} else if (keyCode === KEYCODES.DOWN_ARROW) {
-			this.moveDown();
+			ludeCat.moveDown();
 		} else {
 			ludeCat.moving(LUDECATSTATE.IDLE);
 		}
 	}
 
-	// TODO: Movement logic of LudeCat to LudeCat
-	private moveRight() {
-		const { ludeCat, moveDistance } = this;
-
-		const destinationX =
-			ludeCat.catPosition.x +
-			ludeCat.spritesheet.width / spriteSheetColumCount +
-			moveDistance;
-
-		if (destinationX <= this._canvasWidth) {
-			console.log('Left axe: right');
-			ludeCat.moving(LUDECATSTATE.WALKING_RIGHT);
-			ludeCat.catPosition.x += moveDistance;
-		} else {
-			console.log('Moved out right');
-		}
-	}
-
-	private moveLeft() {
-		const { ludeCat, moveDistance } = this;
-
-		const destinationX = ludeCat.catPosition.x - moveDistance;
-		if (destinationX >= 0) {
-			console.log('Left axe: left');
-			ludeCat.moving(LUDECATSTATE.WALKING_LEFT);
-			ludeCat.catPosition.x += -moveDistance;
-		} else {
-			console.log('Moved out left');
-		}
-	}
-
-	private moveUp() {
-		const { ludeCat, moveDistance } = this;
-
-		const destinationY = ludeCat.catPosition.y - moveDistance;
-
-		if (destinationY >= 0) {
-			console.log('Left axe: up');
-			ludeCat.moving(LUDECATSTATE.WALKING_UP);
-			ludeCat.catPosition.y += -moveDistance;
-		} else {
-			console.log('Moed out top.');
-		}
-	}
-
-	private moveDown() {
-		const { ludeCat, moveDistance } = this;
-
-		const destinationY =
-			ludeCat.catPosition.y +
-			ludeCat.spritesheet.height / spriteSheetRowCount +
-			moveDistance;
-		if (destinationY < this._canvasHeight) {
-			console.log('Left axe: down');
-			ludeCat.moving(LUDECATSTATE.WALKING_UP);
-			ludeCat.catPosition.y += moveDistance;
-		} else {
-			console.log('Moved out bottom.');
-		}
+	public addKeyboardListenerToDocument() {
+		document.addEventListener('keydown', (e: KeyboardEvent) => {
+			this.handleKeyBoardControls(e.keyCode);
+		});
 	}
 }

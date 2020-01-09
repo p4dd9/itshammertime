@@ -11,14 +11,15 @@ import AssetLoader from './AssetLoader';
 import AudioManager from './AudioManager';
 
 export default class LudeCat {
-	private moveDistance = 5;
+	private _moveDistance = 5;
 	private _moving: LUDECATSTATE = LUDECATSTATE.IDLE;
-	private _catPosition: IPosition = {
+	private _position: IPosition = {
 		x: 0,
 		y: 0,
 	};
-	private _canvasWidth: number;
-	private _canvasHeight: number;
+
+	private delayFrameIndexCount = 0;
+	private delayFrameThreshold = 2;
 
 	// Spritesheet Stuff to render
 	private _frameIndex = 0;
@@ -32,10 +33,13 @@ export default class LudeCat {
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
-		this._canvasWidth = context.canvas.width;
-		this._canvasHeight = context.canvas.height;
 
 		this.loadAssets();
+	}
+
+	public resizeCanvas(canvasWidth: number, canvasHeight: number) {
+		this._context.canvas.height = canvasHeight;
+		this._context.canvas.width = canvasWidth;
 	}
 
 	private async loadAssets() {
@@ -48,18 +52,8 @@ export default class LudeCat {
 		this._spritesheet = spritesheets[ANIMATION.IDLE];
 	}
 
-	public get catPosition(): IPosition {
-		return this._catPosition;
-	}
-
-	public set catPosition(value: IPosition) {
-		this._catPosition = value;
-	}
-
-	private delayFrameIndexCount = 0;
-
 	public draw() {
-		const { _context, _colIndex, _rowIndex, catPosition } = this;
+		const { _context, _colIndex, _rowIndex, _position } = this;
 		this.delayFrameIndexCount++;
 		const image = this._spritesheet;
 		if (image === null) {
@@ -74,15 +68,15 @@ export default class LudeCat {
 			_rowIndex * frameHeight,
 			frameWidth,
 			frameHeight,
-			catPosition.x,
-			catPosition.y,
+			_position.x,
+			_position.y,
 			frameWidth / scaleOnCanvas,
 			frameHeight / scaleOnCanvas
 		);
 
 		// Update Rows or Col Index only
-		// slower animation by waiting 3 steps to draw new spritesheet subimage
-		if (this.delayFrameIndexCount > 2) {
+		// Slower animation by waiting 3 steps to draw new spritesheet subimage
+		if (this.delayFrameIndexCount > this.delayFrameThreshold) {
 			if (this._colIndex >= 11) {
 				this._colIndex = 0;
 				this._rowIndex++;
@@ -126,50 +120,46 @@ export default class LudeCat {
 		}
 	}
 
-	public resizeCanvas(canvasWidth: number, canvasHeight: number) {
-		this._canvasWidth = canvasWidth;
-		this._canvasHeight = canvasHeight;
-	}
-
 	public moveRight() {
-		const { catPosition, _spritesheet, moveDistance } = this;
+		const { _position, _spritesheet, _moveDistance: moveDistance } = this;
+		const canvasWidth = this._context.canvas.width;
 
 		const destinationX =
-			catPosition.x +
+			_position.x +
 			_spritesheet!.width / spriteSheetColumCount +
 			moveDistance;
 
-		if (destinationX <= this._canvasWidth) {
+		if (destinationX <= canvasWidth) {
 			console.log('Left axe: right');
 			this.moving(LUDECATSTATE.WALKING_RIGHT);
-			catPosition.x += moveDistance;
+			_position.x += moveDistance;
 		} else {
 			console.log('Moved out right');
 		}
 	}
 
 	public moveLeft() {
-		const { catPosition, moveDistance } = this;
+		const { _position, _moveDistance: moveDistance } = this;
 
-		const destinationX = catPosition.x - moveDistance;
+		const destinationX = _position.x - moveDistance;
 		if (destinationX >= 0) {
 			console.log('Left axe: left');
 			this.moving(LUDECATSTATE.WALKING_LEFT);
-			catPosition.x += -moveDistance;
+			_position.x += -moveDistance;
 		} else {
 			console.log('Moved out left');
 		}
 	}
 
 	public moveUp() {
-		const { catPosition, moveDistance } = this;
+		const { _position, _moveDistance: moveDistance } = this;
 
-		const destinationY = catPosition.y - moveDistance;
+		const destinationY = _position.y - moveDistance;
 
 		if (destinationY >= 0) {
 			console.log('Left axe: up');
 			this.moving(LUDECATSTATE.WALKING_UP);
-			catPosition.y += -moveDistance;
+			_position.y += -moveDistance;
 		} else {
 			console.log('Moed out top.');
 		}
@@ -188,16 +178,17 @@ export default class LudeCat {
 	}
 
 	public moveDown() {
-		const { catPosition, moveDistance, _spritesheet } = this;
+		const { _position, _moveDistance: moveDistance, _spritesheet } = this;
+		const canvasHeight = this._context.canvas.height;
 
 		const destinationY =
-			catPosition.y +
+			_position.y +
 			_spritesheet!.height / spriteSheetRowCount +
 			moveDistance;
-		if (destinationY < this._canvasHeight) {
+		if (destinationY < canvasHeight) {
 			console.log('Left axe: down');
 			this.moving(LUDECATSTATE.WALKING_UP);
-			catPosition.y += moveDistance;
+			_position.y += moveDistance;
 		} else {
 			console.log('Moved out bottom.');
 		}

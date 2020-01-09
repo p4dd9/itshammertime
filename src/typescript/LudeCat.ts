@@ -130,11 +130,8 @@ export default class LudeCat {
 			moveDistance;
 
 		if (destinationX <= canvasWidth) {
-			console.log('Left axe: right');
 			this.moving(LUDECATSTATE.WALKING_RIGHT);
 			_position.x += moveDistance;
-		} else {
-			console.log('Moved out right');
 		}
 	}
 
@@ -143,11 +140,8 @@ export default class LudeCat {
 
 		const destinationX = _position.x - moveDistance;
 		if (destinationX >= 0) {
-			console.log('Left axe: left');
 			this.moving(LUDECATSTATE.WALKING_LEFT);
 			_position.x += -moveDistance;
-		} else {
-			console.log('Moved out left');
 		}
 	}
 
@@ -157,11 +151,22 @@ export default class LudeCat {
 		const destinationY = _position.y - moveDistance;
 
 		if (destinationY >= 0) {
-			console.log('Left axe: up');
 			this.moving(LUDECATSTATE.WALKING_UP);
 			_position.y += -moveDistance;
-		} else {
-			console.log('Moed out top.');
+		}
+	}
+
+	public moveDown() {
+		const { _position, _moveDistance: moveDistance, _spritesheet } = this;
+		const canvasHeight = this._context.canvas.height;
+
+		const destinationY =
+			_position.y +
+			_spritesheet!.height / spriteSheetRowCount +
+			moveDistance;
+		if (destinationY < canvasHeight) {
+			this.moving(LUDECATSTATE.WALKING_UP);
+			_position.y += moveDistance;
 		}
 	}
 
@@ -175,22 +180,5 @@ export default class LudeCat {
 
 	public meow2() {
 		AudioManager.playSound(AssetLoader.audio.meow2.id);
-	}
-
-	public moveDown() {
-		const { _position, _moveDistance: moveDistance, _spritesheet } = this;
-		const canvasHeight = this._context.canvas.height;
-
-		const destinationY =
-			_position.y +
-			_spritesheet!.height / spriteSheetRowCount +
-			moveDistance;
-		if (destinationY < canvasHeight) {
-			console.log('Left axe: down');
-			this.moving(LUDECATSTATE.WALKING_UP);
-			_position.y += moveDistance;
-		} else {
-			console.log('Moved out bottom.');
-		}
 	}
 }

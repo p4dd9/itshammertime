@@ -32,27 +32,20 @@ export default class LudeCat {
 	}
 
 	public moving(moving: LUDECATSTATE) {
+		const movingState = {
+			[LUDECATSTATE.IDLE]: ANIMATION.IDLE,
+			[LUDECATSTATE.WALKING_LEFT]: ANIMATION.WALK_LEFT,
+			[LUDECATSTATE.WALKING_RIGHT]: ANIMATION.WALK_RIGHT,
+			[LUDECATSTATE.WALKING_DOWN]: ANIMATION.IDLE,
+			[LUDECATSTATE.WALKING_UP]: ANIMATION.IDLE,
+		};
+
 		if (moving !== this._moving) {
 			this._moving = moving;
 			if (moving) {
-				if (this._moving === LUDECATSTATE.IDLE) {
-					this._spritesheet = this._spritesheets[ANIMATION.IDLE];
-					return;
-				} else if (this._moving === LUDECATSTATE.WALKING_LEFT) {
-					this._spritesheet = this._spritesheets[ANIMATION.WALK_LEFT];
-					return;
-				} else if (this._moving === LUDECATSTATE.WALKING_RIGHT) {
-					this._spritesheet = this._spritesheets[
-						ANIMATION.WALK_RIGHT
-					];
-					return;
-				} else if (this._moving === LUDECATSTATE.WALKING_DOWN) {
-					this._spritesheet = this._spritesheets[ANIMATION.IDLE];
-					return;
-				} else if (this._moving === LUDECATSTATE.WALKING_UP) {
-					this._spritesheet = this._spritesheets[ANIMATION.IDLE];
-					return;
-				}
+				this._spritesheet = this.spritesheets[
+					movingState[this._moving]
+				];
 			} else {
 				this._spritesheet = this._spritesheets[ANIMATION.IDLE];
 			}

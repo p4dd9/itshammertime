@@ -84,39 +84,58 @@ export default class Controller {
 		}
 	}
 
-	public handleControllerInput() {
+	public handleInput() {
 		if (this._controls === CONTROLS.GAMEPAD) {
 			this.checkMovingCharacterByGamepad();
 			this.handleButtons();
 			this.handleAxesInput();
-		}
-	}
-
-	public handleKeyBoardControls(keyCode: number) {
-		if (this._controls === CONTROLS.KEYBOARD) {
-			this.handleKeyBoardArrows(keyCode);
-		}
-	}
-
-	private handleKeyBoardArrows(keyCode: number) {
-		const { _ludeCat: ludeCat } = this;
-
-		if (keyCode === KEYCODES.RIGHT_ARROW) {
-			ludeCat.moveRight();
-		} else if (keyCode === KEYCODES.LEFT_ARROW) {
-			ludeCat.moveLeft();
-		} else if (keyCode === KEYCODES.UP_ARROW) {
-			ludeCat.moveUp();
-		} else if (keyCode === KEYCODES.DOWN_ARROW) {
-			ludeCat.moveDown();
 		} else {
-			ludeCat.moving(LUDECATSTATE.IDLE);
+			this.handleArrowKeys();
+		}
+	}
+
+	private rightArrowKeyPressed = false;
+	private leftArrowKeyPressed = false;
+	private upArrowKeyPressed = false;
+	private downArrowKeyPressed = false;
+
+	private handleArrowKeys() {
+		if (this.rightArrowKeyPressed) {
+			this._ludeCat.moveRight();
+		} else if (this.leftArrowKeyPressed) {
+			this._ludeCat.moveLeft();
+		} else if (this.upArrowKeyPressed) {
+			this._ludeCat.moveUp();
+		} else if (this.downArrowKeyPressed) {
+			this._ludeCat.moveDown();
+		} else {
+			this._ludeCat.moving(LUDECATSTATE.IDLE);
+		}
+	}
+
+	private detectKey(keyCode: number, pressed: boolean) {
+		if (keyCode === KEYCODES.RIGHT_ARROW) {
+			this.rightArrowKeyPressed = pressed;
+		} else if (keyCode === KEYCODES.LEFT_ARROW) {
+			this.leftArrowKeyPressed = pressed;
+		} else if (keyCode === KEYCODES.UP_ARROW) {
+			this.upArrowKeyPressed = pressed;
+		} else if (keyCode === KEYCODES.DOWN_ARROW) {
+			this.downArrowKeyPressed = pressed;
 		}
 	}
 
 	public addKeyboardListenerToDocument() {
 		document.addEventListener('keydown', (e: KeyboardEvent) => {
-			this.handleKeyBoardControls(e.keyCode);
+			if (this._controls === CONTROLS.KEYBOARD) {
+				this.detectKey(e.keyCode, true);
+			}
+		});
+
+		document.addEventListener('keyup', (e: KeyboardEvent) => {
+			if (this._controls === CONTROLS.KEYBOARD) {
+				this.detectKey(e.keyCode, false);
+			}
 		});
 	}
 }

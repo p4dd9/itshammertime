@@ -42,7 +42,7 @@ export default class Game {
 
 	private step() {
 		// Check for controller input every drawn frame
-		this.controller.handleControllerInput();
+		this.controller.handleInput();
 
 		this.clearCanvas();
 

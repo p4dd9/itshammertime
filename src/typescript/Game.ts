@@ -28,27 +28,30 @@ export default class Game {
 			this.context.canvas.height
 		);
 	}
-	private _frameSpeed = 0;
 
+	private drawCanvasBorder() {
+		this.context.strokeStyle = '#f00';
+		this.context.lineWidth = 2;
+		this.context.strokeRect(
+			0,
+			0,
+			this.context.canvas.width,
+			this.context.canvas.height
+		);
+	}
 	private step() {
 		// Check for controller input every drawn frame
 		this.controller.handleControllerInput();
-
-		this._frameSpeed++;
-		if (this._frameSpeed < 4) {
-			window.requestAnimationFrame(this.step);
-			return;
-		}
 		this.clearCanvas();
-		this._frameSpeed = 0;
 
 		// ACTUAL DRAWINGS
+		this.drawCanvasBorder();
 		this.ludecat.draw();
 
 		window.requestAnimationFrame(this.step);
 	}
 
-	public async start() {
+	public start() {
 		window.requestAnimationFrame(this.step);
 	}
 }

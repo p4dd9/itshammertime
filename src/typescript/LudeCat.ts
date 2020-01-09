@@ -10,7 +10,7 @@ import {
 import AssetLoader from './AssetLoader';
 
 export default class LudeCat {
-	private moveDistance = 12;
+	private moveDistance = 5;
 	private _moving: LUDECATSTATE = LUDECATSTATE.IDLE;
 	private _catPosition: IPosition = {
 		x: 0,
@@ -56,15 +56,7 @@ export default class LudeCat {
 	}
 
 	public draw() {
-		// SpriteImage
-		const {
-			_context,
-			_canvasWidth,
-			_canvasHeight,
-			_colIndex,
-			_rowIndex,
-			catPosition,
-		} = this;
+		const { _context, _colIndex, _rowIndex, catPosition } = this;
 		const image = this._spritesheet;
 		if (image === null) {
 			return;
@@ -72,9 +64,6 @@ export default class LudeCat {
 
 		const frameWidth = image.width / spriteSheetColumCount;
 		const frameHeight = image.height / spriteSheetRowCount;
-		_context.strokeStyle = '#f00';
-		_context.lineWidth = 2;
-		_context.strokeRect(0, 0, _canvasWidth, _canvasHeight);
 		_context.drawImage(
 			image,
 			_colIndex * frameWidth,

@@ -85,8 +85,6 @@ export default class GamepadManager {
 	private gamepadConntectedListener() {
 		if (BrowserUtil.supportsGamepads()) {
 			window.addEventListener('gamepadconnected', (e: any) => {
-				console.log(e.gamepad.buttons);
-
 				this._controller.controls = CONTROLS.GAMEPAD;
 				this.intervalId = window.setInterval(this.listenToGamepad, 100);
 				this._gamepad = e.gamepad;

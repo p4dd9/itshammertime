@@ -8,6 +8,7 @@ import {
 	frameCount,
 } from '../config/ludeCatConfig';
 import AssetLoader from './AssetLoader';
+import AudioManager from './AudioManager';
 
 export default class LudeCat {
 	private moveDistance = 5;
@@ -172,6 +173,18 @@ export default class LudeCat {
 		} else {
 			console.log('Moed out top.');
 		}
+	}
+
+	public meow() {
+		AudioManager.playSound(AssetLoader.audio.meow.id);
+	}
+
+	public nya() {
+		AudioManager.playSound(AssetLoader.audio.nya.id);
+	}
+
+	public meow2() {
+		AudioManager.playSound(AssetLoader.audio.meow2.id);
 	}
 
 	public moveDown() {

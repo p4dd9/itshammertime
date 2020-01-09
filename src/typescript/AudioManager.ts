@@ -1,7 +1,5 @@
-import AssetLoader from './AssetLoader';
-
 export default class AudioManager {
-	private static playSound(elementId: string) {
+	public static playSound(elementId: string) {
 		const htmlElement: HTMLElement | null = document.getElementById(
 			elementId
 		);
@@ -12,18 +10,5 @@ export default class AudioManager {
 			const audioHTMLElement = htmlElement as HTMLAudioElement;
 			audioHTMLElement.play();
 		}
-	}
-
-	// TODO: move to LudeCat class
-	public static meow() {
-		AudioManager.playSound(AssetLoader.audio.meow.id);
-	}
-
-	public static nya() {
-		AudioManager.playSound(AssetLoader.audio.nya.id);
-	}
-
-	public static meow2() {
-		AudioManager.playSound(AssetLoader.audio.meow2.id);
 	}
 }

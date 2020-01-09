@@ -7,7 +7,6 @@ import {
 	spriteSheetColumCount,
 	spriteSheetRowCount,
 } from '../config/ludeCatConfig';
-import CONTROLS from '../enums/controls';
 import KeyboardManager from './KeyboardManager';
 
 export default class App {
@@ -112,7 +111,7 @@ export default class App {
 		AssetLoader.loadAudio();
 		AssetLoader.loadImages(this.initAnimationStart);
 
-		Controller.getInstance().controls = CONTROLS.KEYBOARD;
-		KeyboardManager.getInstance();
+		const kb = new KeyboardManager();
+		kb.addKeyboardListener();
 	}
 }

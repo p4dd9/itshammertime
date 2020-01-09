@@ -1,7 +1,7 @@
 import AssetLoader from './AssetLoader';
 
 export default class AudioManager {
-	private static async playSound(elementId: string) {
+	private static playSound(elementId: string) {
 		const htmlElement: HTMLElement | null = document.getElementById(
 			elementId
 		);
@@ -14,6 +14,7 @@ export default class AudioManager {
 		}
 	}
 
+	// TODO: move to LudeCat class
 	public static meow() {
 		AudioManager.playSound(AssetLoader.audio.meow.id);
 	}

@@ -26,6 +26,9 @@ export default class AssetLoader {
 		},
 	};
 
+	// TODO: Could use promises here, chain em
+	// TODO: return images to cat in contructor / Promises
+	// TODO: Game.characters
 	public static loadImages(callback: () => void) {
 		let loadedImageCount: number = 0;
 		const images: HTMLImageElement[] = new Array() as HTMLImageElement[];
@@ -36,6 +39,7 @@ export default class AssetLoader {
 			catWalkRight,
 			catWalkLeft,
 		];
+
 		for (const imagePath of imagePaths) {
 			const image: HTMLImageElement = new Image();
 			image.onload = imageLoaded;
@@ -54,6 +58,7 @@ export default class AssetLoader {
 		}
 	}
 
+	// TODO: use audio instance, avoid dom
 	public static loadAudio() {
 		for (const audioAsset in AssetLoader.audio) {
 			if (AssetLoader.audio.hasOwnProperty(audioAsset)) {

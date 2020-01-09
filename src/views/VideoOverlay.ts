@@ -20,6 +20,7 @@ window.onload = (onLoadEvent: Event) => {
 		'2d'
 	);
 
+	// TODO: Rename to game
 	const app: App = new App(context!);
 
 	Controller.getInstance().canvasHeight = height;

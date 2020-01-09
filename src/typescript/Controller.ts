@@ -143,6 +143,7 @@ export default class Controller {
 		}
 	}
 
+	// TODO: Movement logic of LudeCat to LudeCat
 	private moveRight() {
 		const { ludeCat, moveDistance } = this;
 

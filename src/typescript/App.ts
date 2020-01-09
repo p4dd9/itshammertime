@@ -11,10 +11,7 @@ import CONTROLS from '../enums/controls';
 import KeyboardManager from './KeyboardManager';
 
 export default class App {
-	private canvas: null | HTMLCanvasElement = document.getElementById('canvas')
-		? (document.getElementById('canvas') as HTMLCanvasElement)
-		: null;
-	private _canvasContext: null | CanvasRenderingContext2D = null;
+	private _context: CanvasRenderingContext2D;
 
 	// Spritesheet Stuff to render
 	private _frameIndex = 0;
@@ -22,7 +19,9 @@ export default class App {
 	private _colIndex = 0;
 	private _frameSpeed = 0;
 
-	constructor() {
+	constructor(context: CanvasRenderingContext2D) {
+		this._context = context;
+
 		this.step = this.step.bind(this);
 		this.drawFrame = this.drawFrame.bind(this);
 		this.initAnimationStart = this.initAnimationStart.bind(this);
@@ -72,16 +71,16 @@ export default class App {
 			window.requestAnimationFrame(this.step);
 			return;
 		}
-		this._canvasContext!.clearRect(
+		this._context.clearRect(
 			0,
 			0,
-			this.canvas!.width,
-			this.canvas!.height
+			this._context.canvas.width,
+			this._context.canvas.height
 		);
 
 		this._frameSpeed = 0;
 		this.drawFrame(
-			this._canvasContext as CanvasRenderingContext2D,
+			this._context,
 			this._frameIndex,
 			this._colIndex,
 			this._rowIndex
@@ -110,23 +109,10 @@ export default class App {
 	}
 
 	public initialize() {
-		if (this.canvas !== null) {
-			const context: CanvasRenderingContext2D | null = this.canvas.getContext(
-				'2d'
-			);
+		AssetLoader.loadAudio();
+		AssetLoader.loadImages(this.initAnimationStart);
 
-			if (context !== null) {
-				this._canvasContext = context;
-				AssetLoader.loadAudio();
-				AssetLoader.loadImages(this.initAnimationStart);
-			} else {
-				console.log('CanvasRenderingContext2D is null.');
-			}
-
-			Controller.getInstance().controls = CONTROLS.KEYBOARD;
-			KeyboardManager.getInstance();
-		} else {
-			console.log('HTMLCanvasElement is null.');
-		}
+		Controller.getInstance().controls = CONTROLS.KEYBOARD;
+		KeyboardManager.getInstance();
 	}
 }

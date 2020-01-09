@@ -15,7 +15,13 @@ window.onload = (onLoadEvent: Event) => {
 	// root cannot be null
 	root!.insertAdjacentHTML('beforeend', canvasDOMString);
 
-	const app: App = new App();
+	const canvas: HTMLElement | null = document.getElementById('canvas');
+	const context: CanvasRenderingContext2D | null = (canvas as HTMLCanvasElement).getContext(
+		'2d'
+	);
+
+	const app: App = new App(context!);
+
 	Controller.getInstance().canvasHeight = height;
 	Controller.getInstance().canvasWidth = width;
 	app.initialize();

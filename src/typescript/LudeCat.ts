@@ -55,8 +55,11 @@ export default class LudeCat {
 		this._catPosition = value;
 	}
 
+	private delayFrameIndexCount = 0;
+
 	public draw() {
 		const { _context, _colIndex, _rowIndex, catPosition } = this;
+		this.delayFrameIndexCount++;
 		const image = this._spritesheet;
 		if (image === null) {
 			return;
@@ -77,18 +80,24 @@ export default class LudeCat {
 		);
 
 		// Update Rows or Col Index only
-		if (this._colIndex >= 11) {
-			this._colIndex = 0;
-			this._rowIndex++;
-		} else {
-			this._colIndex++;
-		}
-		this._frameIndex++;
+		// slower animation by waiting 3 steps to draw new spritesheet subimage
+		if (this.delayFrameIndexCount > 2) {
+			if (this._colIndex >= 11) {
+				this._colIndex = 0;
+				this._rowIndex++;
+			} else {
+				this._colIndex++;
+			}
+			// Next frame incoming
+			this._frameIndex++;
 
-		if (this._frameIndex >= frameCount) {
-			this._frameIndex = 0;
-			this._rowIndex = 0;
-			this._colIndex = 0;
+			// Reset frame from spritesheet to the first one
+			if (this._frameIndex >= frameCount) {
+				this._frameIndex = 0;
+				this._rowIndex = 0;
+				this._colIndex = 0;
+			}
+			this.delayFrameIndexCount = 0;
 		}
 	}
 

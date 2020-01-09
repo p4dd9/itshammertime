@@ -39,9 +39,11 @@ export default class Game {
 			this.context.canvas.height
 		);
 	}
+
 	private step() {
 		// Check for controller input every drawn frame
 		this.controller.handleControllerInput();
+
 		this.clearCanvas();
 
 		// ACTUAL DRAWINGS

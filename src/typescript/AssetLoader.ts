@@ -54,7 +54,7 @@ export default class AssetLoader {
 			if (AssetLoader.audio.hasOwnProperty(audioAsset)) {
 				const audioItem = AssetLoader.audio[audioAsset];
 				const audio = new Audio(audioItem.track);
-				audio.volume = 0.5;
+				audio.volume = 0.2;
 				audio.id = audioItem.id;
 
 				const nP = new Promise<HTMLAudioElement>(resolve => {

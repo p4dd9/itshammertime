@@ -6,25 +6,9 @@ import meowSound from '../assets/audio/meow.mp3';
 import meow2Sound from '../assets/audio/meow2.wav';
 import nyaSound from '../assets/audio/nya.wav';
 
-import IAudioAsset from '../interfaces/IAudioAsset';
-
 export default class AssetLoader {
-	// Always update AUDIO enum in "audio.ts" according to the order
-	public static audio: IAudioAsset = {
-		meow: {
-			id: 'meow',
-			track: meowSound,
-		},
-		nya: {
-			id: 'nya',
-			track: nyaSound,
-		},
-		meow2: {
-			id: 'meow2',
-			track: meow2Sound,
-		},
-	};
-
+	// !IMPORTANT
+	// Always update SPRITESHEETS enum in "spritesheets.ts" according to the order
 	public static async loadImages(): Promise<HTMLImageElement[]> {
 		const imagePromises = new Array() as Array<Promise<HTMLImageElement>>;
 
@@ -47,23 +31,22 @@ export default class AssetLoader {
 		return Promise.all(imagePromises);
 	}
 
+	// !IMPORTANT
+	// Always update AUDIO enum in "audio.ts" according to the order
 	public static async loadAudio(): Promise<HTMLAudioElement[]> {
 		const audioPromises = new Array() as Array<Promise<HTMLAudioElement>>;
+		const audioPaths: string[] = [meowSound, nyaSound, meow2Sound];
 
-		for (const audioAsset in AssetLoader.audio) {
-			if (AssetLoader.audio.hasOwnProperty(audioAsset)) {
-				const audioItem = AssetLoader.audio[audioAsset];
-				const audio = new Audio(audioItem.track);
-				audio.volume = 0.2;
-				audio.id = audioItem.id;
+		for (const audioPath of audioPaths) {
+			const audio = new Audio(audioPath);
+			audio.volume = 0.2;
 
-				const nP = new Promise<HTMLAudioElement>(resolve => {
-					audio.addEventListener('loadeddata', () => {
-						resolve(audio);
-					});
+			const nP = new Promise<HTMLAudioElement>(resolve => {
+				audio.addEventListener('loadeddata', () => {
+					resolve(audio);
 				});
-				audioPromises.push(nP);
-			}
+			});
+			audioPromises.push(nP);
 		}
 
 		return Promise.all(audioPromises);

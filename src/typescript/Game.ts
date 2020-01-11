@@ -2,53 +2,53 @@ import Controller from './Controller';
 import LudeCat from './LudeCat';
 
 export default class Game {
-	public context: CanvasRenderingContext2D;
-	public ludecat: LudeCat;
-	public controller: Controller;
+	private _context: CanvasRenderingContext2D;
+	private _ludecat: LudeCat;
+	private _controller: Controller;
 
 	constructor(context: CanvasRenderingContext2D) {
-		this.context = context;
-		this.ludecat = new LudeCat(this.context);
-		this.controller = new Controller(this.ludecat);
+		this._context = context;
+		this._ludecat = new LudeCat(this._context);
+		this._controller = new Controller(this._ludecat);
 		this.step = this.step.bind(this);
 	}
 
 	public resize(canvasWidth: number, canvasHeight: number) {
-		this.context.canvas.width = canvasWidth;
-		this.context.canvas.height = canvasHeight;
+		this._context.canvas.width = canvasWidth;
+		this._context.canvas.height = canvasHeight;
 
-		this.ludecat.resizeCanvas(canvasWidth, canvasHeight);
+		this._ludecat.resizeCanvas(canvasWidth, canvasHeight);
 	}
 
 	private clearCanvas() {
-		this.context.clearRect(
+		this._context.clearRect(
 			0,
 			0,
-			this.context.canvas.width,
-			this.context.canvas.height
+			this._context.canvas.width,
+			this._context.canvas.height
 		);
 	}
 
 	private drawCanvasBorder() {
-		this.context.strokeStyle = '#f00';
-		this.context.lineWidth = 2;
-		this.context.strokeRect(
+		this._context.strokeStyle = '#f00';
+		this._context.lineWidth = 2;
+		this._context.strokeRect(
 			0,
 			0,
-			this.context.canvas.width,
-			this.context.canvas.height
+			this._context.canvas.width,
+			this._context.canvas.height
 		);
 	}
 
 	private step() {
 		// Check for controller input every drawn frame
-		this.controller.handleInput();
+		this._controller.handleInput();
 
 		this.clearCanvas();
 
 		// ACTUAL DRAWINGS
 		this.drawCanvasBorder();
-		this.ludecat.draw();
+		this._ludecat.draw();
 
 		window.requestAnimationFrame(this.step);
 	}

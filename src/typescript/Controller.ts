@@ -6,10 +6,21 @@ import LUDECATSTATE from '../enums/ludecatstate';
 import LudeCat from './LudeCat';
 
 export default class Controller {
+	// Currently used controls
 	private _controls: CONTROLS = CONTROLS.KEYBOARD;
+
+	// Character instance
+	private _ludeCat: LudeCat;
+
+	// Controller
 	private _gamepadManager: GamepadManager;
 	private _axeStatusThreshold = 0.3;
-	private _ludeCat: LudeCat;
+
+	// Keyboard
+	private _rightArrowKeyPressed = false;
+	private _leftArrowKeyPressed = false;
+	private _upArrowKeyPressed = false;
+	private _downArrowKeyPressed = false;
 
 	constructor(_ludeCat: LudeCat) {
 		this.addKeyboardListenerToDocument();
@@ -65,10 +76,14 @@ export default class Controller {
 
 		if (
 			!(
-				_gamepadManager.axesStatus[0] > _axeStatusThreshold ||
-				_gamepadManager.axesStatus[0] < -_axeStatusThreshold ||
-				_gamepadManager.axesStatus[1] > _axeStatusThreshold ||
-				_gamepadManager.axesStatus[1] < -_axeStatusThreshold
+				_gamepadManager.axesStatus[XBOX360_AXIS.LS_X] >
+					_axeStatusThreshold ||
+				_gamepadManager.axesStatus[XBOX360_AXIS.LS_X] <
+					-_axeStatusThreshold ||
+				_gamepadManager.axesStatus[XBOX360_AXIS.LS_Y] >
+					_axeStatusThreshold ||
+				_gamepadManager.axesStatus[XBOX360_AXIS.LS_Y] <
+					-_axeStatusThreshold
 			)
 		) {
 			_ludeCat.moving(LUDECATSTATE.IDLE);
@@ -85,19 +100,14 @@ export default class Controller {
 		}
 	}
 
-	private rightArrowKeyPressed = false;
-	private leftArrowKeyPressed = false;
-	private upArrowKeyPressed = false;
-	private downArrowKeyPressed = false;
-
 	private handleArrowKeys() {
-		if (this.rightArrowKeyPressed) {
+		if (this._rightArrowKeyPressed) {
 			this._ludeCat.moveRight();
-		} else if (this.leftArrowKeyPressed) {
+		} else if (this._leftArrowKeyPressed) {
 			this._ludeCat.moveLeft();
-		} else if (this.upArrowKeyPressed) {
+		} else if (this._upArrowKeyPressed) {
 			this._ludeCat.moveUp();
-		} else if (this.downArrowKeyPressed) {
+		} else if (this._downArrowKeyPressed) {
 			this._ludeCat.moveDown();
 		} else {
 			this._ludeCat.moving(LUDECATSTATE.IDLE);
@@ -106,13 +116,13 @@ export default class Controller {
 
 	private detectKey(keyCode: number, pressed: boolean) {
 		if (keyCode === KEYCODES.RIGHT_ARROW) {
-			this.rightArrowKeyPressed = pressed;
+			this._rightArrowKeyPressed = pressed;
 		} else if (keyCode === KEYCODES.LEFT_ARROW) {
-			this.leftArrowKeyPressed = pressed;
+			this._leftArrowKeyPressed = pressed;
 		} else if (keyCode === KEYCODES.UP_ARROW) {
-			this.upArrowKeyPressed = pressed;
+			this._upArrowKeyPressed = pressed;
 		} else if (keyCode === KEYCODES.DOWN_ARROW) {
-			this.downArrowKeyPressed = pressed;
+			this._downArrowKeyPressed = pressed;
 		}
 	}
 

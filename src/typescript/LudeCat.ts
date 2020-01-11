@@ -47,10 +47,11 @@ export default class LudeCat {
 		const audio = await AssetLoader.loadAudio();
 		const spritesheets = await AssetLoader.loadImages();
 
-		console.log('Assets loaded...');
 		this._audio = audio;
 		this._spritesheets = spritesheets;
 		this._spritesheet = spritesheets[ANIMATION.IDLE];
+
+		console.log('Assets loaded and ready!');
 	}
 
 	public draw() {

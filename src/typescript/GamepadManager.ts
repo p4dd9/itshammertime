@@ -15,7 +15,7 @@ export default class GamepadManager {
 	// State of buttons
 	private _buttonsStatus: string[] = new Array() as string[];
 
-	public intervalId: number = -1;
+	private _intervalId: number = -1;
 
 	private _controller: Controller;
 
@@ -86,7 +86,10 @@ export default class GamepadManager {
 		if (BrowserUtil.supportsGamepads()) {
 			window.addEventListener('gamepadconnected', (e: any) => {
 				this._controller.controls = CONTROLS.GAMEPAD;
-				this.intervalId = window.setInterval(this.listenToGamepad, 100);
+				this._intervalId = window.setInterval(
+					this.listenToGamepad,
+					100
+				);
 				this._gamepad = e.gamepad;
 				const { index, id, buttons, axes } = e.gamepad;
 				console.log(
@@ -99,7 +102,7 @@ export default class GamepadManager {
 	private gamepadDisconnectedListener() {
 		if (BrowserUtil.supportsGamepads()) {
 			window.addEventListener('gamepaddisconnected', (e: any) => {
-				clearInterval(this.intervalId);
+				clearInterval(this._intervalId);
 				this._controller.controls = CONTROLS.KEYBOARD;
 				delete this._gamepad;
 				const { index, id } = e.gamepad;

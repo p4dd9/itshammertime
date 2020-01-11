@@ -28,6 +28,7 @@ export default class AssetLoader {
 			});
 			imagePromises.push(nP);
 		}
+
 		return Promise.all(imagePromises);
 	}
 

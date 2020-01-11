@@ -1,14 +1,9 @@
 export default class AudioManager {
-	public static playSound(elementId: string) {
-		const htmlElement: HTMLElement | null = document.getElementById(
-			elementId
-		);
-
-		if (!(htmlElement as HTMLAudioElement).paused || htmlElement === null) {
+	public static playSound(audio: HTMLAudioElement) {
+		if (!audio.paused) {
 			return;
 		} else {
-			const audioHTMLElement = htmlElement as HTMLAudioElement;
-			audioHTMLElement.play();
+			audio.play();
 		}
 	}
 }

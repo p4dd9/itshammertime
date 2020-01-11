@@ -9,6 +9,7 @@ import nyaSound from '../assets/audio/nya.wav';
 import IAudioAsset from '../interfaces/IAudioAsset';
 
 export default class AssetLoader {
+	// Always update AUDIO enum in "audio.ts" according to the order
 	public static audio: IAudioAsset = {
 		meow: {
 			id: 'meow',
@@ -48,7 +49,6 @@ export default class AssetLoader {
 
 	public static async loadAudio(): Promise<HTMLAudioElement[]> {
 		const audioPromises = new Array() as Array<Promise<HTMLAudioElement>>;
-		const root = document.getElementById('root');
 
 		for (const audioAsset in AssetLoader.audio) {
 			if (AssetLoader.audio.hasOwnProperty(audioAsset)) {
@@ -59,7 +59,6 @@ export default class AssetLoader {
 
 				const nP = new Promise<HTMLAudioElement>(resolve => {
 					audio.addEventListener('loadeddata', () => {
-						root!.append(audio);
 						resolve(audio);
 					});
 				});

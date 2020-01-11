@@ -9,6 +9,7 @@ import {
 } from '../config/ludeCatConfig';
 import AssetLoader from './AssetLoader';
 import AudioManager from './AudioManager';
+import AUDIO from '../enums/audio';
 
 export default class LudeCat {
 	private _moveDistance = 5;
@@ -18,8 +19,8 @@ export default class LudeCat {
 		y: 0,
 	};
 
-	private delayFrameIndexCount = 0;
-	private delayFrameThreshold = 2;
+	private _delayFrameIndexCount = 0;
+	private _delayFrameThreshold = 2;
 
 	// Spritesheet Stuff to render
 	private _frameIndex = 0;
@@ -29,7 +30,7 @@ export default class LudeCat {
 
 	private _spritesheet: HTMLImageElement | null = null;
 	private _spritesheets: HTMLImageElement[] | null = null;
-	public _audio: HTMLAudioElement[] | null = null;
+	private _audio: HTMLAudioElement[] | null = null;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
@@ -54,7 +55,7 @@ export default class LudeCat {
 
 	public draw() {
 		const { _context, _colIndex, _rowIndex, _position } = this;
-		this.delayFrameIndexCount++;
+		this._delayFrameIndexCount++;
 		const image = this._spritesheet;
 		if (image === null) {
 			return;
@@ -76,7 +77,7 @@ export default class LudeCat {
 
 		// Update Rows or Col Index only
 		// Slower animation by waiting 3 steps to draw new spritesheet subimage
-		if (this.delayFrameIndexCount > this.delayFrameThreshold) {
+		if (this._delayFrameIndexCount > this._delayFrameThreshold) {
 			if (this._colIndex >= 11) {
 				this._colIndex = 0;
 				this._rowIndex++;
@@ -92,7 +93,7 @@ export default class LudeCat {
 				this._rowIndex = 0;
 				this._colIndex = 0;
 			}
-			this.delayFrameIndexCount = 0;
+			this._delayFrameIndexCount = 0;
 		}
 	}
 
@@ -171,14 +172,20 @@ export default class LudeCat {
 	}
 
 	public meow() {
-		AudioManager.playSound(AssetLoader.audio.meow.id);
+		if (this._audio !== null) {
+			AudioManager.playSound(this._audio[AUDIO.MEOW]);
+		}
 	}
 
 	public nya() {
-		AudioManager.playSound(AssetLoader.audio.nya.id);
+		if (this._audio !== null) {
+			AudioManager.playSound(this._audio[AUDIO.NYA]);
+		}
 	}
 
 	public meow2() {
-		AudioManager.playSound(AssetLoader.audio.meow2.id);
+		if (this._audio !== null) {
+			AudioManager.playSound(this._audio[AUDIO.MEOW2]);
+		}
 	}
 }

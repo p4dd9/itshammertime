@@ -1,16 +1,16 @@
-import Controller from './Controller';
+import GameInput from './GameInput';
 import LudeCat from './LudeCat';
 
 export default class Game {
 	private _context: CanvasRenderingContext2D;
 	private _ludecat: LudeCat;
-	private _controller: Controller;
+	private _gameInput: GameInput;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
 		this._ludecat = new LudeCat(this._context);
-		this._controller = new Controller(this._ludecat);
-		this.step = this.step.bind(this);
+		this._gameInput = new GameInput(this._ludecat);
+		this._step = this._step.bind(this);
 	}
 
 	public resize(canvasWidth: number, canvasHeight: number) {
@@ -40,9 +40,9 @@ export default class Game {
 		);
 	}
 
-	private step() {
+	private _step() {
 		// Check for controller input every drawn frame
-		this._controller.handleInput();
+		this._gameInput.handleInput();
 
 		this.clearCanvas();
 
@@ -50,10 +50,10 @@ export default class Game {
 		this.drawCanvasBorder();
 		this._ludecat.draw();
 
-		window.requestAnimationFrame(this.step);
+		window.requestAnimationFrame(this._step);
 	}
 
 	public start() {
-		window.requestAnimationFrame(this.step);
+		window.requestAnimationFrame(this._step);
 	}
 }

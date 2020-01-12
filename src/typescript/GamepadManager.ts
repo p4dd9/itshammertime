@@ -1,7 +1,10 @@
-import Controller from './Controller';
+import GameInput from './GameInput';
 import BrowserUtil from '../util/BrowserUtil';
 import CONTROLS from '../enums/controls';
 import IGamepadEvent from '../interfaces/IGamepadEvent';
+import LudeCat from './LudeCat';
+import { XBOX360_AXIS, XBOX360_BUTTONS } from '../enums/xbox360controls';
+import LUDECATSTATE from '../enums/ludecatstate';
 
 export default class GamepadManager {
 	// The actualy gamepad from the browser API
@@ -17,14 +20,17 @@ export default class GamepadManager {
 	private _buttonsStatus: string[] = new Array() as string[];
 
 	private _intervalId: number = -1;
+	private _axeStatusThreshold = 0.3;
 
-	private _controller: Controller;
+	private _gameInput: GameInput;
+	private _ludeCat: LudeCat;
 
-	constructor(controller: Controller) {
+	constructor(gameInput: GameInput, ludecat: LudeCat) {
 		this.listenToGamepad = this.listenToGamepad.bind(this);
 		this.gamepadConntectedListener();
 		this.gamepadDisconnectedListener();
-		this._controller = controller;
+		this._ludeCat = ludecat;
+		this._gameInput = gameInput;
 	}
 
 	public get axesStatus(): number[] {
@@ -83,11 +89,57 @@ export default class GamepadManager {
 		this._gamepad = navigator.getGamepads()[0];
 	}
 
+	public handleAxesInput() {
+		const { _axeStatusThreshold, _ludeCat } = this;
+		if (this.axesStatus[XBOX360_AXIS.LS_X] > _axeStatusThreshold) {
+			_ludeCat.moveRight();
+		}
+		if (this.axesStatus[XBOX360_AXIS.LS_X] < -_axeStatusThreshold) {
+			_ludeCat.moveLeft();
+		}
+		if (this.axesStatus[XBOX360_AXIS.LS_Y] < -_axeStatusThreshold) {
+			_ludeCat.moveUp();
+		}
+		if (this.axesStatus[XBOX360_AXIS.LS_Y] > _axeStatusThreshold) {
+			_ludeCat.moveDown();
+		}
+	}
+
+	public handleButtons() {
+		const { _ludeCat } = this;
+		if (this.gamepad!.buttons[XBOX360_BUTTONS.A].pressed) {
+			_ludeCat.meow();
+		}
+
+		if (this.gamepad!.buttons[XBOX360_BUTTONS.B].pressed) {
+			_ludeCat.nya();
+		}
+
+		if (this.gamepad!.buttons[XBOX360_BUTTONS.X].pressed) {
+			_ludeCat.meow2();
+		}
+	}
+
+	public checkMovingCharacterByGamepad() {
+		const { _ludeCat, _axeStatusThreshold } = this;
+
+		if (
+			!(
+				this.axesStatus[XBOX360_AXIS.LS_X] > _axeStatusThreshold ||
+				this.axesStatus[XBOX360_AXIS.LS_X] < -_axeStatusThreshold ||
+				this.axesStatus[XBOX360_AXIS.LS_Y] > _axeStatusThreshold ||
+				this.axesStatus[XBOX360_AXIS.LS_Y] < -_axeStatusThreshold
+			)
+		) {
+			_ludeCat.moving(LUDECATSTATE.IDLE);
+		}
+	}
+
 	private gamepadConntectedListener() {
 		if (BrowserUtil.supportsGamepads()) {
 			window.addEventListener('gamepadconnected', (event: Event) => {
 				const gampadEvent = event as IGamepadEvent;
-				this._controller.controls = CONTROLS.GAMEPAD;
+				this._gameInput.controls = CONTROLS.GAMEPAD;
 
 				this._intervalId = window.setInterval(
 					this.listenToGamepad,
@@ -108,7 +160,7 @@ export default class GamepadManager {
 			window.addEventListener('gamepaddisconnected', (event: Event) => {
 				const gampadEvent = event as IGamepadEvent;
 				clearInterval(this._intervalId);
-				this._controller.controls = CONTROLS.KEYBOARD;
+				this._gameInput.controls = CONTROLS.KEYBOARD;
 				delete this._gamepad;
 				const { index, id } = gampadEvent.gamepad;
 				console.log(

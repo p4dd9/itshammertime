@@ -15,7 +15,7 @@ export default class LudeCat {
 	private _moveDistance = 5;
 	private _moving: LUDECATSTATE = LUDECATSTATE.IDLE;
 	private _position: IPosition = {
-		x: 0,
+		x: -150,
 		y: 0,
 	};
 
@@ -30,6 +30,8 @@ export default class LudeCat {
 	private _spritesheet: HTMLImageElement | null = null;
 	private _spritesheets: HTMLImageElement[] | null = null;
 	private _audio: HTMLAudioElement[] | null = null;
+
+	private _playIntro = true;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
@@ -49,8 +51,19 @@ export default class LudeCat {
 		this._audio = audio;
 		this._spritesheets = spritesheets;
 		this._spritesheet = spritesheets[ANIMATION.IDLE];
-
 		console.log('Assets loaded and ready!');
+	}
+
+	private playIntro() {
+		if (
+			this._position.x +
+				this._spritesheet!.width / spriteSheetColumCount / 2 <
+			this._context.canvas.width / 2 - 10 // 10 for the movementdistance x2 to center the cat
+		) {
+			this.moveRight();
+		} else {
+			this._playIntro = false;
+		}
 	}
 
 	// DRAW ON CONTEXT RELATED FUNCTIONS
@@ -59,6 +72,11 @@ export default class LudeCat {
 		const image = this._spritesheet;
 		if (image === null) {
 			return;
+		}
+
+		// TODO: Remove condition with fullfilled once
+		if (this._playIntro) {
+			this.playIntro();
 		}
 
 		this.drawLudeCat();
@@ -95,6 +113,9 @@ export default class LudeCat {
 				this._colIndex++;
 			}
 
+			// Next frame incoming
+			this._frameIndex++;
+
 			// Reset frame from spritesheet to the first one
 			if (this._frameIndex >= frameCount) {
 				this._frameIndex = 0;
@@ -102,8 +123,6 @@ export default class LudeCat {
 				this._colIndex = 0;
 			}
 
-			// Next frame incoming
-			this._frameIndex++;
 			this._delayFrameIndexCount = 0;
 		}
 	}
@@ -149,6 +168,10 @@ export default class LudeCat {
 	}
 
 	public moveLeft() {
+		if (this._playIntro) {
+			return;
+		}
+
 		const { _position, _moveDistance: moveDistance } = this;
 
 		const destinationX = _position.x - moveDistance;
@@ -159,6 +182,10 @@ export default class LudeCat {
 	}
 
 	public moveUp() {
+		if (this._playIntro) {
+			return;
+		}
+
 		const { _position, _moveDistance: moveDistance } = this;
 
 		const destinationY = _position.y - moveDistance;
@@ -170,6 +197,10 @@ export default class LudeCat {
 	}
 
 	public moveDown() {
+		if (this._playIntro) {
+			return;
+		}
+
 		const { _position, _moveDistance: moveDistance, _spritesheet } = this;
 		const canvasHeight = this._context.canvas.height;
 

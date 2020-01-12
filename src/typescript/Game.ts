@@ -2,11 +2,14 @@ import GameInput from './GameInput';
 import LudeCat from './LudeCat';
 
 export default class Game {
-	public debugCanvas = true;
+	public debug: boolean = true;
 
 	private _context: CanvasRenderingContext2D;
 	private _ludecat: LudeCat;
 	private _gameInput: GameInput;
+
+	private _times: number[] = [];
+	public fps: string = '';
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
@@ -60,6 +63,27 @@ export default class Game {
 		);
 	}
 
+	// Reference: https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
+	private calculateFPS() {
+		const now = performance.now();
+		while (this._times.length > 0 && this._times[0] <= now - 1000) {
+			this._times.shift();
+		}
+		this._times.push(now);
+		this.fps = String(this._times.length);
+	}
+
+	private drawFPS() {
+		this.calculateFPS();
+		this._context.fillStyle = '#f00';
+		this._context.font = '25px Arial';
+		this._context.fillText(
+			`${this.fps} fps`,
+			this._context.canvas.width - 80,
+			30
+		);
+	}
+
 	private _step() {
 		// Check for controller input every drawn frame
 		this._gameInput.handleInput();
@@ -67,9 +91,10 @@ export default class Game {
 		this.clearCanvas();
 
 		// ACTUAL DRAWINGS
-		if (this.debugCanvas) {
+		if (this.debug) {
 			this.drawCanvasBorder();
 			this.drawCenterLines();
+			this.drawFPS();
 		}
 
 		this._ludecat.draw();

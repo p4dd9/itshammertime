@@ -1,6 +1,7 @@
 import Controller from './Controller';
 import BrowserUtil from '../util/BrowserUtil';
 import CONTROLS from '../enums/controls';
+import IGamepadEvent from '../interfaces/IGamepadEvent';
 
 export default class GamepadManager {
 	// The actualy gamepad from the browser API
@@ -84,14 +85,17 @@ export default class GamepadManager {
 
 	private gamepadConntectedListener() {
 		if (BrowserUtil.supportsGamepads()) {
-			window.addEventListener('gamepadconnected', (e: any) => {
+			window.addEventListener('gamepadconnected', (event: Event) => {
+				const gampadEvent = event as IGamepadEvent;
 				this._controller.controls = CONTROLS.GAMEPAD;
+
 				this._intervalId = window.setInterval(
 					this.listenToGamepad,
 					100
 				);
-				this._gamepad = e.gamepad;
-				const { index, id, buttons, axes } = e.gamepad;
+
+				this._gamepad = gampadEvent.gamepad;
+				const { index, id, buttons, axes } = gampadEvent.gamepad;
 				console.log(
 					`Gamepad connected at index ${index}: ${id}. ${buttons.length} buttons, ${axes.length} axes.`
 				);
@@ -101,11 +105,12 @@ export default class GamepadManager {
 
 	private gamepadDisconnectedListener() {
 		if (BrowserUtil.supportsGamepads()) {
-			window.addEventListener('gamepaddisconnected', (e: any) => {
+			window.addEventListener('gamepaddisconnected', (event: Event) => {
+				const gampadEvent = event as IGamepadEvent;
 				clearInterval(this._intervalId);
 				this._controller.controls = CONTROLS.KEYBOARD;
 				delete this._gamepad;
-				const { index, id } = e.gamepad;
+				const { index, id } = gampadEvent.gamepad;
 				console.log(
 					`Gamepad disconnected from index ${index}: ${id}. `
 				);

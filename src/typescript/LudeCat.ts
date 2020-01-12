@@ -22,7 +22,6 @@ export default class LudeCat {
 	private _delayFrameIndexCount = 0;
 	private _delayFrameThreshold = 2;
 
-	// Spritesheet Stuff to render
 	private _frameIndex = 0;
 	private _rowIndex = 0;
 	private _colIndex = 0;
@@ -54,18 +53,26 @@ export default class LudeCat {
 		console.log('Assets loaded and ready!');
 	}
 
+	// DRAW ON CONTEXT RELATED FUNCTIONS
 	public draw() {
-		const { _context, _colIndex, _rowIndex, _position } = this;
 		this._delayFrameIndexCount++;
 		const image = this._spritesheet;
 		if (image === null) {
 			return;
 		}
 
-		const frameWidth = image.width / spriteSheetColumCount;
-		const frameHeight = image.height / spriteSheetRowCount;
+		this.drawLudeCat();
+		this.updateImageToDraw();
+	}
+
+	private drawLudeCat() {
+		const { _context, _colIndex, _rowIndex, _position } = this;
+		const image = this._spritesheet;
+
+		const frameWidth = image!.width / spriteSheetColumCount;
+		const frameHeight = image!.height / spriteSheetRowCount;
 		_context.drawImage(
-			image,
+			image!,
 			_colIndex * frameWidth,
 			_rowIndex * frameHeight,
 			frameWidth,
@@ -75,18 +82,18 @@ export default class LudeCat {
 			frameWidth / scaleOnCanvas,
 			frameHeight / scaleOnCanvas
 		);
+	}
 
-		// Update Rows or Col Index only
-		// Slower animation by waiting 3 steps to draw new spritesheet subimage
-		if (this._delayFrameIndexCount > this._delayFrameThreshold) {
+	private updateImageToDraw() {
+		const { _delayFrameThreshold } = this;
+
+		if (this._delayFrameIndexCount > _delayFrameThreshold) {
 			if (this._colIndex >= 11) {
 				this._colIndex = 0;
 				this._rowIndex++;
 			} else {
 				this._colIndex++;
 			}
-			// Next frame incoming
-			this._frameIndex++;
 
 			// Reset frame from spritesheet to the first one
 			if (this._frameIndex >= frameCount) {
@@ -94,10 +101,14 @@ export default class LudeCat {
 				this._rowIndex = 0;
 				this._colIndex = 0;
 			}
+
+			// Next frame incoming
+			this._frameIndex++;
 			this._delayFrameIndexCount = 0;
 		}
 	}
 
+	// MOVEMENT RELATED FUNCTIONS
 	public moving(moving: LUDECATSTATE) {
 		if (this._spritesheets === null) {
 			return;
@@ -172,6 +183,7 @@ export default class LudeCat {
 		}
 	}
 
+	// AUDIO RELATED FUNCTIONS
 	public meow() {
 		if (this._audio !== null) {
 			AudioManager.playSound(this._audio[AUDIO.MEOW]);

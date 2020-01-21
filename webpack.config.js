@@ -4,9 +4,11 @@ const webpack = require('webpack');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 // defines where the bundle file will live
 const bundlePath = path.resolve(__dirname, 'dist/');
+const imagePattern = /\.(jpe?g|png|gif|svg)$/i;
 
 module.exports = (_env, argv) => {
 	const mode = argv.mode;
@@ -24,6 +26,7 @@ module.exports = (_env, argv) => {
 	// edit webpack plugins here!
 	let plugins = [
 		// new webpack.HotModuleReplacementPlugin(),
+		new ImageminPlugin({ test: imagePattern})
 	];
 
 	for (name in entryPoints) {
@@ -63,9 +66,8 @@ module.exports = (_env, argv) => {
 					loader: 'awesome-typescript-loader',
 				},
 				{
-					test: /\.(jpe?g|png|gif|svg)$/i,
+					test: imagePattern,
 					loader: 'file-loader',
-					// loader: 'file-loader?name=/assets/spritesheet[name].[ext]',
 				},
 				{
 					test: /\.(eot|ttf|woff|woff2)$/i,

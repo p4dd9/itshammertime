@@ -4,21 +4,21 @@
 	"description": "",
 	"main": "webpack.config.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "webpack --mode production",
 		"start": "webpack-dev-server --mode development --hot"
 	},
 	"devDependencies": {
+		"typescript": "^3.7.4",
+		"tslint": "^5.20.1",
+		"typestyle": "^2.0.4",
+		"prettier": "^1.19.1",
+		"webpack": "^4.41.5",
+		"webpack-cli": "^3.3.10",
 		"awesome-typescript-loader": "^5.2.1",
 		"clean-webpack-plugin": "^3.0.0",
 		"file-loader": "^5.0.2",
 		"html-webpack-plugin": "^3.2.0",
-		"tslint": "^5.20.1",
-		"prettier": "^1.19.1",
-		"typescript": "^3.7.4",
-		"typestyle": "^2.0.4",
-		"webpack": "^4.41.5",
-		"webpack-cli": "^3.3.10",
+		"imagemin-webpack-plugin": "2.4.2",
 		"webpack-dev-server": "^3.10.1"
 	},
 	"repository": {

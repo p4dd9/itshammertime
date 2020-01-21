@@ -9,6 +9,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const bundlePath = path.resolve(__dirname, 'dist/');
 
 module.exports = (_env, argv) => {
+	const mode = argv.mode;
+
 	let entryPoints = {
 		VideoOverlay: {
 			path: './src/views/VideoOverlay.ts',
@@ -27,7 +29,7 @@ module.exports = (_env, argv) => {
 	for (name in entryPoints) {
 		if (entryPoints[name].build) {
 			entry[name] = entryPoints[name].path;
-			if (argv.mode === 'production') {
+			if (mode === 'production') {
 				plugins.push(
 					new HtmlWebpackPlugin({
 						inject: true,
@@ -85,7 +87,7 @@ module.exports = (_env, argv) => {
 		plugins,
 	};
 
-	if (argv.mode === 'development') {
+	if (mode === 'development') {
 		config.devServer = {
 			contentBase: path.join(__dirname, 'dist'),
 			host: 'localhost',
@@ -96,7 +98,7 @@ module.exports = (_env, argv) => {
 		};
 		config.devServer.https = true;
 	}
-	if (argv.mode === 'production') {
+	if (mode === 'production') {
 		config.plugins.push(new CleanWebpackPlugin());
 
 		config.optimization.splitChunks = {

@@ -49,13 +49,19 @@ export default class KeyboardManager {
 	}
 
 	private detectKey(keyCode: number, pressed: boolean) {
-		if (keyCode === KEYCODES.RIGHT_ARROW) {
+		if (keyCode === KEYCODES.RIGHT_ARROW || keyCode === KEYCODES.RIGHT_D) {
 			this._rightArrowKeyPressed = pressed;
-		} else if (keyCode === KEYCODES.LEFT_ARROW) {
+		} else if (
+			keyCode === KEYCODES.LEFT_ARROW ||
+			keyCode === KEYCODES.LEFT_A
+		) {
 			this._leftArrowKeyPressed = pressed;
-		} else if (keyCode === KEYCODES.UP_ARROW) {
+		} else if (keyCode === KEYCODES.UP_ARROW || keyCode === KEYCODES.UP_W) {
 			this._upArrowKeyPressed = pressed;
-		} else if (keyCode === KEYCODES.DOWN_ARROW) {
+		} else if (
+			keyCode === KEYCODES.DOWN_ARROW ||
+			keyCode === KEYCODES.DOWN_S
+		) {
 			this._downArrowKeyPressed = pressed;
 		}
 	}

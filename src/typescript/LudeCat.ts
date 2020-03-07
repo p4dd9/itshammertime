@@ -215,15 +215,15 @@ export default class LudeCat {
 	}
 
 	// AUDIO RELATED FUNCTIONS
-	public meow() {
-		if (this._audio !== null) {
-			AudioManager.playSound(this._audio[AUDIO.MEOW]);
-		}
-	}
-
 	public nya() {
 		if (this._audio !== null) {
 			AudioManager.playSound(this._audio[AUDIO.NYA]);
+		}
+	}
+
+	public meow() {
+		if (this._audio !== null) {
+			AudioManager.playSound(this._audio[AUDIO.MEOW]);
 		}
 	}
 

@@ -3,7 +3,7 @@ import LudeCat from './LudeCat';
 import Debugger from './Debugger';
 
 export default class Game {
-	public debug: boolean = true;
+	public _debug: boolean = true;
 
 	private _context: CanvasRenderingContext2D;
 	private _ludecat: LudeCat;
@@ -45,7 +45,7 @@ export default class Game {
 		this.clearCanvas();
 
 		// ACTUAL DRAWINGS
-		if (this.debug) {
+		if (this._debug) {
 			this._debugger.debug();
 		}
 

@@ -8,6 +8,8 @@ enum KEYCODES {
 	'RIGHT_D' = 68,
 	'UP_W' = 87,
 	'DOWN_S' = 83,
+
+	'SPACE' = 32,
 }
 
 export default KEYCODES;

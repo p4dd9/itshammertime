@@ -49,6 +49,8 @@ export default class KeyboardManager {
 	}
 
 	private detectKey(keyCode: number, pressed: boolean) {
+		const ludeCat = this._ludeCat;
+
 		if (keyCode === KEYCODES.RIGHT_ARROW || keyCode === KEYCODES.RIGHT_D) {
 			this._rightArrowKeyPressed = pressed;
 		} else if (
@@ -63,6 +65,8 @@ export default class KeyboardManager {
 			keyCode === KEYCODES.DOWN_S
 		) {
 			this._downArrowKeyPressed = pressed;
+		} else if (keyCode === KEYCODES.SPACE) {
+			ludeCat.meow();
 		}
 	}
 }

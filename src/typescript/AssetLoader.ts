@@ -2,13 +2,24 @@ import meowSound from '../assets/audio/meow.mp3';
 import meow2Sound from '../assets/audio/meow2.wav';
 import nyaSound from '../assets/audio/nya.wav';
 import ISpriteSheet from '../interfaces/ISpriteSheet';
-import spriteSheetAssets from '../assets/assets';
+import { spriteSheetAssets } from '../assets/assets';
 
 export default class AssetLoader {
-	public static async loadSpriteSheets(): Promise<ISpriteSheet[]> {
+	public static async loadSpriteSheets() {
+		const spriteSheets = await AssetLoader.loadSpriteSheetImages();
+		const spriteSheetMap = new Map<string, ISpriteSheet>();
+
+		for (const spriteSheet of spriteSheets) {
+			spriteSheetMap.set(spriteSheet.id, spriteSheet);
+		}
+
+		return spriteSheetMap;
+	}
+
+	private static async loadSpriteSheetImages(): Promise<ISpriteSheet[]> {
 		const imagePromises = new Array() as Array<Promise<ISpriteSheet>>;
 
-		for (const spriteSheetAsset of spriteSheetAssets) {
+		for (const spriteSheetAsset of spriteSheetAssets.values()) {
 			const image: HTMLImageElement = new Image();
 			const {
 				id,

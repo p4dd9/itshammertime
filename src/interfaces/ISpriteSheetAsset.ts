@@ -1,7 +1,7 @@
 export default interface ISpriteSheetAsset {
 	id: string;
-	src: string;
 	animated: boolean;
+	src: string;
 	spriteSheetColumCount: number;
 	spriteSheetRowCount: number;
 	scaleOnCanvas: number;

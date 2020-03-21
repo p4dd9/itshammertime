@@ -1,16 +1,15 @@
 import IPosition from '../interfaces/IPosition';
-import ANIMATION from '../enums/spritesheets';
-import LUDECATSTATE from '../enums/ludecatstate';
 import AssetLoader from './AssetLoader';
 import GameAudio from './GameAudio';
 import AUDIO from '../enums/audio';
 import ISpriteSheet from '../interfaces/ISpriteSheet';
+import { spriteSheetAlias } from '../assets/assets';
 
 export default class LudeCat {
 	public audio: HTMLAudioElement[] | null = null;
 
 	private _moveDistance = 5;
-	private _moving: LUDECATSTATE = LUDECATSTATE.IDLE;
+	private _moving: string = spriteSheetAlias.IDLE;
 	private _position: IPosition = {
 		x: -150,
 		y: 0,
@@ -24,8 +23,8 @@ export default class LudeCat {
 	private _colIndex = 0;
 	private _context: CanvasRenderingContext2D;
 
-	private _spritesheet: ISpriteSheet | null = null;
-	private _spritesheets: ISpriteSheet[] | null = null;
+	private _spritesheet: ISpriteSheet | undefined = undefined;
+	private _spritesheets: Map<string, ISpriteSheet> | null = null;
 
 	private _playIntro = true;
 
@@ -46,7 +45,7 @@ export default class LudeCat {
 
 		this.audio = audio;
 		this._spritesheets = spritesheets;
-		this._spritesheet = spritesheets[ANIMATION.IDLE];
+		this._spritesheet = spritesheets.get(spriteSheetAlias.IDLE);
 		console.log('Assets loaded and ready!');
 	}
 
@@ -67,8 +66,7 @@ export default class LudeCat {
 	// DRAW ON CONTEXT RELATED FUNCTIONS
 	public draw() {
 		this._delayFrameIndexCount++;
-		const spritesheet = this._spritesheet;
-		if (spritesheet === null) {
+		if (this._spritesheet === undefined) {
 			return;
 		}
 
@@ -150,26 +148,19 @@ export default class LudeCat {
 	}
 
 	// MOVEMENT RELATED FUNCTIONS
-	public moving(moving: LUDECATSTATE) {
+	public moving(moving: string) {
 		if (this._spritesheets === null) {
 			return;
 		}
-		const movingState = {
-			[LUDECATSTATE.IDLE]: ANIMATION.IDLE,
-			[LUDECATSTATE.WALKING_LEFT]: ANIMATION.WALK_LEFT,
-			[LUDECATSTATE.WALKING_RIGHT]: ANIMATION.WALK_RIGHT,
-			[LUDECATSTATE.WALKING_DOWN]: ANIMATION.IDLE,
-			[LUDECATSTATE.WALKING_UP]: ANIMATION.IDLE,
-		};
 
 		if (moving !== this._moving) {
 			this._moving = moving;
 			if (moving) {
-				this._spritesheet = this._spritesheets[
-					movingState[this._moving]
-				];
+				this._spritesheet = this._spritesheets.get(moving);
 			} else {
-				this._spritesheet = this._spritesheets[ANIMATION.IDLE];
+				this._spritesheet = this._spritesheets.get(
+					spriteSheetAlias.IDLE
+				);
 			}
 		}
 	}
@@ -184,7 +175,7 @@ export default class LudeCat {
 			moveDistance;
 
 		if (destinationX <= canvasWidth) {
-			this.moving(LUDECATSTATE.WALKING_RIGHT);
+			this.moving(spriteSheetAlias.WALK_RIGHT);
 			_position.x += moveDistance;
 		}
 	}
@@ -198,7 +189,7 @@ export default class LudeCat {
 
 		const destinationX = _position.x - moveDistance;
 		if (destinationX >= 0) {
-			this.moving(LUDECATSTATE.WALKING_LEFT);
+			this.moving(spriteSheetAlias.WALK_LEFT);
 			_position.x += -moveDistance;
 		}
 	}
@@ -213,7 +204,7 @@ export default class LudeCat {
 		const destinationY = _position.y - moveDistance;
 
 		if (destinationY >= 0) {
-			this.moving(LUDECATSTATE.WALKING_UP);
+			this.moving(spriteSheetAlias.IDLE);
 			_position.y += -moveDistance;
 		}
 	}
@@ -231,7 +222,7 @@ export default class LudeCat {
 			_spritesheet!.img.height / this._spritesheet!.spriteSheetRowCount +
 			moveDistance;
 		if (destinationY < canvasHeight) {
-			this.moving(LUDECATSTATE.WALKING_UP);
+			this.moving(spriteSheetAlias.IDLE);
 			_position.y += moveDistance;
 		}
 	}

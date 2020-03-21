@@ -1,8 +1,8 @@
 import GameInput from './GameInput';
 import CONTROLS from '../enums/controls';
 import LudeCat from './LudeCat';
-import LUDECATSTATE from '../enums/ludecatstate';
 import KEYCODES from '../enums/keycodes';
+import { spriteSheetAlias } from '../assets/assets';
 
 export default class KeyboardManager {
 	private _gameInput: GameInput;
@@ -30,7 +30,7 @@ export default class KeyboardManager {
 		} else if (this._downArrowKeyPressed) {
 			this._ludeCat.moveDown();
 		} else {
-			this._ludeCat.moving(LUDECATSTATE.IDLE);
+			this._ludeCat.moving(spriteSheetAlias.IDLE);
 		}
 	}
 

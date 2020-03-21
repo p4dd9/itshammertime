@@ -4,7 +4,7 @@ import CONTROLS from '../enums/controls';
 import IGamepadEvent from '../interfaces/IGamepadEvent';
 import LudeCat from './LudeCat';
 import { XBOX360_AXIS, XBOX360_BUTTONS } from '../enums/xbox360controls';
-import LUDECATSTATE from '../enums/ludecatstate';
+import { spriteSheetAlias } from '../assets/assets';
 
 export default class GamepadManager {
 	// The actualy gamepad from the browser API
@@ -131,7 +131,7 @@ export default class GamepadManager {
 				this.axesStatus[XBOX360_AXIS.LS_Y] < -_axeStatusThreshold
 			)
 		) {
-			_ludeCat.moving(LUDECATSTATE.IDLE);
+			_ludeCat.moving(spriteSheetAlias.IDLE);
 		}
 	}
 

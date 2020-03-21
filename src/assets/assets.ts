@@ -3,33 +3,48 @@ import walkRightImage from './spritesheet/sp_ludecat_right.png';
 import walkLeftImage from './spritesheet/sp_ludecat_left.png';
 import ISpriteSheetAsset from '../interfaces/ISpriteSheetAsset';
 
-// !IMPORTANT
-// Always update SPRITESHEETS enum in "spritesheets.ts" according to the order
-const spriteSheetAssets: ISpriteSheetAsset[] = [
-	{
-		id: 'idle',
-		animated: false,
-		src: idleImage,
-		spriteSheetColumCount: 12,
-		spriteSheetRowCount: 12,
-		scaleOnCanvas: 9.2,
-	},
-	{
-		id: 'walk_right',
-		animated: true,
-		src: walkRightImage,
-		spriteSheetColumCount: 12,
-		spriteSheetRowCount: 12,
-		scaleOnCanvas: 1,
-	},
-	{
-		id: 'walk_left',
-		animated: true,
-		src: walkLeftImage,
-		spriteSheetColumCount: 12,
-		spriteSheetRowCount: 12,
-		scaleOnCanvas: 1,
-	},
-];
+// How to add new Spritesheet
+// 1. add alias here
+// 2. add new spritesheet with options to spriteSheetAssets down below
+// 3. use alias where you need it
+export const spriteSheetAlias = {
+	IDLE: 'IDLE',
+	WALK_RIGHT: 'WALK_RIGHT',
+	WALK_LEFT: 'WALK_LEFT',
+};
 
-export default spriteSheetAssets;
+export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
+	[
+		spriteSheetAlias.IDLE,
+		{
+			id: spriteSheetAlias.IDLE,
+			animated: false,
+			src: idleImage,
+			spriteSheetColumCount: 12,
+			spriteSheetRowCount: 12,
+			scaleOnCanvas: 9.2,
+		},
+	],
+	[
+		spriteSheetAlias.WALK_RIGHT,
+		{
+			id: spriteSheetAlias.WALK_RIGHT,
+			animated: true,
+			src: walkRightImage,
+			spriteSheetColumCount: 12,
+			spriteSheetRowCount: 12,
+			scaleOnCanvas: 1,
+		},
+	],
+	[
+		spriteSheetAlias.WALK_LEFT,
+		{
+			id: spriteSheetAlias.WALK_LEFT,
+			animated: true,
+			src: walkLeftImage,
+			spriteSheetColumCount: 12,
+			spriteSheetRowCount: 12,
+			scaleOnCanvas: 1,
+		},
+	],
+]);

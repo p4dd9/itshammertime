@@ -25,7 +25,7 @@
 		"type": "git",
 		"url": "git+https://github.com/p4dd9/ludecattwitchextension.git"
 	},
-	"author": "",
+	"author": "patrick obermueller",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/p4dd9/ludecattwitchextension/issues"

@@ -1,29 +1,35 @@
-import idleBlinktailWhipheadSpriteSheet from '../assets/spritesheet/idle_blinktailwhiphead.png';
-import catWalkRight from '../assets/spritesheet/sp_ludecat_right.png';
-import catWalkLeft from '../assets/spritesheet/sp_ludecat_left.png';
-
 import meowSound from '../assets/audio/meow.mp3';
 import meow2Sound from '../assets/audio/meow2.wav';
 import nyaSound from '../assets/audio/nya.wav';
+import ISpriteSheet from '../interfaces/ISpriteSheet';
+import spriteSheetAssets from '../assets/assets';
 
 export default class AssetLoader {
-	// !IMPORTANT
-	// Always update SPRITESHEETS enum in "spritesheets.ts" according to the order
-	public static async loadImages(): Promise<HTMLImageElement[]> {
-		const imagePromises = new Array() as Array<Promise<HTMLImageElement>>;
+	public static async loadSpriteSheets(): Promise<ISpriteSheet[]> {
+		const imagePromises = new Array() as Array<Promise<ISpriteSheet>>;
 
-		const imagePaths: string[] = [
-			idleBlinktailWhipheadSpriteSheet,
-			catWalkRight,
-			catWalkLeft,
-		];
-
-		for (const imagePath of imagePaths) {
+		for (const spriteSheetAsset of spriteSheetAssets) {
 			const image: HTMLImageElement = new Image();
-			image.src = imagePath;
-			const nP = new Promise<HTMLImageElement>(resolve => {
+			const {
+				id,
+				src,
+				spriteSheetColumCount,
+				spriteSheetRowCount,
+				scaleOnCanvas,
+				animated,
+			} = spriteSheetAsset;
+			image.src = src;
+
+			const nP = new Promise<ISpriteSheet>(resolve => {
 				image.onload = () => {
-					resolve(image);
+					resolve({
+						id,
+						img: image,
+						animated,
+						spriteSheetColumCount,
+						spriteSheetRowCount,
+						scaleOnCanvas,
+					});
 				};
 			});
 			imagePromises.push(nP);

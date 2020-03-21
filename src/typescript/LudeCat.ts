@@ -1,15 +1,10 @@
 import IPosition from '../interfaces/IPosition';
 import ANIMATION from '../enums/spritesheets';
 import LUDECATSTATE from '../enums/ludecatstate';
-import {
-	spriteSheetColumCount,
-	spriteSheetRowCount,
-	scaleOnCanvas,
-	frameCount,
-} from '../config/ludeCatConfig';
 import AssetLoader from './AssetLoader';
 import AudioManager from './AudioManager';
 import AUDIO from '../enums/audio';
+import ISpriteSheet from '../interfaces/ISpriteSheet';
 
 export default class LudeCat {
 	private _moveDistance = 5;
@@ -27,8 +22,8 @@ export default class LudeCat {
 	private _colIndex = 0;
 	private _context: CanvasRenderingContext2D;
 
-	private _spritesheet: HTMLImageElement | null = null;
-	private _spritesheets: HTMLImageElement[] | null = null;
+	private _spritesheet: ISpriteSheet | null = null;
+	private _spritesheets: ISpriteSheet[] | null = null;
 	private _audio: HTMLAudioElement[] | null = null;
 
 	private _playIntro = true;
@@ -46,7 +41,7 @@ export default class LudeCat {
 
 	private async loadAssets() {
 		const audio = await AssetLoader.loadAudio();
-		const spritesheets = await AssetLoader.loadImages();
+		const spritesheets = await AssetLoader.loadSpriteSheets();
 
 		this._audio = audio;
 		this._spritesheets = spritesheets;
@@ -57,7 +52,9 @@ export default class LudeCat {
 	private playIntro() {
 		if (
 			this._position.x +
-				this._spritesheet!.width / spriteSheetColumCount / 2 <
+				this._spritesheet!.img.width /
+					this._spritesheet!.spriteSheetColumCount /
+					2 <
 			this._context.canvas.width / 2 - 10 // 10 for the movementdistance x2 to center the cat
 		) {
 			this.moveRight();
@@ -69,8 +66,8 @@ export default class LudeCat {
 	// DRAW ON CONTEXT RELATED FUNCTIONS
 	public draw() {
 		this._delayFrameIndexCount++;
-		const image = this._spritesheet;
-		if (image === null) {
+		const spritesheet = this._spritesheet;
+		if (spritesheet === null) {
 			return;
 		}
 
@@ -85,12 +82,33 @@ export default class LudeCat {
 
 	private drawLudeCat() {
 		const { _context, _colIndex, _rowIndex, _position } = this;
-		const image = this._spritesheet;
+		const spritesheet = this._spritesheet;
 
-		const frameWidth = image!.width / spriteSheetColumCount;
-		const frameHeight = image!.height / spriteSheetRowCount;
+		if (spritesheet!.animated === false) {
+			_context.drawImage(
+				spritesheet!.img,
+				0,
+				0,
+				spritesheet!.img.width,
+				spritesheet!.img.height,
+				_position.x,
+				_position.y,
+				spritesheet!.img.width / spritesheet!.scaleOnCanvas,
+				spritesheet!.img.height / spritesheet!.scaleOnCanvas
+			);
+			return;
+		}
+
+		const {
+			spriteSheetColumCount,
+			spriteSheetRowCount,
+			scaleOnCanvas,
+		} = this._spritesheet!;
+
+		const frameWidth = spritesheet!.img.width / spriteSheetColumCount;
+		const frameHeight = spritesheet!.img.height / spriteSheetRowCount;
 		_context.drawImage(
-			image!,
+			spritesheet!.img,
 			_colIndex * frameWidth,
 			_rowIndex * frameHeight,
 			frameWidth,
@@ -104,6 +122,9 @@ export default class LudeCat {
 
 	private updateImageToDraw() {
 		const { _delayFrameThreshold } = this;
+		const frameCount =
+			this._spritesheet!.spriteSheetColumCount *
+			this._spritesheet!.spriteSheetRowCount;
 
 		if (this._delayFrameIndexCount > _delayFrameThreshold) {
 			if (this._colIndex >= 11) {
@@ -158,7 +179,7 @@ export default class LudeCat {
 
 		const destinationX =
 			_position.x +
-			_spritesheet!.width / spriteSheetColumCount +
+			_spritesheet!.img.width / this._spritesheet!.spriteSheetColumCount +
 			moveDistance;
 
 		if (destinationX <= canvasWidth) {
@@ -206,7 +227,7 @@ export default class LudeCat {
 
 		const destinationY =
 			_position.y +
-			_spritesheet!.height / spriteSheetRowCount +
+			_spritesheet!.img.height / this._spritesheet!.spriteSheetRowCount +
 			moveDistance;
 		if (destinationY < canvasHeight) {
 			this.moving(LUDECATSTATE.WALKING_UP);

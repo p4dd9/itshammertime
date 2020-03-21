@@ -1,6 +1,4 @@
-const fs = require('fs');
 const path = require('path');
-const webpack = require('webpack');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -16,51 +14,23 @@ module.exports = (_env, argv) => {
 	const mode = argv.mode;
 	const isProduction = mode === 'production';
 
-	let entryPoints = {
-		VideoOverlay: {
-			path: './src/views/VideoOverlay.ts',
-			outputHtml: 'video_overlay.html',
-			build: true,
-		},
+	let entry = {
+		main: './src/views/VideoOverlay.ts',
 	};
 
-	let entry = {};
-
-	// edit webpack plugins here!
 	let plugins = [
-		// new webpack.HotModuleReplacementPlugin(),
-		new ImageminPlugin({ test: imagePattern }),
+		new HtmlWebpackPlugin({
+			inject: true,
+			template: './src/index.html',
+			filename: 'video_overlay.html',
+			title: 'LudeCat Twitch Extension',
+		}),
 	];
 
-	for (name in entryPoints) {
-		if (entryPoints[name].build) {
-			entry[name] = entryPoints[name].path;
-			if (isProduction) {
-				plugins.push(
-					new HtmlWebpackPlugin({
-						inject: true,
-						chunks: [name],
-						template: './src/index.html',
-						filename: entryPoints[name].outputHtml,
-						title: 'LudeCat Twitch Extension',
-					})
-				);
-
-				plugins.push(
-					new MiniCssExtractPlugin({
-						filename: '[name].[hash].css',
-						chunkFilename: '[id].[hash].css',
-					})
-				);
-			}
-		}
-	}
-
 	let config = {
-		//entry points for webpack- remove if not used/needed
 		entry,
 		optimization: {
-			minimize: false, // neccessary to pass Twitch's review process
+			minimize: false, // do not minimize due to twitch review process
 		},
 		devtool: 'source-map',
 		module: {
@@ -125,8 +95,16 @@ module.exports = (_env, argv) => {
 		};
 		config.devServer.https = true;
 	}
+
 	if (isProduction) {
-		config.plugins.push(new CleanWebpackPlugin());
+		plugins.push(
+			new MiniCssExtractPlugin({
+				filename: '[name].[hash].css',
+				chunkFilename: '[id].[hash].css',
+			})
+		);
+		plugins.push(new ImageminPlugin({ test: imagePattern }));
+		plugins.push(new CleanWebpackPlugin());
 
 		config.optimization.splitChunks = {
 			cacheGroups: {

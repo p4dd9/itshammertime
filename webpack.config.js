@@ -40,7 +40,7 @@ module.exports = (_env, argv) => {
 					new HtmlWebpackPlugin({
 						inject: true,
 						chunks: [name],
-						template: './template.html',
+						template: './src/index.html',
 						filename: entryPoints[name].outputHtml,
 						title: 'LudeCat Twitch Extension',
 					})

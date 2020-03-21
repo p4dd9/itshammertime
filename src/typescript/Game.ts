@@ -2,24 +2,28 @@ import GameInput from './GameInput';
 import LudeCat from './LudeCat';
 import Debugger from './Debugger';
 import UI from './GameUI';
+import GameAudio from './GameAudio';
 
 export default class Game {
-	public _debug: boolean = true;
+	public debug: boolean = true;
+	public ui: UI;
+	public gameAudio: GameAudio;
+	public ludecat: LudeCat;
 
 	private _context: CanvasRenderingContext2D;
-	private _ludecat: LudeCat;
 	private _gameInput: GameInput;
 	private _debugger: Debugger;
-	private _ui: UI;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
-		this._ludecat = new LudeCat(this._context);
-		this._gameInput = new GameInput(this._ludecat);
+		this.ludecat = new LudeCat(this._context);
+		this._gameInput = new GameInput(this.ludecat);
 		this._debugger = new Debugger(this);
-		this._ui = new UI();
+		this.ui = new UI(this);
+		this.gameAudio = new GameAudio(this);
 
-		console.log('Checking for UI (commit this): ' + this._ui);
+		console.log('Checking for UI (commit this): ' + this.ui);
+		console.log('Checking for GameAudio (commit this): ' + this.gameAudio);
 
 		this._step = this._step.bind(this);
 	}
@@ -32,7 +36,7 @@ export default class Game {
 		this._context.canvas.width = canvasWidth;
 		this._context.canvas.height = canvasHeight;
 
-		this._ludecat.resizeCanvas(canvasWidth, canvasHeight);
+		this.ludecat.resizeCanvas(canvasWidth, canvasHeight);
 	}
 
 	private clearCanvas() {
@@ -51,11 +55,11 @@ export default class Game {
 		this.clearCanvas();
 
 		// ACTUAL DRAWINGS
-		if (this._debug) {
+		if (this.debug) {
 			this._debugger.debug();
 		}
 
-		this._ludecat.draw();
+		this.ludecat.draw();
 
 		window.requestAnimationFrame(this._step);
 	}

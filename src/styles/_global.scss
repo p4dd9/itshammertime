@@ -1,0 +1,14 @@
+// reset button default styles
+button {
+	border: none;
+	background-color: transparent;
+	padding: 0;
+
+	&:focus {
+		outline: none;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+}

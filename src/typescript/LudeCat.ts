@@ -7,6 +7,8 @@ import AUDIO from '../enums/audio';
 import ISpriteSheet from '../interfaces/ISpriteSheet';
 
 export default class LudeCat {
+	public audio: HTMLAudioElement[] | null = null;
+
 	private _moveDistance = 5;
 	private _moving: LUDECATSTATE = LUDECATSTATE.IDLE;
 	private _position: IPosition = {
@@ -24,7 +26,6 @@ export default class LudeCat {
 
 	private _spritesheet: ISpriteSheet | null = null;
 	private _spritesheets: ISpriteSheet[] | null = null;
-	private _audio: HTMLAudioElement[] | null = null;
 
 	private _playIntro = true;
 
@@ -43,7 +44,7 @@ export default class LudeCat {
 		const audio = await AssetLoader.loadAudio();
 		const spritesheets = await AssetLoader.loadSpriteSheets();
 
-		this._audio = audio;
+		this.audio = audio;
 		this._spritesheets = spritesheets;
 		this._spritesheet = spritesheets[ANIMATION.IDLE];
 		console.log('Assets loaded and ready!');
@@ -237,20 +238,20 @@ export default class LudeCat {
 
 	// AUDIO RELATED FUNCTIONS
 	public nya() {
-		if (this._audio !== null) {
-			GameAudio.playSound(this._audio[AUDIO.NYA]);
+		if (this.audio !== null) {
+			GameAudio.playSound(this.audio[AUDIO.NYA]);
 		}
 	}
 
 	public meow() {
-		if (this._audio !== null) {
-			GameAudio.playSound(this._audio[AUDIO.MEOW]);
+		if (this.audio !== null) {
+			GameAudio.playSound(this.audio[AUDIO.MEOW]);
 		}
 	}
 
 	public meow2() {
-		if (this._audio !== null) {
-			GameAudio.playSound(this._audio[AUDIO.MEOW2]);
+		if (this.audio !== null) {
+			GameAudio.playSound(this.audio[AUDIO.MEOW2]);
 		}
 	}
 }

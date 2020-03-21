@@ -1,0 +1,18 @@
+#ui-options {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+#ui-audio-button-image {
+	width: 40px;
+	height: 40px;
+}
+
+#ui-audio-button {
+	padding: 5px;
+	border-radius: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

@@ -1,4 +1,4 @@
-import '../styles/global';
+import '../styles/index';
 import Game from '../typescript/Game';
 
 window.onload = (onLoadEvent: Event) => {

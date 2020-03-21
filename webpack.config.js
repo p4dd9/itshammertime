@@ -6,12 +6,15 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 // defines where the bundle file will live
 const bundlePath = path.resolve(__dirname, 'dist/');
 const imagePattern = /\.(jpe?g|png|gif|svg)$/i;
 
 module.exports = (_env, argv) => {
 	const mode = argv.mode;
+	const isProduction = mode === 'production';
 
 	let entryPoints = {
 		VideoOverlay: {
@@ -26,13 +29,13 @@ module.exports = (_env, argv) => {
 	// edit webpack plugins here!
 	let plugins = [
 		// new webpack.HotModuleReplacementPlugin(),
-		new ImageminPlugin({ test: imagePattern})
+		new ImageminPlugin({ test: imagePattern }),
 	];
 
 	for (name in entryPoints) {
 		if (entryPoints[name].build) {
 			entry[name] = entryPoints[name].path;
-			if (mode === 'production') {
+			if (isProduction) {
 				plugins.push(
 					new HtmlWebpackPlugin({
 						inject: true,
@@ -40,6 +43,13 @@ module.exports = (_env, argv) => {
 						template: './template.html',
 						filename: entryPoints[name].outputHtml,
 						title: 'LudeCat Twitch Extension',
+					})
+				);
+
+				plugins.push(
+					new MiniCssExtractPlugin({
+						filename: '[name].[hash].css',
+						chunkFilename: '[id].[hash].css',
 					})
 				);
 			}
@@ -77,10 +87,25 @@ module.exports = (_env, argv) => {
 					test: /\.(ogg|mp3|wav|mpe?g)$/i,
 					loader: 'file-loader',
 				},
+				{
+					test: /\.s(a|c)ss$/,
+					loader: [
+						isProduction
+							? MiniCssExtractPlugin.loader
+							: 'style-loader',
+						'css-loader',
+						{
+							loader: 'sass-loader',
+							options: {
+								sourceMap: !isProduction,
+							},
+						},
+					],
+				},
 			],
 		},
 		resolve: {
-			extensions: ['*', '.js', '.ts'],
+			extensions: ['*', '.js', '.ts', '.scss'],
 		},
 		output: {
 			filename: '[name].bundle.js',
@@ -89,7 +114,7 @@ module.exports = (_env, argv) => {
 		plugins,
 	};
 
-	if (mode === 'development') {
+	if (!isProduction) {
 		config.devServer = {
 			contentBase: path.join(__dirname, 'dist'),
 			host: 'localhost',
@@ -100,7 +125,7 @@ module.exports = (_env, argv) => {
 		};
 		config.devServer.https = true;
 	}
-	if (mode === 'production') {
+	if (isProduction) {
 		config.plugins.push(new CleanWebpackPlugin());
 
 		config.optimization.splitChunks = {

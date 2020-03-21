@@ -1,6 +1,7 @@
 import GameInput from './GameInput';
 import LudeCat from './LudeCat';
 import Debugger from './Debugger';
+import UI from './GameUI';
 
 export default class Game {
 	public _debug: boolean = true;
@@ -9,12 +10,17 @@ export default class Game {
 	private _ludecat: LudeCat;
 	private _gameInput: GameInput;
 	private _debugger: Debugger;
+	private _ui: UI;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
 		this._ludecat = new LudeCat(this._context);
 		this._gameInput = new GameInput(this._ludecat);
 		this._debugger = new Debugger(this);
+		this._ui = new UI();
+
+		console.log('Checking for UI (commit this): ' + this._ui);
+
 		this._step = this._step.bind(this);
 	}
 

@@ -2,7 +2,7 @@ import IPosition from '../interfaces/IPosition';
 import ANIMATION from '../enums/spritesheets';
 import LUDECATSTATE from '../enums/ludecatstate';
 import AssetLoader from './AssetLoader';
-import AudioManager from './AudioManager';
+import GameAudio from './GameAudio';
 import AUDIO from '../enums/audio';
 import ISpriteSheet from '../interfaces/ISpriteSheet';
 
@@ -238,19 +238,19 @@ export default class LudeCat {
 	// AUDIO RELATED FUNCTIONS
 	public nya() {
 		if (this._audio !== null) {
-			AudioManager.playSound(this._audio[AUDIO.NYA]);
+			GameAudio.playSound(this._audio[AUDIO.NYA]);
 		}
 	}
 
 	public meow() {
 		if (this._audio !== null) {
-			AudioManager.playSound(this._audio[AUDIO.MEOW]);
+			GameAudio.playSound(this._audio[AUDIO.MEOW]);
 		}
 	}
 
 	public meow2() {
 		if (this._audio !== null) {
-			AudioManager.playSound(this._audio[AUDIO.MEOW2]);
+			GameAudio.playSound(this._audio[AUDIO.MEOW2]);
 		}
 	}
 }

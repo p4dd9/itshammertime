@@ -1,8 +1,9 @@
+import '../styles/global';
 import Game from '../typescript/Game';
 
-const bodyMarginVerticalHorizontal = 16;
-
 window.onload = (onLoadEvent: Event) => {
+	const bodyMarginVerticalHorizontal = 16;
+
 	const root: HTMLElement | null = document.getElementById('root');
 
 	const height = window.innerHeight - bodyMarginVerticalHorizontal;

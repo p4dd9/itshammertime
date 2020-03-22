@@ -16,12 +16,14 @@ export default class AssetLoader {
 	}
 
 	private static async loadSpriteSheetImages(): Promise<ISpriteSheet[]> {
-		const imagePromises = new Array() as Array<Promise<ISpriteSheet>>;
+		const spriteSheetPromises = new Array() as Array<Promise<ISpriteSheet>>;
 
-		for (const spriteSheetAsset of spriteSheetAssets.values()) {
+		for (const [
+			spriteSheetAssetKey,
+			spriteSheetAsset,
+		] of spriteSheetAssets.entries()) {
 			const image: HTMLImageElement = new Image();
 			const {
-				id,
 				src,
 				spriteSheetColumCount,
 				spriteSheetRowCount,
@@ -30,10 +32,10 @@ export default class AssetLoader {
 			} = spriteSheetAsset;
 			image.src = src;
 
-			const nP = new Promise<ISpriteSheet>(resolve => {
+			const spriteSheetPromise = new Promise<ISpriteSheet>(resolve => {
 				image.onload = () => {
 					resolve({
-						id,
+						id: spriteSheetAssetKey,
 						img: image,
 						animated,
 						spriteSheetColumCount,
@@ -42,10 +44,10 @@ export default class AssetLoader {
 					});
 				};
 			});
-			imagePromises.push(nP);
+			spriteSheetPromises.push(spriteSheetPromise);
 		}
 
-		return Promise.all(imagePromises);
+		return Promise.all(spriteSheetPromises);
 	}
 
 	public static async loadAudio() {
@@ -62,18 +64,18 @@ export default class AssetLoader {
 	public static async loadAudioAssets(): Promise<IAudio[]> {
 		const audioPromises = new Array() as Array<Promise<IAudio>>;
 
-		for (const audioAsset of audioAssets.values()) {
+		for (const [key, audioAsset] of audioAssets.entries()) {
 			const audio = new Audio(audioAsset.src);
 
-			const nP = new Promise<IAudio>(resolve => {
+			const audioPromise = new Promise<IAudio>(resolve => {
 				audio.addEventListener('loadeddata', () => {
 					resolve({
-						id: audioAsset.id,
+						id: key,
 						audio,
 					});
 				});
 			});
-			audioPromises.push(nP);
+			audioPromises.push(audioPromise);
 		}
 
 		return Promise.all(audioPromises);

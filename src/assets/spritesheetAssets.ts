@@ -5,7 +5,7 @@ import ISpriteSheetAsset from '../interfaces/ISpriteSheetAsset';
 
 // How to add new Spritesheet
 // 1. add alias here
-// 2. add new spritesheet with options to spriteSheetAssets down below
+// 2. add alias as key
 // 3. use alias where you need it
 export const spriteSheetAlias = {
 	IDLE: 'IDLE',
@@ -17,7 +17,6 @@ export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
 	[
 		spriteSheetAlias.IDLE,
 		{
-			id: spriteSheetAlias.IDLE,
 			animated: false,
 			src: idleImage,
 			spriteSheetColumCount: 12,
@@ -28,7 +27,6 @@ export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
 	[
 		spriteSheetAlias.WALK_RIGHT,
 		{
-			id: spriteSheetAlias.WALK_RIGHT,
 			animated: true,
 			src: walkRightImage,
 			spriteSheetColumCount: 12,
@@ -39,7 +37,6 @@ export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
 	[
 		spriteSheetAlias.WALK_LEFT,
 		{
-			id: spriteSheetAlias.WALK_LEFT,
 			animated: true,
 			src: walkLeftImage,
 			spriteSheetColumCount: 12,

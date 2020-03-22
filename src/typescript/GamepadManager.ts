@@ -4,7 +4,7 @@ import CONTROLS from '../enums/controls';
 import IGamepadEvent from '../interfaces/IGamepadEvent';
 import LudeCat from './LudeCat';
 import { XBOX360_AXIS, XBOX360_BUTTONS } from '../enums/xbox360controls';
-import { spriteSheetAlias } from '../assets/assets';
+import { spriteSheetAlias } from '../assets/spritesheetAssets';
 
 export default class GamepadManager {
 	// The actualy gamepad from the browser API

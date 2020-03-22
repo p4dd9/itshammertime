@@ -1,12 +1,15 @@
-import IPosition from '../interfaces/IPosition';
-import AssetLoader from './AssetLoader';
 import GameAudio from './GameAudio';
-import AUDIO from '../enums/audio';
+import AssetLoader from './AssetLoader';
+
+import { spriteSheetAlias } from '../assets/spritesheetAssets';
+import { audioAlias } from '../assets/audioAssets';
+
+import IPosition from '../interfaces/IPosition';
+import IAudio from '../interfaces/IAudio';
 import ISpriteSheet from '../interfaces/ISpriteSheet';
-import { spriteSheetAlias } from '../assets/assets';
 
 export default class LudeCat {
-	public audio: HTMLAudioElement[] | null = null;
+	public audio: Map<string, IAudio> | null = null;
 
 	private _moveDistance = 5;
 	private _moving: string = spriteSheetAlias.IDLE;
@@ -230,19 +233,19 @@ export default class LudeCat {
 	// AUDIO RELATED FUNCTIONS
 	public nya() {
 		if (this.audio !== null) {
-			GameAudio.playSound(this.audio[AUDIO.NYA]);
+			GameAudio.playSound(this.audio.get(audioAlias.NYA)!.audio);
 		}
 	}
 
 	public meow() {
 		if (this.audio !== null) {
-			GameAudio.playSound(this.audio[AUDIO.MEOW]);
+			GameAudio.playSound(this.audio.get(audioAlias.MEOW)!.audio);
 		}
 	}
 
 	public meow2() {
 		if (this.audio !== null) {
-			GameAudio.playSound(this.audio[AUDIO.MEOW2]);
+			GameAudio.playSound(this.audio.get(audioAlias.MEOW2)!.audio);
 		}
 	}
 }

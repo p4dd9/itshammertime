@@ -18,9 +18,8 @@ export default class GameAudio {
 		this._volumeIndex = volumeIndex;
 		this._game.ui.setAudioButtonImage(volumeIndex);
 
-		// TODO: Make Audio Assets global by adding it to the Game class
-		for (const audio of this._game.ludecat.audio!) {
-			audio.volume = GameAudio.volumeRange[this._volumeIndex];
+		for (const audioAsset of this._game.ludecat.audio!.values()) {
+			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];
 		}
 	}
 

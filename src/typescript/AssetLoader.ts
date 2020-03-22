@@ -1,8 +1,7 @@
-import meowSound from '../assets/audio/meow.mp3';
-import meow2Sound from '../assets/audio/meow2.wav';
-import nyaSound from '../assets/audio/nya.wav';
 import ISpriteSheet from '../interfaces/ISpriteSheet';
-import { spriteSheetAssets } from '../assets/assets';
+import { spriteSheetAssets } from '../assets/spritesheetAssets';
+import IAudio from '../interfaces/IAudio';
+import { audioAssets } from '../assets/audioAssets';
 
 export default class AssetLoader {
 	public static async loadSpriteSheets() {
@@ -49,19 +48,29 @@ export default class AssetLoader {
 		return Promise.all(imagePromises);
 	}
 
-	// !IMPORTANT
-	// Always update AUDIO enum in "audio.ts" according to the order
-	public static async loadAudio(): Promise<HTMLAudioElement[]> {
-		const audioPromises = new Array() as Array<Promise<HTMLAudioElement>>;
-		const audioPaths: string[] = [meowSound, nyaSound, meow2Sound];
+	public static async loadAudio() {
+		const loadedAudioAssets = await AssetLoader.loadAudioAssets();
+		const audioAssetMap = new Map<string, IAudio>();
 
-		for (const audioPath of audioPaths) {
-			const audio = new Audio(audioPath);
-			audio.volume = 0.2;
+		for (const audioAsset of loadedAudioAssets) {
+			audioAssetMap.set(audioAsset.id, audioAsset);
+		}
 
-			const nP = new Promise<HTMLAudioElement>(resolve => {
+		return audioAssetMap;
+	}
+
+	public static async loadAudioAssets(): Promise<IAudio[]> {
+		const audioPromises = new Array() as Array<Promise<IAudio>>;
+
+		for (const audioAsset of audioAssets.values()) {
+			const audio = new Audio(audioAsset.src);
+
+			const nP = new Promise<IAudio>(resolve => {
 				audio.addEventListener('loadeddata', () => {
-					resolve(audio);
+					resolve({
+						id: audioAsset.id,
+						audio,
+					});
 				});
 			});
 			audioPromises.push(nP);

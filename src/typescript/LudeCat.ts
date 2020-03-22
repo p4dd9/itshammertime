@@ -19,7 +19,7 @@ export default class LudeCat {
 	};
 
 	private _delayFrameIndexCount = 0;
-	private _delayFrameThreshold = 2;
+	private _delayFrameThreshold = 10;
 
 	private _frameIndex = 0;
 	private _rowIndex = 0;
@@ -207,7 +207,7 @@ export default class LudeCat {
 		const destinationY = _position.y - moveDistance;
 
 		if (destinationY >= 0) {
-			this.moving(spriteSheetAlias.IDLE);
+			this.moving(spriteSheetAlias.WALK_UP);
 			_position.y += -moveDistance;
 		}
 	}
@@ -225,7 +225,7 @@ export default class LudeCat {
 			_spritesheet!.img.height / this._spritesheet!.spriteSheetRowCount +
 			moveDistance;
 		if (destinationY < canvasHeight) {
-			this.moving(spriteSheetAlias.IDLE);
+			this.moving(spriteSheetAlias.WALK_DOWN);
 			_position.y += moveDistance;
 		}
 	}

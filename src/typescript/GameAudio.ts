@@ -3,7 +3,7 @@ import Game from './Game';
 
 export default class GameAudio {
 	private _game: Game;
-	private _volumeIndex = LocalStorageUtil.initVolume();
+	private _volumeIndex = LocalStorageUtil.initVolumeIndex();
 	public static volumeRange = [0, 0.25, 0.5, 0.75];
 
 	constructor(game: Game) {

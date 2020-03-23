@@ -1,6 +1,5 @@
 import GameAudio from './GameAudio';
 import LocalStorageUtil from '../util/LocalStorageUtil';
-import LOCAL_STORAGE from '../config/LOCAL_STORAGE';
 import DOM_ID from '../config/DOM_ID';
 import Game from './Game';
 
@@ -32,22 +31,15 @@ export default class UI {
 
 	private initAudioButton() {
 		if (this._audioButton !== null) {
-			this.setAudioButtonImage(LocalStorageUtil.initVolume());
+			this.setAudioButtonImage(LocalStorageUtil.initVolumeIndex());
 
 			this._audioButton.addEventListener('click', () => {
 				const newVolumeIndex: number =
-					this._game.gameAudio.volumeIndex + 1;
+					(this._game.gameAudio.volumeIndex + 1) %
+					GameAudio.volumeRange.length;
 
-				if (newVolumeIndex > GameAudio.volumeRange.length - 1) {
-					this._game.gameAudio.volumeIndex = 0;
-					LocalStorageUtil.setItem(LOCAL_STORAGE.volumeIndex, '0');
-				} else {
-					this._game.gameAudio.volumeIndex = newVolumeIndex;
-					LocalStorageUtil.setItem(
-						LOCAL_STORAGE.volumeIndex,
-						String(newVolumeIndex)
-					);
-				}
+				this._game.gameAudio.volumeIndex = newVolumeIndex;
+				LocalStorageUtil.setVolumeIndex(newVolumeIndex);
 			});
 		}
 	}

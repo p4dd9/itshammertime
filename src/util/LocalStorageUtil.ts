@@ -53,31 +53,38 @@ export default class LocalStorageUtil {
 		return null;
 	}
 
-	public static getVolumeIndex(key: string): number | null {
+	public static setVolumeIndex(item: number): void {
+		if (LocalStorageUtil.available()) {
+			window.localStorage.setItem(
+				LOCAL_STORAGE.volumeIndex,
+				String(item)
+			);
+		}
+	}
+
+	public static getVolumeIndex(): number | null {
 		if (LocalStorageUtil.available()) {
 			if (LocalStorageUtil.itemExists(LOCAL_STORAGE.volumeIndex)) {
-				return Number(window.localStorage.getItem(key));
+				return Number(
+					window.localStorage.getItem(LOCAL_STORAGE.volumeIndex)
+				);
 			}
 		}
 		return null;
 	}
 
-	public static initVolume(): number {
-		let volumeIndex = LocalStorageUtil.getVolumeIndex(
-			LOCAL_STORAGE.volumeIndex
-		);
-
+	public static initVolumeIndex(): number {
 		if (LocalStorageUtil.available()) {
+			const volumeIndex = LocalStorageUtil.getVolumeIndex();
+
 			if (typeof volumeIndex !== 'number') {
-				LocalStorageUtil.setItem(LOCAL_STORAGE.volumeIndex, '0');
-				volumeIndex = 0;
+				LocalStorageUtil.setVolumeIndex(0);
 				return 0;
 			} else {
 				return volumeIndex;
 			}
 		}
 
-		volumeIndex = 0;
 		return 0;
 	}
 }

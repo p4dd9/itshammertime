@@ -12,3 +12,4 @@
 -   Cat scratches the screen
 -   Catches mouse
 -   Collect cat shit
+-   Handle LS not available properly

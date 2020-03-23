@@ -16,7 +16,7 @@ export default class AssetLoader {
 	}
 
 	private static async loadSpriteSheetImages(): Promise<ISpriteSheet[]> {
-		const spriteSheetPromises = new Array() as Array<Promise<ISpriteSheet>>;
+		const spriteSheetPromises = new Array<Promise<ISpriteSheet>>();
 
 		for (const [
 			spriteSheetAssetKey,
@@ -62,7 +62,7 @@ export default class AssetLoader {
 	}
 
 	public static async loadAudioAssets(): Promise<IAudio[]> {
-		const audioPromises = new Array() as Array<Promise<IAudio>>;
+		const audioPromises = new Array<Promise<IAudio>>();
 
 		for (const [key, audioAsset] of audioAssets.entries()) {
 			const audio = new Audio(audioAsset.src);

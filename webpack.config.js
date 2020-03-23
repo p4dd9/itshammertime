@@ -32,7 +32,7 @@ module.exports = (_env, argv) => {
 		optimization: {
 			minimize: false, // do not minimize due to twitch review process
 		},
-		devtool: 'source-map',
+		devtool: isProduction ? false : 'source-map',
 		module: {
 			rules: [
 				{

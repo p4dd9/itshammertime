@@ -28,6 +28,8 @@ export default class GameCursorWeapon {
 
 		this.loadAssets();
 		this.addEventListeners();
+
+		this.removeActiveEffect = this.removeActiveEffect.bind(this);
 		console.log('Loaded' + this._gameWeaponEffect);
 		console.log('GameCursor assets loaded ' + this._cursorImages);
 	}
@@ -36,14 +38,12 @@ export default class GameCursorWeapon {
 		if (this._cursorImage === undefined) {
 			return;
 		}
-
-		this.drawGameCursorWeapon();
-
 		if (this._gameWeaponEffect.length > 0) {
 			for (const gameEffect of this._gameWeaponEffect) {
 				gameEffect.draw();
 			}
 		}
+		this.drawGameCursorWeapon();
 	}
 
 	private drawGameCursorWeapon() {
@@ -75,12 +75,21 @@ export default class GameCursorWeapon {
 		this.audio = audio;
 	}
 
+	private removeActiveEffect() {
+		this._gameWeaponEffect.shift();
+	}
+
 	private addEventListeners() {
 		document.addEventListener('click', (event: MouseEvent) => {
 			GameAudio.playSoundOverlap(this._currentAudio!.audio);
-			this._gameWeaponEffect.push(
-				new GameWeaponEffect(this._context, this._gameCursor)
+
+			const newGameWeaponEffect = new GameWeaponEffect(
+				this._context,
+				this._gameCursor
 			);
+			newGameWeaponEffect.initSelfDestructId = this.removeActiveEffect;
+
+			this._gameWeaponEffect.push(newGameWeaponEffect);
 		});
 	}
 }

@@ -3,16 +3,20 @@ import LudeCat from './LudeCat';
 import Debugger from './Debugger';
 import UI from './GameUI';
 import GameAudio from './GameAudio';
+import GameCursor from './GameCursor';
+import GameCursorWeapon from './GameCursorWeapon';
 
 export default class Game {
 	public debug: boolean = true;
 	public ui: UI;
 	public gameAudio: GameAudio;
 	public ludecat: LudeCat;
+	public gameCursorWeapon: GameCursorWeapon;
 
 	private _context: CanvasRenderingContext2D;
 	private _gameInput: GameInput;
 	private _debugger: Debugger;
+	private _gameCursor: GameCursor;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
@@ -21,7 +25,16 @@ export default class Game {
 		this._debugger = new Debugger(this);
 		this.ui = new UI(this);
 		this.gameAudio = new GameAudio(this);
+		this._gameCursor = new GameCursor(this._context);
+		this.gameCursorWeapon = new GameCursorWeapon(
+			this._context,
+			this._gameCursor
+		);
 
+		console.log(
+			'Checking for GameCursor (commit this): ' + this._gameCursor
+		);
+		console.log('Checking for UI (commit this): ' + this.gameCursorWeapon);
 		console.log('Checking for UI (commit this): ' + this.ui);
 		console.log('Checking for GameAudio (commit this): ' + this.gameAudio);
 
@@ -60,6 +73,7 @@ export default class Game {
 		}
 
 		this.ludecat.draw();
+		this.gameCursorWeapon.draw();
 
 		window.requestAnimationFrame(this._step);
 	}

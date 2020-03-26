@@ -21,6 +21,10 @@ export default class GameAudio {
 		for (const audioAsset of this._game.ludecat.audio!.values()) {
 			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];
 		}
+
+		for (const audioAsset of this._game.gameCursorWeapon.audio!.values()) {
+			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];
+		}
 	}
 
 	public static playSound(audio: HTMLAudioElement) {
@@ -29,5 +33,10 @@ export default class GameAudio {
 		} else {
 			audio.play();
 		}
+	}
+
+	public static playSoundOverlap(audio: HTMLAudioElement) {
+		audio.currentTime = 0;
+		audio.play();
 	}
 }

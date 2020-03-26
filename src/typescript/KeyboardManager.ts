@@ -2,7 +2,7 @@ import GameInput from './GameInput';
 import CONTROLS from '../enums/controls';
 import LudeCat from './LudeCat';
 import KEYCODES from '../enums/keycodes';
-import { spriteSheetAlias } from '../assets/spritesheetAssets';
+import { spriteSheetAlias } from '../assets/ludeCatAssets';
 
 export default class KeyboardManager {
 	private _gameInput: GameInput;

@@ -1,11 +1,18 @@
 import ISpriteSheet from '../interfaces/ISpriteSheet';
-import { spriteSheetAssets } from '../assets/spritesheetAssets';
 import IAudio from '../interfaces/IAudio';
-import { audioAssets } from '../assets/audioAssets';
+import IGameAsset from '../interfaces/IGameImageAsset';
+import IGameImage from '../interfaces/IGameImage';
+import ISpriteSheetAsset from '../interfaces/ISpriteSheetAsset';
+import IGameImageAsset from '../interfaces/IGameImageAsset';
+import IAudioAsset from '../interfaces/IAudioAsset';
 
 export default class AssetLoader {
-	public static async loadSpriteSheets() {
-		const spriteSheets = await AssetLoader.loadSpriteSheetImages();
+	public static async loadSpriteSheets(
+		spritesheetAsets: Map<string, ISpriteSheetAsset>
+	) {
+		const spriteSheets = await AssetLoader.loadSpriteSheetImages(
+			spritesheetAsets
+		);
 		const spriteSheetMap = new Map<string, ISpriteSheet>();
 
 		for (const spriteSheet of spriteSheets) {
@@ -15,13 +22,15 @@ export default class AssetLoader {
 		return spriteSheetMap;
 	}
 
-	private static async loadSpriteSheetImages(): Promise<ISpriteSheet[]> {
+	private static async loadSpriteSheetImages(
+		spritesheetAsets: Map<string, ISpriteSheetAsset>
+	): Promise<ISpriteSheet[]> {
 		const spriteSheetPromises = new Array<Promise<ISpriteSheet>>();
 
 		for (const [
 			spriteSheetAssetKey,
 			spriteSheetAsset,
-		] of spriteSheetAssets.entries()) {
+		] of spritesheetAsets.entries()) {
 			const image: HTMLImageElement = new Image();
 			const {
 				src,
@@ -50,8 +59,46 @@ export default class AssetLoader {
 		return Promise.all(spriteSheetPromises);
 	}
 
-	public static async loadAudio() {
-		const loadedAudioAssets = await AssetLoader.loadAudioAssets();
+	public static async loadImages(imageAssets: Map<string, IGameImageAsset>) {
+		const images = await AssetLoader.loadImagesAssets(imageAssets);
+		const imageMap = new Map<string, IGameImage>();
+
+		for (const imageAsset of images) {
+			imageMap.set(imageAsset.id, imageAsset);
+		}
+
+		return imageMap;
+	}
+
+	public static async loadImagesAssets(
+		images: Map<string, IGameAsset>
+	): Promise<IGameImage[]> {
+		const imagePromises = new Array<Promise<IGameImage>>();
+
+		for (const [imageAssetKey, imageAsset] of images.entries()) {
+			const image: HTMLImageElement = new Image();
+			const { src, scaleOnCanvas } = imageAsset;
+			image.src = src;
+
+			const imagePromise = new Promise<IGameImage>(resolve => {
+				image.onload = () => {
+					resolve({
+						id: imageAssetKey,
+						img: image,
+						scaleOnCanvas,
+					});
+				};
+			});
+			imagePromises.push(imagePromise);
+		}
+
+		return Promise.all(imagePromises);
+	}
+
+	public static async loadAudio(audioAssets: Map<string, IAudioAsset>) {
+		const loadedAudioAssets = await AssetLoader.loadAudioAssets(
+			audioAssets
+		);
 		const audioAssetMap = new Map<string, IAudio>();
 
 		for (const audioAsset of loadedAudioAssets) {
@@ -61,7 +108,9 @@ export default class AssetLoader {
 		return audioAssetMap;
 	}
 
-	public static async loadAudioAssets(): Promise<IAudio[]> {
+	public static async loadAudioAssets(
+		audioAssets: Map<string, IAudioAsset>
+	): Promise<IAudio[]> {
 		const audioPromises = new Array<Promise<IAudio>>();
 
 		for (const [key, audioAsset] of audioAssets.entries()) {

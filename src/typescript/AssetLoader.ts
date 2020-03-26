@@ -115,6 +115,7 @@ export default class AssetLoader {
 
 		for (const [key, audioAsset] of audioAssets.entries()) {
 			const audio = new Audio(audioAsset.src);
+			audio.volume = 0;
 
 			const audioPromise = new Promise<IAudio>(resolve => {
 				audio.addEventListener('loadeddata', () => {

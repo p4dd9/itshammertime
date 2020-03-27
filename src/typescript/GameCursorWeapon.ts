@@ -1,11 +1,8 @@
 import IGameImage from '../interfaces/IGameImage';
 import AssetLoader from './AssetLoader';
-import { weaponAssets, weaponAlias } from '../assets/weaponAssets';
+import { imageAssets, imageAlias } from '../assets/imageAssets';
 import IAudio from '../interfaces/IAudio';
-import {
-	weaponCursorAudioAssets,
-	weaponaudioAlias,
-} from '../assets/audioAssets';
+import { audioAssets, audioAlias } from '../assets/audioAssets';
 import GameCursor from './GameCursor';
 import GameAudio from './GameAudio';
 import GameWeaponEffect from './GameWeaponEffect';
@@ -39,13 +36,13 @@ export default class GameCursorWeapon {
 	}
 
 	private async loadAssets() {
-		const cursorImages = await AssetLoader.loadImages(weaponAssets);
-		const audio = await AssetLoader.loadAudio(weaponCursorAudioAssets);
+		const cursorImages = await AssetLoader.loadImages(imageAssets);
+		const audio = await AssetLoader.loadAudio(audioAssets);
 
-		this._currentAudio = audio.get(weaponaudioAlias.HAMMER);
+		this._currentAudio = audio.get(audioAlias.HAMMER);
 
 		this._cursorImages = cursorImages;
-		this._cursorImage = this._cursorImages.get(weaponAlias.HAMMER);
+		this._cursorImage = this._cursorImages.get(imageAlias.HAMMER);
 
 		this.audio = audio;
 	}

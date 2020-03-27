@@ -68,34 +68,4 @@ export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
 			scaleOnCanvas: 0.2,
 		},
 	],
-	//  [
-	//  	spriteSheetAlias.IDLE,
-	//  	{
-	//  		animated: false,
-	//  		src: idleImage,
-	//  		spriteSheetColumCount: 12,
-	//  		spriteSheetRowCount: 12,
-	//  		scaleOnCanvas: 9.2,
-	//  	},
-	//  ],
-	//  [
-	//  	spriteSheetAlias.WALK_LEFT,
-	//  	{
-	//  		animated: true,
-	//  		src: walkLeftImage,
-	//  		spriteSheetColumCount: 12,
-	//  		spriteSheetRowCount: 12,
-	//  		scaleOnCanvas: 1,
-	//  	},
-	//  ],
-	//  [
-	//  	spriteSheetAlias.WALK_RIGHT,
-	//  	{
-	//  		animated: true,
-	//  		src: walkRightImage,
-	//  		spriteSheetColumCount: 12,
-	//  		spriteSheetRowCount: 12,
-	//  		scaleOnCanvas: 1,
-	//  	},
-	//  ],
 ]);

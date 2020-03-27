@@ -1,14 +1,14 @@
 import GameAudio from './GameAudio';
 import AssetLoader from './AssetLoader';
 
-import { spriteSheetAlias } from '../assets/ludeCatAssets';
-import { ludeCatAudioAlias, ludeCatAudioAssets } from '../assets/audioAssets';
+import { spriteSheetAlias } from '../assets/spriteSheetAssets';
+import { audioAlias, audioAssets } from '../assets/audioAssets';
 
 import IPosition from '../interfaces/IPosition';
 import IAudio from '../interfaces/IAudio';
 import ISpriteSheet from '../interfaces/ISpriteSheet';
 
-import { spriteSheetAssets } from '../assets/ludeCatAssets';
+import { spriteSheetAssets } from '../assets/spriteSheetAssets';
 
 export default class LudeCat {
 	public audio: Map<string, IAudio> | null = null;
@@ -45,7 +45,7 @@ export default class LudeCat {
 	}
 
 	private async loadAssets() {
-		const audio = await AssetLoader.loadAudio(ludeCatAudioAssets);
+		const audio = await AssetLoader.loadAudio(audioAssets);
 		const spritesheets = await AssetLoader.loadSpriteSheets(
 			spriteSheetAssets
 		);
@@ -234,19 +234,19 @@ export default class LudeCat {
 	// AUDIO RELATED FUNCTIONS
 	public nya() {
 		if (this.audio !== null) {
-			GameAudio.playSound(this.audio.get(ludeCatAudioAlias.NYA)!.audio);
+			GameAudio.playSound(this.audio.get(audioAlias.NYA)!.audio);
 		}
 	}
 
 	public meow() {
 		if (this.audio !== null) {
-			GameAudio.playSound(this.audio.get(ludeCatAudioAlias.MEOW)!.audio);
+			GameAudio.playSound(this.audio.get(audioAlias.MEOW)!.audio);
 		}
 	}
 
 	public meow2() {
 		if (this.audio !== null) {
-			GameAudio.playSound(this.audio.get(ludeCatAudioAlias.MEOW2)!.audio);
+			GameAudio.playSound(this.audio.get(audioAlias.MEOW2)!.audio);
 		}
 	}
 }

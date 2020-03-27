@@ -10,40 +10,34 @@ import heavyGlassShatter1 from '../assets/audio/heavy_glass_shatter_1.wav';
 // 1. add alias here
 // 2. add alias as key
 // 3. use alias where you need it
-export const ludeCatAudioAlias = {
+export const audioAlias = {
+	HAMMER: 'HAMMER',
 	MEOW: 'MEOW',
 	MEOW2: 'MEOW2',
 	NYA: 'NYA',
 };
 
-export const weaponaudioAlias = {
-	HAMMER: 'HAMMER',
-};
-
-export const weaponCursorAudioAssets: Map<string, IAudioAsset> = new Map([
+export const audioAssets: Map<string, IAudioAsset> = new Map([
 	[
-		weaponaudioAlias.HAMMER,
+		audioAlias.HAMMER,
 		{
 			src: heavyGlassShatter1,
 		},
 	],
-]);
-
-export const ludeCatAudioAssets: Map<string, IAudioAsset> = new Map([
 	[
-		ludeCatAudioAlias.MEOW,
+		audioAlias.MEOW,
 		{
 			src: meowSound,
 		},
 	],
 	[
-		ludeCatAudioAlias.MEOW2,
+		audioAlias.MEOW2,
 		{
 			src: meow2Sound,
 		},
 	],
 	[
-		ludeCatAudioAlias.NYA,
+		audioAlias.NYA,
 		{
 			src: nyaSound,
 		},

@@ -1,7 +1,7 @@
 import GameCursor from './GameCursor';
 import IGameImage from '../interfaces/IGameImage';
 import AssetLoader from './AssetLoader';
-import { weaponAssets, weaponAlias } from '../assets/weaponAssets';
+import { imageAssets, imageAlias } from '../assets/imageAssets';
 import IPosition from '../interfaces/IPosition';
 
 export default class GameWeaponEffect {
@@ -38,10 +38,10 @@ export default class GameWeaponEffect {
 	}
 
 	private async loadAssets() {
-		const images = await AssetLoader.loadImages(weaponAssets);
+		const images = await AssetLoader.loadImages(imageAssets);
 
 		this._images = images;
-		this._image = this._images.get(weaponAlias.HAMMER_EFFECT);
+		this._image = this._images.get(imageAlias.HAMMER_EFFECT);
 	}
 
 	public draw() {

@@ -58,6 +58,17 @@ export default class GameCursorWeapon {
 
 	private drawGameCursorWeapon() {
 		const { _cursorImage, _gameCursor } = this;
+		const canvasX =
+			_gameCursor.mousePosition.x -
+			_cursorImage!.img.width / _cursorImage!.scaleOnCanvas / 2;
+		const canvasY =
+			_gameCursor.mousePosition.y -
+			_cursorImage!.img.height / _cursorImage!.scaleOnCanvas / 2;
+
+		const scaledWidth =
+			_cursorImage!.img.width / _cursorImage!.scaleOnCanvas;
+		const scaledHeight =
+			_cursorImage!.img.height / _cursorImage!.scaleOnCanvas;
 
 		this._context.drawImage(
 			_cursorImage!.img,
@@ -65,12 +76,10 @@ export default class GameCursorWeapon {
 			0,
 			_cursorImage!.img.width,
 			_cursorImage!.img.height,
-			_gameCursor.mousePosition.x -
-				_cursorImage!.img.width / _cursorImage!.scaleOnCanvas / 2,
-			_gameCursor.mousePosition.y -
-				_cursorImage!.img.height / _cursorImage!.scaleOnCanvas / 2,
-			_cursorImage!.img.width / _cursorImage!.scaleOnCanvas,
-			_cursorImage!.img.height / _cursorImage!.scaleOnCanvas
+			canvasX,
+			canvasY,
+			scaledWidth,
+			scaledHeight
 		);
 	}
 

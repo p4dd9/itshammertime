@@ -54,6 +54,8 @@ export default class GameWeaponEffect {
 
 	private drawGameWeaponEffect() {
 		const { _image, _effectPosition } = this;
+		const scaledWidth = _image!.img.width / _image!.scaleOnCanvas;
+		const scaledHeight = _image!.img.height / _image!.scaleOnCanvas;
 
 		this._context.drawImage(
 			_image!.img,
@@ -61,10 +63,10 @@ export default class GameWeaponEffect {
 			0,
 			_image!.img.width,
 			_image!.img.height,
-			_effectPosition.x,
-			_effectPosition.y,
-			_image!.img.width / _image!.scaleOnCanvas,
-			_image!.img.height / _image!.scaleOnCanvas
+			_effectPosition.x - scaledWidth / 2,
+			_effectPosition.y - scaledHeight / 2,
+			scaledWidth,
+			scaledHeight
 		);
 	}
 }

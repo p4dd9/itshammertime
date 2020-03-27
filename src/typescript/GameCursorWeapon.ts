@@ -30,8 +30,18 @@ export default class GameCursorWeapon {
 		this.addEventListeners();
 
 		this.removeActiveEffect = this.removeActiveEffect.bind(this);
-		console.log('Loaded' + this._gameWeaponEffect);
-		console.log('GameCursor assets loaded ' + this._cursorImages);
+	}
+
+	private async loadAssets() {
+		const cursorImages = await AssetLoader.loadImages(weaponAssets);
+		const audio = await AssetLoader.loadAudio(weaponCursorAudioAssets);
+
+		this._currentAudio = audio.get(weaponaudioAlias.HAMMER);
+
+		this._cursorImages = cursorImages;
+		this._cursorImage = this._cursorImages.get(weaponAlias.HAMMER);
+
+		this.audio = audio;
 	}
 
 	public draw() {
@@ -62,17 +72,6 @@ export default class GameCursorWeapon {
 			_cursorImage!.img.width / _cursorImage!.scaleOnCanvas,
 			_cursorImage!.img.height / _cursorImage!.scaleOnCanvas
 		);
-	}
-
-	private async loadAssets() {
-		const cursorImages = await AssetLoader.loadImages(weaponAssets);
-		const audio = await AssetLoader.loadAudio(weaponCursorAudioAssets);
-
-		this._cursorImage = cursorImages.get(weaponAlias.HAMMER);
-		this._currentAudio = audio.get(weaponaudioAlias.HAMMER);
-
-		this._cursorImages = cursorImages;
-		this.audio = audio;
 	}
 
 	private removeActiveEffect() {

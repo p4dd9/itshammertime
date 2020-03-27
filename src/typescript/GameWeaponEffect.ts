@@ -22,8 +22,6 @@ export default class GameWeaponEffect {
 		};
 
 		this.loadAssets();
-
-		console.log(this._images);
 	}
 
 	public set initSelfDestructId(removeItSelf: () => void) {
@@ -42,8 +40,8 @@ export default class GameWeaponEffect {
 	private async loadAssets() {
 		const images = await AssetLoader.loadImages(weaponAssets);
 
-		this._image = images.get(weaponAlias.HAMMER_EFFECT);
 		this._images = images;
+		this._image = this._images.get(weaponAlias.HAMMER_EFFECT);
 	}
 
 	public draw() {

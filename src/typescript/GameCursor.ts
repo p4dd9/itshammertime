@@ -20,7 +20,6 @@ export default class GameCursor {
 	}
 
 	set mousePosition(mousePosition: ICursorPosition) {
-		console.log(mousePosition);
 		this._mousePosition = mousePosition;
 	}
 

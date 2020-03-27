@@ -31,13 +31,6 @@ export default class Game {
 			this._gameCursor
 		);
 
-		console.log(
-			'Checking for GameCursor (commit this): ' + this._gameCursor
-		);
-		console.log('Checking for UI (commit this): ' + this.gameCursorWeapon);
-		console.log('Checking for UI (commit this): ' + this.ui);
-		console.log('Checking for GameAudio (commit this): ' + this.gameAudio);
-
 		this._step = this._step.bind(this);
 	}
 

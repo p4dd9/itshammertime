@@ -5,6 +5,8 @@ import IGameImage from '../interfaces/IGameImage';
 import ISpriteSheetAsset from '../interfaces/ISpriteSheetAsset';
 import IGameImageAsset from '../interfaces/IGameImageAsset';
 import IAudioAsset from '../interfaces/IAudioAsset';
+import LocalStorageUtil from '../util/LocalStorageUtil';
+import GameAudio from './GameAudio';
 
 export default class AssetLoader {
 	public static async loadSpriteSheets(
@@ -115,7 +117,8 @@ export default class AssetLoader {
 
 		for (const [key, audioAsset] of audioAssets.entries()) {
 			const audio = new Audio(audioAsset.src);
-			audio.volume = 0;
+			audio.volume =
+				GameAudio.volumeRange[LocalStorageUtil.getVolumeIndex() || 0];
 
 			const audioPromise = new Promise<IAudio>(resolve => {
 				audio.addEventListener('loadeddata', () => {

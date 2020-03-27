@@ -148,7 +148,7 @@ export default class GamepadManager {
 
 				this._gamepad = gampadEvent.gamepad;
 				const { index, id, buttons, axes } = gampadEvent.gamepad;
-				console.log(
+				console.info(
 					`Gamepad connected at index ${index}: ${id}. ${buttons.length} buttons, ${axes.length} axes.`
 				);
 			});
@@ -163,7 +163,7 @@ export default class GamepadManager {
 				this._gameInput.controls = CONTROLS.KEYBOARD;
 				delete this._gamepad;
 				const { index, id } = gampadEvent.gamepad;
-				console.log(
+				console.info(
 					`Gamepad disconnected from index ${index}: ${id}. `
 				);
 			});

@@ -53,7 +53,6 @@ export default class LudeCat {
 		this.audio = audio;
 		this._spritesheets = spritesheets;
 		this._spritesheet = spritesheets.get(spriteSheetAlias.IDLE);
-		console.log('Assets loaded and ready!');
 	}
 
 	private playIntro() {
@@ -62,7 +61,7 @@ export default class LudeCat {
 				this._spritesheet!.img.width /
 					this._spritesheet!.spriteSheetColumCount /
 					2 <
-			this._context.canvas.width / 2 - 10 // 10 for the movementdistance x2 to center the cat
+			this._context.canvas.width / 2
 		) {
 			this.moveRight();
 		} else {
@@ -70,14 +69,12 @@ export default class LudeCat {
 		}
 	}
 
-	// DRAW ON CONTEXT RELATED FUNCTIONS
 	public draw() {
 		this._delayFrameIndexCount++;
 		if (this._spritesheet === undefined) {
 			return;
 		}
 
-		// TODO: Remove condition with fullfilled once
 		if (this._playIntro) {
 			this.playIntro();
 		}

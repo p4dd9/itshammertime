@@ -4,12 +4,13 @@ import { hammerImageAssets } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
 import { hammerImageAlias } from '../../assets/imageAssets';
 import HammerVFX from '../weaponeffects/HammerVFX';
+import { degToRad } from '../../util/CommonUtil';
 
 export default class HammerWeapon extends Weapon {
 	public imageAssets = hammerImageAssets;
 	public audioAssets = hammerAudioAssets;
 
-	private rotateSpeed = 12.5;
+	private rotateSpeed = 12;
 	private rotateDegreeThreshold = 25;
 	private angle = 0;
 	private moveForward = true;
@@ -39,29 +40,42 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	public draw(): void {
-		if (this.image === undefined) {
+		const { image, context, gameWeaponEffect, angle } = this;
+
+		if (image === undefined) {
 			return;
 		}
-		if (this.gameWeaponEffect.length > 0) {
-			for (const gameEffect of this.gameWeaponEffect) {
+
+		if (gameWeaponEffect.length > 0) {
+			for (const gameEffect of gameWeaponEffect) {
 				gameEffect.draw();
 			}
 		}
+
+		context.save();
+		this.translateRotationPivotToMouse('set');
+		context.rotate(degToRad(-angle));
+		this.drawHammerWeapon();
+		this.translateRotationPivotToMouse('reset');
+		context.restore();
+
+		this.updateHammerAnimation();
+	}
+
+	private drawHammerWeapon(): void {
 		const { image, context } = this;
 
-		const sourceImage = image!.img;
-		const sourceImageWidth = image!.img.width;
-		const sourceImageHeight = image!.img.height;
+		if (image === undefined) {
+			return;
+		}
+		const sourceImage = image.img;
+		const sourceImageWidth = image.img.width;
+		const sourceImageHeight = image.img.height;
 
-		const scaledWidth = image!.img.width / image!.scaleOnCanvas;
-		const scaledHeight = image!.img.height / image!.scaleOnCanvas;
+		const scaledWidth = image.img.width / image.scaleOnCanvas;
+		const scaledHeight = image.img.height / image.scaleOnCanvas;
 
-		this.context.save();
-		this.setRotationPivotToMouse('set');
-
-		context.rotate(this.degToRad(-this.angle));
-
-		this.context.drawImage(
+		context.drawImage(
 			sourceImage,
 			0,
 			0,
@@ -72,14 +86,11 @@ export default class HammerWeapon extends Weapon {
 			scaledWidth,
 			scaledHeight
 		);
-
-		this.setRotationPivotToMouse('reset');
-		context.restore();
-
-		this.updateHammerRotation();
 	}
 
-	private setRotationPivotToMouse(rotationDirection: 'set' | 'reset'): void {
+	private translateRotationPivotToMouse(
+		rotationDirection: 'set' | 'reset'
+	): void {
 		const directionNumber = rotationDirection === 'set' ? 1 : -1;
 
 		this.context.translate(
@@ -88,7 +99,7 @@ export default class HammerWeapon extends Weapon {
 		);
 	}
 
-	private updateHammerRotation(): void {
+	private updateHammerAnimation(): void {
 		if (this.animateHammer) {
 			if (this.angle <= this.rotateDegreeThreshold && this.moveForward) {
 				this.angle += this.rotateSpeed;
@@ -104,12 +115,12 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	protected use(): void {
-		const image = this.image;
+		const image = this.image!;
 
 		this.animateHammer = true;
 
-		const scaledWidth = image!.img.width / image!.scaleOnCanvas;
-		const scaledHeight = image!.img.height / image!.scaleOnCanvas;
+		const scaledWidth = image.img.width / image.scaleOnCanvas;
+		const scaledHeight = image.img.height / image.scaleOnCanvas;
 
 		const newGameWeaponEffect = new HammerVFX(this.context, {
 			x: this.canvasCursor.mousePosition.x - scaledWidth / 2 - 80, // hammer effect related

@@ -33,7 +33,7 @@ export default class CanvasCursor {
 	}
 
 	private addCursorListenerToDocument(): void {
-		document.addEventListener('mousemove', event => {
+		this.context.canvas.addEventListener('mousemove', event => {
 			this.mousePosition = this.getMousePos(event as MouseEvent);
 		});
 	}

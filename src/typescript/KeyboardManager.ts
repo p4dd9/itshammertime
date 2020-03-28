@@ -21,16 +21,18 @@ export default class KeyboardManager {
 	}
 
 	public handleArrowKeys(): void {
+		const ludeCat = this.ludeCat;
+
 		if (this.rightArrowKeyPressed) {
-			this.ludeCat.moveRight();
+			ludeCat.moveRight();
 		} else if (this.leftArrowKeyPressed) {
-			this.ludeCat.moveLeft();
+			ludeCat.moveLeft();
 		} else if (this.upArrowKeyPressed) {
-			this.ludeCat.moveUp();
+			ludeCat.moveUp();
 		} else if (this.downArrowKeyPressed) {
-			this.ludeCat.moveDown();
+			ludeCat.moveDown();
 		} else {
-			this.ludeCat.moving(ludeCatSpriteSheetAlias.IDLE);
+			ludeCat.moving(ludeCatSpriteSheetAlias.IDLE);
 		}
 	}
 

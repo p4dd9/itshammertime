@@ -90,54 +90,48 @@ export default class GamepadManager {
 	}
 
 	public handleAxesInput(): void {
-		const {
-			axeStatusThreshold: _axeStatusThreshold,
-			ludeCat: _ludeCat,
-		} = this;
-		if (this.axesStatus[XBOX360_AXIS.LS_X] > _axeStatusThreshold) {
-			_ludeCat.moveRight();
+		const { axeStatusThreshold, ludeCat } = this;
+		if (this.axesStatus[XBOX360_AXIS.LS_X] > axeStatusThreshold) {
+			ludeCat.moveRight();
 		}
-		if (this.axesStatus[XBOX360_AXIS.LS_X] < -_axeStatusThreshold) {
-			_ludeCat.moveLeft();
+		if (this.axesStatus[XBOX360_AXIS.LS_X] < -axeStatusThreshold) {
+			ludeCat.moveLeft();
 		}
-		if (this.axesStatus[XBOX360_AXIS.LS_Y] < -_axeStatusThreshold) {
-			_ludeCat.moveUp();
+		if (this.axesStatus[XBOX360_AXIS.LS_Y] < -axeStatusThreshold) {
+			ludeCat.moveUp();
 		}
-		if (this.axesStatus[XBOX360_AXIS.LS_Y] > _axeStatusThreshold) {
-			_ludeCat.moveDown();
+		if (this.axesStatus[XBOX360_AXIS.LS_Y] > axeStatusThreshold) {
+			ludeCat.moveDown();
 		}
 	}
 
 	public handleButtons(): void {
-		const { ludeCat: _ludeCat } = this;
-		if (this.gamepad!.buttons[XBOX360_BUTTONS.A].pressed) {
-			_ludeCat.meow();
+		const { ludeCat, gamepad } = this;
+		if (gamepad!.buttons[XBOX360_BUTTONS.A].pressed) {
+			ludeCat.meow();
 		}
 
-		if (this.gamepad!.buttons[XBOX360_BUTTONS.B].pressed) {
-			_ludeCat.nya();
+		if (gamepad!.buttons[XBOX360_BUTTONS.B].pressed) {
+			ludeCat.nya();
 		}
 
-		if (this.gamepad!.buttons[XBOX360_BUTTONS.X].pressed) {
-			_ludeCat.meow2();
+		if (gamepad!.buttons[XBOX360_BUTTONS.X].pressed) {
+			ludeCat.meow2();
 		}
 	}
 
 	public checkMovingCharacterByGamepad(): void {
-		const {
-			ludeCat: _ludeCat,
-			axeStatusThreshold: _axeStatusThreshold,
-		} = this;
+		const { ludeCat, axeStatusThreshold, axesStatus } = this;
 
 		if (
 			!(
-				this.axesStatus[XBOX360_AXIS.LS_X] > _axeStatusThreshold ||
-				this.axesStatus[XBOX360_AXIS.LS_X] < -_axeStatusThreshold ||
-				this.axesStatus[XBOX360_AXIS.LS_Y] > _axeStatusThreshold ||
-				this.axesStatus[XBOX360_AXIS.LS_Y] < -_axeStatusThreshold
+				axesStatus[XBOX360_AXIS.LS_X] > axeStatusThreshold ||
+				axesStatus[XBOX360_AXIS.LS_X] < -axeStatusThreshold ||
+				axesStatus[XBOX360_AXIS.LS_Y] > axeStatusThreshold ||
+				axesStatus[XBOX360_AXIS.LS_Y] < -axeStatusThreshold
 			)
 		) {
-			_ludeCat.moving(ludeCatSpriteSheetAlias.IDLE);
+			ludeCat.moving(ludeCatSpriteSheetAlias.IDLE);
 		}
 	}
 

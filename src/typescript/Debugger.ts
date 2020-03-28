@@ -17,30 +17,28 @@ export default class Debugger {
 	}
 
 	private drawCanvasBorder(): void {
-		this.game.context.strokeStyle = '#f00';
-		this.game.context.lineWidth = 2;
-		this.game.context.strokeRect(
-			0,
-			0,
-			this.game.context.canvas.width,
-			this.game.context.canvas.height
-		);
+		const context = this.game.context;
+		context.strokeStyle = '#f00';
+		context.lineWidth = 2;
+		context.strokeRect(0, 0, context.canvas.width, context.canvas.height);
 	}
 
 	private drawCenterLines(): void {
-		this.game.context.strokeStyle = '#f00';
-		this.game.context.lineWidth = 2;
-		this.game.context.strokeRect(
-			this.game.context.canvas.width / 2,
+		const context = this.game.context;
+
+		context.strokeStyle = '#f00';
+		context.lineWidth = 2;
+		context.strokeRect(
+			context.canvas.width / 2,
 			0,
 			0,
-			this.game.context.canvas.height
+			context.canvas.height
 		);
 
-		this.game.context.strokeRect(
+		context.strokeRect(
 			0,
-			this.game.context.canvas.height / 2,
-			this.game.context.canvas.width,
+			context.canvas.height / 2,
+			context.canvas.width,
 			0
 		);
 	}
@@ -56,13 +54,10 @@ export default class Debugger {
 	}
 
 	private drawFPS(): void {
+		const context = this.game.context;
 		this.calculateFPS();
-		this.game.context.fillStyle = '#f00';
-		this.game.context.font = '25px Arial';
-		this.game.context.fillText(
-			`${this.fps} fps`,
-			this.game.context.canvas.width - 80,
-			30
-		);
+		context.fillStyle = '#f00';
+		context.font = '25px Arial';
+		context.fillText(`${this.fps} fps`, context.canvas.width - 80, 30);
 	}
 }

@@ -51,10 +51,6 @@ export default abstract class Weapon {
 		this.addEventListeners();
 	}
 
-	protected degToRad(degree: number): number {
-		return degree * 0.01745;
-	}
-
 	public abstract draw(): void;
 	public abstract removeEventListeners(): void;
 	protected abstract addEventListeners(): void;

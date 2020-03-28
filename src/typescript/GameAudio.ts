@@ -23,6 +23,7 @@ export default class GameAudio {
 			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];
 		}
 
+		// TODO: Fix audio bug, idk
 		if (this.game.weapon === null) return;
 		for (const audioAsset of this.game.weapon.audio!.values()) {
 			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];

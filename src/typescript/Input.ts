@@ -23,10 +23,12 @@ export default class Input {
 	}
 
 	public handleInput(): void {
+		const gamepadManager = this.gamepadManager;
+
 		if (this._controls === CONTROLS.GAMEPAD) {
-			this.gamepadManager.checkMovingCharacterByGamepad();
-			this.gamepadManager.handleButtons();
-			this.gamepadManager.handleAxesInput();
+			gamepadManager.checkMovingCharacterByGamepad();
+			gamepadManager.handleButtons();
+			gamepadManager.handleAxesInput();
 		} else {
 			this.keyboardManager.handleArrowKeys();
 		}

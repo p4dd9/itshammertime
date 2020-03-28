@@ -94,24 +94,26 @@ export default class UI {
 	}
 
 	public setAudioButtonImage(volumeIndex: number): void {
-		if (this.audioButtonImage === null) {
+		const audioButtonImage = this.audioButtonImage;
+
+		if (audioButtonImage === null) {
 			return;
 		}
 		switch (volumeIndex) {
 			case 0: {
-				this.audioButtonImage.src = VolumeOffImage;
+				audioButtonImage.src = VolumeOffImage;
 				break;
 			}
 			case 1: {
-				this.audioButtonImage.src = VolumeLowImage;
+				audioButtonImage.src = VolumeLowImage;
 				break;
 			}
 			case 2: {
-				this.audioButtonImage.src = VolumeMediumImage;
+				audioButtonImage.src = VolumeMediumImage;
 				break;
 			}
 			case 3: {
-				this.audioButtonImage.src = VolumeHighImage;
+				audioButtonImage.src = VolumeHighImage;
 				break;
 			}
 		}

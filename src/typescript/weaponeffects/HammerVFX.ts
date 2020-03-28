@@ -4,10 +4,12 @@ import { hammerImageAssets, hammerImageAlias } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
 
 export default class HammerVFX extends WeaponVFX {
-	private _initSelfDestructId: () => void;
+	public static lifeTime = 5000; // ms
 
 	public imageAssets = hammerImageAssets;
 	public audioAssets = hammerAudioAssets;
+
+	private _initSelfDestructId: () => void;
 
 	constructor(context: CanvasRenderingContext2D, position: IPosition) {
 		super(
@@ -52,7 +54,7 @@ export default class HammerVFX extends WeaponVFX {
 		}
 		window.setTimeout(() => {
 			removeItSelf();
-		}, 5000);
+		}, HammerVFX.lifeTime);
 	}
 
 	public get initSelfDestructId(): () => void {

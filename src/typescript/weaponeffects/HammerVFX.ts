@@ -9,7 +9,7 @@ export default class HammerVFX extends WeaponVFX {
 	public imageAssets = hammerImageAssets;
 	public audioAssets = hammerAudioAssets;
 
-	private _initSelfDestructId: () => void;
+	private _initSelfDestructId: (() => void) | null = null;
 
 	constructor(context: CanvasRenderingContext2D, position: IPosition) {
 		super(
@@ -20,35 +20,35 @@ export default class HammerVFX extends WeaponVFX {
 			hammerImageAlias.HAMMER_EFFECT,
 			hammerAudioAlias.HAMMER
 		);
-
-		this._initSelfDestructId = (): void => {
-			return;
-		};
 	}
 
 	public draw(): void {
-		if (this.image === undefined) {
+		const { image, effectPosition } = this;
+
+		if (image === undefined || image === null) {
 			return;
 		}
 
-		const { image, effectPosition } = this;
-		const scaledWidth = image!.img.width / image!.scaleOnCanvas;
-		const scaledHeight = image!.img.height / image!.scaleOnCanvas;
+		const scaledWidth = image.img.width / image.scaleOnCanvas;
+		const scaledHeight = image.img.height / image.scaleOnCanvas;
+
+		const canvasX = effectPosition.x - scaledWidth / 2;
+		const canvasY = effectPosition.y - scaledHeight / 2;
 
 		this.context.drawImage(
-			image!.img,
+			image.img,
 			0,
 			0,
-			image!.img.width,
-			image!.img.height,
-			effectPosition.x - scaledWidth / 2,
-			effectPosition.y - scaledHeight / 2,
+			image.img.width,
+			image.img.height,
+			canvasX,
+			canvasY,
 			scaledWidth,
 			scaledHeight
 		);
 	}
 
-	public set initSelfDestructId(removeItSelf: () => void) {
+	public set selfDestruct(removeItSelf: (() => void) | null) {
 		if (removeItSelf === null) {
 			return;
 		}
@@ -57,7 +57,7 @@ export default class HammerVFX extends WeaponVFX {
 		}, HammerVFX.lifeTime);
 	}
 
-	public get initSelfDestructId(): () => void {
+	public get selfDestruct(): (() => void) | null {
 		return this._initSelfDestructId;
 	}
 }

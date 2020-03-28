@@ -115,7 +115,7 @@ export default class HammerWeapon extends Weapon {
 			x: this.canvasCursor.mousePosition.x - scaledWidth / 2 - 80, // hammer effect related
 			y: this.canvasCursor.mousePosition.y - scaledHeight / 2,
 		});
-		newGameWeaponEffect.initSelfDestructId = this.removeActiveEffect;
+		newGameWeaponEffect.selfDestruct = this.removeActiveEffect;
 
 		this.gameWeaponEffect.push(newGameWeaponEffect);
 	}

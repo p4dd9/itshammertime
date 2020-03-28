@@ -1,3 +1,4 @@
+import '../vendor/analytics';
 import Input from './Input';
 import LudeCat from './LudeCat';
 import Debugger from './Debugger';

@@ -8,30 +8,45 @@ import macheteImage from './images/machete.png';
 // 1. add alias here
 // 2. add alias as key
 // 3. use alias where you need it
-export const imageAlias = {
+
+// ASSET ALIAS
+export const hammerImageAlias = {
 	HAMMER: 'HAMMER_STATIC',
 	HAMMER_EFFECT: 'HAMMER_EFFECT',
+};
 
+export const macheteImageAlias = {
 	MACHETE_STATIC: 'MACHETE_STATIC',
 };
 
-export const imageAssets: Map<string, IGameImageAsset> = new Map([
+// ASSETS
+export const macheteImageAssets: Map<string, IGameImageAsset> = new Map([
 	[
-		imageAlias.HAMMER,
+		macheteImageAlias.MACHETE_STATIC,
+		{
+			src: macheteImage,
+			scaleOnCanvas: 4.5,
+		},
+	],
+]);
+
+export const hammerImageAssets: Map<string, IGameImageAsset> = new Map([
+	[
+		hammerImageAlias.HAMMER,
 		{
 			src: hammerImage,
 			scaleOnCanvas: 3.5,
 		},
 	],
 	[
-		imageAlias.HAMMER_EFFECT,
+		hammerImageAlias.HAMMER_EFFECT,
 		{
 			src: hammerEffectImage,
 			scaleOnCanvas: 3.5,
 		},
 	],
 	[
-		imageAlias.MACHETE_STATIC,
+		macheteImageAlias.MACHETE_STATIC,
 		{
 			src: macheteImage,
 			scaleOnCanvas: 4.5,

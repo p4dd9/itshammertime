@@ -1,35 +1,37 @@
 import IGameImage from '../interfaces/IGameImage';
 import AssetLoader from './AssetLoader';
-import IAudio from '../interfaces/IAudio';
-import CanvasCursor from './CanvasCursor';
-import WeaponEffect from './WeaponVFX';
+import IPosition from '../interfaces/IPosition';
 import IGameImageAsset from '../interfaces/IGameImageAsset';
 import IAudioAsset from '../interfaces/IAudioAsset';
+import IAudio from '../interfaces/IAudio';
+import GameAudio from './GameAudio';
 
-export default abstract class Weapon {
+export default abstract class WeaponEffect {
 	public image: IGameImage | undefined = undefined;
 	public images: Map<string, IGameImage> | null = null;
 	public audio: Map<string, IAudio> | null = null;
 
 	protected currentAudio: IAudio | undefined = undefined;
-	protected canvasCursor: CanvasCursor;
-	protected context: CanvasRenderingContext2D;
-	protected gameWeaponEffect: WeaponEffect[] = [] as WeaponEffect[];
+	protected _context: CanvasRenderingContext2D;
 
-	protected abstract imageAssets: Map<string, IGameImageAsset>;
-	protected abstract audioAssets: Map<string, IAudioAsset>;
+	protected _effectPosition: IPosition;
 
 	constructor(
 		context: CanvasRenderingContext2D,
-		canvasCursor: CanvasCursor,
+		position: IPosition,
 		imageAssets: Map<string, IGameImageAsset>,
 		audioAssets: Map<string, IAudioAsset>,
 		imageAlias: string,
 		audioAlias: string
 	) {
-		this.canvasCursor = canvasCursor;
-		this.context = context;
+		this._context = context;
 
+		this._effectPosition = {
+			x: position.x,
+			y: position.y,
+		};
+
+		console.log('Commit me: ' + this.images);
 		this.loadAssets(imageAssets, audioAssets, imageAlias, audioAlias);
 	}
 
@@ -48,15 +50,8 @@ export default abstract class Weapon {
 		this.currentAudio = audio.get(audioAlias);
 		this.image = images.get(imageAlias);
 
-		this.addEventListeners();
-	}
-
-	protected degToRad(degree: number): number {
-		return degree * 0.01745;
+		GameAudio.playSoundOverlap(this.currentAudio!.audio);
 	}
 
 	public abstract draw(): void;
-	public abstract removeEventListeners(): void;
-	protected abstract addEventListeners(): void;
-	protected abstract use(): void;
 }

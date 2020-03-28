@@ -2,7 +2,7 @@ import GameAudio from './GameAudio';
 import AssetLoader from './AssetLoader';
 
 import { spriteSheetAlias } from '../assets/spriteSheetAssets';
-import { audioAlias, audioAssets } from '../assets/audioAssets';
+import { audioAlias, hammerAudioAssets } from '../assets/audioAssets';
 
 import IPosition from '../interfaces/IPosition';
 import IAudio from '../interfaces/IAudio';
@@ -45,7 +45,7 @@ export default class LudeCat {
 	}
 
 	private async loadAssets(): Promise<void> {
-		const audio = await AssetLoader.loadAudio(audioAssets);
+		const audio = await AssetLoader.loadAudio(hammerAudioAssets);
 		const spritesheets = await AssetLoader.loadSpriteSheets(
 			spriteSheetAssets
 		);

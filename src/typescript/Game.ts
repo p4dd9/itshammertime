@@ -6,30 +6,41 @@ import UI from './GameUI';
 import GameAudio from './GameAudio';
 import CanvasCursor from './CanvasCursor';
 import Weapon from './Weapon';
+import HammerWeapon from './weapons/HammerWeapon';
 
 export default class Game {
 	public debug = true;
 	public ui: UI;
 	public gameAudio: GameAudio;
 	public ludecat: LudeCat;
-	public weapon: Weapon;
+	public canvasCursor: CanvasCursor;
 
+	private _weapon: Weapon;
 	private _context: CanvasRenderingContext2D;
 	private _gameInput: Input;
 	private _debugger: Debugger;
-	private _gameCursor: CanvasCursor;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
+		this.canvasCursor = new CanvasCursor(this.context);
+
 		this.ludecat = new LudeCat(this._context);
 		this._gameInput = new Input(this.ludecat);
 		this._debugger = new Debugger(this);
 		this.ui = new UI(this);
 		this.gameAudio = new GameAudio(this);
-		this._gameCursor = new CanvasCursor(this._context);
-		this.weapon = new Weapon(this._context, this._gameCursor);
+		this._weapon = new HammerWeapon(this._context, this.canvasCursor);
 
 		this._step = this._step.bind(this);
+	}
+
+	public get weapon(): Weapon {
+		return this._weapon;
+	}
+
+	public set weapon(weapon: Weapon) {
+		this._weapon.removeEventListeners();
+		this._weapon = weapon;
 	}
 
 	public get context(): CanvasRenderingContext2D {
@@ -64,7 +75,10 @@ export default class Game {
 		}
 
 		this.ludecat.draw();
-		this.weapon.draw();
+
+		if (this.weapon) {
+			this.weapon.draw();
+		}
 
 		window.requestAnimationFrame(this._step);
 	}

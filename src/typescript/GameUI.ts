@@ -10,7 +10,8 @@ import VolumeHighImage from '../assets/icons/volume-high-outline.svg';
 
 import hammerImage from '../assets/images/hammer.png';
 import macheteImage from '../assets/images/machete.png';
-import { imageAlias } from '../assets/imageAssets';
+import HammerWeapon from './weapons/HammerWeapon';
+import MacheteWeapon from './weapons/MacheteWeapon';
 
 export default class UI {
 	public _uiLayer: HTMLDivElement | null;
@@ -60,8 +61,9 @@ export default class UI {
 		this._hammerButton?.addEventListener('click', () => {
 			console.info('Switching to Hammer.');
 
-			this._game.weapon.image = this._game.weapon.images?.get(
-				imageAlias.HAMMER
+			this._game.weapon = new HammerWeapon(
+				this._game.context,
+				this._game.canvasCursor
 			);
 		});
 
@@ -69,8 +71,9 @@ export default class UI {
 		this._macheteButton?.addEventListener('click', () => {
 			console.info('Switching to Machete.');
 
-			this._game.weapon.image = this._game.weapon.images?.get(
-				imageAlias.MACHETE_STATIC
+			this._game.weapon = new MacheteWeapon(
+				this._game.context,
+				this._game.canvasCursor
 			);
 		});
 	}

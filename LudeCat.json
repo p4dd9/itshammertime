@@ -45,6 +45,29 @@
         "width": 1280,
         "height": 720
       }
+    },
+    {
+      "id": "2",
+      "label": "https://www.twitch.tv/djscruffoh",
+      "channelId": "15567200",
+      "configurationAnchor": "video_overlay",
+      "displayChannelName": "djscruffoh",
+      "type": "video_overlay",
+      "features": {
+        "isBitsEnabled": false,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "linked": false,
+      "linkedUserId": "",
+      "mode": "viewer",
+      "isPopout": false,
+      "role": "Broadcaster",
+      "orientation": "Portrait",
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      }
     }
   ],
   "frontendCommand": "",

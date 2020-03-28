@@ -13,6 +13,10 @@ button {
 	}
 }
 
-* {
+canvas {
 	cursor: none;
+}
+
+* {
+	user-select: none;
 }

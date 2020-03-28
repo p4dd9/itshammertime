@@ -17,9 +17,9 @@ export default class GamepadManager {
 	private _axesStatus: number[] = new Array(4) as number[];
 
 	// State of buttons
-	private _buttonsStatus: string[] = new Array() as string[];
+	private _buttonsStatus: string[] = [] as string[];
 
-	private _intervalId: number = -1;
+	private _intervalId = -1;
 	private _axeStatusThreshold = 0.3;
 
 	private _gameInput: GameInput;
@@ -53,7 +53,7 @@ export default class GamepadManager {
 		return this._gamepad;
 	}
 
-	private listenToGamepad() {
+	private listenToGamepad(): void {
 		if (this._gamepad === null) {
 			return;
 		}
@@ -89,7 +89,7 @@ export default class GamepadManager {
 		this._gamepad = navigator.getGamepads()[0];
 	}
 
-	public handleAxesInput() {
+	public handleAxesInput(): void {
 		const { _axeStatusThreshold, _ludeCat } = this;
 		if (this.axesStatus[XBOX360_AXIS.LS_X] > _axeStatusThreshold) {
 			_ludeCat.moveRight();
@@ -105,7 +105,7 @@ export default class GamepadManager {
 		}
 	}
 
-	public handleButtons() {
+	public handleButtons(): void {
 		const { _ludeCat } = this;
 		if (this.gamepad!.buttons[XBOX360_BUTTONS.A].pressed) {
 			_ludeCat.meow();
@@ -120,7 +120,7 @@ export default class GamepadManager {
 		}
 	}
 
-	public checkMovingCharacterByGamepad() {
+	public checkMovingCharacterByGamepad(): void {
 		const { _ludeCat, _axeStatusThreshold } = this;
 
 		if (
@@ -135,7 +135,7 @@ export default class GamepadManager {
 		}
 	}
 
-	private gamepadConntectedListener() {
+	private gamepadConntectedListener(): void {
 		if (BrowserUtil.supportsGamepads()) {
 			window.addEventListener('gamepadconnected', (event: Event) => {
 				const gampadEvent = event as IGamepadEvent;
@@ -155,7 +155,7 @@ export default class GamepadManager {
 		}
 	}
 
-	private gamepadDisconnectedListener() {
+	private gamepadDisconnectedListener(): void {
 		if (BrowserUtil.supportsGamepads()) {
 			window.addEventListener('gamepaddisconnected', (event: Event) => {
 				const gampadEvent = event as IGamepadEvent;

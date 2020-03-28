@@ -13,8 +13,9 @@ export default class GameWeaponEffect {
 
 	constructor(context: CanvasRenderingContext2D, position: IPosition) {
 		this._context = context;
-		// tslint:disable-next-line: no-empty
-		this._initSelfDestructId = () => {};
+		this._initSelfDestructId = (): void => {
+			return;
+		};
 		this._effectPosition = {
 			x: position.x,
 			y: position.y,
@@ -36,14 +37,14 @@ export default class GameWeaponEffect {
 		return this._initSelfDestructId;
 	}
 
-	private async loadAssets() {
+	private async loadAssets(): Promise<void> {
 		const images = await AssetLoader.loadImages(imageAssets);
 
 		this._images = images;
 		this._image = this._images.get(imageAlias.HAMMER_EFFECT);
 	}
 
-	public draw() {
+	public draw(): void {
 		if (this._image === undefined) {
 			return;
 		}
@@ -51,7 +52,7 @@ export default class GameWeaponEffect {
 		this.drawGameWeaponEffect();
 	}
 
-	private drawGameWeaponEffect() {
+	private drawGameWeaponEffect(): void {
 		const { _image, _effectPosition } = this;
 		const scaledWidth = _image!.img.width / _image!.scaleOnCanvas;
 		const scaledHeight = _image!.img.height / _image!.scaleOnCanvas;

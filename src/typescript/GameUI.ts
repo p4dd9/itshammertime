@@ -8,11 +8,21 @@ import VolumeLowImage from '../assets/icons/volume-low-outline.svg';
 import VolumeMediumImage from '../assets/icons/volume-medium-outline.svg';
 import VolumeHighImage from '../assets/icons/volume-high-outline.svg';
 
+import hammerImage from '../assets/images/hammer.png';
+import macheteImage from '../assets/images/machete.png';
+import { imageAlias } from '../assets/imageAssets';
+
 export default class UI {
 	private _game: Game;
 	private _audioButton: HTMLButtonElement | null;
 	private _audioButtonImage: HTMLImageElement | null;
 	public _uiLayer: HTMLDivElement | null;
+
+	private _hammerButton: HTMLButtonElement | null;
+	private _hammerButtonImage: HTMLImageElement | null;
+
+	private _macheteButton: HTMLButtonElement | null;
+	private _macheteButtonImage: HTMLImageElement | null;
 
 	constructor(game: Game) {
 		this._game = game;
@@ -26,10 +36,45 @@ export default class UI {
 			DOM_ID.audioButtonImage
 		) as HTMLImageElement;
 
+		this._hammerButton = document.getElementById(
+			DOM_ID.uiHammerButton
+		) as HTMLButtonElement;
+		this._hammerButtonImage = document.getElementById(
+			DOM_ID.uiHammerButtonImage
+		) as HTMLImageElement;
+
+		this._macheteButton = document.getElementById(
+			DOM_ID.uiMacheteButton
+		) as HTMLButtonElement;
+		this._macheteButtonImage = document.getElementById(
+			DOM_ID.uiMacheteButtonImage
+		) as HTMLImageElement;
+
 		this.initAudioButton();
+		this.initWeaponButtons();
 	}
 
-	private initAudioButton() {
+	private initWeaponButtons(): void {
+		this._hammerButtonImage!.src = hammerImage;
+		this._hammerButton?.addEventListener('click', () => {
+			console.info('Switching to Hammer.');
+
+			this._game.gameCursorWeapon.image = this._game.gameCursorWeapon.images?.get(
+				imageAlias.HAMMER
+			);
+		});
+
+		this._macheteButtonImage!.src = macheteImage;
+		this._macheteButton?.addEventListener('click', () => {
+			console.info('Switching to Machete.');
+
+			this._game.gameCursorWeapon.image = this._game.gameCursorWeapon.images?.get(
+				imageAlias.MACHETE_STATIC
+			);
+		});
+	}
+
+	private initAudioButton(): void {
 		if (this._audioButton !== null) {
 			this.setAudioButtonImage(LocalStorageUtil.initVolumeIndex());
 
@@ -44,7 +89,7 @@ export default class UI {
 		}
 	}
 
-	public setAudioButtonImage(volumeIndex: number) {
+	public setAudioButtonImage(volumeIndex: number): void {
 		if (this._audioButtonImage === null) {
 			return;
 		}

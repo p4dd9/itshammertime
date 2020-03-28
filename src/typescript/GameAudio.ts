@@ -27,7 +27,7 @@ export default class GameAudio {
 		}
 	}
 
-	public static playSound(audio: HTMLAudioElement) {
+	public static playSound(audio: HTMLAudioElement): void {
 		if (!audio.paused) {
 			return;
 		} else {
@@ -35,7 +35,7 @@ export default class GameAudio {
 		}
 	}
 
-	public static playSoundOverlap(audio: HTMLAudioElement) {
+	public static playSoundOverlap(audio: HTMLAudioElement): void {
 		audio.currentTime = 0;
 		audio.play();
 	}

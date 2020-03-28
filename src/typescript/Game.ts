@@ -4,14 +4,14 @@ import Debugger from './Debugger';
 import UI from './GameUI';
 import GameAudio from './GameAudio';
 import GameCursor from './GameCursor';
-import GameCursorWeapon from './GameCursorWeapon';
+import GameWeapon from './GameCursorWeapon';
 
 export default class Game {
-	public debug: boolean = true;
+	public debug = true;
 	public ui: UI;
 	public gameAudio: GameAudio;
 	public ludecat: LudeCat;
-	public gameCursorWeapon: GameCursorWeapon;
+	public gameCursorWeapon: GameWeapon;
 
 	private _context: CanvasRenderingContext2D;
 	private _gameInput: GameInput;
@@ -26,10 +26,7 @@ export default class Game {
 		this.ui = new UI(this);
 		this.gameAudio = new GameAudio(this);
 		this._gameCursor = new GameCursor(this._context);
-		this.gameCursorWeapon = new GameCursorWeapon(
-			this._context,
-			this._gameCursor
-		);
+		this.gameCursorWeapon = new GameWeapon(this._context, this._gameCursor);
 
 		this._step = this._step.bind(this);
 	}
@@ -38,14 +35,14 @@ export default class Game {
 		return this._context;
 	}
 
-	public resize(canvasWidth: number, canvasHeight: number) {
+	public resize(canvasWidth: number, canvasHeight: number): void {
 		this._context.canvas.width = canvasWidth;
 		this._context.canvas.height = canvasHeight;
 
 		this.ludecat.resizeCanvas(canvasWidth, canvasHeight);
 	}
 
-	private clearCanvas() {
+	private clearCanvas(): void {
 		this._context.clearRect(
 			0,
 			0,
@@ -54,7 +51,7 @@ export default class Game {
 		);
 	}
 
-	private _step() {
+	private _step(): void {
 		// Check for controller input every drawn frame
 		this._gameInput.handleInput();
 
@@ -71,7 +68,7 @@ export default class Game {
 		window.requestAnimationFrame(this._step);
 	}
 
-	public start() {
+	public start(): void {
 		window.requestAnimationFrame(this._step);
 	}
 }

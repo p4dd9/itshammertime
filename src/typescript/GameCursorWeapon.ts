@@ -7,23 +7,22 @@ import GameCursor from './GameCursor';
 import GameAudio from './GameAudio';
 import GameWeaponEffect from './GameWeaponEffect';
 
-export default class GameCursorWeapon {
-	private _cursorImage: IGameImage | undefined = undefined;
-	private _cursorImages: Map<string, IGameImage> | null = null;
+export default class GameWeapon {
+	public image: IGameImage | undefined = undefined;
+	public images: Map<string, IGameImage> | null = null;
+	public audio: Map<string, IAudio> | null = null;
+	public angle = 0;
+	public moveForward = true;
+	public animateHammer = false;
 
 	private _currentAudio: IAudio | undefined = undefined;
-	public audio: Map<string, IAudio> | null = null;
 
 	private _gameCursor: GameCursor;
 	private _context: CanvasRenderingContext2D;
 
-	private _gameWeaponEffect: GameWeaponEffect[] = new Array() as GameWeaponEffect[];
-	private _rotateSpeed: number = 12.5;
-	private _rotateDegreeThreshold: number = 25;
-
-	public angle: number = 0;
-	public moveForward: boolean = true;
-	public animateHammer: boolean = false;
+	private _gameWeaponEffect: GameWeaponEffect[] = [] as GameWeaponEffect[];
+	private _rotateSpeed = 12.5;
+	private _rotateDegreeThreshold = 25;
 
 	constructor(context: CanvasRenderingContext2D, gameCursor: GameCursor) {
 		this._gameCursor = gameCursor;
@@ -35,20 +34,20 @@ export default class GameCursorWeapon {
 		this.removeActiveEffect = this.removeActiveEffect.bind(this);
 	}
 
-	private async loadAssets() {
+	private async loadAssets(): Promise<void> {
 		const cursorImages = await AssetLoader.loadImages(imageAssets);
 		const audio = await AssetLoader.loadAudio(audioAssets);
 
 		this._currentAudio = audio.get(audioAlias.HAMMER);
 
-		this._cursorImages = cursorImages;
-		this._cursorImage = this._cursorImages.get(imageAlias.HAMMER);
+		this.images = cursorImages;
+		this.image = this.images.get(imageAlias.HAMMER);
 
 		this.audio = audio;
 	}
 
-	public draw() {
-		if (this._cursorImage === undefined) {
+	public draw(): void {
+		if (this.image === undefined) {
 			return;
 		}
 		if (this._gameWeaponEffect.length > 0) {
@@ -59,12 +58,12 @@ export default class GameCursorWeapon {
 		this.drawGameCursorWeapon();
 	}
 
-	public degToRad(degree: number) {
+	public degToRad(degree: number): number {
 		return degree * 0.01745;
 	}
 
-	private drawGameCursorWeapon() {
-		const { _cursorImage, _context } = this;
+	private drawGameCursorWeapon(): void {
+		const { image: _cursorImage, _context } = this;
 
 		const sourceImage = _cursorImage!.img;
 		const sourceImageWidth = _cursorImage!.img.width;
@@ -98,7 +97,7 @@ export default class GameCursorWeapon {
 		this.updateHammerRotation();
 	}
 
-	private setRotationPivotToMouse(rotationDirection: 'set' | 'reset') {
+	private setRotationPivotToMouse(rotationDirection: 'set' | 'reset'): void {
 		const directionNumber = rotationDirection === 'set' ? 1 : -1;
 
 		this._context.translate(
@@ -107,7 +106,7 @@ export default class GameCursorWeapon {
 		);
 	}
 
-	private updateHammerRotation() {
+	private updateHammerRotation(): void {
 		if (this.animateHammer) {
 			if (this.angle <= this._rotateDegreeThreshold && this.moveForward) {
 				this.angle += this._rotateSpeed;
@@ -123,15 +122,15 @@ export default class GameCursorWeapon {
 	}
 
 	// delete gameweaponeffect? effect = undefined;
-	private removeActiveEffect() {
+	private removeActiveEffect(): void {
 		this._gameWeaponEffect.shift();
 	}
 
-	private addEventListeners() {
-		document.addEventListener('click', (event: MouseEvent) => {
+	private addEventListeners(): void {
+		document.addEventListener('click', () => {
 			GameAudio.playSoundOverlap(this._currentAudio!.audio);
 			this.animateHammer = true;
-			const { _cursorImage } = this;
+			const { image: _cursorImage } = this;
 
 			const scaledWidth =
 				_cursorImage!.img.width / _cursorImage!.scaleOnCanvas;

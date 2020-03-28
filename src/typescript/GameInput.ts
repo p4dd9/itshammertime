@@ -22,7 +22,7 @@ export default class GameInput {
 		return this._gameInput;
 	}
 
-	public handleInput() {
+	public handleInput(): void {
 		if (this._gameInput === CONTROLS.GAMEPAD) {
 			this._gamepadManager.checkMovingCharacterByGamepad();
 			this._gamepadManager.handleButtons();

@@ -1,7 +1,7 @@
 import '../styles/index';
 import Game from '../typescript/Game';
 
-window.onload = (onLoadEvent: Event) => {
+window.onload = (): void => {
 	const bodyMarginVerticalHorizontal = 16;
 
 	const root: HTMLElement | null = document.getElementById('root');
@@ -22,7 +22,7 @@ window.onload = (onLoadEvent: Event) => {
 	const game: Game = new Game(context!);
 	game.start();
 
-	window.onresize = (onResize: Event) => {
+	window.onresize = (): void => {
 		const resizeWidth = window.innerWidth - bodyMarginVerticalHorizontal;
 		const resizeHeight = window.innerHeight - bodyMarginVerticalHorizontal;
 

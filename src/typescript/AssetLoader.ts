@@ -11,7 +11,7 @@ import GameAudio from './GameAudio';
 export default class AssetLoader {
 	public static async loadSpriteSheets(
 		spritesheetAsets: Map<string, ISpriteSheetAsset>
-	) {
+	): Promise<Map<string, ISpriteSheet>> {
 		const spriteSheets = await AssetLoader.loadSpriteSheetImages(
 			spritesheetAsets
 		);
@@ -44,7 +44,7 @@ export default class AssetLoader {
 			image.src = src;
 
 			const spriteSheetPromise = new Promise<ISpriteSheet>(resolve => {
-				image.onload = () => {
+				image.onload = (): void => {
 					resolve({
 						id: spriteSheetAssetKey,
 						img: image,
@@ -61,7 +61,9 @@ export default class AssetLoader {
 		return Promise.all(spriteSheetPromises);
 	}
 
-	public static async loadImages(imageAssets: Map<string, IGameImageAsset>) {
+	public static async loadImages(
+		imageAssets: Map<string, IGameImageAsset>
+	): Promise<Map<string, IGameImage>> {
 		const images = await AssetLoader.loadImagesAssets(imageAssets);
 		const imageMap = new Map<string, IGameImage>();
 
@@ -83,7 +85,7 @@ export default class AssetLoader {
 			image.src = src;
 
 			const imagePromise = new Promise<IGameImage>(resolve => {
-				image.onload = () => {
+				image.onload = (): void => {
 					resolve({
 						id: imageAssetKey,
 						img: image,
@@ -97,7 +99,9 @@ export default class AssetLoader {
 		return Promise.all(imagePromises);
 	}
 
-	public static async loadAudio(audioAssets: Map<string, IAudioAsset>) {
+	public static async loadAudio(
+		audioAssets: Map<string, IAudioAsset>
+	): Promise<Map<string, IAudio>> {
 		const loadedAudioAssets = await AssetLoader.loadAudioAssets(
 			audioAssets
 		);

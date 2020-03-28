@@ -8,7 +8,6 @@ export default class KeyboardManager {
 	private _gameInput: GameInput;
 	private _ludeCat: LudeCat;
 
-	// Keyboard
 	private _rightArrowKeyPressed = false;
 	private _leftArrowKeyPressed = false;
 	private _upArrowKeyPressed = false;
@@ -20,7 +19,7 @@ export default class KeyboardManager {
 		this._gameInput = gameInput;
 	}
 
-	public handleArrowKeys() {
+	public handleArrowKeys(): void {
 		if (this._rightArrowKeyPressed) {
 			this._ludeCat.moveRight();
 		} else if (this._leftArrowKeyPressed) {
@@ -34,7 +33,7 @@ export default class KeyboardManager {
 		}
 	}
 
-	private addKeyboardListenerToDocument() {
+	private addKeyboardListenerToDocument(): void {
 		document.addEventListener('keydown', (e: KeyboardEvent) => {
 			if (this._gameInput.controls === CONTROLS.KEYBOARD) {
 				this.detectKey(e.keyCode, true);
@@ -48,7 +47,7 @@ export default class KeyboardManager {
 		});
 	}
 
-	private detectKey(keyCode: number, pressed: boolean) {
+	private detectKey(keyCode: number, pressed: boolean): void {
 		const ludeCat = this._ludeCat;
 
 		if (keyCode === KEYCODES.RIGHT_ARROW || keyCode === KEYCODES.RIGHT_D) {

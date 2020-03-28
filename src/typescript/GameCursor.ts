@@ -32,7 +32,7 @@ export default class GameCursor {
 		};
 	}
 
-	private addCursorListenerToDocument() {
+	private addCursorListenerToDocument(): void {
 		document.addEventListener('mousemove', event => {
 			this.mousePosition = this.getMousePos(event as MouseEvent);
 		});

@@ -39,12 +39,12 @@ export default class LudeCat {
 		this.loadAssets();
 	}
 
-	public resizeCanvas(canvasWidth: number, canvasHeight: number) {
+	public resizeCanvas(canvasWidth: number, canvasHeight: number): void {
 		this._context.canvas.height = canvasHeight;
 		this._context.canvas.width = canvasWidth;
 	}
 
-	private async loadAssets() {
+	private async loadAssets(): Promise<void> {
 		const audio = await AssetLoader.loadAudio(audioAssets);
 		const spritesheets = await AssetLoader.loadSpriteSheets(
 			spriteSheetAssets
@@ -55,7 +55,7 @@ export default class LudeCat {
 		this._spritesheet = spritesheets.get(spriteSheetAlias.IDLE);
 	}
 
-	private playIntro() {
+	private playIntro(): void {
 		if (
 			this._position.x +
 				this._spritesheet!.img.width /
@@ -69,7 +69,7 @@ export default class LudeCat {
 		}
 	}
 
-	public draw() {
+	public draw(): void {
 		this._delayFrameIndexCount++;
 		if (this._spritesheet === undefined) {
 			return;
@@ -83,7 +83,7 @@ export default class LudeCat {
 		this.updateImageToDraw();
 	}
 
-	private drawLudeCat() {
+	private drawLudeCat(): void {
 		const { _context, _colIndex, _rowIndex, _position } = this;
 		const spritesheet = this._spritesheet;
 
@@ -123,7 +123,7 @@ export default class LudeCat {
 		);
 	}
 
-	private updateImageToDraw() {
+	private updateImageToDraw(): void {
 		const { _delayFrameThreshold } = this;
 		const frameCount =
 			this._spritesheet!.spriteSheetColumCount *
@@ -152,7 +152,7 @@ export default class LudeCat {
 	}
 
 	// MOVEMENT RELATED FUNCTIONS
-	public moving(moving: string) {
+	public moving(moving: string): void {
 		if (this._spritesheets === null) {
 			return;
 		}
@@ -169,7 +169,7 @@ export default class LudeCat {
 		}
 	}
 
-	public moveRight() {
+	public moveRight(): void {
 		const { _position, _spritesheet, _moveDistance: moveDistance } = this;
 		const canvasWidth = this._context.canvas.width;
 
@@ -184,7 +184,7 @@ export default class LudeCat {
 		}
 	}
 
-	public moveLeft() {
+	public moveLeft(): void {
 		if (this._playIntro) {
 			return;
 		}
@@ -198,7 +198,7 @@ export default class LudeCat {
 		}
 	}
 
-	public moveUp() {
+	public moveUp(): void {
 		if (this._playIntro) {
 			return;
 		}
@@ -213,7 +213,7 @@ export default class LudeCat {
 		}
 	}
 
-	public moveDown() {
+	public moveDown(): void {
 		if (this._playIntro) {
 			return;
 		}
@@ -232,19 +232,19 @@ export default class LudeCat {
 	}
 
 	// AUDIO RELATED FUNCTIONS
-	public nya() {
+	public nya(): void {
 		if (this.audio !== null) {
 			GameAudio.playSound(this.audio.get(audioAlias.NYA)!.audio);
 		}
 	}
 
-	public meow() {
+	public meow(): void {
 		if (this.audio !== null) {
 			GameAudio.playSound(this.audio.get(audioAlias.MEOW)!.audio);
 		}
 	}
 
-	public meow2() {
+	public meow2(): void {
 		if (this.audio !== null) {
 			GameAudio.playSound(this.audio.get(audioAlias.MEOW2)!.audio);
 		}

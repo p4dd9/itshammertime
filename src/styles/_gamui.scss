@@ -4,15 +4,22 @@
 	transform: translateY(-50%);
 }
 
-#ui-audio-button-image {
-	width: 40px;
-	height: 40px;
-}
-
-#ui-audio-button {
+.ui-button {
 	padding: 5px;
 	border-radius: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	border: 2px solid green;
+	background-color: white;
+
+	& > img {
+		width: 40px;
+		height: 40px;
+		object-fit: contain;
+	}
+
+	&:hover {
+		cursor: pointer !important;
+	}
 }

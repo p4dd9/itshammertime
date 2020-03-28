@@ -127,7 +127,7 @@ export default class Weapon {
 	}
 
 	private addEventListeners(): void {
-		document.addEventListener('click', () => {
+		this._context.canvas.addEventListener('click', () => {
 			GameAudio.playSoundOverlap(this._currentAudio!.audio);
 			this.animateHammer = true;
 			const { image: _cursorImage } = this;

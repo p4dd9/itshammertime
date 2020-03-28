@@ -14,41 +14,41 @@ import HammerWeapon from './weapons/HammerWeapon';
 import MacheteWeapon from './weapons/MacheteWeapon';
 
 export default class UI {
-	public _uiLayer: HTMLDivElement | null;
+	public uiLayer: HTMLDivElement | null;
 
-	private _game: Game;
-	private _audioButton: HTMLButtonElement | null;
-	private _audioButtonImage: HTMLImageElement | null;
+	private game: Game;
+	private audioButton: HTMLButtonElement | null;
+	private audioButtonImage: HTMLImageElement | null;
 
-	private _hammerButton: HTMLButtonElement | null;
-	private _hammerButtonImage: HTMLImageElement | null;
+	private hammerButton: HTMLButtonElement | null;
+	private hammerButtonImage: HTMLImageElement | null;
 
-	private _macheteButton: HTMLButtonElement | null;
-	private _macheteButtonImage: HTMLImageElement | null;
+	private macheteButton: HTMLButtonElement | null;
+	private macheteButtonImage: HTMLImageElement | null;
 
 	constructor(game: Game) {
-		this._game = game;
-		this._uiLayer = document.getElementById(
+		this.game = game;
+		this.uiLayer = document.getElementById(
 			DOM_ID.uiLayer
 		) as HTMLDivElement;
-		this._audioButton = document.getElementById(
+		this.audioButton = document.getElementById(
 			DOM_ID.uiAudioButton
 		) as HTMLButtonElement;
-		this._audioButtonImage = document.getElementById(
+		this.audioButtonImage = document.getElementById(
 			DOM_ID.uiAudioButtonImage
 		) as HTMLImageElement;
 
-		this._hammerButton = document.getElementById(
+		this.hammerButton = document.getElementById(
 			DOM_ID.uiHammerButton
 		) as HTMLButtonElement;
-		this._hammerButtonImage = document.getElementById(
+		this.hammerButtonImage = document.getElementById(
 			DOM_ID.uiHammerButtonImage
 		) as HTMLImageElement;
 
-		this._macheteButton = document.getElementById(
+		this.macheteButton = document.getElementById(
 			DOM_ID.uiMacheteButton
 		) as HTMLButtonElement;
-		this._macheteButtonImage = document.getElementById(
+		this.macheteButtonImage = document.getElementById(
 			DOM_ID.uiMacheteButtonImage
 		) as HTMLImageElement;
 
@@ -57,61 +57,61 @@ export default class UI {
 	}
 
 	private initWeaponButtons(): void {
-		this._hammerButtonImage!.src = hammerImage;
-		this._hammerButton?.addEventListener('click', () => {
+		this.hammerButtonImage!.src = hammerImage;
+		this.hammerButton?.addEventListener('click', () => {
 			console.info('Switching to Hammer.');
 
-			this._game.weapon = new HammerWeapon(
-				this._game.context,
-				this._game.canvasCursor
+			this.game.weapon = new HammerWeapon(
+				this.game.context,
+				this.game.canvasCursor
 			);
 		});
 
-		this._macheteButtonImage!.src = macheteImage;
-		this._macheteButton?.addEventListener('click', () => {
+		this.macheteButtonImage!.src = macheteImage;
+		this.macheteButton?.addEventListener('click', () => {
 			console.info('Switching to Machete.');
 
-			this._game.weapon = new MacheteWeapon(
-				this._game.context,
-				this._game.canvasCursor
+			this.game.weapon = new MacheteWeapon(
+				this.game.context,
+				this.game.canvasCursor
 			);
 		});
 	}
 
 	private initAudioButton(): void {
-		if (this._audioButton !== null) {
+		if (this.audioButton !== null) {
 			this.setAudioButtonImage(LocalStorageUtil.initVolumeIndex());
 
-			this._audioButton.addEventListener('click', () => {
+			this.audioButton.addEventListener('click', () => {
 				const newVolumeIndex: number =
-					(this._game.gameAudio.volumeIndex + 1) %
+					(this.game.gameAudio.volumeIndex + 1) %
 					GameAudio.volumeRange.length;
 
-				this._game.gameAudio.volumeIndex = newVolumeIndex;
+				this.game.gameAudio.volumeIndex = newVolumeIndex;
 				LocalStorageUtil.setVolumeIndex(newVolumeIndex);
 			});
 		}
 	}
 
 	public setAudioButtonImage(volumeIndex: number): void {
-		if (this._audioButtonImage === null) {
+		if (this.audioButtonImage === null) {
 			return;
 		}
 		switch (volumeIndex) {
 			case 0: {
-				this._audioButtonImage.src = VolumeOffImage;
+				this.audioButtonImage.src = VolumeOffImage;
 				break;
 			}
 			case 1: {
-				this._audioButtonImage.src = VolumeLowImage;
+				this.audioButtonImage.src = VolumeLowImage;
 				break;
 			}
 			case 2: {
-				this._audioButtonImage.src = VolumeMediumImage;
+				this.audioButtonImage.src = VolumeMediumImage;
 				break;
 			}
 			case 3: {
-				this._audioButtonImage.src = VolumeHighImage;
+				this.audioButtonImage.src = VolumeHighImage;
 				break;
 			}
 		}

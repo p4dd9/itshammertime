@@ -29,18 +29,18 @@ export default class HammerVFX extends WeaponVFX {
 			return;
 		}
 
-		const { image: _image, _effectPosition } = this;
-		const scaledWidth = _image!.img.width / _image!.scaleOnCanvas;
-		const scaledHeight = _image!.img.height / _image!.scaleOnCanvas;
+		const { image, effectPosition } = this;
+		const scaledWidth = image!.img.width / image!.scaleOnCanvas;
+		const scaledHeight = image!.img.height / image!.scaleOnCanvas;
 
-		this._context.drawImage(
-			_image!.img,
+		this.context.drawImage(
+			image!.img,
 			0,
 			0,
-			_image!.img.width,
-			_image!.img.height,
-			_effectPosition.x - scaledWidth / 2,
-			_effectPosition.y - scaledHeight / 2,
+			image!.img.width,
+			image!.img.height,
+			effectPosition.x - scaledWidth / 2,
+			effectPosition.y - scaledHeight / 2,
 			scaledWidth,
 			scaledHeight
 		);

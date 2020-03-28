@@ -12,9 +12,9 @@ export default abstract class WeaponEffect {
 	public audio: Map<string, IAudio> | null = null;
 
 	protected currentAudio: IAudio | undefined = undefined;
-	protected _context: CanvasRenderingContext2D;
+	protected context: CanvasRenderingContext2D;
 
-	protected _effectPosition: IPosition;
+	protected effectPosition: IPosition;
 
 	constructor(
 		context: CanvasRenderingContext2D,
@@ -24,14 +24,13 @@ export default abstract class WeaponEffect {
 		imageAlias: string,
 		audioAlias: string
 	) {
-		this._context = context;
+		this.context = context;
 
-		this._effectPosition = {
+		this.effectPosition = {
 			x: position.x,
 			y: position.y,
 		};
 
-		console.log('Commit me: ' + this.images);
 		this.loadAssets(imageAssets, audioAssets, imageAlias, audioAlias);
 	}
 

@@ -2,10 +2,10 @@ import IPosition from '../interfaces/IPosition';
 
 export default class CanvasCursor {
 	private _mousePosition: IPosition;
-	private _context: CanvasRenderingContext2D;
+	private context: CanvasRenderingContext2D;
 
 	constructor(context: CanvasRenderingContext2D) {
-		this._context = context;
+		this.context = context;
 
 		this._mousePosition = {
 			x: 0,
@@ -24,7 +24,7 @@ export default class CanvasCursor {
 	}
 
 	private getMousePos(event: MouseEvent): IPosition {
-		const rect = this._context.canvas.getBoundingClientRect();
+		const rect = this.context.canvas.getBoundingClientRect();
 
 		return {
 			x: event.clientX - rect.left,

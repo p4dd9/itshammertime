@@ -4,11 +4,11 @@ import Game from './Game';
 export default class GameAudio {
 	public static volumeRange = [0, 0.15, 0.35, 0.65];
 
-	private _game: Game;
+	private game: Game;
 	private _volumeIndex = LocalStorageUtil.initVolumeIndex();
 
 	constructor(game: Game) {
-		this._game = game;
+		this.game = game;
 	}
 
 	get volumeIndex(): number {
@@ -17,13 +17,14 @@ export default class GameAudio {
 
 	set volumeIndex(volumeIndex: number) {
 		this._volumeIndex = volumeIndex;
-		this._game.ui.setAudioButtonImage(volumeIndex);
+		this.game.ui.setAudioButtonImage(volumeIndex);
 
-		for (const audioAsset of this._game.ludecat.audio!.values()) {
+		for (const audioAsset of this.game.ludecat.audio!.values()) {
 			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];
 		}
 
-		for (const audioAsset of this._game.weapon.audio!.values()) {
+		if (this.game.weapon === null) return;
+		for (const audioAsset of this.game.weapon.audio!.values()) {
 			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];
 		}
 	}

@@ -15,31 +15,35 @@ export default class Game {
 	public ludecat: LudeCat;
 	public canvasCursor: CanvasCursor;
 
-	private _weapon: Weapon;
+	private gameInput: Input;
+	private debugger: Debugger;
+
+	private _weapon: Weapon | null = null;
 	private _context: CanvasRenderingContext2D;
-	private _gameInput: Input;
-	private _debugger: Debugger;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
 		this.canvasCursor = new CanvasCursor(this.context);
 
 		this.ludecat = new LudeCat(this._context);
-		this._gameInput = new Input(this.ludecat);
-		this._debugger = new Debugger(this);
+		this.gameInput = new Input(this.ludecat);
+		this.debugger = new Debugger(this);
 		this.ui = new UI(this);
 		this.gameAudio = new GameAudio(this);
 		this._weapon = new HammerWeapon(this._context, this.canvasCursor);
 
-		this._step = this._step.bind(this);
+		this.step = this.step.bind(this);
 	}
 
-	public get weapon(): Weapon {
+	public get weapon(): Weapon | null {
 		return this._weapon;
 	}
 
-	public set weapon(weapon: Weapon) {
-		this._weapon.removeEventListeners();
+	public set weapon(weapon: Weapon | null) {
+		if (this._weapon) {
+			this._weapon.removeEventListeners();
+		}
+		this._weapon = null;
 		this._weapon = weapon;
 	}
 
@@ -63,15 +67,13 @@ export default class Game {
 		);
 	}
 
-	private _step(): void {
-		// Check for controller input every drawn frame
-		this._gameInput.handleInput();
+	private step(): void {
+		this.gameInput.handleInput();
 
 		this.clearCanvas();
 
-		// ACTUAL DRAWINGS
 		if (this.debug) {
-			this._debugger.debug();
+			this.debugger.debug();
 		}
 
 		this.ludecat.draw();
@@ -80,10 +82,10 @@ export default class Game {
 			this.weapon.draw();
 		}
 
-		window.requestAnimationFrame(this._step);
+		window.requestAnimationFrame(this.step);
 	}
 
 	public start(): void {
-		window.requestAnimationFrame(this._step);
+		window.requestAnimationFrame(this.step);
 	}
 }

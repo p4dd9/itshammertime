@@ -9,7 +9,7 @@ import ISpriteSheetAsset from '../interfaces/ISpriteSheetAsset';
 // 1. add alias here
 // 2. add alias as key
 // 3. use alias where you need it
-export const spriteSheetAlias = {
+export const ludeCatSpriteSheetAlias = {
 	IDLE: 'IDLE',
 	WALK_RIGHT: 'WALK_RIGHT',
 	WALK_LEFT: 'WALK_LEFT',
@@ -17,9 +17,9 @@ export const spriteSheetAlias = {
 	WALK_UP: 'WALK_UP',
 };
 
-export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
+export const ludeCatSpriteSheets: Map<string, ISpriteSheetAsset> = new Map([
 	[
-		spriteSheetAlias.IDLE,
+		ludeCatSpriteSheetAlias.IDLE,
 		{
 			animated: true,
 			src: idleImage,
@@ -29,7 +29,7 @@ export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
 		},
 	],
 	[
-		spriteSheetAlias.WALK_LEFT,
+		ludeCatSpriteSheetAlias.WALK_LEFT,
 		{
 			animated: true,
 			src: walkLeftImage,
@@ -39,7 +39,7 @@ export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
 		},
 	],
 	[
-		spriteSheetAlias.WALK_RIGHT,
+		ludeCatSpriteSheetAlias.WALK_RIGHT,
 		{
 			animated: true,
 			src: walkRightImage,
@@ -49,7 +49,7 @@ export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
 		},
 	],
 	[
-		spriteSheetAlias.WALK_UP,
+		ludeCatSpriteSheetAlias.WALK_UP,
 		{
 			animated: true,
 			src: walkUpImage,
@@ -59,7 +59,7 @@ export const spriteSheetAssets: Map<string, ISpriteSheetAsset> = new Map([
 		},
 	],
 	[
-		spriteSheetAlias.WALK_DOWN,
+		ludeCatSpriteSheetAlias.WALK_DOWN,
 		{
 			animated: true,
 			src: walkDownImage,

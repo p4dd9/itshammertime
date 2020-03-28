@@ -6,12 +6,12 @@ import KeyboardManager from './KeyboardManager';
 export default class Input {
 	private _controls: CONTROLS = CONTROLS.KEYBOARD;
 
-	private _gamepadManager: GamepadManager;
-	private _keyboardManager: KeyboardManager;
+	private gamepadManager: GamepadManager;
+	private keyboardManager: KeyboardManager;
 
 	constructor(ludecat: LudeCat) {
-		this._gamepadManager = new GamepadManager(this, ludecat);
-		this._keyboardManager = new KeyboardManager(this, ludecat);
+		this.gamepadManager = new GamepadManager(this, ludecat);
+		this.keyboardManager = new KeyboardManager(this, ludecat);
 	}
 
 	public set controls(controls: CONTROLS) {
@@ -24,11 +24,11 @@ export default class Input {
 
 	public handleInput(): void {
 		if (this._controls === CONTROLS.GAMEPAD) {
-			this._gamepadManager.checkMovingCharacterByGamepad();
-			this._gamepadManager.handleButtons();
-			this._gamepadManager.handleAxesInput();
+			this.gamepadManager.checkMovingCharacterByGamepad();
+			this.gamepadManager.handleButtons();
+			this.gamepadManager.handleAxesInput();
 		} else {
-			this._keyboardManager.handleArrowKeys();
+			this.keyboardManager.handleArrowKeys();
 		}
 	}
 }

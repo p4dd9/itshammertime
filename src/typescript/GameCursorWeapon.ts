@@ -18,8 +18,8 @@ export default class GameCursorWeapon {
 	private _context: CanvasRenderingContext2D;
 
 	private _gameWeaponEffect: GameWeaponEffect[] = new Array() as GameWeaponEffect[];
-	private _rotateSpeed: number = 22.5;
-	private _rotateDegreeThreshold: number = 45;
+	private _rotateSpeed: number = 12.5;
+	private _rotateDegreeThreshold: number = 25;
 
 	public angle: number = 0;
 	public moveForward: boolean = true;
@@ -122,6 +122,7 @@ export default class GameCursorWeapon {
 		}
 	}
 
+	// delete gameweaponeffect? effect = undefined;
 	private removeActiveEffect() {
 		this._gameWeaponEffect.shift();
 	}
@@ -130,11 +131,17 @@ export default class GameCursorWeapon {
 		document.addEventListener('click', (event: MouseEvent) => {
 			GameAudio.playSoundOverlap(this._currentAudio!.audio);
 			this.animateHammer = true;
+			const { _cursorImage } = this;
 
-			const newGameWeaponEffect = new GameWeaponEffect(
-				this._context,
-				this._gameCursor
-			);
+			const scaledWidth =
+				_cursorImage!.img.width / _cursorImage!.scaleOnCanvas;
+			const scaledHeight =
+				_cursorImage!.img.height / _cursorImage!.scaleOnCanvas;
+
+			const newGameWeaponEffect = new GameWeaponEffect(this._context, {
+				x: this._gameCursor.mousePosition.x - scaledWidth / 2 - 80, // hammer effect related
+				y: this._gameCursor.mousePosition.y - scaledHeight / 2,
+			});
 			newGameWeaponEffect.initSelfDestructId = this.removeActiveEffect;
 
 			this._gameWeaponEffect.push(newGameWeaponEffect);

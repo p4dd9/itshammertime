@@ -1,4 +1,3 @@
-import GameCursor from './GameCursor';
 import IGameImage from '../interfaces/IGameImage';
 import AssetLoader from './AssetLoader';
 import { imageAssets, imageAlias } from '../assets/imageAssets';
@@ -12,13 +11,13 @@ export default class GameWeaponEffect {
 	private _effectPosition: IPosition;
 	private _initSelfDestructId: () => void;
 
-	constructor(context: CanvasRenderingContext2D, gameCursor: GameCursor) {
+	constructor(context: CanvasRenderingContext2D, position: IPosition) {
 		this._context = context;
 		// tslint:disable-next-line: no-empty
 		this._initSelfDestructId = () => {};
 		this._effectPosition = {
-			x: gameCursor.mousePosition.x,
-			y: gameCursor.mousePosition.y,
+			x: position.x,
+			y: position.y,
 		};
 
 		this.loadAssets();

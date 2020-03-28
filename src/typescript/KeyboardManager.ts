@@ -1,11 +1,11 @@
-import GameInput from './GameInput';
+import Input from './Input';
 import CONTROLS from '../enums/controls';
 import LudeCat from './LudeCat';
 import KEYCODES from '../enums/keycodes';
 import { spriteSheetAlias } from '../assets/spriteSheetAssets';
 
 export default class KeyboardManager {
-	private _gameInput: GameInput;
+	private _gameInput: Input;
 	private _ludeCat: LudeCat;
 
 	private _rightArrowKeyPressed = false;
@@ -13,10 +13,11 @@ export default class KeyboardManager {
 	private _upArrowKeyPressed = false;
 	private _downArrowKeyPressed = false;
 
-	constructor(gameInput: GameInput, ludeCat: LudeCat) {
-		this.addKeyboardListenerToDocument();
+	constructor(gameInput: Input, ludeCat: LudeCat) {
 		this._ludeCat = ludeCat;
 		this._gameInput = gameInput;
+
+		this.addKeyboardListenerToDocument();
 	}
 
 	public handleArrowKeys(): void {

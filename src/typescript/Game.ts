@@ -1,32 +1,32 @@
-import GameInput from './GameInput';
+import Input from './Input';
 import LudeCat from './LudeCat';
 import Debugger from './Debugger';
 import UI from './GameUI';
 import GameAudio from './GameAudio';
-import GameCursor from './GameCursor';
-import GameWeapon from './GameCursorWeapon';
+import CanvasCursor from './CanvasCursor';
+import Weapon from './Weapon';
 
 export default class Game {
 	public debug = true;
 	public ui: UI;
 	public gameAudio: GameAudio;
 	public ludecat: LudeCat;
-	public gameCursorWeapon: GameWeapon;
+	public weapon: Weapon;
 
 	private _context: CanvasRenderingContext2D;
-	private _gameInput: GameInput;
+	private _gameInput: Input;
 	private _debugger: Debugger;
-	private _gameCursor: GameCursor;
+	private _gameCursor: CanvasCursor;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
 		this.ludecat = new LudeCat(this._context);
-		this._gameInput = new GameInput(this.ludecat);
+		this._gameInput = new Input(this.ludecat);
 		this._debugger = new Debugger(this);
 		this.ui = new UI(this);
 		this.gameAudio = new GameAudio(this);
-		this._gameCursor = new GameCursor(this._context);
-		this.gameCursorWeapon = new GameWeapon(this._context, this._gameCursor);
+		this._gameCursor = new CanvasCursor(this._context);
+		this.weapon = new Weapon(this._context, this._gameCursor);
 
 		this._step = this._step.bind(this);
 	}
@@ -63,7 +63,7 @@ export default class Game {
 		}
 
 		this.ludecat.draw();
-		this.gameCursorWeapon.draw();
+		this.weapon.draw();
 
 		window.requestAnimationFrame(this._step);
 	}

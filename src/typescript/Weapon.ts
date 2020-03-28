@@ -3,11 +3,11 @@ import AssetLoader from './AssetLoader';
 import { imageAssets, imageAlias } from '../assets/imageAssets';
 import IAudio from '../interfaces/IAudio';
 import { audioAssets, audioAlias } from '../assets/audioAssets';
-import GameCursor from './GameCursor';
+import CanvasCursor from './CanvasCursor';
 import GameAudio from './GameAudio';
-import GameWeaponEffect from './GameWeaponEffect';
+import WeaponEffect from './WeaponEffect';
 
-export default class GameWeapon {
+export default class Weapon {
 	public image: IGameImage | undefined = undefined;
 	public images: Map<string, IGameImage> | null = null;
 	public audio: Map<string, IAudio> | null = null;
@@ -17,14 +17,14 @@ export default class GameWeapon {
 
 	private _currentAudio: IAudio | undefined = undefined;
 
-	private _gameCursor: GameCursor;
+	private _gameCursor: CanvasCursor;
 	private _context: CanvasRenderingContext2D;
 
-	private _gameWeaponEffect: GameWeaponEffect[] = [] as GameWeaponEffect[];
+	private _gameWeaponEffect: WeaponEffect[] = [] as WeaponEffect[];
 	private _rotateSpeed = 12.5;
 	private _rotateDegreeThreshold = 25;
 
-	constructor(context: CanvasRenderingContext2D, gameCursor: GameCursor) {
+	constructor(context: CanvasRenderingContext2D, gameCursor: CanvasCursor) {
 		this._gameCursor = gameCursor;
 		this._context = context;
 
@@ -137,7 +137,7 @@ export default class GameWeapon {
 			const scaledHeight =
 				_cursorImage!.img.height / _cursorImage!.scaleOnCanvas;
 
-			const newGameWeaponEffect = new GameWeaponEffect(this._context, {
+			const newGameWeaponEffect = new WeaponEffect(this._context, {
 				x: this._gameCursor.mousePosition.x - scaledWidth / 2 - 80, // hammer effect related
 				y: this._gameCursor.mousePosition.y - scaledHeight / 2,
 			});

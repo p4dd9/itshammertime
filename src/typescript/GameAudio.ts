@@ -2,9 +2,10 @@ import LocalStorageUtil from '../util/LocalStorageUtil';
 import Game from './Game';
 
 export default class GameAudio {
+	public static volumeRange = [0, 0.15, 0.35, 0.65];
+
 	private _game: Game;
 	private _volumeIndex = LocalStorageUtil.initVolumeIndex();
-	public static volumeRange = [0, 0.25, 0.5, 0.75];
 
 	constructor(game: Game) {
 		this._game = game;
@@ -22,7 +23,7 @@ export default class GameAudio {
 			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];
 		}
 
-		for (const audioAsset of this._game.gameCursorWeapon.audio!.values()) {
+		for (const audioAsset of this._game.weapon.audio!.values()) {
 			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];
 		}
 	}

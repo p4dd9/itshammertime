@@ -4,9 +4,12 @@
 	transform: translateY(-50%);
 }
 
+#ui-audio-button {
+	margin-bottom: 10px;
+}
+
 .ui-button {
 	padding: 5px;
-	border-radius: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;

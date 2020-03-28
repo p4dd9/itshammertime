@@ -1,8 +1,9 @@
 const DOM_ID = {
-	audioButton: 'ui-audio-button',
-	audioButtonImage: 'ui-audio-button-image',
-	uiOptions: 'ui-options',
 	uiLayer: 'ui-layer',
+	uiOptions: 'ui-options',
+
+	uiAudioButton: 'ui-audio-button',
+	uiAudioButtonImage: 'ui-audio-button-image',
 
 	uiHammerButton: 'ui-hammer-weapon-button',
 	uiHammerButtonImage: 'ui-hammer-weapon-button-image',

@@ -3,7 +3,7 @@ import AssetLoader from './AssetLoader';
 import { imageAssets, imageAlias } from '../assets/imageAssets';
 import IPosition from '../interfaces/IPosition';
 
-export default class GameWeaponEffect {
+export default class WeaponEffect {
 	private _context: CanvasRenderingContext2D;
 	private _image: IGameImage | undefined = undefined;
 	private _images: Map<string, IGameImage> | null = null;

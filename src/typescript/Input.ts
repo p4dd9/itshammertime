@@ -3,8 +3,8 @@ import CONTROLS from '../enums/controls';
 import LudeCat from './LudeCat';
 import KeyboardManager from './KeyboardManager';
 
-export default class GameInput {
-	private _gameInput: CONTROLS = CONTROLS.KEYBOARD;
+export default class Input {
+	private _controls: CONTROLS = CONTROLS.KEYBOARD;
 
 	private _gamepadManager: GamepadManager;
 	private _keyboardManager: KeyboardManager;
@@ -15,15 +15,15 @@ export default class GameInput {
 	}
 
 	public set controls(controls: CONTROLS) {
-		this._gameInput = controls;
+		this._controls = controls;
 	}
 
 	public get controls(): CONTROLS {
-		return this._gameInput;
+		return this._controls;
 	}
 
 	public handleInput(): void {
-		if (this._gameInput === CONTROLS.GAMEPAD) {
+		if (this._controls === CONTROLS.GAMEPAD) {
 			this._gamepadManager.checkMovingCharacterByGamepad();
 			this._gamepadManager.handleButtons();
 			this._gamepadManager.handleAxesInput();

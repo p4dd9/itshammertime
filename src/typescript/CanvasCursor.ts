@@ -1,7 +1,7 @@
-import ICursorPosition from '../interfaces/ICursor';
+import IPosition from '../interfaces/IPosition';
 
-export default class GameCursor {
-	private _mousePosition: ICursorPosition;
+export default class CanvasCursor {
+	private _mousePosition: IPosition;
 	private _context: CanvasRenderingContext2D;
 
 	constructor(context: CanvasRenderingContext2D) {
@@ -15,15 +15,15 @@ export default class GameCursor {
 		this.addCursorListenerToDocument();
 	}
 
-	get mousePosition(): ICursorPosition {
+	get mousePosition(): IPosition {
 		return this._mousePosition;
 	}
 
-	set mousePosition(mousePosition: ICursorPosition) {
+	set mousePosition(mousePosition: IPosition) {
 		this._mousePosition = mousePosition;
 	}
 
-	private getMousePos(event: MouseEvent): ICursorPosition {
+	private getMousePos(event: MouseEvent): IPosition {
 		const rect = this._context.canvas.getBoundingClientRect();
 
 		return {

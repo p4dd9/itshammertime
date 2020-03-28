@@ -13,10 +13,11 @@ import macheteImage from '../assets/images/machete.png';
 import { imageAlias } from '../assets/imageAssets';
 
 export default class UI {
+	public _uiLayer: HTMLDivElement | null;
+
 	private _game: Game;
 	private _audioButton: HTMLButtonElement | null;
 	private _audioButtonImage: HTMLImageElement | null;
-	public _uiLayer: HTMLDivElement | null;
 
 	private _hammerButton: HTMLButtonElement | null;
 	private _hammerButtonImage: HTMLImageElement | null;
@@ -30,10 +31,10 @@ export default class UI {
 			DOM_ID.uiLayer
 		) as HTMLDivElement;
 		this._audioButton = document.getElementById(
-			DOM_ID.audioButton
+			DOM_ID.uiAudioButton
 		) as HTMLButtonElement;
 		this._audioButtonImage = document.getElementById(
-			DOM_ID.audioButtonImage
+			DOM_ID.uiAudioButtonImage
 		) as HTMLImageElement;
 
 		this._hammerButton = document.getElementById(
@@ -59,7 +60,7 @@ export default class UI {
 		this._hammerButton?.addEventListener('click', () => {
 			console.info('Switching to Hammer.');
 
-			this._game.gameCursorWeapon.image = this._game.gameCursorWeapon.images?.get(
+			this._game.weapon.image = this._game.weapon.images?.get(
 				imageAlias.HAMMER
 			);
 		});
@@ -68,7 +69,7 @@ export default class UI {
 		this._macheteButton?.addEventListener('click', () => {
 			console.info('Switching to Machete.');
 
-			this._game.gameCursorWeapon.image = this._game.gameCursorWeapon.images?.get(
+			this._game.weapon.image = this._game.weapon.images?.get(
 				imageAlias.MACHETE_STATIC
 			);
 		});

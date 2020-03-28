@@ -1,4 +1,4 @@
-import GameInput from './GameInput';
+import Input from './Input';
 import BrowserUtil from '../util/BrowserUtil';
 import CONTROLS from '../enums/controls';
 import IGamepadEvent from '../interfaces/IGamepadEvent';
@@ -7,8 +7,7 @@ import { XBOX360_AXIS, XBOX360_BUTTONS } from '../enums/xbox360controls';
 import { spriteSheetAlias } from '../assets/spriteSheetAssets';
 
 export default class GamepadManager {
-	// The actualy gamepad from the browser API
-	private _gamepad: null | Gamepad = null;
+	private _gamepad: Gamepad | null = null;
 
 	// XBOX 360 MAPPING
 	private _buttons = ['A', 'B', 'X', 'Y'];
@@ -22,15 +21,17 @@ export default class GamepadManager {
 	private _intervalId = -1;
 	private _axeStatusThreshold = 0.3;
 
-	private _gameInput: GameInput;
+	private _gameInput: Input;
 	private _ludeCat: LudeCat;
 
-	constructor(gameInput: GameInput, ludecat: LudeCat) {
-		this.listenToGamepad = this.listenToGamepad.bind(this);
-		this.gamepadConntectedListener();
-		this.gamepadDisconnectedListener();
+	constructor(gameInput: Input, ludecat: LudeCat) {
 		this._ludeCat = ludecat;
 		this._gameInput = gameInput;
+
+		this.gamepadConntectedListener();
+		this.gamepadDisconnectedListener();
+
+		this.listenToGamepad = this.listenToGamepad.bind(this);
 	}
 
 	public get axesStatus(): number[] {

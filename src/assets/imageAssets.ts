@@ -3,6 +3,7 @@ import IGameImageAsset from '../interfaces/IGameImageAsset';
 import hammerImage from './images/hammer.png';
 import hammerEffectImage from './images/hammer_effect.png';
 import macheteImage from './images/machete.png';
+import laserImage from './images/flashlight.png';
 
 // How to add new image
 // 1. add alias here
@@ -19,7 +20,21 @@ export const macheteImageAlias = {
 	MACHETE_STATIC: 'MACHETE_STATIC',
 };
 
+export const laserImageAlias = {
+	LASER_STATIC: 'LASER_STATIC',
+};
+
 // ASSETS
+export const laserImageAssets: Map<string, IGameImageAsset> = new Map([
+	[
+		laserImageAlias.LASER_STATIC,
+		{
+			src: laserImage,
+			scaleOnCanvas: 4.5,
+		},
+	],
+]);
+
 export const macheteImageAssets: Map<string, IGameImageAsset> = new Map([
 	[
 		macheteImageAlias.MACHETE_STATIC,

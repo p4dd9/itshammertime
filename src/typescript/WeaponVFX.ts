@@ -6,7 +6,7 @@ import IAudioAsset from '../interfaces/IAudioAsset';
 import IAudio from '../interfaces/IAudio';
 import GameAudio from './GameAudio';
 
-export default abstract class WeaponEffect {
+export default abstract class WeaponVFX {
 	public image: IGameImage | undefined = undefined;
 	public images: Map<string, IGameImage> | null = null;
 	public audio: Map<string, IAudio> | null = null;

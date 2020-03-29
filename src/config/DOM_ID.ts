@@ -10,6 +10,9 @@ const DOM_ID = {
 
 	uiMacheteButton: 'ui-machete-weapon-button',
 	uiMacheteButtonImage: 'ui-machete-weapon-button-image',
+
+	uiLaserButton: 'ui-laser-weapon-button',
+	uiLaserButtonImage: 'ui-laser-weapon-button-image',
 };
 
 export default DOM_ID;

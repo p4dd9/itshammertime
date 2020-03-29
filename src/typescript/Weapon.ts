@@ -2,7 +2,7 @@ import IGameImage from '../interfaces/IGameImage';
 import AssetLoader from './AssetLoader';
 import IAudio from '../interfaces/IAudio';
 import CanvasCursor from './CanvasCursor';
-import WeaponEffect from './WeaponVFX';
+import WeaponVFX from './WeaponVFX';
 import IGameImageAsset from '../interfaces/IGameImageAsset';
 import IAudioAsset from '../interfaces/IAudioAsset';
 
@@ -14,7 +14,7 @@ export default abstract class Weapon {
 	protected currentAudio: IAudio | undefined = undefined;
 	protected canvasCursor: CanvasCursor;
 	protected context: CanvasRenderingContext2D;
-	protected gameWeaponEffect: WeaponEffect[] = [] as WeaponEffect[];
+	protected gameWeaponEffect: WeaponVFX[] = [] as WeaponVFX[];
 
 	protected abstract imageAssets: Map<string, IGameImageAsset>;
 	protected abstract audioAssets: Map<string, IAudioAsset>;

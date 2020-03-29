@@ -42,4 +42,15 @@ export default class GameAudio {
 		audio.currentTime = 0;
 		audio.play();
 	}
+
+	public static loop(audio: HTMLAudioElement): void {
+		audio.loop = true;
+		audio.play();
+	}
+
+	public static stopLoop(audio: HTMLAudioElement): void {
+		audio.loop = false;
+		audio.currentTime = 0;
+		audio.pause();
+	}
 }

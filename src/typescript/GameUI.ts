@@ -10,8 +10,11 @@ import VolumeHighImage from '../assets/icons/volume-high-outline.svg';
 
 import hammerImage from '../assets/images/hammer.png';
 import macheteImage from '../assets/images/machete.png';
+import laserImage from '../assets/images/flashlight.png';
+
 import HammerWeapon from './weapons/HammerWeapon';
 import MacheteWeapon from './weapons/MacheteWeapon';
+import LaserWeapon from './weapons/LaserWeapon';
 
 export default class UI {
 	public uiLayer: HTMLDivElement | null;
@@ -25,6 +28,9 @@ export default class UI {
 
 	private macheteButton: HTMLButtonElement | null;
 	private macheteButtonImage: HTMLImageElement | null;
+
+	private laserButton: HTMLButtonElement | null;
+	private laserButtonImage: HTMLImageElement | null;
 
 	constructor(game: Game) {
 		this.game = game;
@@ -52,6 +58,13 @@ export default class UI {
 			DOM_ID.uiMacheteButtonImage
 		) as HTMLImageElement;
 
+		this.laserButton = document.getElementById(
+			DOM_ID.uiLaserButton
+		) as HTMLButtonElement;
+		this.laserButtonImage = document.getElementById(
+			DOM_ID.uiLaserButtonImage
+		) as HTMLImageElement;
+
 		this.initAudioButton();
 		this.initWeaponButtons();
 	}
@@ -72,6 +85,16 @@ export default class UI {
 			console.info('Switching to Machete.');
 
 			this.game.weapon = new MacheteWeapon(
+				this.game.context,
+				this.game.canvasCursor
+			);
+		});
+
+		this.laserButtonImage!.src = laserImage;
+		this.laserButton?.addEventListener('click', () => {
+			console.info('Switching to Laser.');
+
+			this.game.weapon = new LaserWeapon(
 				this.game.context,
 				this.game.canvasCursor
 			);

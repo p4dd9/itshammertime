@@ -9,7 +9,7 @@ import Weapon from './Weapon';
 import HammerWeapon from './weapons/HammerWeapon';
 
 export default class Game {
-	public debug = true;
+	public debug = false;
 	public ui: UI;
 	public gameAudio: GameAudio;
 	public ludecat: LudeCat;
@@ -78,7 +78,7 @@ export default class Game {
 
 		this.ludecat.draw();
 
-		if (this.weapon) {
+		if (this.weapon !== null) {
 			this.weapon.draw();
 		}
 

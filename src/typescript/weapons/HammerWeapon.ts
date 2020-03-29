@@ -33,10 +33,8 @@ export default class HammerWeapon extends Weapon {
 		this.removeEventListeners = this.removeEventListeners.bind(this);
 	}
 
-	// delete gameweaponeffect? effect = undefined;
 	protected removeActiveEffect(): void {
 		this.gameWeaponEffect.shift();
-		this.removeEventListeners();
 	}
 
 	public draw(): void {

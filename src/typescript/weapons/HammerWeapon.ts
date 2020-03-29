@@ -4,7 +4,7 @@ import { hammerImageAssets } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
 import { hammerImageAlias } from '../../assets/imageAssets';
 import HammerVFX from '../weaponeffects/HammerVFX';
-import { degToRad } from '../../util/CommonUtil';
+import { degToRad } from '../../util/commonUtil';
 
 export default class HammerWeapon extends Weapon {
 	public imageAssets = hammerImageAssets;

@@ -2,7 +2,7 @@ import WeaponVFX from '../WeaponVFX';
 import IPosition from '../../interfaces/IPosition';
 import { hammerImageAssets, hammerImageAlias } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
-import Particle from './Particle';
+import HammerParticle from './HammerParticle';
 
 export default class HammerVFX extends WeaponVFX {
 	public static lifeTime = 5000; // ms
@@ -10,12 +10,16 @@ export default class HammerVFX extends WeaponVFX {
 	public imageAssets = hammerImageAssets;
 	public audioAssets = hammerAudioAssets;
 
-	public maxLife = 20;
-	private particles: { [key: string]: Particle } = {};
+	private particles: { [key: string]: HammerParticle } = {};
 	private particleIndex = 0;
-	private density = 15;
-	private particleSize = 5;
-	private generated = false;
+	private particlesLoaded = false;
+
+	private particleSettings = {
+		maxLife: 20,
+		density: 15,
+		particleSize: 5,
+		gravity: 0.5,
+	};
 
 	private _initSelfDestructId: (() => void) | null = null;
 
@@ -37,7 +41,7 @@ export default class HammerVFX extends WeaponVFX {
 			return;
 		}
 
-		if (!this.generated) {
+		if (!this.particlesLoaded) {
 			this.generateParticles();
 		}
 
@@ -63,7 +67,7 @@ export default class HammerVFX extends WeaponVFX {
 	}
 
 	private generateParticles(): void {
-		const { image, effectPosition } = this;
+		const { image, effectPosition, particleSettings } = this;
 
 		if (image === undefined || image === null) {
 			return;
@@ -74,28 +78,28 @@ export default class HammerVFX extends WeaponVFX {
 		const canvasX = effectPosition.x - scaledWidth / 2;
 		const canvasY = effectPosition.y - scaledHeight / 2;
 
-		for (let i = 0; i < this.density; i++) {
-			const particle = new Particle(
+		for (let i = 0; i < particleSettings.density; i++) {
+			const particle = new HammerParticle(
 				this.context,
 				{
 					x: canvasX + scaledWidth / 2,
 					y: canvasY + scaledHeight / 2,
 				},
 				this.particleIndex,
-				this.particleSize,
-				this.maxLife
+				particleSettings.particleSize,
+				particleSettings.gravity
 			);
 			this.particleIndex++;
 			this.particles[this.particleIndex.toString()] = particle;
 		}
-		this.generated = true;
+		this.particlesLoaded = true;
 	}
 
 	private drawParticles(): void {
 		for (const particleKey in this.particles) {
 			const particle = this.particles[particleKey];
 			particle.draw();
-			if (particle.life >= particle.maxLife) {
+			if (particle.life >= this.particleSettings.maxLife) {
 				delete this.particles[particle.id];
 			}
 		}

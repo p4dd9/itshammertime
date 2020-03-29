@@ -1,14 +1,14 @@
 import IPosition from '../../interfaces/IPosition';
 import IVelocity from '../../interfaces/IVelocity';
 
-export default class Particle {
+export default class HammerParticle {
+	public id: number;
+	public life = 0;
+
 	private context: CanvasRenderingContext2D;
 	private position: IPosition;
 	private velocity: IVelocity;
-	public id: number;
-	public life = 0;
-	public maxLife: number;
-	private gravity = 0.5;
+	private gravity: number;
 	private particleSize: number;
 
 	constructor(
@@ -16,13 +16,13 @@ export default class Particle {
 		startPosition: IPosition,
 		id: number,
 		particleSize: number,
-		maxLife: number
+		gravity: number
 	) {
 		this.context = context;
 		this.position = startPosition;
 		this.id = id;
-		this.maxLife = maxLife;
 		this.particleSize = particleSize;
+		this.gravity = gravity;
 		this.velocity = {
 			vx: Math.random() * 20 - 10,
 			vy: Math.random() * 20 - 5,
@@ -30,24 +30,18 @@ export default class Particle {
 	}
 
 	public draw(): void {
-		this.position.x += this.velocity.vx;
-		this.position.y += this.velocity.vy;
+		const { context, position, velocity, particleSize, gravity } = this;
+		position.x += velocity.vx;
+		position.y += velocity.vy;
 
-		this.velocity.vy += this.gravity;
+		velocity.vy += gravity;
 		this.life++;
 
-		this.context.beginPath();
-		this.context.fillStyle = '#ffffff';
+		context.beginPath();
+		context.fillStyle = '#ffffff';
 
-		this.context.arc(
-			this.position.x,
-			this.position.y,
-			this.particleSize,
-			0,
-			Math.PI * 2,
-			true
-		);
-		this.context.closePath();
-		this.context.fill();
+		context.arc(position.x, position.y, particleSize, 0, Math.PI * 2, true);
+		context.closePath();
+		context.fill();
 	}
 }

@@ -43,7 +43,7 @@ export default class AssetLoader {
 			} = spriteSheetAsset;
 			image.src = src;
 
-			const spriteSheetPromise = new Promise<ISpriteSheet>(resolve => {
+			const spriteSheetPromise = new Promise<ISpriteSheet>((resolve) => {
 				image.onload = (): void => {
 					resolve({
 						id: spriteSheetAssetKey,
@@ -84,11 +84,11 @@ export default class AssetLoader {
 			const { src, scaleOnCanvas } = imageAsset;
 			image.src = src;
 
-			const imagePromise = new Promise<IGameImage>(resolve => {
+			const imagePromise = new Promise<IGameImage>((resolve) => {
 				image.onload = (): void => {
 					resolve({
 						id: imageAssetKey,
-						img: image,
+						image: image,
 						scaleOnCanvas,
 					});
 				};
@@ -124,7 +124,7 @@ export default class AssetLoader {
 			audio.volume =
 				GameAudio.volumeRange[LocalStorageUtil.getVolumeIndex() || 0];
 
-			const audioPromise = new Promise<IAudio>(resolve => {
+			const audioPromise = new Promise<IAudio>((resolve) => {
 				audio.addEventListener('loadeddata', () => {
 					resolve({
 						id: key,

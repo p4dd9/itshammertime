@@ -6,14 +6,14 @@ import IAudioAsset from '../interfaces/IAudioAsset';
 import IAudio from '../interfaces/IAudio';
 import GameAudio from './GameAudio';
 
-export default abstract class WeaponVFX {
-	public image: IGameImage | undefined = undefined;
+export default abstract class WeaponEffect {
+	public currentImage: IGameImage | undefined = undefined;
+	public currentAudio: IAudio | undefined = undefined;
+
 	public images: Map<string, IGameImage> | null = null;
 	public audio: Map<string, IAudio> | null = null;
 
-	protected currentAudio: IAudio | undefined = undefined;
 	protected context: CanvasRenderingContext2D;
-
 	protected effectPosition: IPosition;
 
 	constructor(
@@ -47,7 +47,7 @@ export default abstract class WeaponVFX {
 		this.audio = audio;
 
 		this.currentAudio = audio.get(audioAlias);
-		this.image = images.get(imageAlias);
+		this.currentImage = images.get(imageAlias);
 
 		GameAudio.playSoundOverlap(this.currentAudio!.audio);
 	}

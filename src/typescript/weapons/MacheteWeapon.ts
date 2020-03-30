@@ -41,21 +41,21 @@ export default class MacheteWeapon extends Weapon {
 	}
 
 	public draw(): void {
-		const { image, context, canvasCursor } = this;
+		const { currentImage: image, context, canvasCursor } = this;
 		if (image === undefined) {
 			return;
 		}
 
 		context.drawImage(
-			image.img,
+			image.image,
 			0,
 			0,
-			image.img.width,
-			image.img.height,
+			image.image.width,
+			image.image.height,
 			canvasCursor.mousePosition.x,
 			canvasCursor.mousePosition.y,
-			image.img.width / image.scaleOnCanvas,
-			image.img.height / image.scaleOnCanvas
+			image.image.width / image.scaleOnCanvas,
+			image.image.height / image.scaleOnCanvas
 		);
 	}
 }

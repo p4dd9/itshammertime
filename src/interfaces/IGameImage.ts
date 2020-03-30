@@ -1,5 +1,5 @@
 export default interface IGameImage {
 	id: string;
-	img: HTMLImageElement;
+	image: HTMLImageElement;
 	scaleOnCanvas: number;
 }

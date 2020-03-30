@@ -34,11 +34,16 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	protected removeActiveEffect(): void {
-		this.gameWeaponEffect.shift();
+		this.effect.shift();
 	}
 
 	public draw(): void {
-		const { image, context, gameWeaponEffect, angle } = this;
+		const {
+			currentImage: image,
+			context,
+			effect: gameWeaponEffect,
+			angle,
+		} = this;
 
 		if (image === undefined) {
 			return;
@@ -61,17 +66,18 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	private drawHammerWeapon(): void {
-		const { image, context } = this;
+		const { currentImage: image, context } = this;
 
 		if (image === undefined) {
 			return;
 		}
-		const sourceImage = image.img;
-		const sourceImageWidth = image.img.width;
-		const sourceImageHeight = image.img.height;
 
-		const scaledWidth = image.img.width / image.scaleOnCanvas;
-		const scaledHeight = image.img.height / image.scaleOnCanvas;
+		const sourceImage = image.image;
+		const sourceImageWidth = image.image.width;
+		const sourceImageHeight = image.image.height;
+
+		const scaledWidth = image.image.width / image.scaleOnCanvas;
+		const scaledHeight = image.image.height / image.scaleOnCanvas;
 
 		context.drawImage(
 			sourceImage,
@@ -113,12 +119,12 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	protected use(): void {
-		const image = this.image!;
+		const image = this.currentImage!;
 
 		this.animateHammer = true;
 
-		const scaledWidth = image.img.width / image.scaleOnCanvas;
-		const scaledHeight = image.img.height / image.scaleOnCanvas;
+		const scaledWidth = image.image.width / image.scaleOnCanvas;
+		const scaledHeight = image.image.height / image.scaleOnCanvas;
 
 		const newGameWeaponEffect = new HammerVFX(this.context, {
 			x: this.canvasCursor.mousePosition.x - scaledWidth / 2 - 80, // hammer effect related
@@ -126,7 +132,7 @@ export default class HammerWeapon extends Weapon {
 		});
 		newGameWeaponEffect.selfDestruct = this.removeActiveEffect;
 
-		this.gameWeaponEffect.push(newGameWeaponEffect);
+		this.effect.push(newGameWeaponEffect);
 	}
 
 	protected addEventListeners(): void {

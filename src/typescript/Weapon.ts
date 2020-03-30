@@ -2,19 +2,20 @@ import IGameImage from '../interfaces/IGameImage';
 import AssetLoader from './AssetLoader';
 import IAudio from '../interfaces/IAudio';
 import CanvasCursor from './CanvasCursor';
-import WeaponVFX from './WeaponVFX';
+import WeaponEffect from './WeaponEffect';
 import IGameImageAsset from '../interfaces/IGameImageAsset';
 import IAudioAsset from '../interfaces/IAudioAsset';
 
 export default abstract class Weapon {
-	public image: IGameImage | undefined = undefined;
+	public currentImage: IGameImage | undefined = undefined;
+	public currentAudio: IAudio | undefined = undefined;
+
 	public images: Map<string, IGameImage> | null = null;
 	public audio: Map<string, IAudio> | null = null;
 
-	protected currentAudio: IAudio | undefined = undefined;
 	protected canvasCursor: CanvasCursor;
 	protected context: CanvasRenderingContext2D;
-	protected gameWeaponEffect: WeaponVFX[] = [] as WeaponVFX[];
+	protected effect: WeaponEffect[] = [] as WeaponEffect[];
 
 	protected abstract imageAssets: Map<string, IGameImageAsset>;
 	protected abstract audioAssets: Map<string, IAudioAsset>;
@@ -46,7 +47,7 @@ export default abstract class Weapon {
 		this.audio = audio;
 
 		this.currentAudio = audio.get(audioAlias);
-		this.image = images.get(imageAlias);
+		this.currentImage = images.get(imageAlias);
 
 		this.addEventListeners();
 	}

@@ -1,10 +1,10 @@
-import WeaponVFX from '../WeaponVFX';
+import WeaponEffect from '../WeaponEffect';
 import IPosition from '../../interfaces/IPosition';
 import { hammerImageAssets, hammerImageAlias } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
 import HammerParticle from './HammerParticle';
 
-export default class HammerVFX extends WeaponVFX {
+export default class HammerVFX extends WeaponEffect {
 	public static lifeTime = 5000; // ms
 
 	public imageAssets = hammerImageAssets;
@@ -35,7 +35,7 @@ export default class HammerVFX extends WeaponVFX {
 	}
 
 	public draw(): void {
-		const { image, effectPosition } = this;
+		const { currentImage: image, effectPosition } = this;
 
 		if (image === undefined || image === null) {
 			return;
@@ -45,18 +45,18 @@ export default class HammerVFX extends WeaponVFX {
 			this.generateParticles();
 		}
 
-		const scaledWidth = image.img.width / image.scaleOnCanvas;
-		const scaledHeight = image.img.height / image.scaleOnCanvas;
+		const scaledWidth = image.image.width / image.scaleOnCanvas;
+		const scaledHeight = image.image.height / image.scaleOnCanvas;
 
 		const canvasX = effectPosition.x - scaledWidth / 2;
 		const canvasY = effectPosition.y - scaledHeight / 2;
 
 		this.context.drawImage(
-			image.img,
+			image.image,
 			0,
 			0,
-			image.img.width,
-			image.img.height,
+			image.image.width,
+			image.image.height,
 			canvasX,
 			canvasY,
 			scaledWidth,
@@ -67,13 +67,13 @@ export default class HammerVFX extends WeaponVFX {
 	}
 
 	private generateParticles(): void {
-		const { image, effectPosition, particleSettings } = this;
+		const { currentImage: image, effectPosition, particleSettings } = this;
 
 		if (image === undefined || image === null) {
 			return;
 		}
-		const scaledWidth = image.img.width / image.scaleOnCanvas;
-		const scaledHeight = image.img.height / image.scaleOnCanvas;
+		const scaledWidth = image.image.width / image.scaleOnCanvas;
+		const scaledHeight = image.image.height / image.scaleOnCanvas;
 
 		const canvasX = effectPosition.x - scaledWidth / 2;
 		const canvasY = effectPosition.y - scaledHeight / 2;

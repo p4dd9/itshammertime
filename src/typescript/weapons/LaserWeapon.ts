@@ -28,31 +28,31 @@ export default class LaserWeapon extends Weapon {
 	}
 
 	public draw(): void {
-		const { image, canvasCursor } = this;
+		const { currentImage: image, canvasCursor } = this;
 		if (image === undefined) {
 			return;
 		}
 
 		if (this.laserOn) {
-			(this.gameWeaponEffect[0] as LaserVFX).drawWithPosition(
+			(this.effect[0] as LaserVFX).drawWithPosition(
 				canvasCursor.mousePosition.x +
-					image.img.width / image.scaleOnCanvas / 2 -
+					image.image.width / image.scaleOnCanvas / 2 -
 					5,
 				canvasCursor.mousePosition.y -
-					image.img.height / image.scaleOnCanvas
+					image.image.height / image.scaleOnCanvas
 			);
 		}
 
 		this.context.drawImage(
-			image.img,
+			image.image,
 			0,
 			0,
-			image.img.width,
-			image.img.height,
+			image.image.width,
+			image.image.height,
 			canvasCursor.mousePosition.x,
 			canvasCursor.mousePosition.y,
-			image.img.width / image.scaleOnCanvas,
-			image.img.height / image.scaleOnCanvas
+			image.image.width / image.scaleOnCanvas,
+			image.image.height / image.scaleOnCanvas
 		);
 	}
 
@@ -67,7 +67,7 @@ export default class LaserWeapon extends Weapon {
 	}
 
 	private stopUse(): void {
-		this.gameWeaponEffect = [];
+		this.effect = [];
 
 		GameAudio.playSound(
 			this.audio!.get(laserAudioAlias.LASER_CLICK_OFF)!.audio
@@ -77,7 +77,7 @@ export default class LaserWeapon extends Weapon {
 	}
 
 	protected use(): void {
-		this.gameWeaponEffect = [
+		this.effect = [
 			new LaserVFX(this.context, this.canvasCursor.mousePosition),
 		];
 		this.currentAudio = this.audio!.get(laserAudioAlias.LASER_BEAM);

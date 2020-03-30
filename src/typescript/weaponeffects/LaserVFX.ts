@@ -1,9 +1,9 @@
-import WeaponVFX from '../WeaponVFX';
+import WeaponEffect from '../WeaponEffect';
 import { laserImageAssets, laserImageAlias } from '../../assets/imageAssets';
 import { laserAudioAssets, laserAudioAlias } from '../../assets/audioAssets';
 import IPosition from '../../interfaces/IPosition';
 
-export default class LaserVFX extends WeaponVFX {
+export default class LaserVFX extends WeaponEffect {
 	constructor(context: CanvasRenderingContext2D, position: IPosition) {
 		super(
 			context,
@@ -16,7 +16,7 @@ export default class LaserVFX extends WeaponVFX {
 	}
 
 	public drawWithPosition(x: number, y: number): void {
-		if (this.image === undefined) {
+		if (this.currentImage === undefined) {
 			return;
 		}
 
@@ -28,7 +28,7 @@ export default class LaserVFX extends WeaponVFX {
 	}
 
 	public draw(): void {
-		if (this.image === null || this.image === undefined) {
+		if (this.currentImage === null || this.currentImage === undefined) {
 			return;
 		}
 

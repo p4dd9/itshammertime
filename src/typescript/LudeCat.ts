@@ -93,17 +93,21 @@ export default class LudeCat {
 		} = this;
 		const spritesheet = this.spritesheet;
 
-		if (spritesheet!.animated === false) {
+		if (spritesheet === undefined) {
+			return;
+		}
+
+		if (spritesheet.animated === false) {
 			_context.drawImage(
-				spritesheet!.img,
+				spritesheet.img,
 				0,
 				0,
-				spritesheet!.img.width,
-				spritesheet!.img.height,
+				spritesheet.img.width,
+				spritesheet.img.height,
 				_position.x,
 				_position.y,
-				spritesheet!.img.width / spritesheet!.scaleOnCanvas,
-				spritesheet!.img.height / spritesheet!.scaleOnCanvas
+				spritesheet.img.width / spritesheet.scaleOnCanvas,
+				spritesheet.img.height / spritesheet.scaleOnCanvas
 			);
 			return;
 		}
@@ -114,10 +118,10 @@ export default class LudeCat {
 			scaleOnCanvas,
 		} = this.spritesheet!;
 
-		const frameWidth = spritesheet!.img.width / spriteSheetColumCount;
-		const frameHeight = spritesheet!.img.height / spriteSheetRowCount;
+		const frameWidth = spritesheet.img.width / spriteSheetColumCount;
+		const frameHeight = spritesheet.img.height / spriteSheetRowCount;
 		_context.drawImage(
-			spritesheet!.img,
+			spritesheet.img,
 			_colIndex * frameWidth,
 			_rowIndex * frameHeight,
 			frameWidth,

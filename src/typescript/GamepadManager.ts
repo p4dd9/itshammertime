@@ -107,15 +107,20 @@ export default class GamepadManager {
 
 	public handleButtons(): void {
 		const { ludeCat, gamepad } = this;
-		if (gamepad!.buttons[XBOX360_BUTTONS.A].pressed) {
+
+		if (gamepad === null) {
+			return;
+		}
+
+		if (gamepad.buttons[XBOX360_BUTTONS.A].pressed) {
 			ludeCat.meow();
 		}
 
-		if (gamepad!.buttons[XBOX360_BUTTONS.B].pressed) {
+		if (gamepad.buttons[XBOX360_BUTTONS.B].pressed) {
 			ludeCat.nya();
 		}
 
-		if (gamepad!.buttons[XBOX360_BUTTONS.X].pressed) {
+		if (gamepad.buttons[XBOX360_BUTTONS.X].pressed) {
 			ludeCat.meow2();
 		}
 	}

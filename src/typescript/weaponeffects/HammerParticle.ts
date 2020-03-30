@@ -4,6 +4,8 @@ import IVelocity from '../../interfaces/IVelocity';
 export default class HammerParticle {
 	public id: number;
 	public life = 0;
+	public vxMultiplier = 20; // 0 === vertical spread origin distance
+	public vyMultiplier = 20; // 0 === horizontal spread origin distance
 
 	private context: CanvasRenderingContext2D;
 	private position: IPosition;
@@ -24,8 +26,8 @@ export default class HammerParticle {
 		this.particleSize = particleSize;
 		this.gravity = gravity;
 		this.velocity = {
-			vx: Math.random() * 20 - 10,
-			vy: Math.random() * 20 - 5,
+			vx: Math.random() * this.vxMultiplier - 10,
+			vy: Math.random() * this.vyMultiplier - 5,
 		};
 	}
 

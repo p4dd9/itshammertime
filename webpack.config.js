@@ -23,7 +23,7 @@ module.exports = (_env, argv) => {
 			inject: true,
 			template: './src/index.html',
 			filename: 'video_overlay.html',
-			title: 'LudeCat Twitch Extension',
+			title: 'Stress Relief Twitch Extension',
 		}),
 	];
 

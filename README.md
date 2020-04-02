@@ -1,4 +1,4 @@
-# LudeCat Twitch Extension
+# Stress Relief Twitch Extension
 
 ## Todos
 

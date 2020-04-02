@@ -102,18 +102,18 @@ export default class GamepadManager {
 	};
 
 	public handleAxesInput(): void {
-		const { axeStatusThreshold, weapon: ludeCat } = this;
+		const { axeStatusThreshold, weapon } = this;
 		if (this.axesStatus[XBOX360_AXIS.LS_X] > axeStatusThreshold) {
-			ludeCat.moveRight();
+			weapon.moveRight();
 		}
 		if (this.axesStatus[XBOX360_AXIS.LS_X] < -axeStatusThreshold) {
-			ludeCat.moveLeft();
+			weapon.moveLeft();
 		}
 		if (this.axesStatus[XBOX360_AXIS.LS_Y] < -axeStatusThreshold) {
-			ludeCat.moveUp();
+			weapon.moveUp();
 		}
 		if (this.axesStatus[XBOX360_AXIS.LS_Y] > axeStatusThreshold) {
-			ludeCat.moveDown();
+			weapon.moveDown();
 		}
 	}
 

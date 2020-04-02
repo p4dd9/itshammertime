@@ -7,7 +7,7 @@ import IAudioAsset from '../interfaces/IAudioAsset';
 import IPosition from '../interfaces/IPosition';
 
 export default abstract class Weapon {
-	private moveDistance = 5;
+	private moveDistance = 9;
 
 	public currentImage: IGameImage | undefined = undefined;
 	public currentAudio: IAudio | undefined = undefined;
@@ -34,6 +34,11 @@ export default abstract class Weapon {
 		this.context = context;
 
 		this.loadAssets(imageAssets, audioAssets, imageAlias, audioAlias);
+	}
+
+	public resizeCanvas(canvasWidth: number, canvasHeight: number): void {
+		this.context.canvas.height = canvasHeight;
+		this.context.canvas.width = canvasWidth;
 	}
 
 	protected async loadAssets(

@@ -1,10 +1,10 @@
 import IGameImage from '../interfaces/IGameImage';
 import AssetLoader from './AssetLoader';
 import IAudio from '../interfaces/IAudio';
-import CanvasCursor from './CanvasCursor';
 import WeaponEffect from './WeaponEffect';
 import IGameImageAsset from '../interfaces/IGameImageAsset';
 import IAudioAsset from '../interfaces/IAudioAsset';
+import IPosition from '../interfaces/IPosition';
 
 export default abstract class Weapon {
 	public currentImage: IGameImage | undefined = undefined;
@@ -13,7 +13,7 @@ export default abstract class Weapon {
 	public images: Map<string, IGameImage> | null = null;
 	public audio: Map<string, IAudio> | null = null;
 
-	protected canvasCursor: CanvasCursor;
+	public position: IPosition;
 	protected context: CanvasRenderingContext2D;
 	protected effect: WeaponEffect[] = [] as WeaponEffect[];
 
@@ -22,13 +22,13 @@ export default abstract class Weapon {
 
 	constructor(
 		context: CanvasRenderingContext2D,
-		canvasCursor: CanvasCursor,
+		position: IPosition,
 		imageAssets: Map<string, IGameImageAsset>,
 		audioAssets: Map<string, IAudioAsset>,
 		imageAlias: string,
 		audioAlias: string
 	) {
-		this.canvasCursor = canvasCursor;
+		this.position = position;
 		this.context = context;
 
 		this.loadAssets(imageAssets, audioAssets, imageAlias, audioAlias);

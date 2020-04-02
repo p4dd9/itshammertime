@@ -4,7 +4,6 @@ import LudeCat from './LudeCat';
 import Debugger from './Debugger';
 import UI from './GameUI';
 import GameAudio from './GameAudio';
-import CanvasCursor from './CanvasCursor';
 import Weapon from './Weapon';
 import HammerWeapon from './weapons/HammerWeapon';
 
@@ -13,7 +12,6 @@ export default class Game {
 	public ui: UI;
 	public gameAudio: GameAudio;
 	public ludecat: LudeCat;
-	public canvasCursor: CanvasCursor;
 
 	private gameInput: Input;
 	private debugger: Debugger;
@@ -23,14 +21,13 @@ export default class Game {
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
-		this.canvasCursor = new CanvasCursor(this.context);
 
 		this.ludecat = new LudeCat(this._context);
-		this.gameInput = new Input(this.ludecat);
 		this.debugger = new Debugger(this);
 		this.ui = new UI(this);
 		this.gameAudio = new GameAudio(this);
-		this._weapon = new HammerWeapon(this._context, this.canvasCursor);
+		this._weapon = new HammerWeapon(this._context, { x: 200, y: 200 });
+		this.gameInput = new Input(this.ludecat, this.weapon!, this.context);
 
 		this.step = this.step.bind(this);
 	}

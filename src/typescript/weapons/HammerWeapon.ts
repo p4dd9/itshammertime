@@ -1,10 +1,10 @@
 import Weapon from '../Weapon';
-import CanvasCursor from '../CanvasCursor';
 import { hammerImageAssets } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
 import { hammerImageAlias } from '../../assets/imageAssets';
 import HammerVFX from '../weaponeffects/HammerVFX';
 import { degToRad } from '../../util/commonUtil';
+import IPosition from '../../interfaces/IPosition';
 
 export default class HammerWeapon extends Weapon {
 	public imageAssets = hammerImageAssets;
@@ -16,10 +16,10 @@ export default class HammerWeapon extends Weapon {
 	private moveForward = true;
 	private animateHammer = false;
 
-	constructor(context: CanvasRenderingContext2D, canvasCursor: CanvasCursor) {
+	constructor(context: CanvasRenderingContext2D, position: IPosition) {
 		super(
 			context,
-			canvasCursor,
+			position,
 			hammerImageAssets,
 			hammerAudioAssets,
 			hammerImageAlias.HAMMER,
@@ -98,8 +98,8 @@ export default class HammerWeapon extends Weapon {
 		const directionNumber = rotationDirection === 'set' ? 1 : -1;
 
 		this.context.translate(
-			directionNumber * this.canvasCursor.mousePosition.x,
-			directionNumber * this.canvasCursor.mousePosition.y
+			directionNumber * this.position.x,
+			directionNumber * this.position.y
 		);
 	}
 
@@ -127,8 +127,8 @@ export default class HammerWeapon extends Weapon {
 		const scaledHeight = image.image.height / image.scaleOnCanvas;
 
 		const newGameWeaponEffect = new HammerVFX(this.context, {
-			x: this.canvasCursor.mousePosition.x - scaledWidth / 2 - 80, // hammer effect related
-			y: this.canvasCursor.mousePosition.y - scaledHeight / 2,
+			x: this.position.x - scaledWidth / 2 - 80, // hammer effect related
+			y: this.position.y - scaledHeight / 2,
 		});
 		newGameWeaponEffect.selfDestruct = this.removeActiveEffect;
 

@@ -74,30 +74,30 @@ export default class UI {
 		this.hammerButton?.addEventListener('click', () => {
 			console.info('Switching to Hammer.');
 
-			this.game.weapon = new HammerWeapon(
-				this.game.context,
-				this.game.canvasCursor
-			);
+			this.game.weapon = new HammerWeapon(this.game.context, {
+				x: 200,
+				y: 200,
+			});
 		});
 
 		this.macheteButtonImage!.src = macheteImage;
 		this.macheteButton?.addEventListener('click', () => {
 			console.info('Switching to Machete.');
 
-			this.game.weapon = new MacheteWeapon(
-				this.game.context,
-				this.game.canvasCursor
-			);
+			this.game.weapon = new MacheteWeapon(this.game.context, {
+				x: 200,
+				y: 200,
+			});
 		});
 
 		this.laserButtonImage!.src = laserImage;
 		this.laserButton?.addEventListener('click', () => {
 			console.info('Switching to Laser.');
 
-			this.game.weapon = new LaserWeapon(
-				this.game.context,
-				this.game.canvasCursor
-			);
+			this.game.weapon = new LaserWeapon(this.game.context, {
+				x: 200,
+				y: 200,
+			});
 		});
 	}
 

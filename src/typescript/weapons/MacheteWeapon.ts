@@ -7,16 +7,16 @@ import {
 	macheteAudioAssets,
 	macheteAudioAlias,
 } from '../../assets/audioAssets';
-import CanvasCursor from '../CanvasCursor';
+import IPosition from '../../interfaces/IPosition';
 
 export default class MacheteWeapon extends Weapon {
 	public imageAssets = macheteImageAssets;
 	public audioAssets = macheteAudioAssets;
 
-	constructor(context: CanvasRenderingContext2D, canvasCursor: CanvasCursor) {
+	constructor(context: CanvasRenderingContext2D, position: IPosition) {
 		super(
 			context,
-			canvasCursor,
+			position,
 			macheteImageAssets,
 			macheteAudioAssets,
 			macheteImageAlias.MACHETE_STATIC,
@@ -41,7 +41,7 @@ export default class MacheteWeapon extends Weapon {
 	}
 
 	public draw(): void {
-		const { currentImage: image, context, canvasCursor } = this;
+		const { currentImage: image, context, position } = this;
 		if (image === undefined) {
 			return;
 		}
@@ -52,8 +52,8 @@ export default class MacheteWeapon extends Weapon {
 			0,
 			image.image.width,
 			image.image.height,
-			canvasCursor.mousePosition.x,
-			canvasCursor.mousePosition.y,
+			position.x,
+			position.y,
 			image.image.width / image.scaleOnCanvas,
 			image.image.height / image.scaleOnCanvas
 		);

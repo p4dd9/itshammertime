@@ -1,9 +1,9 @@
 import Weapon from '../Weapon';
 import { laserImageAssets, laserImageAlias } from '../../assets/imageAssets';
 import { laserAudioAssets, laserAudioAlias } from '../../assets/audioAssets';
-import CanvasCursor from '../CanvasCursor';
 import GameAudio from '../GameAudio';
 import LaserVFX from '../weaponeffects/LaserVFX';
+import IPosition from '../../interfaces/IPosition';
 
 export default class LaserWeapon extends Weapon {
 	private laserOn = false;
@@ -11,10 +11,10 @@ export default class LaserWeapon extends Weapon {
 	protected imageAssets = laserImageAssets;
 	protected audioAssets = laserAudioAssets;
 
-	constructor(context: CanvasRenderingContext2D, canvasCursor: CanvasCursor) {
+	constructor(context: CanvasRenderingContext2D, position: IPosition) {
 		super(
 			context,
-			canvasCursor,
+			position,
 			laserImageAssets,
 			laserAudioAssets,
 			laserImageAlias.LASER_STATIC,
@@ -28,18 +28,15 @@ export default class LaserWeapon extends Weapon {
 	}
 
 	public draw(): void {
-		const { currentImage: image, canvasCursor } = this;
+		const { currentImage: image, position } = this;
 		if (image === undefined) {
 			return;
 		}
 
 		if (this.laserOn) {
 			(this.effect[0] as LaserVFX).drawWithPosition(
-				canvasCursor.mousePosition.x +
-					image.image.width / image.scaleOnCanvas / 2 -
-					5,
-				canvasCursor.mousePosition.y -
-					image.image.height / image.scaleOnCanvas
+				position.x + image.image.width / image.scaleOnCanvas / 2 - 5,
+				position.y - image.image.height / image.scaleOnCanvas
 			);
 		}
 
@@ -49,8 +46,8 @@ export default class LaserWeapon extends Weapon {
 			0,
 			image.image.width,
 			image.image.height,
-			canvasCursor.mousePosition.x,
-			canvasCursor.mousePosition.y,
+			position.x,
+			position.y,
 			image.image.width / image.scaleOnCanvas,
 			image.image.height / image.scaleOnCanvas
 		);
@@ -77,9 +74,7 @@ export default class LaserWeapon extends Weapon {
 	}
 
 	protected use(): void {
-		this.effect = [
-			new LaserVFX(this.context, this.canvasCursor.mousePosition),
-		];
+		this.effect = [new LaserVFX(this.context, this.position)];
 		this.currentAudio = this.audio!.get(laserAudioAlias.LASER_BEAM);
 		GameAudio.loop(this.currentAudio!.audio);
 		this.laserOn = true;

@@ -7,6 +7,8 @@ import IAudioAsset from '../interfaces/IAudioAsset';
 import IPosition from '../interfaces/IPosition';
 
 export default abstract class Weapon {
+	private moveDistance = 5;
+
 	public currentImage: IGameImage | undefined = undefined;
 	public currentAudio: IAudio | undefined = undefined;
 
@@ -52,8 +54,54 @@ export default abstract class Weapon {
 		this.addEventListeners();
 	}
 
+	public moveRight(): void {
+		const canvasWidth = this.context.canvas.width;
+		const destinationX =
+			this.position.x +
+			this.moveDistance +
+			this.currentImage!.image.width / this.currentImage!.scaleOnCanvas;
+
+		if (destinationX <= canvasWidth) {
+			this.position.x += this.moveDistance;
+		}
+	}
+
+	public moveLeft(): void {
+		const destinationX =
+			this.position.x -
+			(this.moveDistance +
+				this.currentImage!.image.width /
+					this.currentImage!.scaleOnCanvas) /
+				2;
+
+		if (destinationX >= 0) {
+			this.position.x += -this.moveDistance;
+		}
+	}
+
+	public moveUp(): void {
+		const destinationY =
+			this.position.y -
+			(this.moveDistance +
+				this.currentImage!.image.height /
+					this.currentImage!.scaleOnCanvas);
+
+		if (destinationY >= 0) {
+			this.position.y += -this.moveDistance;
+		}
+	}
+
+	public moveDown(): void {
+		const canvasHeight = this.context.canvas.height;
+		const destinationY = this.position.y + this.moveDistance;
+
+		if (destinationY < canvasHeight) {
+			this.position.y += this.moveDistance;
+		}
+	}
+
 	public abstract draw(): void;
 	public abstract removeEventListeners(): void;
 	protected abstract addEventListeners(): void;
-	protected abstract use(): void;
+	public abstract use(): void;
 }

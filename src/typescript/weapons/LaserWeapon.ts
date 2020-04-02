@@ -73,7 +73,7 @@ export default class LaserWeapon extends Weapon {
 		this.laserOn = false;
 	}
 
-	protected use(): void {
+	public use(): void {
 		this.effect = [new LaserVFX(this.context, this.position)];
 		this.currentAudio = this.audio!.get(laserAudioAlias.LASER_BEAM);
 		GameAudio.loop(this.currentAudio!.audio);

@@ -1,7 +1,6 @@
 import IPosition from '../interfaces/IPosition';
 import Weapon from './Weapon';
 import Input from './Input';
-import CONTROLS from '../enums/controls';
 
 export default class CursorManager {
 	private position: IPosition;
@@ -24,6 +23,7 @@ export default class CursorManager {
 		this.weapon = weapon;
 		this.gameInput = gameInput;
 
+		console.log(this.gameInput);
 		this.addCursorListenerToDocument();
 	}
 
@@ -36,7 +36,6 @@ export default class CursorManager {
 	}
 
 	public handleMouse(): void {
-		console.log(this.position);
 		this.weapon.position = this.position;
 	}
 
@@ -51,7 +50,6 @@ export default class CursorManager {
 
 	private addCursorListenerToDocument(): void {
 		this.context.canvas.addEventListener('mousemove', (event) => {
-			this.gameInput.controls = CONTROLS.MOUSE;
 			this.position = this.getMousePos(event as MouseEvent);
 		});
 	}

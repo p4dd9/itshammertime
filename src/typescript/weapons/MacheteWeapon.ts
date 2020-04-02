@@ -36,7 +36,7 @@ export default class MacheteWeapon extends Weapon {
 		this.context.canvas.removeEventListener('click', this.use);
 	}
 
-	protected use(): void {
+	public use(): void {
 		console.log('IT MUST DO SOMETHING');
 	}
 

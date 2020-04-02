@@ -1,58 +1,49 @@
 import Input from './Input';
-import CONTROLS from '../enums/controls';
-import LudeCat from './LudeCat';
 import KEYCODES from '../enums/keycodes';
-import { ludeCatSpriteSheetAlias } from '../assets/spriteSheetAssets';
+import Weapon from './Weapon';
 
 export default class KeyboardManager {
 	private gameInput: Input;
-	private ludeCat: LudeCat;
+	private weapon: Weapon;
 
 	private rightArrowKeyPressed = false;
 	private leftArrowKeyPressed = false;
 	private upArrowKeyPressed = false;
 	private downArrowKeyPressed = false;
 
-	constructor(gameInput: Input, ludeCat: LudeCat) {
-		this.ludeCat = ludeCat;
+	constructor(gameInput: Input, weapon: Weapon) {
+		this.weapon = weapon;
 		this.gameInput = gameInput;
 
+		console.log(this.gameInput);
 		this.addKeyboardListenerToDocument();
 	}
 
 	public handleArrowKeys(): void {
-		const ludeCat = this.ludeCat;
+		const weapon = this.weapon;
 
 		if (this.rightArrowKeyPressed) {
-			ludeCat.moveRight();
+			weapon.moveRight();
 		} else if (this.leftArrowKeyPressed) {
-			ludeCat.moveLeft();
+			weapon.moveLeft();
 		} else if (this.upArrowKeyPressed) {
-			ludeCat.moveUp();
+			weapon.moveUp();
 		} else if (this.downArrowKeyPressed) {
-			ludeCat.moveDown();
-		} else {
-			ludeCat.moving(ludeCatSpriteSheetAlias.IDLE);
+			weapon.moveDown();
 		}
 	}
 
 	private addKeyboardListenerToDocument(): void {
 		document.addEventListener('keydown', (event: KeyboardEvent) => {
-			if (this.gameInput.controls === CONTROLS.KEYBOARD) {
-				this.detectKey(event.keyCode, true);
-			}
+			this.detectKey(event.keyCode, true);
 		});
 
 		document.addEventListener('keyup', (event: KeyboardEvent) => {
-			if (this.gameInput.controls === CONTROLS.KEYBOARD) {
-				this.detectKey(event.keyCode, false);
-			}
+			this.detectKey(event.keyCode, false);
 		});
 	}
 
 	private detectKey(keyCode: number, pressed: boolean): void {
-		const ludeCat = this.ludeCat;
-
 		if (keyCode === KEYCODES.RIGHT_ARROW || keyCode === KEYCODES.RIGHT_D) {
 			this.rightArrowKeyPressed = pressed;
 		} else if (
@@ -67,8 +58,9 @@ export default class KeyboardManager {
 			keyCode === KEYCODES.DOWN_S
 		) {
 			this.downArrowKeyPressed = pressed;
-		} else if (keyCode === KEYCODES.SPACE) {
-			ludeCat.meow();
+		}
+		if (keyCode === KEYCODES.SPACE) {
+			this.weapon.use();
 		}
 	}
 }

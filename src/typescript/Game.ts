@@ -26,8 +26,10 @@ export default class Game {
 		this.debugger = new Debugger(this);
 		this.ui = new UI(this);
 		this.gameAudio = new GameAudio(this);
-		this._weapon = new HammerWeapon(this._context, { x: 200, y: 200 });
-		this.gameInput = new Input(this.ludecat, this.weapon!, this.context);
+
+		const newWeapon = new HammerWeapon(this._context, { x: 200, y: 200 });
+		this._weapon = newWeapon;
+		this.gameInput = new Input(this.ludecat, newWeapon, this.context);
 
 		this.step = this.step.bind(this);
 	}

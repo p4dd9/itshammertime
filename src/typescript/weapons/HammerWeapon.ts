@@ -118,7 +118,7 @@ export default class HammerWeapon extends Weapon {
 		}
 	}
 
-	protected use(): void {
+	public use(): void {
 		const image = this.currentImage!;
 
 		this.animateHammer = true;

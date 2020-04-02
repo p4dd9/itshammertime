@@ -18,8 +18,7 @@ export default class Input {
 		context: CanvasRenderingContext2D
 	) {
 		this.gamepadManager = new GamepadManager(this, ludecat);
-		this.keyboardManager = new KeyboardManager(this, ludecat);
-
+		this.keyboardManager = new KeyboardManager(this, weapon);
 		this.cursorManager = new CursorManager(this, weapon, context);
 	}
 

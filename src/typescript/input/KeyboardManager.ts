@@ -1,6 +1,6 @@
-import Input from './Input';
-import KEYCODES from '../enums/keycodes';
-import Weapon from './Weapon';
+import Input from '../Input';
+import KEYCODES from '../../enums/keycodes';
+import Weapon from '../Weapon';
 
 export default class KeyboardManager {
 	private gameInput: Input;

@@ -1,10 +1,10 @@
-import Input from './Input';
-import BrowserUtil from '../util/BrowserUtil';
-import CONTROLS from '../enums/controls';
-import IGamepadEvent from '../interfaces/IGamepadEvent';
-import LudeCat from './LudeCat';
-import { XBOX360_AXIS, XBOX360_BUTTONS } from '../enums/xbox360controls';
-import { ludeCatSpriteSheetAlias } from '../assets/spriteSheetAssets';
+import Input from '../Input';
+import BrowserUtil from '../../util/BrowserUtil';
+import CONTROLS from '../../enums/controls';
+import IGamepadEvent from '../../interfaces/IGamepadEvent';
+import LudeCat from '../LudeCat';
+import { XBOX360_AXIS, XBOX360_BUTTONS } from '../../enums/xbox360controls';
+import { ludeCatSpriteSheetAlias } from '../../assets/spriteSheetAssets';
 
 export default class GamepadManager {
 	private _gamepad: Gamepad | null = null;

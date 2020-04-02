@@ -1,9 +1,9 @@
-import GamepadManager from './GamepadManager';
+import GamepadManager from './input/GamepadManager';
 import CONTROLS from '../enums/controls';
 import LudeCat from './LudeCat';
-import KeyboardManager from './KeyboardManager';
+import KeyboardManager from './input/KeyboardManager';
 import Weapon from './Weapon';
-import CursorManager from './CursorManager';
+import CursorManager from './input/CursorManager';
 
 export default class Input {
 	private _controls: CONTROLS = CONTROLS.KEYBOARD;

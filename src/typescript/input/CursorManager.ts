@@ -1,6 +1,6 @@
-import IPosition from '../interfaces/IPosition';
-import Weapon from './Weapon';
-import Input from './Input';
+import IPosition from '../../interfaces/IPosition';
+import Weapon from '../Weapon';
+import Input from '../Input';
 
 export default class CursorManager {
 	private position: IPosition;

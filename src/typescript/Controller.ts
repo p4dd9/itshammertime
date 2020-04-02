@@ -1,11 +1,11 @@
 import GamepadManager from './input/GamepadManager';
-import CONTROLS from '../enums/controls';
+import CONTROL_TYPE from '../enums/controls';
 import KeyboardManager from './input/KeyboardManager';
 import Weapon from './Weapon';
 import CursorManager from './input/CursorManager';
 
-export default class Input {
-	private _controls: CONTROLS = CONTROLS.KEYBOARD;
+export default class Controller {
+	private controllerType: CONTROL_TYPE = CONTROL_TYPE.KEYBOARD;
 
 	private gamepadManager: GamepadManager;
 	private keyboardManager: KeyboardManager;
@@ -17,21 +17,17 @@ export default class Input {
 		this.cursorManager = new CursorManager(this, weapon, context);
 	}
 
-	public set controls(controls: CONTROLS) {
-		this._controls = controls;
+	public set controls(controllerType: CONTROL_TYPE) {
+		this.controllerType = controllerType;
 	}
 
-	public get controls(): CONTROLS {
-		return this._controls;
+	public get controls(): CONTROL_TYPE {
+		return this.controllerType;
 	}
 
 	public handleInput(): void {
-		const gamepadManager = this.gamepadManager;
-
-		gamepadManager.checkMovingCharacterByGamepad();
-		gamepadManager.handleButtons();
-		gamepadManager.handleAxesInput();
-		this.cursorManager.handleMouse();
-		this.keyboardManager.handleArrowKeys();
+		this.gamepadManager.handleInput();
+		this.cursorManager.handleInput();
+		this.keyboardManager.handleInput();
 	}
 }

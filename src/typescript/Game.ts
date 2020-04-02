@@ -1,5 +1,5 @@
 import '../vendor/analytics';
-import Input from './Input';
+import Controller from './Controller';
 import Debugger from './Debugger';
 import UI from './GameUI';
 import GameAudio from './GameAudio';
@@ -11,7 +11,7 @@ export default class Game {
 	public ui: UI;
 	public gameAudio: GameAudio;
 
-	private gameInput: Input;
+	private gameController: Controller | null;
 	private debugger: Debugger;
 
 	private _weapon: Weapon | null = null;
@@ -26,7 +26,7 @@ export default class Game {
 
 		const newWeapon = new HammerWeapon(this._context, { x: 200, y: 200 });
 		this._weapon = newWeapon;
-		this.gameInput = new Input(newWeapon, this.context);
+		this.gameController = new Controller(newWeapon, this.context);
 
 		this.step = this.step.bind(this);
 	}
@@ -37,10 +37,11 @@ export default class Game {
 
 	public set weapon(weapon: Weapon | null) {
 		if (this._weapon) {
-			this._weapon.removeEventListeners();
+			this._weapon.stop();
 		}
-		this._weapon = null;
+
 		this._weapon = weapon;
+		this.gameController = new Controller(weapon!, this.context);
 	}
 
 	public get context(): CanvasRenderingContext2D {
@@ -64,7 +65,9 @@ export default class Game {
 	}
 
 	private step(): void {
-		this.gameInput.handleInput();
+		if (this.gameController) {
+			this.gameController.handleInput();
+		}
 
 		this.clearCanvas();
 

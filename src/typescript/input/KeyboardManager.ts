@@ -1,9 +1,11 @@
-import Input from '../Input';
+import Controller from '../Controller';
 import KEYCODES from '../../enums/keycodes';
 import Weapon from '../Weapon';
+import Input from '../../interfaces/Input';
+import CONTROLS from '../../enums/controls';
 
-export default class KeyboardManager {
-	private gameInput: Input;
+export default class KeyboardManager implements Input {
+	private gameInput: Controller;
 	private weapon: Weapon;
 
 	private rightArrowKeyPressed = false;
@@ -11,15 +13,32 @@ export default class KeyboardManager {
 	private upArrowKeyPressed = false;
 	private downArrowKeyPressed = false;
 
-	constructor(gameInput: Input, weapon: Weapon) {
+	constructor(gameInput: Controller, weapon: Weapon) {
 		this.weapon = weapon;
 		this.gameInput = gameInput;
 
-		console.log(this.gameInput);
-		this.addKeyboardListenerToDocument();
+		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.handleKeyUp = this.handleKeyUp.bind(this);
+		this.start();
 	}
 
-	public handleArrowKeys(): void {
+	public start(): void {
+		this.gameInput.controls = CONTROLS.KEYBOARD;
+		window.addEventListener('keydown', this.handleKeyDown);
+		window.addEventListener('keyup', this.handleKeyUp);
+	}
+
+	public stop(): void {
+		this.gameInput.controls = CONTROLS.MOUSE;
+		window.removeEventListener('keydown', this.handleKeyDown);
+		window.removeEventListener('keyup', this.handleKeyUp);
+	}
+
+	public handleInput(): void {
+		this.handleArrowKeys();
+	}
+
+	private handleArrowKeys(): void {
 		const weapon = this.weapon;
 
 		if (this.rightArrowKeyPressed) {
@@ -33,14 +52,12 @@ export default class KeyboardManager {
 		}
 	}
 
-	private addKeyboardListenerToDocument(): void {
-		document.addEventListener('keydown', (event: KeyboardEvent) => {
-			this.detectKey(event.keyCode, true);
-		});
+	private handleKeyUp(event: KeyboardEvent): void {
+		this.detectKey(event.keyCode, false);
+	}
 
-		document.addEventListener('keyup', (event: KeyboardEvent) => {
-			this.detectKey(event.keyCode, false);
-		});
+	private handleKeyDown(event: KeyboardEvent): void {
+		this.detectKey(event.keyCode, true);
 	}
 
 	private detectKey(keyCode: number, pressed: boolean): void {

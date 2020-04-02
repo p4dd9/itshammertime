@@ -1,11 +1,12 @@
-import Input from '../Input';
+import Controller from '../Controller';
 import BrowserUtil from '../../util/BrowserUtil';
 import CONTROLS from '../../enums/controls';
 import IGamepadEvent from '../../interfaces/IGamepadEvent';
 import { XBOX360_AXIS, XBOX360_BUTTONS } from '../../enums/xbox360controls';
 import Weapon from '../Weapon';
+import Input from '../../interfaces/Input';
 
-export default class GamepadManager {
+export default class GamepadManager implements Input {
 	private throttleTimerId: undefined | number = undefined;
 
 	private _gamepad: Gamepad | null = null;
@@ -21,17 +22,20 @@ export default class GamepadManager {
 
 	private intervalId = -1;
 	private axeStatusThreshold = 0.3;
-	private gameInput: Input;
+	private gameInput: Controller;
 	private weapon: Weapon;
 
-	constructor(gameInput: Input, weapon: Weapon) {
+	constructor(gameInput: Controller, weapon: Weapon) {
 		this.weapon = weapon;
 		this.gameInput = gameInput;
 
-		this.gamepadConntectedListener();
-		this.gamepadDisconnectedListener();
-
+		this.handleGamepadConnected = this.handleGamepadConnected.bind(this);
+		this.handleGamepadDisconnected = this.handleGamepadDisconnected.bind(
+			this
+		);
 		this.listenToGamepad = this.listenToGamepad.bind(this);
+
+		this.start();
 	}
 
 	public get axesStatus(): number[] {
@@ -52,6 +56,26 @@ export default class GamepadManager {
 
 	public get gamepad(): Gamepad | null {
 		return this._gamepad;
+	}
+
+	public start(): void {
+		if (BrowserUtil.supportsGamepads()) {
+			this.addGamepadConnectListener();
+			this.addGamepadDisconnectListener();
+		}
+	}
+
+	public stop(): void {
+		if (BrowserUtil.supportsGamepads()) {
+			this.removeGamepadConnectListener();
+			this.removeGamepadDisconnectListener();
+		}
+	}
+
+	public handleInput(): void {
+		this.checkMovingCharacterByGamepad();
+		this.handleButtons();
+		this.handleAxesInput();
 	}
 
 	private listenToGamepad(): void {
@@ -120,7 +144,7 @@ export default class GamepadManager {
 	public handleButtons(): void {
 		const { weapon, gamepad } = this;
 
-		if (gamepad === null) {
+		if (gamepad === null || gamepad === undefined) {
 			return;
 		}
 
@@ -146,35 +170,54 @@ export default class GamepadManager {
 		}
 	}
 
-	private gamepadConntectedListener(): void {
-		if (BrowserUtil.supportsGamepads()) {
-			window.addEventListener('gamepadconnected', (event: Event) => {
-				const gampadEvent = event as IGamepadEvent;
-				this.gameInput.controls = CONTROLS.GAMEPAD;
+	private handleGamepadConnected(event: Event): void {
+		const gampadEvent = event as IGamepadEvent;
+		this.gameInput.controls = CONTROLS.GAMEPAD;
 
-				this.intervalId = window.setInterval(this.listenToGamepad, 100);
+		this.intervalId = window.setInterval(this.listenToGamepad, 100);
 
-				this._gamepad = gampadEvent.gamepad;
-				const { index, id, buttons, axes } = gampadEvent.gamepad;
-				console.info(
-					`Gamepad connected at index ${index}: ${id}. ${buttons.length} buttons, ${axes.length} axes.`
-				);
-			});
-		}
+		this._gamepad = gampadEvent.gamepad;
+		const { index, id, buttons, axes } = gampadEvent.gamepad;
+		console.info(
+			`Gamepad connected at index ${index}: ${id}. ${buttons.length} buttons, ${axes.length} axes.`
+		);
 	}
 
-	private gamepadDisconnectedListener(): void {
-		if (BrowserUtil.supportsGamepads()) {
-			window.addEventListener('gamepaddisconnected', (event: Event) => {
-				const gampadEvent = event as IGamepadEvent;
-				clearInterval(this.intervalId);
-				this.gameInput.controls = CONTROLS.KEYBOARD;
-				delete this._gamepad;
-				const { index, id } = gampadEvent.gamepad;
-				console.info(
-					`Gamepad disconnected from index ${index}: ${id}. `
-				);
-			});
-		}
+	private handleGamepadDisconnected(event: Event): void {
+		const gampadEvent = event as IGamepadEvent;
+		clearInterval(this.intervalId);
+
+		this.gameInput.controls = CONTROLS.MOUSE;
+		delete this._gamepad;
+		const { index, id } = gampadEvent.gamepad;
+		console.info(`Gamepad disconnected from index ${index}: ${id}. `);
+	}
+
+	private addGamepadConnectListener(): void {
+		window.addEventListener(
+			'gamepadconnected',
+			this.handleGamepadConnected
+		);
+	}
+
+	private addGamepadDisconnectListener(): void {
+		window.addEventListener(
+			'gamepaddisconnected',
+			this.handleGamepadDisconnected
+		);
+	}
+
+	private removeGamepadConnectListener(): void {
+		window.removeEventListener(
+			'gamepadconnected',
+			this.handleGamepadConnected
+		);
+	}
+
+	private removeGamepadDisconnectListener(): void {
+		window.removeEventListener(
+			'gamepaddisconnected',
+			this.handleGamepadDisconnected
+		);
 	}
 }

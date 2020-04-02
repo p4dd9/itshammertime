@@ -23,8 +23,8 @@ export default class LaserWeapon extends Weapon {
 
 		this.use = this.use.bind(this);
 		this.stopUse = this.stopUse.bind(this);
-		this.addEventListeners = this.addEventListeners.bind(this);
-		this.removeEventListeners = this.removeEventListeners.bind(this);
+		this.start = this.start.bind(this);
+		this.stop = this.stop.bind(this);
 	}
 
 	public draw(): void {
@@ -53,12 +53,12 @@ export default class LaserWeapon extends Weapon {
 		);
 	}
 
-	protected addEventListeners(): void {
+	public start(): void {
 		this.context.canvas.addEventListener('mousedown', this.use);
 		this.context.canvas.addEventListener('mouseup', this.stopUse);
 	}
 
-	public removeEventListeners(): void {
+	public stop(): void {
 		this.context.canvas.removeEventListener('mousedown', this.use);
 		this.context.canvas.removeEventListener('mouseup', this.stopUse);
 	}

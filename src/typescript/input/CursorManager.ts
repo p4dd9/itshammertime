@@ -1,15 +1,17 @@
 import IPosition from '../../interfaces/IPosition';
 import Weapon from '../Weapon';
-import Input from '../Input';
+import Controller from '../Controller';
+import Input from '../../interfaces/Input';
+import CONTROLS from '../../enums/controls';
 
-export default class CursorManager {
+export default class CursorManager implements Input {
 	private position: IPosition;
 	private context: CanvasRenderingContext2D;
-	private gameInput: Input;
+	private gameInput: Controller;
 	private weapon: Weapon;
 
 	constructor(
-		gameInput: Input,
+		gameInput: Controller,
 		weapon: Weapon,
 		context: CanvasRenderingContext2D
 	) {
@@ -23,20 +25,20 @@ export default class CursorManager {
 		this.weapon = weapon;
 		this.gameInput = gameInput;
 
-		console.log(this.gameInput);
-		this.addCursorListenerToDocument();
+		this.updatePosition = this.updatePosition.bind(this);
+		this.start();
 	}
 
-	get mousePosition(): IPosition {
-		return this.position;
+	public start(): void {
+		this.gameInput.controls = CONTROLS.MOUSE;
+		this.context.canvas.addEventListener('mousemove', this.updatePosition);
 	}
 
-	set mousePosition(position: IPosition) {
-		this.position = position;
-	}
-
-	public handleMouse(): void {
-		this.weapon.position = this.position;
+	public stop(): void {
+		this.context.canvas.removeEventListener(
+			'mousemove',
+			this.updatePosition
+		);
 	}
 
 	private getMousePos(event: MouseEvent): IPosition {
@@ -48,9 +50,19 @@ export default class CursorManager {
 		};
 	}
 
-	private addCursorListenerToDocument(): void {
-		this.context.canvas.addEventListener('mousemove', (event) => {
-			this.position = this.getMousePos(event as MouseEvent);
-		});
+	public updatePosition(): void {
+		this.position = this.getMousePos(event as MouseEvent);
+	}
+
+	get mousePosition(): IPosition {
+		return this.position;
+	}
+
+	set mousePosition(position: IPosition) {
+		this.position = position;
+	}
+
+	public handleInput(): void {
+		this.weapon.position = this.position;
 	}
 }

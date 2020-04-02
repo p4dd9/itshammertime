@@ -24,15 +24,15 @@ export default class MacheteWeapon extends Weapon {
 		);
 
 		this.use = this.use.bind(this);
-		this.addEventListeners = this.addEventListeners.bind(this);
-		this.removeEventListeners = this.removeEventListeners.bind(this);
+		this.start = this.start.bind(this);
+		this.stop = this.stop.bind(this);
 	}
 
-	protected addEventListeners(): void {
+	public start(): void {
 		this.context.canvas.addEventListener('click', this.use);
 	}
 
-	public removeEventListeners(): void {
+	public stop(): void {
 		this.context.canvas.removeEventListener('click', this.use);
 	}
 

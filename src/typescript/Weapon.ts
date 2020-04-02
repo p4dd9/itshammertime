@@ -56,7 +56,7 @@ export default abstract class Weapon {
 		this.currentAudio = audio.get(audioAlias);
 		this.currentImage = images.get(imageAlias);
 
-		this.addEventListeners();
+		this.start();
 	}
 
 	public moveRight(): void {
@@ -106,7 +106,7 @@ export default abstract class Weapon {
 	}
 
 	public abstract draw(): void;
-	public abstract removeEventListeners(): void;
-	protected abstract addEventListeners(): void;
+	public abstract stop(): void;
+	public abstract start(): void;
 	public abstract use(): void;
 }

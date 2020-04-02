@@ -73,7 +73,6 @@ export default class GamepadManager implements Input {
 	}
 
 	public handleInput(): void {
-		this.checkMovingCharacterByGamepad();
 		this.handleButtons();
 		this.handleAxesInput();
 	}
@@ -152,21 +151,6 @@ export default class GamepadManager implements Input {
 			this.throttleFunction(() => {
 				weapon.use();
 			}, 90);
-		}
-	}
-
-	public checkMovingCharacterByGamepad(): void {
-		const { axeStatusThreshold, axesStatus } = this;
-
-		if (
-			!(
-				axesStatus[XBOX360_AXIS.LS_X] > axeStatusThreshold ||
-				axesStatus[XBOX360_AXIS.LS_X] < -axeStatusThreshold ||
-				axesStatus[XBOX360_AXIS.LS_Y] > axeStatusThreshold ||
-				axesStatus[XBOX360_AXIS.LS_Y] < -axeStatusThreshold
-			)
-		) {
-			console.log('I like to move it move it');
 		}
 	}
 

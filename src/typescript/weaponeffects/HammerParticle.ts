@@ -12,16 +12,19 @@ export default class HammerParticle {
 	private velocity: IVelocity;
 	private gravity: number;
 	private particleSize: number;
+	private color: string;
 
 	constructor(
 		context: CanvasRenderingContext2D,
 		startPosition: IPosition,
 		id: number,
 		particleSize: number,
-		gravity: number
+		gravity: number,
+		color: string
 	) {
 		this.context = context;
 		this.position = startPosition;
+		this.color = color;
 		this.id = id;
 		this.particleSize = particleSize;
 		this.gravity = gravity;
@@ -32,7 +35,14 @@ export default class HammerParticle {
 	}
 
 	public draw(): void {
-		const { context, position, velocity, particleSize, gravity } = this;
+		const {
+			context,
+			position,
+			velocity,
+			particleSize,
+			gravity,
+			color,
+		} = this;
 		position.x += velocity.vx;
 		position.y += velocity.vy;
 
@@ -40,7 +50,7 @@ export default class HammerParticle {
 		this.life++;
 
 		context.beginPath();
-		context.fillStyle = '#ffffff';
+		context.fillStyle = color;
 
 		context.arc(position.x, position.y, particleSize, 0, Math.PI * 2, true);
 		context.closePath();

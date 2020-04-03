@@ -34,23 +34,18 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	protected removeActiveEffect(): void {
-		this.effect.shift();
+		this.effects.shift();
 	}
 
 	public draw(): void {
-		const {
-			currentImage: image,
-			context,
-			effect: gameWeaponEffect,
-			angle,
-		} = this;
+		const { currentImage, context, effects, angle } = this;
 
-		if (image === undefined) {
+		if (currentImage === undefined) {
 			return;
 		}
 
-		if (gameWeaponEffect.length > 0) {
-			for (const gameEffect of gameWeaponEffect) {
+		if (effects.length > 0) {
+			for (const gameEffect of effects) {
 				gameEffect.draw();
 			}
 		}
@@ -132,7 +127,7 @@ export default class HammerWeapon extends Weapon {
 		});
 		newGameWeaponEffect.selfDestruct = this.removeActiveEffect;
 
-		this.effect.push(newGameWeaponEffect);
+		this.effects.push(newGameWeaponEffect);
 	}
 
 	public start(): void {

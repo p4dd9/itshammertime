@@ -34,7 +34,7 @@ export default class LaserWeapon extends Weapon {
 		}
 
 		if (this.laserOn) {
-			(this.effect[0] as LaserVFX).drawWithPosition(
+			(this.effects[0] as LaserVFX).drawWithPosition(
 				position.x + image.image.width / image.scaleOnCanvas / 2 - 5,
 				position.y - image.image.height / image.scaleOnCanvas
 			);
@@ -64,7 +64,7 @@ export default class LaserWeapon extends Weapon {
 	}
 
 	private stopUse(): void {
-		this.effect = [];
+		this.effects = [];
 
 		GameAudio.playSound(
 			this.audio!.get(laserAudioAlias.LASER_CLICK_OFF)!.audio
@@ -74,7 +74,7 @@ export default class LaserWeapon extends Weapon {
 	}
 
 	public use(): void {
-		this.effect = [new LaserVFX(this.context, this.position)];
+		this.effects = [new LaserVFX(this.context, this.position)];
 		this.currentAudio = this.audio!.get(laserAudioAlias.LASER_BEAM);
 		GameAudio.loop(this.currentAudio!.audio);
 		this.laserOn = true;

@@ -17,7 +17,7 @@ export default abstract class Weapon {
 
 	public position: IPosition;
 	protected context: CanvasRenderingContext2D;
-	protected effect: WeaponEffect[] = [] as WeaponEffect[];
+	protected effects: WeaponEffect[] = [] as WeaponEffect[];
 
 	protected abstract imageAssets: Map<string, IGameImageAsset>;
 	protected abstract audioAssets: Map<string, IAudioAsset>;

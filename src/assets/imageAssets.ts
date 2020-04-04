@@ -68,14 +68,14 @@ export const hammerImageAssets: Map<string, IGameImageAsset> = new Map([
 		hammerImageAlias.HAMMER_EFFECT_02,
 		{
 			src: hammerEffectImage02,
-			scaleOnCanvas: 3.5,
+			scaleOnCanvas: 2.5,
 		},
 	],
 	[
 		hammerImageAlias.HAMMER_EFFECT_03,
 		{
 			src: hammerEffectImage03,
-			scaleOnCanvas: 3.5,
+			scaleOnCanvas: 2.5,
 		},
 	],
 	[

@@ -10,8 +10,8 @@ export default class LaserVFX extends WeaponEffect {
 			position,
 			laserImageAssets,
 			laserAudioAssets,
-			laserImageAlias.LASER_STATIC,
-			laserAudioAlias.LASER_CLICK_ON
+			laserAudioAlias.LASER_CLICK_ON,
+			laserImageAlias.LASER_STATIC
 		);
 	}
 

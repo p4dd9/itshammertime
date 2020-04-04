@@ -61,18 +61,20 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	private drawHammerWeapon(): void {
-		const { currentImage: image, context } = this;
+		const { currentImage, context } = this;
 
-		if (image === undefined) {
+		if (currentImage === undefined) {
 			return;
 		}
 
-		const sourceImage = image.image;
-		const sourceImageWidth = image.image.width;
-		const sourceImageHeight = image.image.height;
+		const sourceImage = currentImage.image;
+		const sourceImageWidth = currentImage.image.width;
+		const sourceImageHeight = currentImage.image.height;
 
-		const scaledWidth = image.image.width / image.scaleOnCanvas;
-		const scaledHeight = image.image.height / image.scaleOnCanvas;
+		const scaledWidth =
+			currentImage.image.width / currentImage.scaleOnCanvas;
+		const scaledHeight =
+			currentImage.image.height / currentImage.scaleOnCanvas;
 
 		context.drawImage(
 			sourceImage,

@@ -1,6 +1,6 @@
 import WeaponEffect from '../WeaponEffect';
 import IPosition from '../../interfaces/IPosition';
-import { hammerImageAssets, hammerImageAlias } from '../../assets/imageAssets';
+import { hammerImageAssets } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
 import HammerParticle from './HammerParticle';
 
@@ -29,15 +29,14 @@ export default class HammerVFX extends WeaponEffect {
 			position,
 			hammerImageAssets,
 			hammerAudioAssets,
-			hammerImageAlias.HAMMER_EFFECT_01,
 			hammerAudioAlias.HAMMER
 		);
 	}
 
 	public draw(): void {
-		const { currentImage: image, effectPosition } = this;
+		const { currentImage, effectPosition } = this;
 
-		if (image === undefined || image === null) {
+		if (currentImage === undefined || currentImage === null) {
 			return;
 		}
 
@@ -45,18 +44,20 @@ export default class HammerVFX extends WeaponEffect {
 			this.generateParticles();
 		}
 
-		const scaledWidth = image.image.width / image.scaleOnCanvas;
-		const scaledHeight = image.image.height / image.scaleOnCanvas;
+		const scaledWidth =
+			currentImage.image.width / currentImage.scaleOnCanvas;
+		const scaledHeight =
+			currentImage.image.height / currentImage.scaleOnCanvas;
 
 		const canvasX = effectPosition.x - scaledWidth / 2;
 		const canvasY = effectPosition.y - scaledHeight / 2;
 
 		this.context.drawImage(
-			image.image,
+			currentImage.image,
 			0,
 			0,
-			image.image.width,
-			image.image.height,
+			currentImage.image.width,
+			currentImage.image.height,
 			canvasX,
 			canvasY,
 			scaledWidth,

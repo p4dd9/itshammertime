@@ -101,10 +101,9 @@ export default class UI {
 
 	private initAudioButton(): void {
 		const audioButton = document.getElementById('ui-audio-button');
-		const audioButtonImage = document.getElementById(
-			'ui-audio-button-image'
-		);
+
 		const volumeIndex = LocalStorageUtil.initVolumeIndex();
+		this.setAudioButtonImage(volumeIndex);
 
 		if (audioButton instanceof HTMLButtonElement) {
 			audioButton.addEventListener('click', () => {
@@ -116,7 +115,12 @@ export default class UI {
 				LocalStorageUtil.setVolumeIndex(newVolumeIndex);
 			});
 		}
+	}
 
+	public setAudioButtonImage(volumeIndex: number): void {
+		const audioButtonImage = document.getElementById(
+			'ui-audio-button-image'
+		);
 		if (audioButtonImage instanceof HTMLImageElement) {
 			switch (volumeIndex) {
 				case 0: {

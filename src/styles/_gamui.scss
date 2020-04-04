@@ -1,3 +1,6 @@
+$bookImage: url('../assets/images/book.png');
+$darkBrown: #4a362a;
+
 // TRANSFORMATIONS //
 
 .open {
@@ -30,8 +33,6 @@
 	opacity: 1;
 	transform: translateX(-250px);
 	transition: all 0.5s ease-in-out;
-	list-style: none;
-	padding: 0;
 	position: absolute;
 	background-size: contain;
 	height: 244px;
@@ -44,9 +45,6 @@
 	justify-content: space-between;
 
 	& > li > button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
 		background-repeat: no-repeat;
 		background-size: contain;
 	}
@@ -62,9 +60,6 @@
 
 .ui-button {
 	padding: 0 5px 5px 5px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 
 	& > img {
 		width: 40px;
@@ -75,4 +70,50 @@
 	&:hover {
 		cursor: pointer !important;
 	}
+}
+
+.ui-button-hint {
+	position: absolute;
+	transform: translateX(50px) translateY(-50%);
+	background-image: $bookImage;
+	width: 199px;
+	height: 150px;
+	background-size: cover;
+	display: flex;
+	justify-content: space-around;
+
+	& > div {
+		width: 50%;
+	}
+}
+
+#ui-faq-button-hint {
+	display: none;
+
+	&:hover {
+		display: flex;
+	}
+}
+
+#ui-faq-button {
+	cursor: help !important;
+	&:hover #ui-faq-button-hint {
+		display: flex;
+	}
+}
+
+.ui-button-hint-page {
+	padding: 15px;
+}
+
+.ui-button-hintpage-title {
+	margin-bottom: 8px;
+	font-size: 16px;
+	color: $darkBrown;
+}
+
+.ui-button-hintpage-text {
+	color: $darkBrown;
+	text-align: left;
+	margin-bottom: 7px;
 }

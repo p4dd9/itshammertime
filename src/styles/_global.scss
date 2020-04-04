@@ -13,6 +13,12 @@ button {
 	}
 }
 
+body {
+	&:hover #ui-options {
+		opacity: 1 !important;
+	}
+}
+
 canvas {
 	cursor: none;
 }

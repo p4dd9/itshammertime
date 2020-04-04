@@ -29,7 +29,7 @@ export default class HammerVFX extends WeaponEffect {
 			position,
 			hammerImageAssets,
 			hammerAudioAssets,
-			hammerAudioAlias.HAMMER
+			hammerAudioAlias.HAMMER_SHATTER
 		);
 	}
 

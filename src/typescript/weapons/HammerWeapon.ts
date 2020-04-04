@@ -23,7 +23,7 @@ export default class HammerWeapon extends Weapon {
 			hammerImageAssets,
 			hammerAudioAssets,
 			hammerImageAlias.HAMMER,
-			hammerAudioAlias.HAMMER
+			hammerAudioAlias.HAMMER_SHATTER
 		);
 
 		this.removeActiveEffect = this.removeActiveEffect.bind(this);

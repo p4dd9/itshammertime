@@ -12,12 +12,6 @@
     {
       "isAllowed": true,
       "isEphemeral": false,
-      "isOrigin": false,
-      "value": "wss://localhost:3434/sockjs-node/419/mpla2vk2/websocket"
-    },
-    {
-      "isAllowed": true,
-      "isEphemeral": false,
       "isOrigin": true,
       "value": "wss://localhost:3434"
     }
@@ -26,32 +20,9 @@
     {
       "id": "1",
       "label": "",
-      "channelId": "265737932",
+      "channelId": "54739364",
       "configurationAnchor": "video_overlay",
-      "displayChannelName": "kitboga",
-      "type": "video_overlay",
-      "features": {
-        "isBitsEnabled": false,
-        "isChatEnabled": false,
-        "isSubscriptionStatusAvailable": false
-      },
-      "linked": false,
-      "linkedUserId": "",
-      "mode": "viewer",
-      "isPopout": false,
-      "role": "Broadcaster",
-      "orientation": "Portrait",
-      "frameSize": {
-        "width": 1280,
-        "height": 720
-      }
-    },
-    {
-      "id": "2",
-      "label": "https://www.twitch.tv/djscruffoh",
-      "channelId": "15567200",
-      "configurationAnchor": "video_overlay",
-      "displayChannelName": "djscruffoh",
+      "displayChannelName": "esamarathon",
       "type": "video_overlay",
       "features": {
         "isBitsEnabled": false,
@@ -70,17 +41,15 @@
       }
     }
   ],
-  "frontendCommand": "",
-  "frontendFolderName": "",
   "manifest": {
     "anchor": "video_overlay",
     "assetUrls": [],
-    "authorName": "",
+    "authorName": "Patrick Obermueller",
     "bitsEnabled": false,
     "canInstall": true,
     "configUrl": "https://localhost:3434/config.html",
     "configurationLocation": "none",
-    "description": "",
+    "description": "Have you ever wanted to smash the screen? Do you feel an inner pressure? Do you know what time it is? IT'S HAMMER TIME!\nPick up the Hammer using your Cursor, Keyboard or XBOX360 controller to smash the sh*t out of the streamer's stream.",
     "eulaTosUrl": "",
     "hasChatSupport": false,
     "iconUrl": "",
@@ -88,7 +57,7 @@
     "id": "uikhtmhdgzgwoq7e1vnlw7pryqajji",
     "installationCount": -42,
     "liveConfigUrl": "",
-    "name": "Ludecat",
+    "name": "Patrick Obermüller",
     "panelHeight": 0,
     "privacyPolicyUrl": "",
     "requestIdentityLink": false,
@@ -97,11 +66,11 @@
     "sku": "",
     "state": "Testing",
     "subscriptionsSupportLevel": "none",
-    "summary": "",
-    "supportEmail": "",
+    "summary": "Pick up the hammer, smash the streamer's livestream to relieve your inner stress.",
+    "supportEmail": "pat.obermueller@gmail.com",
     "vendorCode": "",
     "version": "0.0.1",
-    "viewerSummary": "",
+    "viewerSummary": "Pick up the hammer, smash the streamer's livestream to relieve your inner stress.",
     "viewerUrl": "",
     "viewerUrls": {
       "videoOverlay": "https://localhost:3434/video_overlay.html",
@@ -134,6 +103,8 @@
     "whitelistedConfigUrls": [],
     "whitelistedPanelUrls": []
   },
-  "name": "LudeCat",
+  "frontendCommand": "",
+  "frontendFolderName": "",
+  "name": "It's Hammer Time!",
   "version": 1
 }

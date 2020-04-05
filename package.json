@@ -1,5 +1,5 @@
 {
-	"name": "ludecattwitchextension",
+	"name": "itshammertimetwitchextension",
 	"version": "1.0.0",
 	"description": "",
 	"main": "webpack.config.js",
@@ -30,12 +30,12 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/p4dd9/ludecattwitchextension.git"
+		"url": "git+https://github.com/p4dd9/itshammertime"
 	},
 	"author": "patrick obermueller",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/p4dd9/ludecattwitchextension/issues"
+		"url": "https://github.com/p4dd9/itshammertime/issues"
 	},
-	"homepage": "https://github.com/p4dd9/ludecattwitchextension#readme"
+	"homepage": "https://github.com/p4dd9/itshammertime#readme"
 }

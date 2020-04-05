@@ -119,7 +119,8 @@ export default class HammerVFX extends WeaponEffect {
 		numOfSteps: number,
 		step: number
 	): string {
-		// This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
+		// This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for
+		// creating easily distinguishable vibrant markers in Google Maps and other apps.
 		// Adam Cole, 2011-Sept-14
 		// HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
 		let r, g, b;

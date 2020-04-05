@@ -1,8 +1,9 @@
 $bookImage: url('../assets/images/book.png');
 $darkBrown: #4a362a;
+$menuTransitionDistance: -250px;
+$menuTranistionTime: 0.5s;
 
 // TRANSFORMATIONS //
-
 .open {
 	transform: translateX(0) !important;
 	opacity: 1 !important;
@@ -13,7 +14,6 @@ $darkBrown: #4a362a;
 }
 
 // USER INTERFACE //
-
 #ui-options {
 	position: absolute;
 	top: 110px;
@@ -24,15 +24,15 @@ $darkBrown: #4a362a;
 #ui-menu-button-image {
 	width: 50px;
 	height: 50px;
-	transition: transform 0.5s ease-in-out;
+	transition: transform $menuTranistionTime ease-in-out;
 	object-fit: contain;
 }
 
 #ui-menu-item-list {
 	margin: 5px 0;
 	opacity: 1;
-	transform: translateX(-250px);
-	transition: all 0.5s ease-in-out;
+	transform: translateX($menuTransitionDistance);
+	transition: all $menuTranistionTime ease-in-out;
 	position: absolute;
 	background-size: contain;
 	height: 244px;
@@ -72,21 +72,7 @@ $darkBrown: #4a362a;
 	}
 }
 
-.ui-button-hint {
-	position: absolute;
-	transform: translateX(50px) translateY(-50%);
-	background-image: $bookImage;
-	width: 199px;
-	height: 150px;
-	background-size: cover;
-	display: flex;
-	justify-content: space-around;
-
-	& > div {
-		width: 50%;
-	}
-}
-
+// FAQ //
 #ui-faq-button-hint {
 	display: none;
 
@@ -99,6 +85,22 @@ $darkBrown: #4a362a;
 	cursor: help !important;
 	&:hover #ui-faq-button-hint {
 		display: flex;
+	}
+}
+
+// HINT PAGE RELATED //
+.ui-button-hint {
+	position: absolute;
+	transform: translateX(50px) translateY(-50%);
+	background-image: $bookImage;
+	width: 199px;
+	height: 150px;
+	background-size: cover;
+	display: flex;
+	justify-content: space-around;
+
+	& > div {
+		width: 50%;
 	}
 }
 

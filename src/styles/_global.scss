@@ -1,16 +1,7 @@
-// reset button default styles
-button {
-	border: none;
-	background-color: transparent;
-	padding: 0;
-
-	&:focus {
-		outline: none;
-	}
-
-	&:hover {
-		cursor: pointer;
-	}
+// GLOBAL STYLES //
+* {
+	user-select: none;
+	box-sizing: border-box;
 }
 
 body {
@@ -23,9 +14,13 @@ canvas {
 	cursor: none;
 }
 
-* {
-	user-select: none;
-	box-sizing: border-box;
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+	margin: 0;
 }
 
 ul,
@@ -34,11 +29,16 @@ ol {
 	list-style: none;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-p {
-	margin: 0;
+button {
+	border: none;
+	background-color: transparent;
+	padding: 0;
+
+	&:focus {
+		outline: none;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
 }

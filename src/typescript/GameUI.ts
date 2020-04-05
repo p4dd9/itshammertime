@@ -1,6 +1,7 @@
+import Game from './Game';
 import GameAudio from './GameAudio';
 import LocalStorageUtil from '../util/LocalStorageUtil';
-import Game from './Game';
+import IEffectSettings from '../interfaces/IEffectSettings';
 
 import VolumeOffImage from '../assets/icons/volume-mute.svg';
 import VolumeLowImage from '../assets/icons/volume-low.svg';
@@ -14,13 +15,14 @@ import FaqImage from '../assets/images/faq_questionmark.png';
 import BookImage from '../assets/images/book.png';
 
 import { copyTextToClipboard } from '../util/commonUtil';
-
 export default class UI {
 	private game: Game;
 	private static timeOutId: undefined | number = undefined;
+	private effectSettings: IEffectSettings;
 
-	constructor(game: Game) {
+	constructor(game: Game, effectSettings: IEffectSettings) {
 		this.game = game;
+		this.effectSettings = effectSettings;
 		this.start();
 	}
 
@@ -38,10 +40,43 @@ export default class UI {
 		const enchantmentsButton = document.getElementById(
 			'ui-enchantments-button'
 		);
+		const enchantmentColorButtons = document.getElementsByClassName(
+			'ui-enchantments-color-button'
+		);
+		const enchantmentShapeButtons = document.getElementsByClassName(
+			'ui-hintpage-enchantment-button'
+		);
 
 		if (enchantmentsButton instanceof HTMLButtonElement) {
 			const enchantmentsButtonImage = enchantmentsButton.firstElementChild as HTMLImageElement;
 			enchantmentsButtonImage.src = BookImage;
+		}
+
+		for (const enchantmentColorButton of Array.from(
+			enchantmentColorButtons
+		)) {
+			if (enchantmentColorButton instanceof HTMLButtonElement) {
+				enchantmentColorButton.addEventListener(
+					'click',
+					(event: MouseEvent) => {
+						this.effectSettings.particleColor = (event.target as HTMLButtonElement).value;
+					}
+				);
+			}
+		}
+
+		for (const enchantmentShapeButton of Array.from(
+			enchantmentShapeButtons
+		)) {
+			if (enchantmentShapeButton instanceof HTMLButtonElement) {
+				enchantmentShapeButton.addEventListener(
+					'click',
+					(event: MouseEvent) => {
+						this.effectSettings.shape = (event.target as HTMLButtonElement)
+							.value as 'circle' | 'star';
+					}
+				);
+			}
 		}
 	}
 

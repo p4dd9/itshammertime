@@ -3,6 +3,7 @@ import IPosition from '../../interfaces/IPosition';
 import { hammerImageAssets } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
 import HammerParticle from './HammerParticle';
+import IEffectSettings from '../../interfaces/IEffectSettings';
 
 export default class HammerVFX extends WeaponEffect {
 	public static lifeTime = 5000; // ms
@@ -23,10 +24,15 @@ export default class HammerVFX extends WeaponEffect {
 
 	private _initSelfDestructId: (() => void) | null = null;
 
-	constructor(context: CanvasRenderingContext2D, position: IPosition) {
+	constructor(
+		context: CanvasRenderingContext2D,
+		position: IPosition,
+		effectSettings: IEffectSettings
+	) {
 		super(
 			context,
 			position,
+			effectSettings,
 			hammerImageAssets,
 			hammerAudioAssets,
 			hammerAudioAlias.HAMMER_SHATTER
@@ -80,10 +86,15 @@ export default class HammerVFX extends WeaponEffect {
 		const canvasY = effectPosition.y - scaledHeight / 2;
 
 		for (let i = 0; i < particleSettings.density; i++) {
-			const color = this.getRandomDistinctColorCode(
-				this.particleSettings.density,
-				i
-			);
+			const color =
+				this.effectSettings.particleColor === 'white'
+					? '#FFFFFF'
+					: this.getRandomDistinctColorCode(
+							this.particleSettings.density,
+							i
+							// eslint-disable-next-line no-mixed-spaces-and-tabs
+					  );
+
 			const particle = new HammerParticle(
 				this.context,
 				{
@@ -93,7 +104,8 @@ export default class HammerVFX extends WeaponEffect {
 				this.particleIndex,
 				particleSettings.particleSize,
 				particleSettings.gravity,
-				color
+				color,
+				this.effectSettings.shape
 			);
 			this.particleIndex++;
 			this.particles[this.particleIndex.toString()] = particle;

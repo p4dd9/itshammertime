@@ -164,7 +164,7 @@ $menuTranistionTime: 0.5s;
 	font-size: 14px;
 }
 
-.ui-enchantments-color {
+.ui-enchantments-color-button {
 	width: 50px;
 	height: 23px;
 	border-radius: 5px;
@@ -173,11 +173,11 @@ $menuTranistionTime: 0.5s;
 	cursor: pointer;
 }
 
-#enchantments-color-white {
+#enchantments-color-white-button {
 	background-color: white;
 }
 
-#enchantments-color-party {
+#enchantments-color-party-button {
 	background-image: linear-gradient(
 		to left,
 		violet,

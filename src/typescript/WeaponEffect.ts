@@ -6,6 +6,7 @@ import IAudioAsset from '../interfaces/IAudioAsset';
 import IAudio from '../interfaces/IAudio';
 import GameAudio from './GameAudio';
 import { hammerImageAlias } from '../assets/imageAssets';
+import IEffectSettings from '../interfaces/IEffectSettings';
 
 export default abstract class WeaponEffect {
 	public currentImage: IGameImage | undefined = undefined;
@@ -16,18 +17,21 @@ export default abstract class WeaponEffect {
 
 	protected context: CanvasRenderingContext2D;
 	protected effectPosition: IPosition;
+	protected effectSettings: IEffectSettings;
 
 	private static effectCount = 0;
 
 	constructor(
 		context: CanvasRenderingContext2D,
 		position: IPosition,
+		effectSettings: IEffectSettings,
 		imageAssets: Map<string, IGameImageAsset>,
 		audioAssets: Map<string, IAudioAsset>,
 		audioAlias: string,
 		imageAlias?: string
 	) {
 		this.context = context;
+		this.effectSettings = effectSettings;
 
 		this.effectPosition = {
 			x: position.x,

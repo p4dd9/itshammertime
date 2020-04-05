@@ -5,6 +5,7 @@ import { hammerImageAlias } from '../../assets/imageAssets';
 import HammerVFX from '../weaponeffects/HammerVFX';
 import { degToRad } from '../../util/commonUtil';
 import IPosition from '../../interfaces/IPosition';
+import IEffectSettings from '../../interfaces/IEffectSettings';
 
 export default class HammerWeapon extends Weapon {
 	public imageAssets = hammerImageAssets;
@@ -16,10 +17,15 @@ export default class HammerWeapon extends Weapon {
 	private moveForward = true;
 	private animateHammer = false;
 
-	constructor(context: CanvasRenderingContext2D, position: IPosition) {
+	constructor(
+		context: CanvasRenderingContext2D,
+		position: IPosition,
+		effectSettings: IEffectSettings
+	) {
 		super(
 			context,
 			position,
+			effectSettings,
 			hammerImageAssets,
 			hammerAudioAssets,
 			hammerImageAlias.HAMMER,
@@ -123,10 +129,14 @@ export default class HammerWeapon extends Weapon {
 		const scaledWidth = image.image.width / image.scaleOnCanvas;
 		const scaledHeight = image.image.height / image.scaleOnCanvas;
 
-		const newGameWeaponEffect = new HammerVFX(this.context, {
-			x: this.position.x - scaledWidth / 2 - 80, // hammer effect related
-			y: this.position.y - scaledHeight / 2,
-		});
+		const newGameWeaponEffect = new HammerVFX(
+			this.context,
+			{
+				x: this.position.x - scaledWidth / 2 - 80, // hammer effect related
+				y: this.position.y - scaledHeight / 2,
+			},
+			this.effectSettings
+		);
 		newGameWeaponEffect.selfDestruct = this.removeActiveEffect;
 
 		this.effects.push(newGameWeaponEffect);

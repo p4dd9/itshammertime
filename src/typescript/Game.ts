@@ -5,26 +5,33 @@ import UI from './GameUI';
 import GameAudio from './GameAudio';
 import Weapon from './Weapon';
 import HammerWeapon from './weapons/HammerWeapon';
+import effectSettings from '../config/effectSettings';
 
 export default class Game {
-	public debug = false;
 	public ui: UI;
 	public gameAudio: GameAudio;
 
 	private gameController: Controller | null;
-	private debugger: Debugger;
+	private effectSettings = effectSettings;
 
 	private _weapon: Weapon | null = null;
 	private _context: CanvasRenderingContext2D;
+
+	public debug = false;
+	private debugger: Debugger;
 
 	constructor(context: CanvasRenderingContext2D) {
 		this._context = context;
 
 		this.debugger = new Debugger(this);
-		this.ui = new UI(this);
+		this.ui = new UI(this, this.effectSettings);
 		this.gameAudio = new GameAudio(this);
 
-		const newWeapon = new HammerWeapon(this._context, { x: 200, y: 200 });
+		const newWeapon = new HammerWeapon(
+			this._context,
+			{ x: 200, y: 200 },
+			this.effectSettings
+		);
 		this._weapon = newWeapon;
 		this.gameController = new Controller(newWeapon, this.context);
 

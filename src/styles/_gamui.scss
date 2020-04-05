@@ -114,6 +114,7 @@ $menuTranistionTime: 0.5s;
 	color: $darkBrown;
 	text-align: left;
 	margin-bottom: 7px;
+	font-size: 14px;
 }
 
 .ui-hintpage-button {
@@ -133,6 +134,10 @@ $menuTranistionTime: 0.5s;
 		background-color: $pageLightBrown;
 		color: $woodBron;
 	}
+}
+
+#ui-hint-page-button {
+	font-weight: bold;
 }
 
 .ui-hint-container {

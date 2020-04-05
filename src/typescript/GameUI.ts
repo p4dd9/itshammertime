@@ -15,6 +15,7 @@ import { copyTextToClipboard } from '../util/commonUtil';
 
 export default class UI {
 	private game: Game;
+	private static timeOutId: undefined | number = undefined;
 
 	constructor(game: Game) {
 		this.game = game;
@@ -36,6 +37,16 @@ export default class UI {
 		if (hintPageButton instanceof HTMLElement) {
 			hintPageButton.addEventListener('click', (event: MouseEvent) => {
 				copyTextToClipboard(event);
+				hintPageButton.textContent = `Copied!`;
+
+				if (UI.timeOutId !== undefined) {
+					clearTimeout(UI.timeOutId);
+				}
+
+				UI.timeOutId = window.setTimeout(() => {
+					hintPageButton.textContent = `Copy Mail`;
+					UI.timeOutId = undefined;
+				}, 2000);
 			});
 		}
 	}

@@ -1,7 +1,10 @@
+$standardFont: 'ComicNeue', sans-serif;
+
 // GLOBAL STYLES //
 * {
 	user-select: none;
 	box-sizing: border-box;
+	font-family: $standardFont;
 }
 
 body {

@@ -117,16 +117,16 @@ $menuTranistionTime: 0.5s;
 	font-size: 14px;
 }
 
-.ui-hintpage-button {
+@mixin hintPageButton($height, $display) {
 	background-color: $woodBron;
 	color: $pageLightBrown;
 	border-radius: 3px;
 	border: 2px solid $darkBrown;
 	padding: 2px;
 	cursor: pointer;
-	height: calc(100% - 10px);
+	height: $height;
 	text-align: center;
-	display: flex;
+	display: $display;
 	justify-content: center;
 	align-items: center;
 
@@ -134,6 +134,15 @@ $menuTranistionTime: 0.5s;
 		background-color: $pageLightBrown;
 		color: $woodBron;
 	}
+}
+
+.ui-hintpage-button {
+	@include hintPageButton(calc(100% - 10px), flex);
+}
+
+.ui-hintpage-enchantment-button {
+	@include hintPageButton(25px, block);
+	width: 100%;
 }
 
 #ui-hint-page-button {

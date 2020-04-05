@@ -1,5 +1,7 @@
 $bookImage: url('../assets/images/book.png');
 $darkBrown: #4a362a;
+$pageLightBrown: #cba77b;
+$woodBron: #8d5232;
 $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
 
@@ -17,7 +19,7 @@ $menuTranistionTime: 0.5s;
 #ui-options {
 	position: absolute;
 	top: 110px;
-	opacity: 0;
+	opacity: 1; // Toggle to Debug
 	transition: opacity 0.25s;
 }
 
@@ -73,17 +75,17 @@ $menuTranistionTime: 0.5s;
 }
 
 // FAQ //
-#ui-faq-button-hint {
-	display: none;
+#ui-faq-button {
+	cursor: help !important;
 
-	&:hover {
+	&:hover #ui-faq-button-hint {
 		display: flex;
 	}
 }
 
-#ui-faq-button {
-	cursor: help !important;
-	&:hover #ui-faq-button-hint {
+// CONTACT //
+#ui-contact-button {
+	&:hover #ui-contact-button-hint {
 		display: flex;
 	}
 }
@@ -96,9 +98,13 @@ $menuTranistionTime: 0.5s;
 	width: 199px;
 	height: 150px;
 	background-size: cover;
-	display: flex;
 	justify-content: space-around;
+	display: flex; // Toggle to Debug
+	cursor: default;
 
+	&:hover {
+		display: flex;
+	}
 	& > div {
 		width: 50%;
 	}
@@ -118,4 +124,19 @@ $menuTranistionTime: 0.5s;
 	color: $darkBrown;
 	text-align: left;
 	margin-bottom: 7px;
+}
+
+.ui-hintpage-button {
+	background-color: $woodBron;
+	color: $pageLightBrown;
+	border-radius: 3px;
+	border: 2px solid $darkBrown;
+	padding: 2px;
+	cursor: pointer;
+	display: block;
+
+	&:hover {
+		background-color: $pageLightBrown;
+		color: $woodBron;
+	}
 }

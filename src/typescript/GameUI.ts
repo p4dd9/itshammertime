@@ -11,6 +11,7 @@ import GearImage from '../assets/images/gear.png';
 import PlankBackgroundImage from '../assets/images/plank.png';
 import LetterImage from '../assets/images/letter.png';
 import FaqImage from '../assets/images/faq_questionmark.png';
+import { copyTextToClipboard } from '../util/commonUtil';
 
 export default class UI {
 	private game: Game;
@@ -26,6 +27,17 @@ export default class UI {
 		this.initAudioButton();
 		this.initFaqButton();
 		this.initCanvasEvents();
+		this.initHintPageEvents();
+	}
+
+	private initHintPageEvents(): void {
+		const hintPageButton = document.getElementById('ui-hint-page-button');
+
+		if (hintPageButton instanceof HTMLElement) {
+			hintPageButton.addEventListener('click', (event: MouseEvent) => {
+				copyTextToClipboard(event);
+			});
+		}
 	}
 
 	private initCanvasEvents(): void {

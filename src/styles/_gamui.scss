@@ -19,8 +19,8 @@ $menuTranistionTime: 0.5s;
 #ui-options {
 	position: absolute;
 	top: 110px;
-	opacity: 1; // Toggle to Debug
-	transition: opacity 0.25s;
+	opacity: 0;
+	transition: all 0.25s;
 }
 
 #ui-menu-button-image {
@@ -46,16 +46,16 @@ $menuTranistionTime: 0.5s;
 	background-repeat: no-repeat;
 	justify-content: space-between;
 
-	& > li > button {
+	& li button {
 		background-repeat: no-repeat;
 		background-size: contain;
 	}
 
-	& > li:last-child {
+	& li:last-child {
 		margin-bottom: 10px;
 	}
 
-	& > li:first-child {
+	& li:first-child {
 		margin-top: 8px;
 	}
 }
@@ -77,34 +77,24 @@ $menuTranistionTime: 0.5s;
 // FAQ //
 #ui-faq-button {
 	cursor: help !important;
-
-	&:hover #ui-faq-button-hint {
-		display: flex;
-	}
-}
-
-// CONTACT //
-#ui-contact-button {
-	&:hover #ui-contact-button-hint {
-		display: flex;
-	}
 }
 
 // HINT PAGE RELATED //
 .ui-button-hint {
 	position: absolute;
-	transform: translateX(50px) translateY(-50%);
+	transform: translateX(70px) translateY(-50%);
 	background-image: $bookImage;
 	width: 199px;
 	height: 150px;
 	background-size: cover;
 	justify-content: space-around;
-	display: flex; // Toggle to Debug
+	display: none; // Toggle to Debug
 	cursor: default;
 
 	&:hover {
 		display: flex;
 	}
+
 	& > div {
 		width: 50%;
 	}
@@ -133,10 +123,23 @@ $menuTranistionTime: 0.5s;
 	border: 2px solid $darkBrown;
 	padding: 2px;
 	cursor: pointer;
-	display: block;
+	height: calc(100% - 10px);
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	&:hover {
 		background-color: $pageLightBrown;
 		color: $woodBron;
+	}
+}
+
+.ui-hint-container {
+	height: 100%;
+	width: 80px;
+
+	&:hover > .ui-button-hint {
+		display: flex;
 	}
 }

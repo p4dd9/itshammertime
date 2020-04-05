@@ -1,4 +1,5 @@
-# Stress Relief Twitch Extension
+# It's Hammer Time!
+### Client-Side Twitch Extension
 
 ## Todos
 

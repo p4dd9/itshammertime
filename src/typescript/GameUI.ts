@@ -11,6 +11,8 @@ import GearImage from '../assets/images/gear.png';
 import PlankBackgroundImage from '../assets/images/plank.png';
 import LetterImage from '../assets/images/letter.png';
 import FaqImage from '../assets/images/faq_questionmark.png';
+import BookImage from '../assets/images/book.png';
+
 import { copyTextToClipboard } from '../util/commonUtil';
 
 export default class UI {
@@ -29,6 +31,18 @@ export default class UI {
 		this.initFaqButton();
 		this.initCanvasEvents();
 		this.initHintPageEvents();
+		this.initEnchantmentsButton();
+	}
+
+	private initEnchantmentsButton(): void {
+		const enchantmentsButton = document.getElementById(
+			'ui-enchantments-button'
+		);
+
+		if (enchantmentsButton instanceof HTMLButtonElement) {
+			const enchantmentsButtonImage = enchantmentsButton.firstElementChild as HTMLImageElement;
+			enchantmentsButtonImage.src = BookImage;
+		}
 	}
 
 	private initHintPageEvents(): void {

@@ -1,4 +1,4 @@
-$bookImage: url('../assets/images/book.png');
+$openBookImage: url('../assets/images/open_book.png');
 $darkBrown: #4a362a;
 $pageLightBrown: #cba77b;
 $woodBron: #8d5232;
@@ -83,7 +83,7 @@ $menuTranistionTime: 0.5s;
 .ui-button-hint {
 	position: absolute;
 	transform: translateX(70px) translateY(-50%);
-	background-image: $bookImage;
+	background-image: $openBookImage;
 	width: 199px;
 	height: 150px;
 	background-size: cover;
@@ -105,7 +105,7 @@ $menuTranistionTime: 0.5s;
 }
 
 .ui-button-hintpage-title {
-	margin-bottom: 8px;
+	margin-bottom: 7px;
 	font-size: 16px;
 	color: $darkBrown;
 }
@@ -141,10 +141,42 @@ $menuTranistionTime: 0.5s;
 }
 
 .ui-hint-container {
-	height: 100%;
 	width: 80px;
 
 	&:hover > .ui-button-hint {
 		display: flex;
 	}
+}
+
+//  ENCHANTMENTS //
+.ui-enchantments-container {
+	color: $darkBrown;
+	margin-bottom: 7px;
+	font-size: 14px;
+}
+
+.ui-enchantments-color {
+	width: 50px;
+	height: 23px;
+	border-radius: 5px;
+	border: 2px solid $darkBrown;
+	display: inline-block;
+	cursor: pointer;
+}
+
+#enchantments-color-white {
+	background-color: white;
+}
+
+#enchantments-color-party {
+	background-image: linear-gradient(
+		to left,
+		violet,
+		indigo,
+		blue,
+		green,
+		yellow,
+		orange,
+		red
+	);
 }

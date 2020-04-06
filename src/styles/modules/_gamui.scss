@@ -5,6 +5,12 @@ $woodBron: #8d5232;
 $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
 
+body {
+	&:hover #ui-options {
+		opacity: 1; // Toggle to Debug
+	}
+}
+
 // TRANSFORMATIONS //
 .open {
 	transform: translateX(0) !important;

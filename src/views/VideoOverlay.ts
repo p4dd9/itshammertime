@@ -1,4 +1,4 @@
-import '../styles/index';
+import '../styles/video_overlay.scss';
 import Game from '../typescript/Game';
 
 window.onload = (): void => {

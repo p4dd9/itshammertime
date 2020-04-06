@@ -16,14 +16,22 @@ module.exports = (_env, argv) => {
 
 	let entry = {
 		main: './src/views/VideoOverlay.ts',
+		config: './src/views/Config.ts',
 	};
 
 	let plugins = [
 		new HtmlWebpackPlugin({
 			inject: true,
-			template: './src/index.html',
+			template: './src/video_overlay.html',
 			filename: 'video_overlay.html',
-			title: 'Stress Relief Twitch Extension',
+			chunks: ['main'],
+			title: "It's Hammer Time!",
+		}),
+		new HtmlWebpackPlugin({
+			template: './src/static_config.html',
+			filename: 'config.html',
+			chunks: ['config'],
+			title: "It's Hammer Time!",
 		}),
 	];
 

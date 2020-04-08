@@ -73,7 +73,7 @@ export default class UI {
 					'click',
 					(event: MouseEvent) => {
 						this.effectSettings.shape = (event.target as HTMLButtonElement)
-							.value as 'circle' | 'star';
+							.value as 'splitter' | 'star';
 					}
 				);
 			}

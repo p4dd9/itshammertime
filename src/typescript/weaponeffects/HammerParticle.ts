@@ -45,8 +45,8 @@ export default class HammerParticle {
 		velocity.vy += gravity;
 		this.life++;
 
-		if (this.shape === 'circle') {
-			this.drawCircle();
+		if (this.shape === 'splitter') {
+			this.drawSplitter();
 		} else if (this.shape === 'square') {
 			this.drawSquares();
 		} else {
@@ -54,20 +54,40 @@ export default class HammerParticle {
 		}
 	}
 
-	private drawCircle(): void {
-		const { context, particleSize, color } = this;
+	// TODO: Optimize drawing of colors
+	private drawSplitter(): void {
+		const { context, particleSize } = this;
 
 		context.beginPath();
-		context.fillStyle = color;
 
-		context.arc(
+		const grd = context.createLinearGradient(
 			this.position.x,
 			this.position.y,
-			particleSize,
-			0,
-			Math.PI * 2,
-			true
+			this.position.x + particleSize,
+			this.position.y
 		);
+		grd.addColorStop(0.1, 'white');
+		grd.addColorStop(1, '#66A0D0');
+
+		context.fillStyle = grd;
+		// context.fillStyle = color;
+
+		context.moveTo(this.position.x, this.position.y);
+		context.lineTo(this.position.x, this.position.y + particleSize);
+		context.lineTo(
+			this.position.x + particleSize,
+			this.position.y + particleSize
+		);
+
+		// context.arc(
+		// 	this.position.x,
+		// 	this.position.y,
+		// 	particleSize,
+		// 	0,
+		// 	Math.PI * 2,
+		// 	true
+		// );
+
 		context.closePath();
 		context.fill();
 	}
@@ -80,7 +100,7 @@ export default class HammerParticle {
 	}
 
 	// https://stackoverflow.com/questions/25837158/how-to-draw-a-star-by-using-canvas-html5
-	private drawStar(spikes = 5, outerRadius = 15, innerRadius = 10): void {
+	private drawStar(spikes = 5, outerRadius = 15, innerRadius = 7): void {
 		let rot = (Math.PI / 2) * 3;
 		let x = this.position.x;
 		let y = this.position.y;

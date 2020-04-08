@@ -6,7 +6,7 @@ import HammerParticle from './HammerParticle';
 import IEffectSettings from '../../interfaces/IEffectSettings';
 
 export default class HammerVFX extends WeaponEffect {
-	public static lifeTime = 5000; // ms
+	public static lifeTime = 3000; // ms
 
 	public imageAssets = hammerImageAssets;
 	public audioAssets = hammerAudioAssets;
@@ -18,7 +18,7 @@ export default class HammerVFX extends WeaponEffect {
 	private particleSettings = {
 		maxLife: 20,
 		density: 15,
-		particleSize: 5,
+		particleSize: 20,
 		gravity: 0.5,
 	};
 
@@ -37,6 +37,10 @@ export default class HammerVFX extends WeaponEffect {
 			hammerAudioAssets,
 			hammerAudioAlias.HAMMER_SHATTER
 		);
+	}
+
+	private getRandomAlphaValue(min = 0.3, max = 0.5): number {
+		return Number((min + Math.random() * (max - min)).toFixed(2));
 	}
 
 	public draw(): void {
@@ -172,12 +176,21 @@ export default class HammerVFX extends WeaponEffect {
 	}
 
 	private drawParticles(): void {
+		if (this.effectSettings.shape === 'splitter') {
+			this.context.save();
+			this.context.globalAlpha = this.getRandomAlphaValue();
+		}
+
 		for (const particleKey in this.particles) {
 			const particle = this.particles[particleKey];
 			particle.draw();
 			if (particle.life >= this.particleSettings.maxLife) {
 				delete this.particles[particle.id];
 			}
+		}
+
+		if (this.effectSettings.shape === 'splitter') {
+			this.context.restore();
 		}
 	}
 

@@ -2,7 +2,7 @@ import IEffectSettings from '../interfaces/IEffectSettings';
 
 const effectSettings: IEffectSettings = {
 	particleColor: 'white',
-	shape: 'circle',
+	shape: 'splitter',
 };
 
 export default effectSettings;

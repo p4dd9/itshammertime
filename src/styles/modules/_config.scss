@@ -1,3 +1,9 @@
+$titleBannerBackground: url('../assets/images/title.png');
+
 body {
-	background-color: burlywood;
+	background-color: $woodBron;
+}
+
+* {
+	color: #f7f0f5;
 }

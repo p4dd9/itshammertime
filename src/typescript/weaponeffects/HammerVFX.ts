@@ -175,6 +175,7 @@ export default class HammerVFX extends WeaponEffect {
 		return c;
 	}
 
+	// TODO: Should be drawn on front layer
 	private drawParticles(): void {
 		if (this.effectSettings.shape === 'splitter') {
 			this.context.save();

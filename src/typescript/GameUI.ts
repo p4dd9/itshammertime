@@ -104,27 +104,24 @@ export default class UI {
 		const optionsContainer = document.getElementById('ui-options');
 
 		if (optionsContainer instanceof HTMLElement) {
-			this.game.context.canvas.addEventListener(
-				'click',
-				(event: MouseEvent) => {
-					const isMenuOpen = document
-						.getElementById('ui-menu-item-list')
-						?.classList.contains('open');
-					if (!isMenuOpen) return;
+			window.document.addEventListener('click', (event: MouseEvent) => {
+				const isMenuOpen = document
+					.getElementById('ui-menu-item-list')
+					?.classList.contains('open');
+				if (!isMenuOpen) return;
 
-					const clickedOutSideOptionsContainer = optionsContainer.contains(
-						event.target as Node
-					);
-					if (!clickedOutSideOptionsContainer) {
-						document
-							.getElementById('ui-menu-item-list')
-							?.classList.remove('open');
-						document
-							.getElementById('ui-menu-button-image')
-							?.classList.toggle('rotate');
-					}
+				const clickedOutSideOptionsContainer = optionsContainer.contains(
+					event.target as Node
+				);
+				if (!clickedOutSideOptionsContainer) {
+					document
+						.getElementById('ui-menu-item-list')
+						?.classList.remove('open');
+					document
+						.getElementById('ui-menu-button-image')
+						?.classList.toggle('rotate');
 				}
-			);
+			});
 		}
 	}
 

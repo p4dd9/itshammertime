@@ -12,21 +12,21 @@ window.onload = (): void => {
 	const height = window.innerHeight - bodyMarginVerticalHorizontal;
 	const width = window.innerWidth - bodyMarginVerticalHorizontal;
 
-	const layers = [];
+	const contexts = [];
 
 	for (let i = 0; i < 3; i++) {
-		const canvasDOMElement = document.createElement('canvas');
-		canvasDOMElement.width = width;
-		canvasDOMElement.height = height;
-		canvasDOMElement.id = `layer-${i}`;
-		canvasDOMElement.style.position = 'absolute';
-		const domElementAppened = root.appendChild(canvasDOMElement);
-		layers.push(
+		const canvas = document.createElement('canvas');
+		canvas.width = width;
+		canvas.height = height;
+		canvas.id = `layer-${i}`;
+		canvas.style.position = 'absolute';
+		const domElementAppened = root.appendChild(canvas);
+		contexts.push(
 			domElementAppened.getContext('2d') as CanvasRenderingContext2D
 		);
 	}
 
-	const game: Game = new Game(layers[0]);
+	const game: Game = new Game(contexts);
 	game.start();
 
 	window.onresize = (): void => {

@@ -17,14 +17,14 @@ export default class Debugger {
 	}
 
 	private drawCanvasBorder(): void {
-		const context = this.game.context;
+		const context = this.game.contexts[0];
 		context.strokeStyle = '#f00';
 		context.lineWidth = 2;
 		context.strokeRect(0, 0, context.canvas.width, context.canvas.height);
 	}
 
 	private drawCenterLines(): void {
-		const context = this.game.context;
+		const context = this.game.contexts[0];
 
 		context.strokeStyle = '#f00';
 		context.lineWidth = 2;
@@ -54,7 +54,7 @@ export default class Debugger {
 	}
 
 	private drawFPS(): void {
-		const context = this.game.context;
+		const context = this.game.contexts[0];
 		this.calculateFPS();
 		context.fillStyle = '#f00';
 		context.font = '25px Arial';

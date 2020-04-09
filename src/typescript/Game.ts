@@ -15,25 +15,25 @@ export default class Game {
 	private effectSettings = effectSettings;
 
 	private _weapon: Weapon | null = null;
-	private _context: CanvasRenderingContext2D;
+	public contexts: CanvasRenderingContext2D[];
 
 	public debug = false;
 	private debugger: Debugger;
 
-	constructor(context: CanvasRenderingContext2D) {
-		this._context = context;
+	constructor(contexts: CanvasRenderingContext2D[]) {
+		this.contexts = contexts;
 
 		this.debugger = new Debugger(this);
 		this.ui = new UI(this, this.effectSettings);
 		this.gameAudio = new GameAudio(this);
 
 		const newWeapon = new HammerWeapon(
-			this._context,
+			contexts[2],
 			{ x: 200, y: 200 },
 			this.effectSettings
 		);
 		this._weapon = newWeapon;
-		this.gameController = new Controller(newWeapon, this.context);
+		this.gameController = new Controller(newWeapon, this.contexts[2]);
 
 		this.step = this.step.bind(this);
 	}
@@ -48,27 +48,22 @@ export default class Game {
 		}
 
 		this._weapon = weapon;
-		this.gameController = new Controller(weapon!, this.context);
-	}
-
-	public get context(): CanvasRenderingContext2D {
-		return this._context;
+		this.gameController = new Controller(weapon!, this.contexts[2]);
 	}
 
 	public resize(canvasWidth: number, canvasHeight: number): void {
-		this._context.canvas.width = canvasWidth;
-		this._context.canvas.height = canvasHeight;
+		for (const layer of this.contexts) {
+			layer.canvas.width = canvasWidth;
+			layer.canvas.height = canvasHeight;
+		}
 
 		this.weapon!.resizeCanvas(canvasWidth, canvasHeight);
 	}
 
 	private clearCanvas(): void {
-		this._context.clearRect(
-			0,
-			0,
-			this._context.canvas.width,
-			this._context.canvas.height
-		);
+		for (const layer of this.contexts) {
+			layer.clearRect(0, 0, layer.canvas.width, layer.canvas.height);
+		}
 	}
 
 	private step(): void {

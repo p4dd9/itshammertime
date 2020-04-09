@@ -37,6 +37,7 @@ export default class HammerParticle {
 		};
 	}
 
+	// TODO: Should be drawn on front layer
 	public draw(): void {
 		const { velocity, gravity, position } = this;
 		position.x += velocity.vx;

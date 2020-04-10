@@ -6,6 +6,7 @@ import IGameImageAsset from '../interfaces/IGameImageAsset';
 import IAudioAsset from '../interfaces/IAudioAsset';
 import IPosition from '../interfaces/IPosition';
 import IEffectSettings from '../interfaces/IEffectSettings';
+import LAYERS from '../config/layers';
 
 export default abstract class Weapon {
 	private moveDistance = 9;
@@ -17,7 +18,7 @@ export default abstract class Weapon {
 	public audio: Map<string, IAudio> | null = null;
 
 	public position: IPosition;
-	protected context: CanvasRenderingContext2D;
+	protected contexts: CanvasRenderingContext2D[];
 	protected effects: WeaponEffect[] = [] as WeaponEffect[];
 	protected effectSettings: IEffectSettings;
 
@@ -25,7 +26,7 @@ export default abstract class Weapon {
 	protected abstract audioAssets: Map<string, IAudioAsset>;
 
 	constructor(
-		context: CanvasRenderingContext2D,
+		contexts: CanvasRenderingContext2D[],
 		position: IPosition,
 		effectSettings: IEffectSettings,
 		imageAssets: Map<string, IGameImageAsset>,
@@ -34,15 +35,17 @@ export default abstract class Weapon {
 		audioAlias: string
 	) {
 		this.position = position;
-		this.context = context;
+		this.contexts = contexts;
 		this.effectSettings = effectSettings;
 
 		this.loadAssets(imageAssets, audioAssets, imageAlias, audioAlias);
 	}
 
 	public resizeCanvas(canvasWidth: number, canvasHeight: number): void {
-		this.context.canvas.height = canvasHeight;
-		this.context.canvas.width = canvasWidth;
+		for (const layer of this.contexts) {
+			layer.canvas.width = canvasWidth;
+			layer.canvas.height = canvasHeight;
+		}
 	}
 
 	protected async loadAssets(
@@ -64,7 +67,7 @@ export default abstract class Weapon {
 	}
 
 	public moveRight(): void {
-		const canvasWidth = this.context.canvas.width;
+		const canvasWidth = this.contexts[LAYERS.FRONT].canvas.width;
 		const destinationX =
 			this.position.x +
 			this.moveDistance +
@@ -101,7 +104,7 @@ export default abstract class Weapon {
 	}
 
 	public moveDown(): void {
-		const canvasHeight = this.context.canvas.height;
+		const canvasHeight = this.contexts[LAYERS.FRONT].canvas.height;
 		const destinationY = this.position.y + this.moveDistance;
 
 		if (destinationY < canvasHeight) {

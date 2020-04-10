@@ -6,6 +6,7 @@ import HammerVFX from '../weaponeffects/HammerVFX';
 import { degToRad } from '../../util/commonUtil';
 import IPosition from '../../interfaces/IPosition';
 import IEffectSettings from '../../interfaces/IEffectSettings';
+import LAYERS from '../../config/layers';
 
 export default class HammerWeapon extends Weapon {
 	public imageAssets = hammerImageAssets;
@@ -18,12 +19,12 @@ export default class HammerWeapon extends Weapon {
 	private animateHammer = false;
 
 	constructor(
-		context: CanvasRenderingContext2D,
+		contexts: CanvasRenderingContext2D[],
 		position: IPosition,
 		effectSettings: IEffectSettings
 	) {
 		super(
-			context,
+			contexts,
 			position,
 			effectSettings,
 			hammerImageAssets,
@@ -44,7 +45,7 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	public draw(): void {
-		const { currentImage, context, effects, angle } = this;
+		const { currentImage, contexts, effects, angle } = this;
 
 		if (currentImage === undefined) {
 			return;
@@ -56,18 +57,18 @@ export default class HammerWeapon extends Weapon {
 			}
 		}
 
-		context.save();
+		contexts[LAYERS.FRONT].save();
 		this.translateRotationPivotToMouse('set');
-		context.rotate(degToRad(-angle));
+		contexts[LAYERS.FRONT].rotate(degToRad(-angle));
 		this.drawHammerWeapon();
 		this.translateRotationPivotToMouse('reset');
-		context.restore();
+		contexts[LAYERS.FRONT].restore();
 
 		this.updateHammerAnimation();
 	}
 
 	private drawHammerWeapon(): void {
-		const { currentImage, context } = this;
+		const { currentImage, contexts } = this;
 
 		if (currentImage === undefined) {
 			return;
@@ -82,7 +83,7 @@ export default class HammerWeapon extends Weapon {
 		const scaledHeight =
 			currentImage.image.height / currentImage.scaleOnCanvas;
 
-		context.drawImage(
+		contexts[LAYERS.FRONT].drawImage(
 			sourceImage,
 			0,
 			0,
@@ -100,7 +101,7 @@ export default class HammerWeapon extends Weapon {
 	): void {
 		const directionNumber = rotationDirection === 'set' ? 1 : -1;
 
-		this.context.translate(
+		this.contexts[LAYERS.FRONT].translate(
 			directionNumber * this.position.x,
 			directionNumber * this.position.y
 		);
@@ -130,7 +131,7 @@ export default class HammerWeapon extends Weapon {
 		const scaledHeight = image.image.height / image.scaleOnCanvas;
 
 		const newGameWeaponEffect = new HammerVFX(
-			this.context,
+			this.contexts,
 			{
 				x: this.position.x - scaledWidth / 2 - 80, // hammer effect related
 				y: this.position.y - scaledHeight / 2,
@@ -143,10 +144,13 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	public start(): void {
-		this.context.canvas.addEventListener('click', this.use);
+		this.contexts[LAYERS.FRONT].canvas.addEventListener('click', this.use);
 	}
 
 	public stop(): void {
-		this.context.canvas.removeEventListener('click', this.use);
+		this.contexts[LAYERS.FRONT].canvas.removeEventListener(
+			'click',
+			this.use
+		);
 	}
 }

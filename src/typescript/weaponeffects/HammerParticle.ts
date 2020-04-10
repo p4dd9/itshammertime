@@ -74,10 +74,10 @@ export default class HammerParticle {
 		// context.fillStyle = color;
 
 		context.moveTo(this.position.x, this.position.y);
-		context.lineTo(this.position.x, this.position.y + particleSize);
+		context.lineTo(this.position.x, this.position.y + particleSize * 2);
 		context.lineTo(
-			this.position.x + particleSize,
-			this.position.y + particleSize
+			this.position.x + particleSize * 2,
+			this.position.y + particleSize * 2
 		);
 
 		// context.arc(

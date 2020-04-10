@@ -4,6 +4,7 @@ import { hammerImageAssets } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
 import HammerParticle from './HammerParticle';
 import IEffectSettings from '../../interfaces/IEffectSettings';
+import LAYERS from '../../config/layers';
 
 export default class HammerVFX extends WeaponEffect {
 	public static lifeTime = 3000; // ms
@@ -25,12 +26,12 @@ export default class HammerVFX extends WeaponEffect {
 	private _initSelfDestructId: (() => void) | null = null;
 
 	constructor(
-		context: CanvasRenderingContext2D,
+		contexts: CanvasRenderingContext2D[],
 		position: IPosition,
 		effectSettings: IEffectSettings
 	) {
 		super(
-			context,
+			contexts,
 			position,
 			effectSettings,
 			hammerImageAssets,
@@ -39,7 +40,7 @@ export default class HammerVFX extends WeaponEffect {
 		);
 	}
 
-	private getRandomAlphaValue(min = 0.3, max = 0.5): number {
+	private getRandomAlphaValue(min = 0.5, max = 0.8): number {
 		return Number((min + Math.random() * (max - min)).toFixed(2));
 	}
 
@@ -62,7 +63,7 @@ export default class HammerVFX extends WeaponEffect {
 		const canvasX = effectPosition.x - scaledWidth / 2;
 		const canvasY = effectPosition.y - scaledHeight / 2;
 
-		this.context.drawImage(
+		this.contexts[LAYERS.BACK].drawImage(
 			currentImage.image,
 			0,
 			0,
@@ -100,7 +101,7 @@ export default class HammerVFX extends WeaponEffect {
 					  );
 
 			const particle = new HammerParticle(
-				this.context,
+				this.contexts[LAYERS.FRONT],
 				{
 					x: canvasX + scaledWidth / 2,
 					y: canvasY + scaledHeight / 2,
@@ -178,8 +179,10 @@ export default class HammerVFX extends WeaponEffect {
 	// TODO: Should be drawn on front layer
 	private drawParticles(): void {
 		if (this.effectSettings.shape === 'splitter') {
-			this.context.save();
-			this.context.globalAlpha = this.getRandomAlphaValue();
+			this.contexts[LAYERS.FRONT].save();
+			this.contexts[
+				LAYERS.FRONT
+			].globalAlpha = this.getRandomAlphaValue();
 		}
 
 		for (const particleKey in this.particles) {
@@ -191,7 +194,7 @@ export default class HammerVFX extends WeaponEffect {
 		}
 
 		if (this.effectSettings.shape === 'splitter') {
-			this.context.restore();
+			this.contexts[LAYERS.FRONT].restore();
 		}
 	}
 

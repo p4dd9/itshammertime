@@ -15,14 +15,14 @@ export default abstract class WeaponEffect {
 	public images: Map<string, IGameImage> | null = null;
 	public audio: Map<string, IAudio> | null = null;
 
-	protected context: CanvasRenderingContext2D;
+	protected contexts: CanvasRenderingContext2D[];
 	protected effectPosition: IPosition;
 	protected effectSettings: IEffectSettings;
 
 	private static effectCount = 0;
 
 	constructor(
-		context: CanvasRenderingContext2D,
+		contexts: CanvasRenderingContext2D[],
 		position: IPosition,
 		effectSettings: IEffectSettings,
 		imageAssets: Map<string, IGameImageAsset>,
@@ -30,7 +30,7 @@ export default abstract class WeaponEffect {
 		audioAlias: string,
 		imageAlias?: string
 	) {
-		this.context = context;
+		this.contexts = contexts;
 		this.effectSettings = effectSettings;
 
 		this.effectPosition = {

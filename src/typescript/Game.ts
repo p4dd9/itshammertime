@@ -6,6 +6,7 @@ import GameAudio from './GameAudio';
 import Weapon from './Weapon';
 import HammerWeapon from './weapons/HammerWeapon';
 import effectSettings from '../config/effectSettings';
+import LAYERS from '../config/layers';
 
 export default class Game {
 	public ui: UI;
@@ -28,12 +29,15 @@ export default class Game {
 		this.gameAudio = new GameAudio(this);
 
 		const newWeapon = new HammerWeapon(
-			contexts[2],
+			contexts,
 			{ x: 200, y: 200 },
 			this.effectSettings
 		);
 		this._weapon = newWeapon;
-		this.gameController = new Controller(newWeapon, this.contexts[2]);
+		this.gameController = new Controller(
+			newWeapon,
+			this.contexts[LAYERS.FRONT]
+		);
 
 		this.step = this.step.bind(this);
 	}
@@ -48,7 +52,10 @@ export default class Game {
 		}
 
 		this._weapon = weapon;
-		this.gameController = new Controller(weapon!, this.contexts[2]);
+		this.gameController = new Controller(
+			weapon!,
+			this.contexts[LAYERS.FRONT]
+		);
 	}
 
 	public resize(canvasWidth: number, canvasHeight: number): void {

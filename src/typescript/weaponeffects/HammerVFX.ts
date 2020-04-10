@@ -21,6 +21,10 @@ export default class HammerVFX extends WeaponEffect {
 		density: 15,
 		particleSize: 20,
 		gravity: 0.5,
+		velocityMultiplier: {
+			x: 20, // 0 === vertical spread origin distance
+			y: 20, // 0 === horizontal spread origin distance
+		},
 	};
 
 	private _initSelfDestructId: (() => void) | null = null;
@@ -110,7 +114,9 @@ export default class HammerVFX extends WeaponEffect {
 				particleSettings.particleSize,
 				particleSettings.gravity,
 				color,
-				this.effectSettings.shape
+				this.effectSettings.shape,
+				this.particleSettings.velocityMultiplier.x,
+				this.particleSettings.velocityMultiplier.y
 			);
 			this.particleIndex++;
 			this.particles[this.particleIndex.toString()] = particle;

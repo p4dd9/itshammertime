@@ -13,10 +13,10 @@ export default class GamepadManager implements Input {
 	private _gamepad: Gamepad | null = null;
 
 	// State of the Controll Joystick Axes
-	private _axesStatus: number[] = new Array(4) as number[];
+	private axesStatus = new Array(4) as number[];
 
-	// State of buttons
-	private _buttonsStatus: string[] = [] as string[];
+	// State of buttons (TODO: This should be savely removeable)
+	private _buttonsStatus = [] as string[];
 
 	// XBOX 360 MAPPING
 	private buttons = ['A', 'B', 'X', 'Y'];
@@ -37,14 +37,6 @@ export default class GamepadManager implements Input {
 		this.listenToGamepad = this.listenToGamepad.bind(this);
 
 		this.start();
-	}
-
-	public get axesStatus(): number[] {
-		return this._axesStatus;
-	}
-
-	public set axesStatus(axesStatus: number[]) {
-		this._axesStatus = axesStatus;
 	}
 
 	public get buttonStatus(): string[] {
@@ -109,7 +101,7 @@ export default class GamepadManager implements Input {
 			}
 		}
 
-		this._axesStatus = newAxes.map(Number);
+		this.axesStatus = newAxes.map(Number);
 		this._buttonsStatus = pressed;
 		this._gamepad = navigator.getGamepads()[0];
 	}
@@ -126,31 +118,28 @@ export default class GamepadManager implements Input {
 	};
 
 	public handleAxesInput(): void {
-		const { axeStatusThreshold, weapon } = this;
-		if (this.axesStatus[XBOX360_AXIS.LS_X] > axeStatusThreshold) {
-			weapon.moveRight();
+		if (this.axesStatus[XBOX360_AXIS.LS_X] > this.axeStatusThreshold) {
+			this.weapon.moveRight();
 		}
-		if (this.axesStatus[XBOX360_AXIS.LS_X] < -axeStatusThreshold) {
-			weapon.moveLeft();
+		if (this.axesStatus[XBOX360_AXIS.LS_X] < -this.axeStatusThreshold) {
+			this.weapon.moveLeft();
 		}
-		if (this.axesStatus[XBOX360_AXIS.LS_Y] < -axeStatusThreshold) {
-			weapon.moveUp();
+		if (this.axesStatus[XBOX360_AXIS.LS_Y] < -this.axeStatusThreshold) {
+			this.weapon.moveUp();
 		}
-		if (this.axesStatus[XBOX360_AXIS.LS_Y] > axeStatusThreshold) {
-			weapon.moveDown();
+		if (this.axesStatus[XBOX360_AXIS.LS_Y] > this.axeStatusThreshold) {
+			this. weapon.moveDown();
 		}
 	}
 
 	public handleButtons(): void {
-		const { weapon, gamepad } = this;
-
-		if (gamepad === null || gamepad === undefined) {
+		if (this.gamepad === null || this.gamepad === undefined) {
 			return;
 		}
 
-		if (gamepad.buttons[XBOX360_BUTTONS.A].pressed) {
+		if (this.gamepad.buttons[XBOX360_BUTTONS.A].pressed) {
 			this.throttleFunction(() => {
-				weapon.use();
+				this.weapon.use();
 			}, this.buttonReadInterval);
 		}
 	}

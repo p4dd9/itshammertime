@@ -10,12 +10,12 @@ import LAYERS from '../config/layers';
 
 export default class Game {
 	public ui: UI;
-	public gameAudio: GameAudio;
+	public audio: GameAudio;
 
-	private gameController: Controller | null;
+	private controller: Controller;
 	private effectSettings = effectSettings;
 
-	private _weapon: Weapon | null = null;
+	private _weapon: Weapon;
 	private contexts: CanvasRenderingContext2D[];
 
 	private debug = true;
@@ -26,34 +26,31 @@ export default class Game {
 
 		this.debugger = new Debugger(contexts[LAYERS.BACK]);
 		this.ui = new UI(this, this.effectSettings);
-		this.gameAudio = new GameAudio(this);
+		this.audio = new GameAudio(this);
 
-		const newWeapon = new HammerWeapon(
+		const weapon = new HammerWeapon(
 			contexts,
 			{ x: 200, y: 200 },
 			this.effectSettings
 		);
-		this._weapon = newWeapon;
-		this.gameController = new Controller(
-			newWeapon,
+		this._weapon = weapon;
+		this.controller = new Controller(
+			weapon,
 			this.contexts[LAYERS.FRONT]
 		);
 
 		this.step = this.step.bind(this);
 	}
 
-	public get weapon(): Weapon | null {
+	public get weapon(): Weapon {
 		return this._weapon;
 	}
 
-	public set weapon(weapon: Weapon | null) {
-		if (this._weapon) {
-			this._weapon.stop();
-		}
-
+	public set weapon(weapon: Weapon) {
+		this._weapon.stop();
 		this._weapon = weapon;
-		this.gameController = new Controller(
-			weapon!,
+		this.controller = new Controller(
+			weapon,
 			this.contexts[LAYERS.FRONT]
 		);
 	}
@@ -64,7 +61,7 @@ export default class Game {
 			layer.canvas.height = canvasHeight;
 		}
 
-		this.weapon!.resizeCanvas(canvasWidth, canvasHeight);
+		this.weapon.resizeCanvas(canvasWidth, canvasHeight);
 	}
 
 	private clearCanvas(): void {
@@ -74,17 +71,14 @@ export default class Game {
 	}
 
 	private step(): void {
-		if (this.gameController) {
-			this.gameController.handleInput();
-		}
-
+		this.controller.handleInput();
 		this.clearCanvas();
 
 		if (this.debug) {
 			this.debugger.debug();
 		}
 
-		this.weapon!.draw();
+		this.weapon.draw();
 
 		window.requestAnimationFrame(this.step);
 	}

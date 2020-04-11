@@ -177,10 +177,10 @@ export default class UI {
 		if (audioButton instanceof HTMLButtonElement) {
 			audioButton.addEventListener('click', () => {
 				const newVolumeIndex: number =
-					(this.game.gameAudio.volumeIndex + 1) %
+					(this.game.audio.volumeIndex + 1) %
 					GameAudio.volumeRange.length;
 
-				this.game.gameAudio.volumeIndex = newVolumeIndex;
+				this.game.audio.volumeIndex = newVolumeIndex;
 				LocalStorageUtil.setVolumeIndex(newVolumeIndex);
 			});
 		}

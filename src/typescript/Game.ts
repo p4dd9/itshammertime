@@ -16,7 +16,7 @@ export default class Game {
 	private effectSettings = effectSettings;
 
 	private _weapon: Weapon | null = null;
-	public contexts: CanvasRenderingContext2D[];
+	private contexts: CanvasRenderingContext2D[];
 
 	private debug = true;
 	private debugger: Debugger;

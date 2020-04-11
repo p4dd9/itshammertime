@@ -1,14 +1,17 @@
-import Game from './Game';
-import LAYERS from '../config/layers';
-
 export default class Debugger {
-	public fps = '';
+	public context: CanvasRenderingContext2D;
 
-	private game: Game;
+	private color: string;
+	private font: string;
+
+	private fps = '';
 	private times: number[] = [];
 
-	constructor(game: Game) {
-		this.game = game;
+	constructor(context: CanvasRenderingContext2D, color = "#f00", font = "25px Arial") {
+		this.context = context;
+
+		this.color = color;
+		this.font = font;
 	}
 
 	public debug(): void {
@@ -18,30 +21,20 @@ export default class Debugger {
 	}
 
 	private drawCanvasBorder(): void {
-		const context = this.game.contexts[LAYERS.BACK];
-		context.strokeStyle = '#f00';
-		context.lineWidth = 2;
-		context.strokeRect(0, 0, context.canvas.width, context.canvas.height);
+		this.context.strokeStyle = this.color;
+		this.context.lineWidth = 2;
+		this.context.strokeRect(0, 0, this.context.canvas.width, this.context.canvas.height);
 	}
 
 	private drawCenterLines(): void {
-		const context = this.game.contexts[LAYERS.BACK];
-
-		context.strokeStyle = '#f00';
-		context.lineWidth = 2;
-		context.strokeRect(
-			context.canvas.width / 2,
-			0,
-			0,
-			context.canvas.height
-		);
-
-		context.strokeRect(
-			0,
-			context.canvas.height / 2,
-			context.canvas.width,
-			0
-		);
+		this.context.strokeStyle = this.color;
+		this.context.lineWidth = 1;
+		this.context.beginPath();
+		this.context.moveTo(0, this.context.canvas.height * 0.5)
+		this.context.lineTo(this.context.canvas.width, this.context.canvas.height * 0.5)
+		this.context.moveTo(this.context.canvas.width * 0.5, 0)
+		this.context.lineTo(this.context.canvas.width * 0.5, this.context.canvas.height)
+		this.context.stroke();
 	}
 
 	// Reference: https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
@@ -55,10 +48,9 @@ export default class Debugger {
 	}
 
 	private drawFPS(): void {
-		const context = this.game.contexts[LAYERS.BACK];
 		this.calculateFPS();
-		context.fillStyle = '#f00';
-		context.font = '25px Arial';
-		context.fillText(`${this.fps} fps`, context.canvas.width - 80, 30);
+		this.context.fillStyle = this.color;
+		this.context.font = this.font;
+		this.context.fillText(`${this.fps} fps`, this.context.canvas.width - 80, 30);
 	}
 }

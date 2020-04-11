@@ -18,13 +18,13 @@ export default class Game {
 	private _weapon: Weapon | null = null;
 	public contexts: CanvasRenderingContext2D[];
 
-	public debug = false;
+	private debug = true;
 	private debugger: Debugger;
 
 	constructor(contexts: CanvasRenderingContext2D[]) {
 		this.contexts = contexts;
 
-		this.debugger = new Debugger(this);
+		this.debugger = new Debugger(contexts[LAYERS.BACK]);
 		this.ui = new UI(this, this.effectSettings);
 		this.gameAudio = new GameAudio(this);
 

@@ -83,13 +83,13 @@ export default class HammerVFX extends WeaponEffect {
 	}
 
 	private generateParticles(): void {
-		const { currentImage: image, effectPosition, particleSettings } = this;
+		const { currentImage, effectPosition, particleSettings } = this;
 
-		if (image === undefined || image === null) {
+		if (currentImage === undefined || currentImage === null) {
 			return;
 		}
-		const scaledWidth = image.image.width / image.scaleOnCanvas;
-		const scaledHeight = image.image.height / image.scaleOnCanvas;
+		const scaledWidth = currentImage.image.width / currentImage.scaleOnCanvas;
+		const scaledHeight = currentImage.image.height / currentImage.scaleOnCanvas;
 
 		const canvasX = effectPosition.x - scaledWidth / 2;
 		const canvasY = effectPosition.y - scaledHeight / 2;

@@ -39,16 +39,14 @@ export default class KeyboardManager implements Input {
 	}
 
 	private handleArrowKeys(): void {
-		const weapon = this.weapon;
-
 		if (this.rightArrowKeyPressed) {
-			weapon.moveRight();
+			this.weapon.moveRight();
 		} else if (this.leftArrowKeyPressed) {
-			weapon.moveLeft();
+			this.weapon.moveLeft();
 		} else if (this.upArrowKeyPressed) {
-			weapon.moveUp();
+			this.weapon.moveUp();
 		} else if (this.downArrowKeyPressed) {
-			weapon.moveDown();
+			this.weapon.moveDown();
 		}
 	}
 

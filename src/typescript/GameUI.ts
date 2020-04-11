@@ -104,7 +104,7 @@ export default class UI {
 		const optionsContainer = document.getElementById('ui-options');
 
 		if (optionsContainer instanceof HTMLElement) {
-			window.document.addEventListener('click', (event: MouseEvent) => {
+			window.addEventListener('click', (event: MouseEvent) => {
 				const isMenuOpen = document
 					.getElementById('ui-menu-item-list')
 					?.classList.contains('open');

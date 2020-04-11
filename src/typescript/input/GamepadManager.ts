@@ -8,6 +8,7 @@ import Input from '../../interfaces/Input';
 
 export default class GamepadManager implements Input {
 	private throttleTimerId: undefined | number = undefined;
+	private buttonReadInterval = 90; // time between button input locked to not ready any input
 
 	private _gamepad: Gamepad | null = null;
 
@@ -113,13 +114,13 @@ export default class GamepadManager implements Input {
 		this._gamepad = navigator.getGamepads()[0];
 	}
 
-	private throttleFunction = (func: () => void, delay: number): void => {
+	private throttleFunction = (callback: () => void, delay: number): void => {
 		if (this.throttleTimerId) {
 			return;
 		}
 
 		this.throttleTimerId = window.setTimeout(() => {
-			func();
+			callback();
 			this.throttleTimerId = undefined;
 		}, delay);
 	};
@@ -150,7 +151,7 @@ export default class GamepadManager implements Input {
 		if (gamepad.buttons[XBOX360_BUTTONS.A].pressed) {
 			this.throttleFunction(() => {
 				weapon.use();
-			}, 90);
+			}, this.buttonReadInterval);
 		}
 	}
 

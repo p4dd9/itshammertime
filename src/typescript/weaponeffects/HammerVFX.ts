@@ -184,11 +184,10 @@ export default class HammerVFX extends WeaponEffect {
 
 	// TODO: Should be drawn on front layer
 	private drawParticles(): void {
+		const frontContext = this.contexts[LAYERS.FRONT];
 		if (this.effectSettings.shape === 'splitter') {
-			this.contexts[LAYERS.FRONT].save();
-			this.contexts[
-				LAYERS.FRONT
-			].globalAlpha = this.getRandomAlphaValue();
+			frontContext.save();
+			frontContext.globalAlpha = this.getRandomAlphaValue();
 		}
 
 		for (const particleKey in this.particles) {
@@ -200,7 +199,7 @@ export default class HammerVFX extends WeaponEffect {
 		}
 
 		if (this.effectSettings.shape === 'splitter') {
-			this.contexts[LAYERS.FRONT].restore();
+			frontContext.restore();
 		}
 	}
 

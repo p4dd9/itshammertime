@@ -37,7 +37,6 @@ export default class HammerParticle {
 		};
 	}
 
-	// TODO: Should be drawn on front layer
 	public draw(): void {
 		const { velocity, gravity, position } = this;
 		position.x += velocity.vx;
@@ -55,7 +54,6 @@ export default class HammerParticle {
 		}
 	}
 
-	// TODO: Optimize drawing of colors
 	private drawSplitter(): void {
 		const { context, particleSize } = this;
 
@@ -71,7 +69,6 @@ export default class HammerParticle {
 		grd.addColorStop(1, '#66A0D0');
 
 		context.fillStyle = grd;
-		// context.fillStyle = color;
 
 		context.moveTo(this.position.x, this.position.y);
 		context.lineTo(this.position.x, this.position.y + particleSize * 2);
@@ -80,23 +77,19 @@ export default class HammerParticle {
 			this.position.y + particleSize * 2
 		);
 
-		// context.arc(
-		// 	this.position.x,
-		// 	this.position.y,
-		// 	particleSize,
-		// 	0,
-		// 	Math.PI * 2,
-		// 	true
-		// );
-
 		context.closePath();
 		context.fill();
 	}
 
 	private drawSquares(): void {
-		const { context, color } = this;
+		const { context, color, particleSize } = this;
 		context.fillStyle = color;
-		context.fillRect(this.position.x, this.position.y, 20, 20);
+		context.fillRect(
+			this.position.x,
+			this.position.y,
+			particleSize,
+			particleSize
+		);
 		context.fill();
 	}
 

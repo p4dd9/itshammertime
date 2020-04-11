@@ -34,10 +34,7 @@ export default class Game {
 			this.effectSettings
 		);
 		this._weapon = weapon;
-		this.controller = new Controller(
-			weapon,
-			this.contexts[LAYERS.FRONT]
-		);
+		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);
 
 		this.step = this.step.bind(this);
 	}
@@ -47,12 +44,8 @@ export default class Game {
 	}
 
 	public set weapon(weapon: Weapon) {
-		this._weapon.stop();
 		this._weapon = weapon;
-		this.controller = new Controller(
-			weapon,
-			this.contexts[LAYERS.FRONT]
-		);
+		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);
 	}
 
 	public resize(canvasWidth: number, canvasHeight: number): void {

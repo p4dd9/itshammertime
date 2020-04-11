@@ -34,10 +34,7 @@ export default class HammerWeapon extends Weapon {
 		);
 
 		this.removeActiveEffect = this.removeActiveEffect.bind(this);
-
 		this.use = this.use.bind(this);
-		this.start = this.start.bind(this);
-		this.stop = this.stop.bind(this);
 	}
 
 	protected removeActiveEffect(): void {
@@ -141,16 +138,5 @@ export default class HammerWeapon extends Weapon {
 		newGameWeaponEffect.selfDestruct = this.removeActiveEffect;
 
 		this.effects.push(newGameWeaponEffect);
-	}
-
-	public start(): void {
-		this.contexts[LAYERS.FRONT].canvas.addEventListener('click', this.use);
-	}
-
-	public stop(): void {
-		this.contexts[LAYERS.FRONT].canvas.removeEventListener(
-			'click',
-			this.use
-		);
 	}
 }

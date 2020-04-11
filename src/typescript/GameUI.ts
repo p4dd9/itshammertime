@@ -84,8 +84,8 @@ export default class UI {
 		const hintPageButton = document.getElementById('ui-hint-page-button');
 
 		if (hintPageButton instanceof HTMLElement) {
-			hintPageButton.addEventListener('click', (event: MouseEvent) => {
-				copyTextToClipboard(event);
+			hintPageButton.addEventListener('click', () => {
+				copyTextToClipboard('pat.obermueller@gmail.com');
 				hintPageButton.textContent = `Copied!`;
 
 				if (UI.timeOutId !== undefined) {

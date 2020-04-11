@@ -3,8 +3,7 @@ export function degToRad(degree: number): number {
 }
 
 export function copyTextToClipboard(
-	event: MouseEvent,
-	text = 'pat.obermueller@gmail.com'
+	text: string
 ): void {
 	const input = document.createElement('input');
 	input.style.position = 'fixed';

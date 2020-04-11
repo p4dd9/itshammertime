@@ -9,7 +9,7 @@ export default class HammerParticle {
 	private position: IPosition;
 	private velocity: IVelocity;
 	private gravity: number;
-	private particleSize: number;
+	private size: number;
 	private color: string;
 	private shape: string;
 
@@ -28,7 +28,7 @@ export default class HammerParticle {
 		this.position = startPosition;
 		this.color = color;
 		this.id = id;
-		this.particleSize = particleSize;
+		this.size = particleSize;
 		this.gravity = gravity;
 		this.shape = shape;
 		this.velocity = {
@@ -38,11 +38,12 @@ export default class HammerParticle {
 	}
 
 	public draw(): void {
-		const { velocity, gravity, position } = this;
-		position.x += velocity.vx;
-		position.y += velocity.vy;
+		this.position = { 
+			x: this.position.x + this.velocity.vx,
+			y: this.position.y + this.velocity.vy,
+		}
 
-		velocity.vy += gravity;
+		this.velocity.vy += this.gravity;
 		this.life++;
 
 		if (this.shape === 'splitter') {
@@ -55,42 +56,39 @@ export default class HammerParticle {
 	}
 
 	private drawSplitter(): void {
-		const { context, particleSize } = this;
+		this.context.beginPath();
 
-		context.beginPath();
-
-		const grd = context.createLinearGradient(
+		const grd = this.context.createLinearGradient(
 			this.position.x,
 			this.position.y,
-			this.position.x + particleSize,
+			this.position.x + this.size,
 			this.position.y
 		);
 		grd.addColorStop(0.1, 'white');
 		grd.addColorStop(1, '#66A0D0');
 
-		context.fillStyle = grd;
+		this.context.fillStyle = grd;
 
-		context.moveTo(this.position.x, this.position.y);
-		context.lineTo(this.position.x, this.position.y + particleSize * 2);
-		context.lineTo(
-			this.position.x + particleSize * 2,
-			this.position.y + particleSize * 2
+		this.context.moveTo(this.position.x, this.position.y);
+		this.context.lineTo(this.position.x, this.position.y + this.size * 2);
+		this.context.lineTo(
+			this.position.x + this.size * 2,
+			this.position.y + this.size * 2
 		);
 
-		context.closePath();
-		context.fill();
+		this.context.closePath();
+		this.context.fill();
 	}
 
 	private drawSquares(): void {
-		const { context, color, particleSize } = this;
-		context.fillStyle = color;
-		context.fillRect(
+		this.context.fillStyle = this.color;
+		this.context.fillRect(
 			this.position.x,
 			this.position.y,
-			particleSize,
-			particleSize
+			this.size,
+			this.size
 		);
-		context.fill();
+		this.context.fill();
 	}
 
 	// https://stackoverflow.com/questions/25837158/how-to-draw-a-star-by-using-canvas-html5

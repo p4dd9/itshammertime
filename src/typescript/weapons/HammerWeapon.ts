@@ -57,14 +57,14 @@ export default class HammerWeapon extends Weapon {
 		contexts[LAYERS.FRONT].save();
 		this.translateRotationPivotToMouse('set');
 		contexts[LAYERS.FRONT].rotate(degToRad(-angle));
-		this.drawHammerWeapon();
+		this.drawWeaponImage();
 		this.translateRotationPivotToMouse('reset');
 		contexts[LAYERS.FRONT].restore();
 
 		this.updateHammerAnimation();
 	}
 
-	private drawHammerWeapon(): void {
+	private drawWeaponImage(): void {
 		const { currentImage, contexts } = this;
 
 		if (currentImage === undefined) {

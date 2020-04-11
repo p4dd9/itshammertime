@@ -1,10 +1,10 @@
 import Controller from '../Controller';
-import BrowserUtil from '../../util/BrowserUtil';
 import CONTROLS from '../../enums/controls';
 import IGamepadEvent from '../../interfaces/IGamepadEvent';
 import { XBOX360_AXIS, XBOX360_BUTTONS } from '../../enums/xbox360controls';
 import Weapon from '../Weapon';
 import Input from '../../interfaces/Input';
+import { supportsGamepads } from '../../util/commonUtil';
 
 export default class GamepadManager implements Input {
 	private gamepad: Gamepad | null = null;
@@ -29,14 +29,14 @@ export default class GamepadManager implements Input {
 	}
 
 	public start(): void {
-		if (BrowserUtil.supportsGamepads()) {
+		if (supportsGamepads()) {
 			this.addGamepadConnectListener();
 			this.addGamepadDisconnectListener();
 		}
 	}
 
 	public stop(): void {
-		if (BrowserUtil.supportsGamepads()) {
+		if (supportsGamepads()) {
 			this.removeGamepadConnectListener();
 			this.removeGamepadDisconnectListener();
 		}

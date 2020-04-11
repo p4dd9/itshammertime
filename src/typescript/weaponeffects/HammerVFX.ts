@@ -13,7 +13,6 @@ export default class HammerVFX extends WeaponEffect {
 	public audioAssets = hammerAudioAssets;
 
 	private particles: { [key: string]: HammerParticle } = {};
-	private particleIndex = 0;
 	private particlesLoaded = false;
 
 	private particleSettings = {
@@ -84,12 +83,16 @@ export default class HammerVFX extends WeaponEffect {
 
 	private generateParticles(): void {
 		const { currentImage, effectPosition, particleSettings } = this;
+		let particlesIndex = 0;
 
 		if (currentImage === undefined || currentImage === null) {
 			return;
 		}
-		const scaledWidth = currentImage.image.width / currentImage.scaleOnCanvas;
-		const scaledHeight = currentImage.image.height / currentImage.scaleOnCanvas;
+
+		const scaledWidth =
+			currentImage.image.width / currentImage.scaleOnCanvas;
+		const scaledHeight =
+			currentImage.image.height / currentImage.scaleOnCanvas;
 
 		const canvasX = effectPosition.x - scaledWidth / 2;
 		const canvasY = effectPosition.y - scaledHeight / 2;
@@ -110,7 +113,7 @@ export default class HammerVFX extends WeaponEffect {
 					x: canvasX + scaledWidth / 2,
 					y: canvasY + scaledHeight / 2,
 				},
-				this.particleIndex,
+				particlesIndex,
 				particleSettings.particleSize,
 				particleSettings.gravity,
 				color,
@@ -118,8 +121,8 @@ export default class HammerVFX extends WeaponEffect {
 				this.particleSettings.velocityMultiplier.x,
 				this.particleSettings.velocityMultiplier.y
 			);
-			this.particleIndex++;
-			this.particles[this.particleIndex.toString()] = particle;
+			particlesIndex++;
+			this.particles[particlesIndex.toString()] = particle;
 		}
 		this.particlesLoaded = true;
 	}

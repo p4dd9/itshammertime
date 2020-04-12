@@ -16,31 +16,7 @@
       "value": "wss://localhost:3434"
     }
   ],
-  "extensionViews": [
-    {
-      "id": "1",
-      "label": "",
-      "channelId": "54739364",
-      "configurationAnchor": "video_overlay",
-      "displayChannelName": "esamarathon",
-      "type": "video_overlay",
-      "features": {
-        "isBitsEnabled": false,
-        "isChatEnabled": false,
-        "isSubscriptionStatusAvailable": false
-      },
-      "linked": false,
-      "linkedUserId": "",
-      "mode": "viewer",
-      "isPopout": false,
-      "role": "Broadcaster",
-      "orientation": "Portrait",
-      "frameSize": {
-        "width": 1280,
-        "height": 720
-      }
-    }
-  ],
+  "extensionViews": [],
   "manifest": {
     "anchor": "video_overlay",
     "assetUrls": [],

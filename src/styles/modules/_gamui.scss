@@ -3,6 +3,18 @@ $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
 
 body {
+	@media only screen and (max-height: 499px) {
+		#ui-layer {
+			display: none;
+		}
+	}
+
+	@media only screen and (max-width: 499px) {
+		#ui-layer {
+			display: none;
+		}
+	}
+
 	&:hover #ui-options {
 		opacity: 1; // Toggle to Debug
 	}

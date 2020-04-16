@@ -2,6 +2,10 @@
 
 ## A Client-Side Twitch Extension
 
+Supports screens width and height of minimum 500px each.
+Works for UI
+TODO: Game Logic start/stop (cancelAnim, global handlers)
+
 ## Mentionable Codesnippets
 
 I used and/or adapted some codesnippets from these resources.

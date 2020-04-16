@@ -21,6 +21,8 @@ export default class Game {
 	private debug = false;
 	private debugger: Debugger;
 
+	private frameId: number | undefined = undefined;
+
 	constructor(contexts: CanvasRenderingContext2D[]) {
 		this.contexts = contexts;
 
@@ -64,6 +66,7 @@ export default class Game {
 	}
 
 	private step(): void {
+		this.frameId = undefined;
 		this.controller.handleInput();
 		this.clearCanvas();
 
@@ -73,10 +76,17 @@ export default class Game {
 
 		this.weapon.draw();
 
-		window.requestAnimationFrame(this.step);
+		this.frameId = window.requestAnimationFrame(this.step);
 	}
 
 	public start(): void {
-		window.requestAnimationFrame(this.step);
+		this.frameId = window.requestAnimationFrame(this.step);
+	}
+
+	public stop(): void {
+		if (this.frameId) {
+			window.cancelAnimationFrame(this.frameId);
+			this.frameId = undefined;
+		}
 	}
 }

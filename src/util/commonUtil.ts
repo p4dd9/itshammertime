@@ -16,3 +16,10 @@ export function copyTextToClipboard(text: string): void {
 export function supportsGamepads(): boolean {
 	return navigator.getGamepads() !== null;
 }
+
+export function isScreenSizeSupported(width: number, height: number): boolean {
+	if (width < 500 || height < 500) {
+		return false;
+	}
+	return true;
+}

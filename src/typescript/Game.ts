@@ -50,13 +50,17 @@ export default class Game {
 		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);
 	}
 
-	public resize(canvasWidth: number, canvasHeight: number): void {
+	public resize(): void {
+		const bodyMarginVerticalHorizontal = 16;
+		const resizeWidth = window.innerWidth - bodyMarginVerticalHorizontal;
+		const resizeHeight = window.innerHeight - bodyMarginVerticalHorizontal;
+
 		for (const layer of this.contexts) {
-			layer.canvas.width = canvasWidth;
-			layer.canvas.height = canvasHeight;
+			layer.canvas.width = resizeWidth;
+			layer.canvas.height = resizeHeight;
 		}
 
-		this.weapon.resizeCanvas(canvasWidth, canvasHeight);
+		this.weapon.resizeCanvas(resizeWidth, resizeHeight);
 	}
 
 	private clearCanvas(): void {
@@ -80,6 +84,7 @@ export default class Game {
 	}
 
 	public start(): void {
+		this.addOnResizeListener();
 		this.frameId = window.requestAnimationFrame(this.step);
 	}
 
@@ -88,5 +93,11 @@ export default class Game {
 			window.cancelAnimationFrame(this.frameId);
 			this.frameId = undefined;
 		}
+	}
+
+	private addOnResizeListener(): void {
+		window.onresize = (): void => {
+			this.resize();
+		};
 	}
 }

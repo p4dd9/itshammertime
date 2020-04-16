@@ -23,3 +23,17 @@ export function isScreenSizeSupported(width: number, height: number): boolean {
 	}
 	return true;
 }
+
+export function getRenderingContextsFromDOM(): CanvasRenderingContext2D[] {
+	const root: HTMLElement | null = document.getElementById('game-layer');
+	const contexts = [];
+	const canvases: HTMLCollectionOf<HTMLCanvasElement> = root!.getElementsByTagName(
+		'canvas'
+	);
+
+	for (let i = 0; i < canvases.length; i++) {
+		contexts.push(canvases[i].getContext('2d') as CanvasRenderingContext2D);
+	}
+
+	return contexts;
+}

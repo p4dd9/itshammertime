@@ -7,7 +7,7 @@ import IEffectSettings from '../../interfaces/IEffectSettings';
 import LAYERS from '../../config/layers';
 
 export default class HammerVFX extends WeaponEffect {
-	public static lifeTime = 3000; // ms
+	public static lifeTime = 2000; // ms
 
 	public imageAssets = hammerImageAssets;
 	public audioAssets = hammerAudioAssets;

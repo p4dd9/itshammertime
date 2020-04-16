@@ -10,7 +10,8 @@ export default class HammerParticle {
 	private velocity: IVelocity;
 	private gravity: number;
 	private size: number;
-	private color: string;
+	private theme: string | string[];
+	private color: string | CanvasGradient;
 	private shape: string;
 
 	constructor(
@@ -19,17 +20,18 @@ export default class HammerParticle {
 		id: number,
 		particleSize: number,
 		gravity: number,
-		color: string,
+		theme: string | string[],
 		shape: string,
 		vxMultiplier: number,
 		vyMultiplier: number
 	) {
 		this.context = context;
 		this.position = startPosition;
-		this.color = color;
+		this.theme = theme;
 		this.id = id;
 		this.size = particleSize;
 		this.gravity = gravity;
+		this.color = this.setColorAndFillStyles();
 		this.shape = shape;
 		this.velocity = {
 			vx: Math.random() * vxMultiplier - 10,
@@ -37,50 +39,83 @@ export default class HammerParticle {
 		};
 	}
 
+	private setColorAndFillStyles(): CanvasGradient | string {
+		if (Array.isArray(this.theme)) {
+			const grd = this.context.createLinearGradient(
+				this.position.x,
+				this.position.y,
+				this.position.x + this.size,
+				this.position.y
+			);
+			grd.addColorStop(0.1, this.theme[0]);
+			grd.addColorStop(1, this.theme[1]);
+			return grd;
+		} else {
+			return this.theme;
+		}
+	}
+
 	public draw(): void {
-		this.position = { 
+		this.position = {
 			x: this.position.x + this.velocity.vx,
 			y: this.position.y + this.velocity.vy,
-		}
+		};
 
 		this.velocity.vy += this.gravity;
 		this.life++;
+		this.color = Array.isArray(this.theme)
+			? this.setColorAndFillStyles()
+			: this.theme;
 
-		if (this.shape === 'splitter') {
-			this.drawSplitter();
+		if (this.shape === 'circle') {
+			this.drawCircle();
 		} else if (this.shape === 'square') {
-			this.drawSquares();
-		} else {
+			this.drawSquare();
+		} else if (this.shape === 'star') {
 			this.drawStar();
 		}
 	}
 
-	private drawSplitter(): void {
-		this.context.beginPath();
+	//private drawcircle(): void {
+	//	this.context.beginPath();
+	//
+	//	const grd = this.context.createLinearGradient(
+	//		this.position.x,
+	//		this.position.y,
+	//		this.position.x + this.size,
+	//		this.position.y
+	//	);
+	//	grd.addColorStop(0.1, 'white');
+	//	grd.addColorStop(1, '#66A0D0');
+	//
+	//	this.context.fillStyle = grd;
+	//	this.context.fillRect(
+	//		this.position.x,
+	//		this.position.y,
+	//		this.size,
+	//		this.size
+	//	);
+	//	this.context.closePath();
+	//	this.context.fill();
+	//}
 
-		const grd = this.context.createLinearGradient(
+	private drawCircle(): void {
+		this.context.beginPath();
+		this.context.fillStyle = this.color;
+
+		this.context.arc(
 			this.position.x,
 			this.position.y,
-			this.position.x + this.size,
-			this.position.y
+			this.size,
+			0,
+			Math.PI * 2,
+			true
 		);
-		grd.addColorStop(0.1, 'white');
-		grd.addColorStop(1, '#66A0D0');
-
-		this.context.fillStyle = grd;
-
-		this.context.moveTo(this.position.x, this.position.y);
-		this.context.lineTo(this.position.x, this.position.y + this.size * 2);
-		this.context.lineTo(
-			this.position.x + this.size * 2,
-			this.position.y + this.size * 2
-		);
-
 		this.context.closePath();
 		this.context.fill();
 	}
 
-	private drawSquares(): void {
+	private drawSquare(): void {
 		this.context.fillStyle = this.color;
 		this.context.fillRect(
 			this.position.x,
@@ -91,7 +126,6 @@ export default class HammerParticle {
 		this.context.fill();
 	}
 
-	// https://stackoverflow.com/questions/25837158/how-to-draw-a-star-by-using-canvas-html5
 	private drawStar(spikes = 5, outerRadius = 15, innerRadius = 7): void {
 		let rot = (Math.PI / 2) * 3;
 		let x = this.position.x;

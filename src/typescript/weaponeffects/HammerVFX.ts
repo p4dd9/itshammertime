@@ -81,6 +81,26 @@ export default class HammerVFX extends WeaponEffect {
 		this.drawParticles();
 	}
 
+	private getColorFromTheme(index: number): string | string[] {
+		switch (this.effectSettings.particleTheme) {
+			case 'white': {
+				return '#FFFFFF';
+			}
+			case 'party': {
+				return this.getRandomDistinctColorCode(
+					this.particleSettings.density,
+					index
+				);
+			}
+			case 'glass': {
+				return ['white', '#66A0D0'];
+			}
+			default: {
+				return '#FFFFFF';
+			}
+		}
+	}
+
 	private generateParticles(): void {
 		const { currentImage, effectPosition, particleSettings } = this;
 		let particlesIndex = 0;
@@ -98,15 +118,6 @@ export default class HammerVFX extends WeaponEffect {
 		const canvasY = effectPosition.y - scaledHeight / 2;
 
 		for (let i = 0; i < particleSettings.density; i++) {
-			const color =
-				this.effectSettings.particleColor === 'white'
-					? '#FFFFFF'
-					: this.getRandomDistinctColorCode(
-							this.particleSettings.density,
-							i
-							// eslint-disable-next-line no-mixed-spaces-and-tabs
-					  );
-
 			const particle = new HammerParticle(
 				this.contexts[LAYERS.FRONT],
 				{
@@ -116,7 +127,7 @@ export default class HammerVFX extends WeaponEffect {
 				particlesIndex,
 				particleSettings.particleSize,
 				particleSettings.gravity,
-				color,
+				this.getColorFromTheme(i),
 				this.effectSettings.shape,
 				this.particleSettings.velocityMultiplier.x,
 				this.particleSettings.velocityMultiplier.y
@@ -127,19 +138,13 @@ export default class HammerVFX extends WeaponEffect {
 		this.particlesLoaded = true;
 	}
 
-	// https://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
-	// https://stackoverflow.com/questions/1484506/random-color-generator
 	private getRandomDistinctColorCode(
 		numOfSteps: number,
 		step: number
 	): string {
-		// This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for
-		// creating easily distinguishable vibrant markers in Google Maps and other apps.
-		// Adam Cole, 2011-Sept-14
-		// HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
 		let r, g, b;
 		const h = step / numOfSteps;
-		const i = ~~(h * 6); // round up
+		const i = ~~(h * 6);
 		const f = h * 6 - i;
 		const q = 1 - f;
 		switch (i % 6) {
@@ -185,10 +190,9 @@ export default class HammerVFX extends WeaponEffect {
 		return c;
 	}
 
-	// TODO: Should be drawn on front layer
 	private drawParticles(): void {
 		const frontContext = this.contexts[LAYERS.FRONT];
-		if (this.effectSettings.shape === 'splitter') {
+		if (this.effectSettings.particleTheme === 'glass') {
 			frontContext.save();
 			frontContext.globalAlpha = this.getRandomAlphaValue();
 		}
@@ -201,7 +205,7 @@ export default class HammerVFX extends WeaponEffect {
 			}
 		}
 
-		if (this.effectSettings.shape === 'splitter') {
+		if (this.effectSettings.particleTheme === 'glass') {
 			frontContext.restore();
 		}
 	}

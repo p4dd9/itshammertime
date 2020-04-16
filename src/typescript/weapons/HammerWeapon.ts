@@ -130,7 +130,7 @@ export default class HammerWeapon extends Weapon {
 		const newGameWeaponEffect = new HammerVFX(
 			this.contexts,
 			{
-				x: this.position.x - scaledWidth / 2 - 80, // hammer effect related
+				x: this.position.x - scaledWidth / 2 - 80, // -80 hammer effect related
 				y: this.position.y - scaledHeight / 2,
 			},
 			this.effectSettings

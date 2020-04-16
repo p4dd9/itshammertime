@@ -62,8 +62,6 @@ export default abstract class WeaponEffect {
 		GameAudio.playSoundOverlap(this.currentAudio!.audio);
 	}
 
-	// TODO: Refactor access of effects if  more images that 1 is provided
-	// 		 not only hammer effects
 	private setWeaponEffectImage(): IGameImage | undefined {
 		if (WeaponEffect.effectCount === 2) {
 			WeaponEffect.effectCount = 0;

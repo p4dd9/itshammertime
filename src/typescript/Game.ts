@@ -18,7 +18,7 @@ export default class Game {
 	private _weapon: Weapon;
 	private contexts: CanvasRenderingContext2D[];
 
-	private debug = true;
+	private debug = false;
 	private debugger: Debugger;
 
 	constructor(contexts: CanvasRenderingContext2D[]) {

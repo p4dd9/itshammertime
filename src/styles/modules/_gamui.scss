@@ -148,7 +148,7 @@ body {
 	width: 100%;
 }
 
-#ui-hint-page-button {
+#ui-hint-page-contact-button {
 	font-weight: bold;
 }
 
@@ -180,7 +180,12 @@ body {
 	background-color: white;
 }
 
+#enchantments-color-glass-button {
+	background-image: linear-gradient(to right, white, #66a0d0);
+}
+
 #enchantments-color-party-button {
+	color: white;
 	background-image: linear-gradient(
 		to left,
 		violet,

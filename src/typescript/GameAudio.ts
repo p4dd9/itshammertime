@@ -19,7 +19,6 @@ export default class GameAudio {
 		this._volumeIndex = volumeIndex;
 		this.game.ui.setAudioButtonImage(volumeIndex);
 
-		// TODO: Fix audio bug, idk
 		if (this.game.weapon === null || this.game.weapon.audio === null)
 			return;
 		for (const audioAsset of this.game.weapon.audio.values()) {

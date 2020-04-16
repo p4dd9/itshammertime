@@ -59,7 +59,8 @@ export default class UI {
 				enchantmentColorButton.addEventListener(
 					'click',
 					(event: MouseEvent) => {
-						this.effectSettings.particleColor = (event.target as HTMLButtonElement).value;
+						this.effectSettings.particleTheme = (event.target as HTMLButtonElement)
+							.value as 'white' | 'party' | 'glass';
 					}
 				);
 			}
@@ -73,7 +74,7 @@ export default class UI {
 					'click',
 					(event: MouseEvent) => {
 						this.effectSettings.shape = (event.target as HTMLButtonElement)
-							.value as 'splitter' | 'star';
+							.value as 'circle' | 'star' | 'square';
 					}
 				);
 			}
@@ -81,7 +82,9 @@ export default class UI {
 	}
 
 	private initHintPageEvents(): void {
-		const hintPageButton = document.getElementById('ui-hint-page-button');
+		const hintPageButton = document.getElementById(
+			'ui-hint-page-contact-button'
+		);
 
 		if (hintPageButton instanceof HTMLElement) {
 			hintPageButton.addEventListener('click', () => {
@@ -154,14 +157,9 @@ export default class UI {
 	}
 
 	private initContactButton(): void {
-		const contactButton = document.getElementById('ui-contact-button');
 		const contactButtonImage = document.getElementById(
 			'ui-contact-button-image'
 		);
-
-		if (contactButton instanceof HTMLButtonElement) {
-			console.log('Contact-Button ready to serve!');
-		}
 
 		if (contactButtonImage instanceof HTMLImageElement) {
 			contactButtonImage.src = LetterImage;

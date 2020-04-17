@@ -3,13 +3,13 @@ $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
 
 body {
-	@media only screen and (max-height: 383px) {
+	@media only screen and (max-height: 450px) {
 		#ui-layer {
 			display: none;
 		}
 	}
 
-	@media only screen and (max-width: 283px) {
+	@media only screen and (max-width: 300px) {
 		#ui-layer {
 			display: none;
 		}

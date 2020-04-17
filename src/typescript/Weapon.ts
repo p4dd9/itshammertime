@@ -70,11 +70,14 @@ export default abstract class Weapon {
 	}
 
 	public moveRight(): void {
+		if (this.currentImage === undefined) {
+			return;
+		}
 		const canvasWidth = this.contexts[LAYERS.FRONT].canvas.width;
 		const destinationX =
 			this.position.x +
 			this.moveDistance +
-			this.currentImage!.image.width / this.currentImage!.scaleOnCanvas;
+			this.currentImage.image.width / this.currentImage.scaleOnCanvas;
 
 		if (destinationX <= canvasWidth) {
 			this.position.x += this.moveDistance;
@@ -82,11 +85,14 @@ export default abstract class Weapon {
 	}
 
 	public moveLeft(): void {
+		if (this.currentImage === undefined) {
+			return;
+		}
 		const destinationX =
 			this.position.x -
 			(this.moveDistance +
-				this.currentImage!.image.width /
-					this.currentImage!.scaleOnCanvas) /
+				this.currentImage.image.width /
+					this.currentImage.scaleOnCanvas) /
 				2;
 
 		if (destinationX >= 0) {
@@ -95,11 +101,14 @@ export default abstract class Weapon {
 	}
 
 	public moveUp(): void {
+		if (this.currentImage === undefined) {
+			return;
+		}
 		const destinationY =
 			this.position.y -
 			(this.moveDistance +
-				this.currentImage!.image.height /
-					this.currentImage!.scaleOnCanvas);
+				this.currentImage.image.height /
+					this.currentImage.scaleOnCanvas);
 
 		if (destinationY >= 0) {
 			this.position.y += -this.moveDistance;

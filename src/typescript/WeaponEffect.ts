@@ -64,21 +64,21 @@ export default abstract class WeaponEffect {
 				? images.get(imageAlias)
 				: this.setWeaponEffectImage();
 
-		GameAudio.playSoundOverlap(this.currentAudio!.audio);
+		if (this.currentAudio !== undefined) {
+			GameAudio.playSoundOverlap(this.currentAudio.audio);
+		}
 	}
 
 	private setRandomAudioEffect(): IAudio | undefined {
-		const randomNumber = getRandomInt(3);
-
-		switch (randomNumber) {
+		switch (getRandomInt(3)) {
 			case 0: {
-				return this.audio!.get(hammerAudioAlias.HAMMER_SHATTER_01);
+				return this.audio?.get(hammerAudioAlias.HAMMER_SHATTER_01);
 			}
 			case 1: {
-				return this.audio!.get(hammerAudioAlias.HAMMER_SHATTER_02);
+				return this.audio?.get(hammerAudioAlias.HAMMER_SHATTER_02);
 			}
 			case 2: {
-				return this.audio!.get(hammerAudioAlias.HAMMER_SHATTER_03);
+				return this.audio?.get(hammerAudioAlias.HAMMER_SHATTER_03);
 			}
 			default: {
 				return undefined;
@@ -93,15 +93,15 @@ export default abstract class WeaponEffect {
 		switch (WeaponEffect.effectCount) {
 			case 0: {
 				WeaponEffect.effectCount++;
-				return this.images!.get(hammerImageAlias.HAMMER_EFFECT_01);
+				return this.images?.get(hammerImageAlias.HAMMER_EFFECT_01);
 			}
 			case 1: {
 				WeaponEffect.effectCount++;
-				return this.images!.get(hammerImageAlias.HAMMER_EFFECT_02);
+				return this.images?.get(hammerImageAlias.HAMMER_EFFECT_02);
 			}
 			case 2: {
 				WeaponEffect.effectCount++;
-				return this.images!.get(hammerImageAlias.HAMMER_EFFECT_03);
+				return this.images?.get(hammerImageAlias.HAMMER_EFFECT_03);
 			}
 			default: {
 				return undefined;

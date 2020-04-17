@@ -42,45 +42,41 @@ export default class HammerWeapon extends Weapon {
 	}
 
 	public draw(): void {
-		const { currentImage, contexts, effects, angle } = this;
-
-		if (currentImage === undefined) {
+		if (this.currentImage === undefined) {
 			return;
 		}
 
-		if (effects.length > 0) {
-			for (const gameEffect of effects) {
+		if (this.effects.length > 0) {
+			for (const gameEffect of this.effects) {
 				gameEffect.draw();
 			}
 		}
 
-		contexts[LAYERS.FRONT].save();
+		this.contexts[LAYERS.FRONT].save();
 		this.translateRotationPivotToMouse('set');
-		contexts[LAYERS.FRONT].rotate(degToRad(-angle));
+		this.contexts[LAYERS.FRONT].rotate(degToRad(-this.angle));
 		this.drawWeaponImage();
 		this.translateRotationPivotToMouse('reset');
-		contexts[LAYERS.FRONT].restore();
+		this.contexts[LAYERS.FRONT].restore();
 
 		this.updateHammerAnimation();
 	}
 
 	private drawWeaponImage(): void {
-		const { currentImage, contexts } = this;
-
-		if (currentImage === undefined) {
+		if (this.currentImage === undefined) {
 			return;
 		}
 
-		const sourceImage = currentImage.image;
-		const sourceImageWidth = currentImage.image.width;
-		const sourceImageHeight = currentImage.image.height;
+		const sourceImage = this.currentImage.image;
+		const sourceImageWidth = this.currentImage.image.width;
+		const sourceImageHeight = this.currentImage.image.height;
 
 		const scaledWidth =
-			currentImage.image.width / currentImage.scaleOnCanvas;
+			this.currentImage.image.width / this.currentImage.scaleOnCanvas;
 		const scaledHeight =
-			currentImage.image.height / currentImage.scaleOnCanvas;
+			this.currentImage.image.height / this.currentImage.scaleOnCanvas;
 
-		contexts[LAYERS.FRONT].drawImage(
+		this.contexts[LAYERS.FRONT].drawImage(
 			sourceImage,
 			0,
 			0,

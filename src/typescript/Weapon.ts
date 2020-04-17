@@ -64,6 +64,11 @@ export default abstract class Weapon {
 		this.currentImage = images.get(imageAlias);
 	}
 
+	public moveTo(x: number, y: number): void {
+		this.position.x = x;
+		this.position.y = y;
+	}
+
 	public moveRight(): void {
 		const canvasWidth = this.contexts[LAYERS.FRONT].canvas.width;
 		const destinationX =

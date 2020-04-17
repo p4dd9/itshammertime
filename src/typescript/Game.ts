@@ -9,6 +9,7 @@ import effectSettings from '../config/effectSettings';
 import LAYERS from '../config/layers';
 import { isScreenSizeSupported } from '../util/commonUtil';
 import { Extension, ExtensionContext } from '../types/twitch';
+import { bodyMarginVerticalHorizontal } from '../config/consts';
 
 export default class Game {
 	public ui: UI;
@@ -65,7 +66,6 @@ export default class Game {
 	}
 
 	public resize(): void {
-		const bodyMarginVerticalHorizontal = 16;
 		const resizeWidth = window.innerWidth - bodyMarginVerticalHorizontal;
 		const resizeHeight = window.innerHeight - bodyMarginVerticalHorizontal;
 

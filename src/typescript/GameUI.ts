@@ -15,6 +15,7 @@ import FaqImage from '../assets/images/faq_questionmark.png';
 import BookImage from '../assets/images/book.png';
 
 import { copyTextToClipboard } from '../util/commonUtil';
+import { bodyMarginVerticalHorizontal } from '../config/consts';
 export default class UI {
 	private game: Game;
 	private static timeOutId: undefined | number = undefined;
@@ -61,6 +62,16 @@ export default class UI {
 					(event: MouseEvent) => {
 						this.effectSettings.particleTheme = (event.target as HTMLButtonElement)
 							.value as 'white' | 'party' | 'glass';
+
+						const resizeWidth =
+							window.innerWidth - bodyMarginVerticalHorizontal;
+						const resizeHeight =
+							window.innerHeight - bodyMarginVerticalHorizontal;
+						this.game.weapon.moveTo(
+							resizeWidth / 2,
+							resizeHeight / 2
+						);
+						this.game.weapon.use();
 					}
 				);
 			}
@@ -75,6 +86,15 @@ export default class UI {
 					(event: MouseEvent) => {
 						this.effectSettings.shape = (event.target as HTMLButtonElement)
 							.value as 'circle' | 'star' | 'square';
+						const resizeWidth =
+							window.innerWidth - bodyMarginVerticalHorizontal;
+						const resizeHeight =
+							window.innerHeight - bodyMarginVerticalHorizontal;
+						this.game.weapon.moveTo(
+							resizeWidth / 2,
+							resizeHeight / 2
+						);
+						this.game.weapon.use();
 					}
 				);
 			}

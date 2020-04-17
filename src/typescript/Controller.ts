@@ -25,6 +25,18 @@ export default class Controller {
 		return this.controllerType;
 	}
 
+	public stop(): void {
+		this.gamepadManager.stop();
+		this.cursorManager.stop();
+		this.keyboardManager.stop();
+	}
+
+	public start(): void {
+		this.gamepadManager.start();
+		this.cursorManager.start();
+		this.keyboardManager.start();
+	}
+
 	public handleInput(): void {
 		this.gamepadManager.handleInput();
 		this.cursorManager.handleInput();

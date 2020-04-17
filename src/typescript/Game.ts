@@ -9,7 +9,6 @@ import effectSettings from '../config/effectSettings';
 import LAYERS from '../config/layers';
 import { isScreenSizeSupported } from '../util/commonUtil';
 import { Extension, ExtensionContext } from '../types/twitch';
-import { bodyMarginVerticalHorizontal } from '../config/consts';
 
 export default class Game {
 	public ui: UI;
@@ -66,10 +65,10 @@ export default class Game {
 	}
 
 	public resize(): void {
-		const resizeWidth = window.innerWidth - bodyMarginVerticalHorizontal;
-		const resizeHeight = window.innerHeight - bodyMarginVerticalHorizontal;
+		const resizeWidth = window.innerWidth;
+		const resizeHeight = window.innerHeight;
 
-		if (isScreenSizeSupported(resizeWidth, resizeHeight)) {
+		if (isScreenSizeSupported(window.innerWidth, window.innerHeight)) {
 			if (this.frameId !== undefined) {
 				for (const layer of this.contexts) {
 					layer.canvas.width = resizeWidth;
@@ -108,6 +107,7 @@ export default class Game {
 
 	public start(): void {
 		this.frameId = window.requestAnimationFrame(this.step);
+		this.controller.start();
 	}
 
 	public stop(): void {
@@ -115,6 +115,7 @@ export default class Game {
 			window.cancelAnimationFrame(this.frameId);
 			this.frameId = undefined;
 		}
+		this.controller.stop();
 	}
 
 	private addOnResizeListener(): void {

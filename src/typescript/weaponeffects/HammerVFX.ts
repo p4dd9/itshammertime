@@ -1,7 +1,7 @@
 import WeaponEffect from '../WeaponEffect';
 import IPosition from '../../interfaces/IPosition';
 import { hammerImageAssets } from '../../assets/imageAssets';
-import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
+import { hammerAudioAssets } from '../../assets/audioAssets';
 import HammerParticle from './HammerParticle';
 import IEffectSettings from '../../interfaces/IEffectSettings';
 import LAYERS from '../../config/layers';
@@ -38,8 +38,7 @@ export default class HammerVFX extends WeaponEffect {
 			position,
 			effectSettings,
 			hammerImageAssets,
-			hammerAudioAssets,
-			hammerAudioAlias.HAMMER_SHATTER_01
+			hammerAudioAssets
 		);
 	}
 

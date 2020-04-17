@@ -19,7 +19,6 @@ export default class KeyboardManager implements Input {
 
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
-		this.start();
 	}
 
 	public start(): void {

@@ -3,13 +3,13 @@ $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
 
 body {
-	@media only screen and (max-height: 499px) {
+	@media only screen and (max-height: 383px) {
 		#ui-layer {
 			display: none;
 		}
 	}
 
-	@media only screen and (max-width: 499px) {
+	@media only screen and (max-width: 283px) {
 		#ui-layer {
 			display: none;
 		}
@@ -38,6 +38,7 @@ body {
 	height: 100%;
 	opacity: 0;
 	transition: all 0.25s;
+	left: 8px;
 }
 
 #ui-menu-button-cursor-wrapper {

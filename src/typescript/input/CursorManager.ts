@@ -31,7 +31,7 @@ export default class CursorManager implements Input {
 		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.handleMouseDown = this.handleMouseDown.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
-		this.start();
+		this.handleMouseLeave = this.handleMouseLeave.bind(this);
 	}
 
 	public start(): void {
@@ -39,6 +39,10 @@ export default class CursorManager implements Input {
 		this.context.canvas.addEventListener('mousemove', this.handleMouseMove);
 		this.context.canvas.addEventListener('mousedown', this.handleMouseDown);
 		this.context.canvas.addEventListener('mouseup', this.handleMouseUp);
+		this.context.canvas.addEventListener(
+			'mouseleave',
+			this.handleMouseLeave
+		);
 	}
 
 	public stop(): void {
@@ -53,6 +57,10 @@ export default class CursorManager implements Input {
 		);
 
 		this.context.canvas.removeEventListener('mouseup', this.handleMouseUp);
+		this.context.canvas.removeEventListener(
+			'mouseleave',
+			this.handleMouseLeave
+		);
 		clearInterval(this.mouseDownID);
 	}
 
@@ -66,6 +74,11 @@ export default class CursorManager implements Input {
 	}
 
 	private handleMouseUp(): void {
+		clearInterval(this.mouseDownID);
+		this.mouseDownID = undefined;
+	}
+
+	private handleMouseLeave(): void {
 		clearInterval(this.mouseDownID);
 		this.mouseDownID = undefined;
 	}

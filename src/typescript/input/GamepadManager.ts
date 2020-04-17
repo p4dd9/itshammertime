@@ -24,8 +24,6 @@ export default class GamepadManager implements Input {
 		this.handleGamepadDisconnected = this.handleGamepadDisconnected.bind(
 			this
 		);
-
-		this.start();
 	}
 
 	public start(): void {

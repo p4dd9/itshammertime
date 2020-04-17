@@ -11,6 +11,10 @@ $standardFont: 'ComicNeue', sans-serif;
 	font-family: $standardFont;
 }
 
+body {
+	margin: 0;
+}
+
 canvas {
 	cursor: none;
 }

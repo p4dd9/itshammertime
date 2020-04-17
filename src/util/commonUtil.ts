@@ -35,7 +35,7 @@ export function supportsGamepads(): boolean {
 }
 
 export function isScreenSizeSupported(width: number, height: number): boolean {
-	if (width < 500 || height < 500) {
+	if (width < 400 || height < 300) {
 		return false;
 	}
 	return true;
@@ -55,9 +55,8 @@ export function injectCanvas(): CanvasRenderingContext2D[] {
 	const root: HTMLElement = document.getElementById(
 		'game-layer'
 	) as HTMLElement;
-	const bodyMarginVerticalHorizontal = 16;
-	const height = window.innerHeight - bodyMarginVerticalHorizontal;
-	const width = window.innerWidth - bodyMarginVerticalHorizontal;
+	const height = window.innerHeight;
+	const width = window.innerWidth;
 
 	const contexts = [];
 

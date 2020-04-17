@@ -31,6 +31,10 @@ body {
 }
 
 // USER INTERFACE //
+#ui-layer {
+	visibility: 'hidden';
+}
+
 #ui-options {
 	position: absolute;
 	top: 0;

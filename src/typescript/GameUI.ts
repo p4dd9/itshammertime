@@ -34,6 +34,15 @@ export default class UI {
 		this.initCanvasEvents();
 		this.initHintPageEvents();
 		this.initEnchantmentsButton();
+
+		this.showUI();
+	}
+
+	private showUI(): void {
+		const ui = document.getElementById('ui-layer');
+		if (ui instanceof HTMLDivElement) {
+			ui.style.visibility = 'visible';
+		}
 	}
 
 	private initEnchantmentsButton(): void {

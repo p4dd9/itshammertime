@@ -48,9 +48,30 @@ export default class UI {
 			'ui-hintpage-enchantment-button'
 		);
 
+		const enchantmentColorPicker = document.getElementById(
+			'ui-enchantments-color-picker'
+		);
+
 		if (enchantmentsButton instanceof HTMLButtonElement) {
 			const enchantmentsButtonImage = enchantmentsButton.firstElementChild as HTMLImageElement;
 			enchantmentsButtonImage.src = BookImage;
+		}
+
+		if (enchantmentColorPicker instanceof HTMLInputElement) {
+			enchantmentColorPicker.addEventListener(
+				'change',
+				(event: Event) => {
+					const target = event.target as HTMLInputElement;
+					this.effectSettings.particleTheme = target.value;
+
+					const resizeWidth =
+						window.innerWidth - bodyMarginVerticalHorizontal;
+					const resizeHeight =
+						window.innerHeight - bodyMarginVerticalHorizontal;
+					this.game.weapon.moveTo(resizeWidth / 2, resizeHeight / 2);
+					this.game.weapon.use();
+				}
+			);
 		}
 
 		for (const enchantmentColorButton of Array.from(
@@ -60,8 +81,7 @@ export default class UI {
 				enchantmentColorButton.addEventListener(
 					'click',
 					(event: MouseEvent) => {
-						this.effectSettings.particleTheme = (event.target as HTMLButtonElement)
-							.value as 'white' | 'party' | 'glass';
+						this.effectSettings.particleTheme = (event.target as HTMLButtonElement).value;
 
 						const resizeWidth =
 							window.innerWidth - bodyMarginVerticalHorizontal;

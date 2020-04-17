@@ -12,7 +12,7 @@ I used and/or adapted some codesnippets from these resources.
 
 [Star Shape](https://stackoverflow.com/questions/25837158/how-to-draw-a-star-by-using-canvas-html5) draws a star shaped particle on canvas  
 [FPS count](https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html) used to display current FPS in debugmode  
-[Random Color Generator](https://stackoverflow.com/a/7419630) created a wonderful rainbow palette of colors  
+[Random Color Generator](https://stackoverflow.com/a/7419630) created a wonderful rainbow palette of colors [also check out this crazy discussion](https://gist.github.com/mjackson/5311256)
 [CopyToClipboard](https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript) stackoverflow discussion how to implement copy-top-clipboard functionality in js
 
 ## Gamepad API

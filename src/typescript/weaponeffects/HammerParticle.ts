@@ -76,29 +76,6 @@ export default class HammerParticle {
 		}
 	}
 
-	//private drawcircle(): void {
-	//	this.context.beginPath();
-	//
-	//	const grd = this.context.createLinearGradient(
-	//		this.position.x,
-	//		this.position.y,
-	//		this.position.x + this.size,
-	//		this.position.y
-	//	);
-	//	grd.addColorStop(0.1, 'white');
-	//	grd.addColorStop(1, '#66A0D0');
-	//
-	//	this.context.fillStyle = grd;
-	//	this.context.fillRect(
-	//		this.position.x,
-	//		this.position.y,
-	//		this.size,
-	//		this.size
-	//	);
-	//	this.context.closePath();
-	//	this.context.fill();
-	//}
-
 	private drawCircle(): void {
 		this.context.beginPath();
 		this.context.fillStyle = this.color;

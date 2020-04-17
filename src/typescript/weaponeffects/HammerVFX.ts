@@ -83,9 +83,6 @@ export default class HammerVFX extends WeaponEffect {
 
 	private getColorFromTheme(index: number): string | string[] {
 		switch (this.effectSettings.particleTheme) {
-			case 'white': {
-				return '#FFFFFF';
-			}
 			case 'party': {
 				return this.getRandomDistinctColorCode(
 					this.particleSettings.density,
@@ -96,7 +93,7 @@ export default class HammerVFX extends WeaponEffect {
 				return ['white', '#66A0D0'];
 			}
 			default: {
-				return '#FFFFFF';
+				return this.effectSettings.particleTheme;
 			}
 		}
 	}

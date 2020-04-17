@@ -1,4 +1,4 @@
 export default interface IParticleEnchantment {
-	color: 'white' | 'colorful';
+	color: string | 'party' | 'glass';
 	shape: 'round' | 'square' | 'triangle';
 }

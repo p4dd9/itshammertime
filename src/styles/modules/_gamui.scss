@@ -33,9 +33,15 @@ body {
 // USER INTERFACE //
 #ui-options {
 	position: absolute;
-	top: 110px;
+	top: 0;
+	padding-top: 110px;
+	height: 100%;
 	opacity: 0;
 	transition: all 0.25s;
+}
+
+#ui-menu-button-cursor-wrapper {
+	cursor: default;
 }
 
 #ui-menu-button-image {
@@ -61,6 +67,10 @@ body {
 	background-repeat: no-repeat;
 	justify-content: space-between;
 
+	&:hover {
+		cursor: pointer !important;
+	}
+
 	& li button {
 		background-repeat: no-repeat;
 		background-size: contain;
@@ -82,10 +92,6 @@ body {
 		width: 40px;
 		height: 40px;
 		object-fit: contain;
-	}
-
-	&:hover {
-		cursor: pointer !important;
 	}
 }
 

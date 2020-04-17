@@ -1,3 +1,5 @@
+import IDisplayResolution from '../interfaces/IDisplayResolution';
+
 export function degToRad(degree: number): number {
 	return degree * 0.01745;
 }
@@ -24,15 +26,36 @@ export function isScreenSizeSupported(width: number, height: number): boolean {
 	return true;
 }
 
-export function getRenderingContextsFromDOM(): CanvasRenderingContext2D[] {
-	const root: HTMLElement | null = document.getElementById('game-layer');
-	const contexts = [];
-	const canvases: HTMLCollectionOf<HTMLCanvasElement> = root!.getElementsByTagName(
-		'canvas'
-	);
+export function getDisplayResolution(
+	displayResolution: string
+): IDisplayResolution {
+	const split = displayResolution.split('x');
+	return {
+		width: Number(split[0]),
+		height: Number(split[1]),
+	};
+}
 
-	for (let i = 0; i < canvases.length; i++) {
-		contexts.push(canvases[i].getContext('2d') as CanvasRenderingContext2D);
+export function injectCanvas(): CanvasRenderingContext2D[] {
+	const root: HTMLElement = document.getElementById(
+		'game-layer'
+	) as HTMLElement;
+	const bodyMarginVerticalHorizontal = 16;
+	const height = window.innerHeight - bodyMarginVerticalHorizontal;
+	const width = window.innerWidth - bodyMarginVerticalHorizontal;
+
+	const contexts = [];
+
+	for (let i = 0; i < 3; i++) {
+		const canvas = document.createElement('canvas');
+		canvas.width = width;
+		canvas.height = height;
+		canvas.id = `layer-${i}`;
+		canvas.style.position = 'absolute';
+		const domElementAppened = root.appendChild(canvas);
+		contexts.push(
+			domElementAppened.getContext('2d') as CanvasRenderingContext2D
+		);
 	}
 
 	return contexts;

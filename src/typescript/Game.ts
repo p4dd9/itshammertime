@@ -7,6 +7,8 @@ import Weapon from './Weapon';
 import HammerWeapon from './weapons/HammerWeapon';
 import effectSettings from '../config/effectSettings';
 import LAYERS from '../config/layers';
+import { isScreenSizeSupported } from '../util/commonUtil';
+import { Extension, ExtensionContext } from '../types/twitch';
 
 export default class Game {
 	public ui: UI;
@@ -21,6 +23,7 @@ export default class Game {
 	private debug = false;
 	private debugger: Debugger;
 
+	private twitch: Extension | null;
 	private frameId: number | undefined = undefined;
 
 	constructor(contexts: CanvasRenderingContext2D[]) {
@@ -29,6 +32,7 @@ export default class Game {
 		this.debugger = new Debugger(contexts[LAYERS.BACK]);
 		this.ui = new UI(this, this.effectSettings);
 		this.audio = new GameAudio(this);
+		this.twitch = window.Twitch ? window.Twitch.ext : null;
 
 		const weapon = new HammerWeapon(
 			contexts,
@@ -38,6 +42,11 @@ export default class Game {
 		this._weapon = weapon;
 		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);
 
+		this.addOnResizeListener();
+
+		this.twitch?.onContext((context, delta) => {
+			this.contextUpdate(context, delta);
+		});
 		this.step = this.step.bind(this);
 	}
 
@@ -50,17 +59,31 @@ export default class Game {
 		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	private contextUpdate(context: ExtensionContext, delta: [string]): void {
+		// It must be doing something ...
+	}
+
 	public resize(): void {
 		const bodyMarginVerticalHorizontal = 16;
 		const resizeWidth = window.innerWidth - bodyMarginVerticalHorizontal;
 		const resizeHeight = window.innerHeight - bodyMarginVerticalHorizontal;
 
-		for (const layer of this.contexts) {
-			layer.canvas.width = resizeWidth;
-			layer.canvas.height = resizeHeight;
-		}
+		if (isScreenSizeSupported(resizeWidth, resizeHeight)) {
+			if (this.frameId !== undefined) {
+				for (const layer of this.contexts) {
+					layer.canvas.width = resizeWidth;
+					layer.canvas.height = resizeHeight;
+				}
 
-		this.weapon.resizeCanvas(resizeWidth, resizeHeight);
+				this.weapon.resizeCanvas(resizeWidth, resizeHeight);
+			} else {
+				this.start();
+				this.resize();
+			}
+		} else {
+			this.stop();
+		}
 	}
 
 	private clearCanvas(): void {
@@ -75,7 +98,7 @@ export default class Game {
 		this.clearCanvas();
 
 		if (this.debug) {
-			this.debugger.debug();
+			this.debugger?.debug();
 		}
 
 		this.weapon.draw();
@@ -84,7 +107,6 @@ export default class Game {
 	}
 
 	public start(): void {
-		this.addOnResizeListener();
 		this.frameId = window.requestAnimationFrame(this.step);
 	}
 

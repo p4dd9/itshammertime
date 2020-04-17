@@ -40,6 +40,7 @@ export default class GamepadManager implements Input {
 			this.removeGamepadConnectListener();
 			this.removeGamepadDisconnectListener();
 		}
+		clearTimeout(this.throttleId);
 	}
 
 	public handleInput(): void {

@@ -9,6 +9,8 @@ export default class CursorManager implements Input {
 	private context: CanvasRenderingContext2D;
 	private gameInput: Controller;
 	private weapon: Weapon;
+	private mouseDownID: number | undefined;
+	private delay = 55;
 
 	constructor(
 		gameInput: Controller,
@@ -24,16 +26,19 @@ export default class CursorManager implements Input {
 
 		this.weapon = weapon;
 		this.gameInput = gameInput;
+		this.mouseDownID = undefined;
 
 		this.handleMouseMove = this.handleMouseMove.bind(this);
-		this.handleClick = this.handleClick.bind(this);
+		this.handleMouseDown = this.handleMouseDown.bind(this);
+		this.handleMouseUp = this.handleMouseUp.bind(this);
 		this.start();
 	}
 
 	public start(): void {
 		this.gameInput.controls = CONTROLS.MOUSE;
 		this.context.canvas.addEventListener('mousemove', this.handleMouseMove);
-		this.context.canvas.addEventListener('click', this.handleClick);
+		this.context.canvas.addEventListener('mousedown', this.handleMouseDown);
+		this.context.canvas.addEventListener('mouseup', this.handleMouseUp);
 	}
 
 	public stop(): void {
@@ -42,11 +47,27 @@ export default class CursorManager implements Input {
 			this.handleMouseMove
 		);
 
-		this.context.canvas.removeEventListener('click', this.handleClick);
+		this.context.canvas.removeEventListener(
+			'mousedown',
+			this.handleMouseDown
+		);
+
+		this.context.canvas.removeEventListener('mouseup', this.handleMouseUp);
+		clearInterval(this.mouseDownID);
 	}
 
-	private handleClick(): void {
-		this.weapon.use();
+	private handleMouseDown(): void {
+		if (this.mouseDownID === undefined) {
+			this.mouseDownID = window.setInterval(
+				() => this.weapon.use(),
+				this.delay
+			);
+		}
+	}
+
+	private handleMouseUp(): void {
+		clearInterval(this.mouseDownID);
+		this.mouseDownID = undefined;
 	}
 
 	public handleMouseMove(): void {

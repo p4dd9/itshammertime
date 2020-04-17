@@ -4,6 +4,10 @@ export function degToRad(degree: number): number {
 	return degree * 0.01745;
 }
 
+export function getRandomInt(max = 1): number {
+	return Math.floor(Math.random() * max);
+}
+
 export function copyTextToClipboard(text: string): void {
 	const input = document.createElement('input');
 	input.style.position = 'fixed';

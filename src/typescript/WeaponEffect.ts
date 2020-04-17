@@ -7,6 +7,8 @@ import IAudio from '../interfaces/IAudio';
 import GameAudio from './GameAudio';
 import { hammerImageAlias } from '../assets/imageAssets';
 import IEffectSettings from '../interfaces/IEffectSettings';
+import { getRandomInt } from '../util/commonUtil';
+import { hammerAudioAlias } from '../assets/audioAssets';
 
 export default abstract class WeaponEffect {
 	public currentImage: IGameImage | undefined = undefined;
@@ -27,7 +29,7 @@ export default abstract class WeaponEffect {
 		effectSettings: IEffectSettings,
 		imageAssets: Map<string, IGameImageAsset>,
 		audioAssets: Map<string, IAudioAsset>,
-		audioAlias: string,
+		audioAlias?: string,
 		imageAlias?: string
 	) {
 		this.contexts = contexts;
@@ -44,7 +46,7 @@ export default abstract class WeaponEffect {
 	protected async loadAssets(
 		imageAssets: Map<string, IGameImageAsset>,
 		audioAssets: Map<string, IAudioAsset>,
-		audioAlias: string,
+		audioAlias?: string,
 		imageAlias?: string
 	): Promise<void> {
 		const images = await AssetLoader.loadImages(imageAssets);
@@ -53,13 +55,35 @@ export default abstract class WeaponEffect {
 		this.images = images;
 		this.audio = audio;
 
-		this.currentAudio = audio.get(audioAlias);
+		this.currentAudio =
+			typeof audioAlias === 'string'
+				? audio.get(audioAlias)
+				: this.setRandomAudioEffect();
 		this.currentImage =
 			typeof imageAlias === 'string'
 				? images.get(imageAlias)
 				: this.setWeaponEffectImage();
 
 		GameAudio.playSoundOverlap(this.currentAudio!.audio);
+	}
+
+	private setRandomAudioEffect(): IAudio | undefined {
+		const randomNumber = getRandomInt(3);
+
+		switch (randomNumber) {
+			case 0: {
+				return this.audio!.get(hammerAudioAlias.HAMMER_SHATTER_01);
+			}
+			case 1: {
+				return this.audio!.get(hammerAudioAlias.HAMMER_SHATTER_02);
+			}
+			case 2: {
+				return this.audio!.get(hammerAudioAlias.HAMMER_SHATTER_03);
+			}
+			default: {
+				return undefined;
+			}
+		}
 	}
 
 	private setWeaponEffectImage(): IGameImage | undefined {

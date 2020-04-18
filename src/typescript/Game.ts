@@ -9,6 +9,7 @@ import effectSettings from '../config/effectSettings';
 import LAYERS from '../config/layers';
 import { isScreenSizeSupported } from '../util/commonUtil';
 import { Extension, ExtensionContext } from '../types/twitch';
+import IPosition from '../interfaces/IPosition';
 
 export default class Game {
 	public ui: UI;
@@ -62,6 +63,13 @@ export default class Game {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	private contextUpdate(context: ExtensionContext, delta: [string]): void {
 		// It must be doing something ...
+	}
+
+	public center(): IPosition {
+		return {
+			x: window.innerWidth * 0.5,
+			y: window.innerHeight * 0.5,
+		};
 	}
 
 	public resize(): void {

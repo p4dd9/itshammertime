@@ -71,11 +71,7 @@ export default class UI {
 				(event: Event) => {
 					const target = event.target as HTMLInputElement;
 					this.effectSettings.particleTheme = target.value;
-
-					this.game.weapon.moveTo(
-						window.innerWidth / 2,
-						window.innerHeight / 2
-					);
+					this.game.weapon.moveTo(this.game.center());
 					this.game.weapon.use();
 				}
 			);
@@ -89,11 +85,7 @@ export default class UI {
 					'click',
 					(event: MouseEvent) => {
 						this.effectSettings.particleTheme = (event.target as HTMLButtonElement).value;
-
-						this.game.weapon.moveTo(
-							window.innerWidth / 2,
-							window.innerHeight / 2
-						);
+						this.game.weapon.moveTo(this.game.center());
 						this.game.weapon.use();
 					}
 				);
@@ -109,10 +101,7 @@ export default class UI {
 					(event: MouseEvent) => {
 						this.effectSettings.shape = (event.target as HTMLButtonElement)
 							.value as 'circle' | 'star' | 'square';
-						this.game.weapon.moveTo(
-							window.innerWidth / 2,
-							window.innerHeight / 2
-						);
+						this.game.weapon.moveTo(this.game.center());
 						this.game.weapon.use();
 					}
 				);

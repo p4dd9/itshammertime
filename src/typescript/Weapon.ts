@@ -64,9 +64,9 @@ export default abstract class Weapon {
 		this.currentImage = images.get(imageAlias);
 	}
 
-	public moveTo(x: number, y: number): void {
-		this.position.x = x;
-		this.position.y = y;
+	public moveTo(position: IPosition): void {
+		this.position.x = position.x;
+		this.position.y = position.y;
 	}
 
 	public moveRight(): void {

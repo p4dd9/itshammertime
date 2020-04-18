@@ -80,9 +80,6 @@ export default abstract class WeaponEffect {
 			case 2: {
 				return this.audio?.get(hammerAudioAlias.HAMMER_SHATTER_03);
 			}
-			default: {
-				return undefined;
-			}
 		}
 	}
 
@@ -102,9 +99,6 @@ export default abstract class WeaponEffect {
 			case 2: {
 				WeaponEffect.effectCount++;
 				return this.images?.get(hammerImageAlias.HAMMER_EFFECT_03);
-			}
-			default: {
-				return undefined;
 			}
 		}
 	}

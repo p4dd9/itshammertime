@@ -88,11 +88,9 @@ export default class CursorManager implements Input {
 	}
 
 	private getMousePos(event: MouseEvent): IPosition {
-		const rect = this.context.canvas.getBoundingClientRect();
-
 		return {
-			x: event.clientX - rect.left,
-			y: event.clientY - rect.top,
+			x: event.clientX - this.context.canvas.getBoundingClientRect().left,
+			y: event.clientY - this.context.canvas.getBoundingClientRect().top,
 		};
 	}
 

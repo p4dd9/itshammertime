@@ -37,18 +37,18 @@ export default class Game {
 
 		const weapon = new HammerWeapon(
 			contexts,
-			{ x: 200, y: 200 },
+			this.center(),
 			this.effectSettings
 		);
 		this._weapon = weapon;
 		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);
+		this.step = this.step.bind(this);
 
+		// TODO: refactor this
 		this.addOnResizeListener();
-
 		this.twitch?.onContext((context, delta) => {
 			this.contextUpdate(context, delta);
 		});
-		this.step = this.step.bind(this);
 	}
 
 	public get weapon(): Weapon {
@@ -105,7 +105,7 @@ export default class Game {
 		this.clearCanvas();
 
 		if (this.debug) {
-			this.debugger?.debug();
+			this.debugger.debug();
 		}
 
 		this.weapon.draw();

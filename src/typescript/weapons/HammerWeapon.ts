@@ -2,7 +2,7 @@ import Weapon from '../Weapon';
 import { hammerImageAssets } from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
 import { hammerImageAlias } from '../../assets/imageAssets';
-import HammerVFX from '../weaponeffects/HammerVFX';
+import HammerEffect from '../weaponeffects/HammerEffect';
 import { degToRad } from '../../util/commonUtil';
 import IPosition from '../../interfaces/IPosition';
 import IEffectSettings from '../../interfaces/IEffectSettings';
@@ -53,21 +53,21 @@ export default class HammerWeapon extends Weapon {
 		}
 
 		this.contexts[LAYERS.FRONT].save();
-		this.translateRotationPivotToMouse('set');
+		this.setRotPivotToMouse();
 		this.contexts[LAYERS.FRONT].rotate(degToRad(-this.angle));
 		this.drawWeaponImage();
-		this.translateRotationPivotToMouse('reset');
+		this.resetRotPivotToMouse();
 		this.contexts[LAYERS.FRONT].restore();
 
 		this.updateHammerAnimation();
 	}
 
+	// TODO: Optimize
 	private drawWeaponImage(): void {
 		if (this.currentImage === undefined) {
 			return;
 		}
 
-		const sourceImage = this.currentImage.image;
 		const sourceImageWidth = this.currentImage.image.width;
 		const sourceImageHeight = this.currentImage.image.height;
 
@@ -77,7 +77,7 @@ export default class HammerWeapon extends Weapon {
 			this.currentImage.image.height / this.currentImage.scaleOnCanvas;
 
 		this.contexts[LAYERS.FRONT].drawImage(
-			sourceImage,
+			this.currentImage.image,
 			0,
 			0,
 			sourceImageWidth,
@@ -89,14 +89,17 @@ export default class HammerWeapon extends Weapon {
 		);
 	}
 
-	private translateRotationPivotToMouse(
-		rotationDirection: 'set' | 'reset'
-	): void {
-		const directionNumber = rotationDirection === 'set' ? 1 : -1;
-
+	private setRotPivotToMouse(): void {
 		this.contexts[LAYERS.FRONT].translate(
-			directionNumber * this.position.x,
-			directionNumber * this.position.y
+			1 * this.position.x,
+			1 * this.position.y
+		);
+	}
+
+	private resetRotPivotToMouse(): void {
+		this.contexts[LAYERS.FRONT].translate(
+			-1 * this.position.x,
+			-1 * this.position.y
 		);
 	}
 
@@ -115,15 +118,19 @@ export default class HammerWeapon extends Weapon {
 		}
 	}
 
+	// Optimize
 	public use(): void {
-		const image = this.currentImage!;
-
+		if (this.currentImage === undefined) {
+			return;
+		}
 		this.animateHammer = true;
 
-		const scaledWidth = image.image.width / image.scaleOnCanvas;
-		const scaledHeight = image.image.height / image.scaleOnCanvas;
+		const scaledWidth =
+			this.currentImage.image.width / this.currentImage.scaleOnCanvas;
+		const scaledHeight =
+			this.currentImage.image.height / this.currentImage.scaleOnCanvas;
 
-		const newGameWeaponEffect = new HammerVFX(
+		const newGameWeaponEffect = new HammerEffect(
 			this.contexts,
 			{
 				x: this.position.x - scaledWidth / 2 - 80, // -80 hammer effect related
@@ -132,7 +139,6 @@ export default class HammerWeapon extends Weapon {
 			this.effectSettings
 		);
 		newGameWeaponEffect.selfDestruct = this.removeActiveEffect;
-
 		this.effects.push(newGameWeaponEffect);
 	}
 }

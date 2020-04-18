@@ -12,13 +12,15 @@ export default class GamepadManager implements Input {
 	private throttleId: undefined | number = undefined;
 	private delay = 95;
 
-	private axeStatusThreshold = 0.3;
-	private gameInput: Controller;
+	private axesThreshold = 0.3;
+	private input: Controller;
 	private weapon: Weapon;
+	private compatible: boolean;
 
 	constructor(gameInput: Controller, weapon: Weapon) {
 		this.weapon = weapon;
-		this.gameInput = gameInput;
+		this.input = gameInput;
+		this.compatible = supportsGamepads();
 
 		this.handleGamepadConnected = this.handleGamepadConnected.bind(this);
 		this.handleGamepadDisconnected = this.handleGamepadDisconnected.bind(
@@ -27,14 +29,14 @@ export default class GamepadManager implements Input {
 	}
 
 	public start(): void {
-		if (supportsGamepads()) {
+		if (this.compatible) {
 			this.addGamepadConnectListener();
 			this.addGamepadDisconnectListener();
 		}
 	}
 
 	public stop(): void {
-		if (supportsGamepads()) {
+		if (this.compatible) {
 			this.removeGamepadConnectListener();
 			this.removeGamepadDisconnectListener();
 		}
@@ -49,16 +51,16 @@ export default class GamepadManager implements Input {
 
 	public handleAxesInput(): void {
 		const axes = this.mapGamepadAxes();
-		if (axes[XBOX360_AXIS.LS_X] > this.axeStatusThreshold) {
+		if (axes[XBOX360_AXIS.LS_X] > this.axesThreshold) {
 			this.weapon.moveRight();
 		}
-		if (axes[XBOX360_AXIS.LS_X] < -this.axeStatusThreshold) {
+		if (axes[XBOX360_AXIS.LS_X] < -this.axesThreshold) {
 			this.weapon.moveLeft();
 		}
-		if (axes[XBOX360_AXIS.LS_Y] < -this.axeStatusThreshold) {
+		if (axes[XBOX360_AXIS.LS_Y] < -this.axesThreshold) {
 			this.weapon.moveUp();
 		}
-		if (axes[XBOX360_AXIS.LS_Y] > this.axeStatusThreshold) {
+		if (axes[XBOX360_AXIS.LS_Y] > this.axesThreshold) {
 			this.weapon.moveDown();
 		}
 	}
@@ -91,12 +93,12 @@ export default class GamepadManager implements Input {
 	};
 
 	private handleGamepadConnected(event: Event): void {
-		this.gameInput.controls = CONTROLS.GAMEPAD;
+		this.input.controls = CONTROLS.GAMEPAD;
 		this.gamepad = (event as IGamepadEvent).gamepad;
 	}
 
 	private handleGamepadDisconnected(): void {
-		this.gameInput.controls = CONTROLS.MOUSE;
+		this.input.controls = CONTROLS.MOUSE;
 		delete this.gamepad;
 	}
 

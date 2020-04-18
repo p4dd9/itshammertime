@@ -6,7 +6,7 @@ import HammerParticle from './HammerParticle';
 import IEffectSettings from '../../interfaces/IEffectSettings';
 import LAYERS from '../../config/layers';
 
-export default class HammerVFX extends WeaponEffect {
+export default class HammerEffect extends WeaponEffect {
 	public static lifeTime = 2000; // ms
 
 	public imageAssets = hammerImageAssets;
@@ -46,10 +46,9 @@ export default class HammerVFX extends WeaponEffect {
 		return Number((min + Math.random() * (max - min)).toFixed(2));
 	}
 
+	// TODO: Optimize
 	public draw(): void {
-		const { currentImage, effectPosition } = this;
-
-		if (currentImage === undefined || currentImage === null) {
+		if (this.currentImage === undefined) {
 			return;
 		}
 
@@ -58,19 +57,19 @@ export default class HammerVFX extends WeaponEffect {
 		}
 
 		const scaledWidth =
-			currentImage.image.width / currentImage.scaleOnCanvas;
+			this.currentImage.image.width / this.currentImage.scaleOnCanvas;
 		const scaledHeight =
-			currentImage.image.height / currentImage.scaleOnCanvas;
+			this.currentImage.image.height / this.currentImage.scaleOnCanvas;
 
-		const canvasX = effectPosition.x - scaledWidth / 2;
-		const canvasY = effectPosition.y - scaledHeight / 2;
+		const canvasX = this.effectPosition.x - scaledWidth / 2;
+		const canvasY = this.effectPosition.y - scaledHeight / 2;
 
 		this.contexts[LAYERS.BACK].drawImage(
-			currentImage.image,
+			this.currentImage.image,
 			0,
 			0,
-			currentImage.image.width,
-			currentImage.image.height,
+			this.currentImage.image.width,
+			this.currentImage.image.height,
 			canvasX,
 			canvasY,
 			scaledWidth,
@@ -97,39 +96,37 @@ export default class HammerVFX extends WeaponEffect {
 		}
 	}
 
+	// TODO: Optimize
 	private generateParticles(): void {
-		const { currentImage, effectPosition, particleSettings } = this;
-		let particlesIndex = 0;
-
-		if (currentImage === undefined || currentImage === null) {
+		if (this.currentImage === undefined) {
 			return;
 		}
+		let particlesIndex = 0;
 
 		const scaledWidth =
-			currentImage.image.width / currentImage.scaleOnCanvas;
+			this.currentImage.image.width / this.currentImage.scaleOnCanvas;
 		const scaledHeight =
-			currentImage.image.height / currentImage.scaleOnCanvas;
+			this.currentImage.image.height / this.currentImage.scaleOnCanvas;
 
-		const canvasX = effectPosition.x - scaledWidth / 2;
-		const canvasY = effectPosition.y - scaledHeight / 2;
+		const canvasX = this.effectPosition.x - scaledWidth / 2;
+		const canvasY = this.effectPosition.y - scaledHeight / 2;
 
-		for (let i = 0; i < particleSettings.density; i++) {
-			const particle = new HammerParticle(
+		for (let i = 0; i < this.particleSettings.density; i++) {
+			this.particles[particlesIndex.toString()] = new HammerParticle(
 				this.contexts[LAYERS.FRONT],
 				{
 					x: canvasX + scaledWidth / 2,
 					y: canvasY + scaledHeight / 2,
 				},
 				particlesIndex,
-				particleSettings.particleSize,
-				particleSettings.gravity,
+				this.particleSettings.particleSize,
+				this.particleSettings.gravity,
 				this.getColorFromTheme(i),
 				this.effectSettings.shape,
 				this.particleSettings.velocityMultiplier.x,
 				this.particleSettings.velocityMultiplier.y
 			);
 			particlesIndex++;
-			this.particles[particlesIndex.toString()] = particle;
 		}
 		this.particlesLoaded = true;
 	}
@@ -187,10 +184,11 @@ export default class HammerVFX extends WeaponEffect {
 	}
 
 	private drawParticles(): void {
-		const frontContext = this.contexts[LAYERS.FRONT];
 		if (this.effectSettings.particleTheme === 'glass') {
-			frontContext.save();
-			frontContext.globalAlpha = this.getRandomAlphaValue();
+			this.contexts[LAYERS.FRONT].save();
+			this.contexts[
+				LAYERS.FRONT
+			].globalAlpha = this.getRandomAlphaValue();
 		}
 
 		for (const particleKey in this.particles) {
@@ -202,7 +200,7 @@ export default class HammerVFX extends WeaponEffect {
 		}
 
 		if (this.effectSettings.particleTheme === 'glass') {
-			frontContext.restore();
+			this.contexts[LAYERS.FRONT].restore();
 		}
 	}
 
@@ -212,7 +210,7 @@ export default class HammerVFX extends WeaponEffect {
 		}
 		window.setTimeout(() => {
 			removeItSelf();
-		}, HammerVFX.lifeTime);
+		}, HammerEffect.lifeTime);
 	}
 
 	public get selfDestruct(): (() => void) | null {

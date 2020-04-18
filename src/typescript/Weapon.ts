@@ -69,6 +69,7 @@ export default abstract class Weapon {
 		this.position.y = position.y;
 	}
 
+	// Refactor+Optimize
 	public moveRight(): void {
 		if (this.currentImage === undefined) {
 			return;
@@ -84,6 +85,7 @@ export default abstract class Weapon {
 		}
 	}
 
+	// Refactor+Optimize
 	public moveLeft(): void {
 		if (this.currentImage === undefined) {
 			return;
@@ -100,6 +102,7 @@ export default abstract class Weapon {
 		}
 	}
 
+	// Refactor+Optimize
 	public moveUp(): void {
 		if (this.currentImage === undefined) {
 			return;
@@ -115,6 +118,7 @@ export default abstract class Weapon {
 		}
 	}
 
+	// Refactor+Optimize
 	public moveDown(): void {
 		const canvasHeight = this.contexts[LAYERS.FRONT].canvas.height;
 		const destinationY = this.position.y + this.moveDistance;

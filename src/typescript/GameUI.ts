@@ -13,12 +13,16 @@ import PlankBackgroundImage from '../assets/images/plank.png';
 import LetterImage from '../assets/images/letter.png';
 import FaqImage from '../assets/images/faq_questionmark.png';
 import BookImage from '../assets/images/book.png';
+import Picker from 'vanilla-picker';
 
 import { copyTextToClipboard } from '../util/commonUtil';
+import { IVanillaColor } from '../interfaces/IVanillaPickerColor';
 export default class UI {
 	private game: Game;
 	private static timeOutId: undefined | number = undefined;
 	private effectSettings: IEffectSettings;
+	private throttleId: undefined | number = undefined;
+	private delay = 55;
 
 	constructor(game: Game, effectSettings: IEffectSettings) {
 		this.game = game;
@@ -45,6 +49,17 @@ export default class UI {
 		}
 	}
 
+	private throttle = (callback: () => void, delay: number): void => {
+		if (this.throttleId) {
+			return;
+		}
+
+		this.throttleId = window.setTimeout(() => {
+			callback();
+			this.throttleId = undefined;
+		}, delay);
+	};
+
 	private initEnchantmentsButton(): void {
 		const enchantmentsButton = document.getElementById(
 			'ui-enchantments-button'
@@ -65,16 +80,21 @@ export default class UI {
 			enchantmentsButtonImage.src = BookImage;
 		}
 
-		if (enchantmentColorPicker instanceof HTMLInputElement) {
-			enchantmentColorPicker.addEventListener(
-				'change',
-				(event: Event) => {
-					const target = event.target as HTMLInputElement;
-					this.effectSettings.particleTheme = target.value;
+		if (enchantmentColorPicker instanceof HTMLDivElement) {
+			const picker = new Picker(enchantmentColorPicker);
+			picker.onChange = (color: IVanillaColor): void => {
+				this.throttle(() => {
+					enchantmentColorPicker.style.backgroundColor =
+						color.rgbaString;
+					this.effectSettings.particleTheme = color.rgbaString;
 					this.game.weapon.moveTo(this.game.center());
 					this.game.weapon.use();
-				}
-			);
+				}, this.delay);
+			};
+
+			picker.onClose = (): void => {
+				clearTimeout(this.throttleId);
+			};
 		}
 
 		for (const enchantmentColorButton of Array.from(

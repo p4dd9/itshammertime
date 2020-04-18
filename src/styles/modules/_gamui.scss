@@ -1,4 +1,5 @@
 $openBookImage: url('../assets/images/open_book.png');
+$colorPaletteImage: url('../assets/icons/color-palette-outline.svg');
 $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
 
@@ -33,6 +34,14 @@ body {
 // USER INTERFACE //
 #ui-layer {
 	visibility: 'hidden';
+}
+
+#ui-enchantments-color-picker {
+	background-color: white;
+	background-image: $colorPaletteImage;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 #ui-options {

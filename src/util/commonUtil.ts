@@ -35,7 +35,7 @@ export function supportsGamepads(): boolean {
 }
 
 export function isScreenSizeSupported(width: number, height: number): boolean {
-	if (width < 400 || height < 325) {
+	if (width < 451 || height < 301) {
 		return false;
 	}
 	return true;

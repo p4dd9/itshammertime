@@ -15,6 +15,8 @@ import FaqImage from '../assets/images/faq_questionmark.png';
 import BookImage from '../assets/images/book.png';
 import Picker from 'vanilla-picker';
 
+import VolumeOn from '../assets/audio/volume-on.wav';
+
 import { copyTextToClipboard } from '../util/commonUtil';
 import { IVanillaColor } from '../interfaces/IVanillaPickerColor';
 export default class UI {
@@ -219,6 +221,8 @@ export default class UI {
 
 		const volumeIndex = LocalStorageUtil.initVolumeIndex();
 		this.setAudioButtonImage(volumeIndex);
+		const volumeSound = new Audio();
+		volumeSound.src = VolumeOn;
 
 		if (audioButton instanceof HTMLButtonElement) {
 			audioButton.addEventListener('click', () => {
@@ -227,7 +231,11 @@ export default class UI {
 					GameAudio.volumeRange.length;
 
 				this.game.audio.volumeIndex = newVolumeIndex;
+				volumeSound.volume =
+					GameAudio.volumeRange[newVolumeIndex] +
+					(newVolumeIndex === 0 ? 0 : 0.35);
 				LocalStorageUtil.setVolumeIndex(newVolumeIndex);
+				GameAudio.playSoundOverlap(volumeSound);
 			});
 		}
 	}

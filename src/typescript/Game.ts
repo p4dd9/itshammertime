@@ -119,6 +119,7 @@ export default class Game {
 	}
 
 	public stop(): void {
+		this.clearCanvas();
 		if (this.frameId) {
 			window.cancelAnimationFrame(this.frameId);
 			this.frameId = undefined;

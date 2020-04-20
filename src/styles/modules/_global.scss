@@ -15,6 +15,14 @@ body {
 	margin: 0;
 }
 
+img[src=''] {
+	display: none;
+}
+
+img {
+	pointer-events: none;
+}
+
 canvas {
 	cursor: none;
 }

@@ -1,4 +1,4 @@
-# It's Hammer Time!
+# [It's Hammer Time!](https://dashboard.twitch.tv/extensions/uikhtmhdgzgwoq7e1vnlw7pryqajji-0.0.1)
 
 ## A Client-Side Twitch Extension
 
@@ -6,6 +6,8 @@
 
 Do you feel inner pressure? Have you ever wanted to smash the screen? Do you know what time it is? **IT'S HAMMER TIME!**
 Pick up the hammer and smash the streamer's livestream window.
+
+Available at https://dashboard.twitch.tv/extensions/uikhtmhdgzgwoq7e1vnlw7pryqajji-0.0.1
 
 ## Mentionable Codesnippets
 

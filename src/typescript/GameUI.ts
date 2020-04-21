@@ -8,7 +8,6 @@ import VolumeLowImage from '../assets/icons/volume-low.svg';
 import VolumeMediumImage from '../assets/icons/volume-medium.svg';
 import VolumeHighImage from '../assets/icons/volume-high.svg';
 
-import GearImage from '../assets/images/gear.png';
 import PlankBackgroundImage from '../assets/images/plank.png';
 import LetterImage from '../assets/images/letter.png';
 import FaqImage from '../assets/images/faq_questionmark.png';
@@ -195,12 +194,10 @@ export default class UI {
 				'ui-menu-item-list'
 			) as HTMLUListElement;
 
-			const menuButtonImage = menuButton.firstElementChild as HTMLImageElement;
-			menuButtonImage.src = GearImage;
 			menuList.style.backgroundImage = `url("${PlankBackgroundImage}")`;
 
 			menuButton.addEventListener('click', () => {
-				menuButtonImage.classList.toggle('rotate');
+				menuButton.classList.toggle('rotate');
 				menuList.classList.toggle('open');
 			});
 		}

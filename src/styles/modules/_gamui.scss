@@ -1,5 +1,7 @@
 $openBookImage: url('../assets/images/open_book.png');
 $colorPaletteImage: url('../assets/icons/color-palette-outline.svg');
+$gearImage: url('../assets/images/gear.png');
+
 $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
 
@@ -60,11 +62,13 @@ body {
 	cursor: default;
 }
 
-#ui-menu-button-image {
+#ui-menu-button {
 	width: 50px;
-	height: 50px;
+	height: 52px;
 	transition: transform $menuTranistionTime ease-in-out;
-	object-fit: contain;
+	background: $gearImage;
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 
 #ui-menu-item-list {

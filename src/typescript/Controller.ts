@@ -1,19 +1,16 @@
 import GamepadManager from './input/GamepadManager';
 import CONTROL_TYPE from '../enums/controls';
-import KeyboardManager from './input/KeyboardManager';
 import Weapon from './Weapon';
 import CursorManager from './input/CursorManager';
 
 export default class Controller {
-	private controllerType: CONTROL_TYPE = CONTROL_TYPE.KEYBOARD;
+	private controllerType: CONTROL_TYPE = CONTROL_TYPE.MOUSE;
 
 	private gamepadManager: GamepadManager;
-	private keyboardManager: KeyboardManager;
 	private cursorManager: CursorManager;
 
 	constructor(weapon: Weapon, context: CanvasRenderingContext2D) {
 		this.gamepadManager = new GamepadManager(this, weapon);
-		this.keyboardManager = new KeyboardManager(this, weapon);
 		this.cursorManager = new CursorManager(this, weapon, context);
 	}
 
@@ -28,18 +25,15 @@ export default class Controller {
 	public stop(): void {
 		this.gamepadManager.stop();
 		this.cursorManager.stop();
-		this.keyboardManager.stop();
 	}
 
 	public start(): void {
 		this.gamepadManager.start();
 		this.cursorManager.start();
-		this.keyboardManager.start();
 	}
 
 	public handleInput(): void {
 		this.gamepadManager.handleInput();
 		this.cursorManager.handleInput();
-		this.keyboardManager.handleInput();
 	}
 }

@@ -1,5 +1,4 @@
 enum CONTROLS {
-	'KEYBOARD',
 	'GAMEPAD',
 	'MOUSE',
 }

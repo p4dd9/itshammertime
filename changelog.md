@@ -9,6 +9,10 @@ How to test:
 -   The Book underneath the audio icon allows users to change the shape and color of the particles.
 -   The letter image opens an option to copy the contact address to the clipboard
 
+#### v.0.1b
+
+-   Remove keyboard controls regarding policy 2.3. of extension guidelines
+
 #### v.0.1a
 
 -   Implement hammer including SFX and VFX

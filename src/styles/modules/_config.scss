@@ -21,6 +21,7 @@ body {
 
 * {
 	line-height: 1.15;
+	user-select: auto;
 }
 
 h3 {
@@ -75,7 +76,7 @@ footer {
 	color: #ffffff4f;
 	font-size: 12px;
 
-	a {
+	* {
 		transition: color 0.2s;
 		margin-left: 3px;
 		color: #ffffff4f;
@@ -86,7 +87,7 @@ footer {
 		}
 	}
 
-	a:nth-child(1) {
+	*:nth-child(1) {
 		margin-right: 3px;
 	}
 }

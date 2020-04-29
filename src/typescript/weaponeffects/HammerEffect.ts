@@ -5,6 +5,7 @@ import { hammerAudioAssets } from '../../assets/audioAssets';
 import HammerParticle from './HammerParticle';
 import IEffectSettings from '../../interfaces/IEffectSettings';
 import LAYERS from '../../config/layers';
+import GameAudio from '../GameAudio';
 
 export default class HammerEffect extends WeaponEffect {
 	public static lifeTime = 2000; // ms
@@ -31,14 +32,16 @@ export default class HammerEffect extends WeaponEffect {
 	constructor(
 		contexts: CanvasRenderingContext2D[],
 		position: IPosition,
-		effectSettings: IEffectSettings
+		effectSettings: IEffectSettings,
+		gameAudio: GameAudio
 	) {
 		super(
 			contexts,
 			position,
 			effectSettings,
+			gameAudio,
 			hammerImageAssets,
-			hammerAudioAssets
+			hammerAudioAssets,
 		);
 	}
 

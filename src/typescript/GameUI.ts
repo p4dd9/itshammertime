@@ -18,6 +18,7 @@ import VolumeOn from '../assets/audio/volume-on.wav';
 
 import { copyTextToClipboard } from '../util/commonUtil';
 import { IVanillaColor } from '../interfaces/IVanillaPickerColor';
+
 export default class UI {
 	private game: Game;
 	private static timeOutId: undefined | number = undefined;
@@ -229,10 +230,10 @@ export default class UI {
 
 				this.game.audio.volumeIndex = newVolumeIndex;
 				volumeSound.volume =
-					GameAudio.volumeRange[newVolumeIndex] +
+				GameAudio.volumeRange[newVolumeIndex] +
 					(newVolumeIndex === 0 ? 0 : 0.35);
 				LocalStorageUtil.setVolumeIndex(newVolumeIndex);
-				GameAudio.playSoundOverlap(volumeSound);
+				this.game.audio.playSoundOverlap(volumeSound);
 			});
 		}
 	}

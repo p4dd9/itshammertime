@@ -18,35 +18,10 @@ export default class GameAudio {
 	set volumeIndex(volumeIndex: number) {
 		this._volumeIndex = volumeIndex;
 		this.game.ui.setAudioButtonImage(volumeIndex);
-
-		if (this.game.weapon === null || this.game.weapon.audio === null)
-			return;
-		for (const audioAsset of this.game.weapon.audio.values()) {
-			audioAsset.audio.volume = GameAudio.volumeRange[this._volumeIndex];
-		}
 	}
 
-	public static playSound(audio: HTMLAudioElement): void {
-		if (!audio.paused) {
-			return;
-		} else {
-			audio.play();
-		}
-	}
-
-	public static playSoundOverlap(audio: HTMLAudioElement): void {
+	public playSoundOverlap(audio: HTMLAudioElement): void {
 		audio.currentTime = 0;
 		audio.play();
-	}
-
-	public static loop(audio: HTMLAudioElement): void {
-		audio.loop = true;
-		audio.play();
-	}
-
-	public static stopLoop(audio: HTMLAudioElement): void {
-		audio.loop = false;
-		audio.currentTime = 0;
-		audio.pause();
 	}
 }

@@ -38,7 +38,8 @@ export default class Game {
 		const weapon = new HammerWeapon(
 			contexts,
 			this.center(),
-			this.effectSettings
+			this.effectSettings,
+			this.audio,
 		);
 		this._weapon = weapon;
 		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);

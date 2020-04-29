@@ -16,14 +16,13 @@
       "value": "wss://localhost:3434"
     }
   ],
-  "extensionViews": [],
   "manifest": {
     "anchor": "video_overlay",
     "assetUrls": [],
     "authorName": "Patrick Obermueller",
     "bitsEnabled": false,
     "canInstall": true,
-    "configUrl": "https://uikhtmhdgzgwoq7e1vnlw7pryqajji.ext-twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/431e84636fc7a0f7bc9dd1aa13b09e21/config.html",
+    "configUrl": "https://localhost:3434/config.html",
     "configurationLocation": "none",
     "description": "Do you feel an inner pressure? Have you ever wanted to smash the screen? Do you know what time it is? IT'S HAMMER TIME!\nPick up the hammer and smash the streamer's livestream window. Relief your inner stress or create fun screenshots with your favourite streamer.",
     "eulaTosUrl": "",
@@ -48,24 +47,24 @@
       "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/screenshot47fa6241-5f80-4d27-a110-d20deb76358c"
     ],
     "sku": "",
-    "state": "Assets Uploaded",
+    "state": "Testing",
     "subscriptionsSupportLevel": "none",
     "summary": "Pick up the hammer and smash the streamer's livestream window",
     "supportEmail": "pat.obermueller@gmail.com",
     "vendorCode": "",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "viewerSummary": "Pick up the hammer and smash the streamer's livestream window",
     "viewerUrl": "",
     "viewerUrls": {
-      "videoOverlay": "https://uikhtmhdgzgwoq7e1vnlw7pryqajji.ext-twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/431e84636fc7a0f7bc9dd1aa13b09e21/video_overlay.html"
+      "videoOverlay": "https://localhost:3434/video_overlay.html"
     },
     "views": {
       "videoOverlay": {
-        "viewerUrl": "https://uikhtmhdgzgwoq7e1vnlw7pryqajji.ext-twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/431e84636fc7a0f7bc9dd1aa13b09e21/video_overlay.html",
+        "viewerUrl": "https://localhost:3434/video_overlay.html",
         "canLinkExternalContent": false
       },
       "config": {
-        "viewerUrl": "https://uikhtmhdgzgwoq7e1vnlw7pryqajji.ext-twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/431e84636fc7a0f7bc9dd1aa13b09e21/config.html",
+        "viewerUrl": "https://localhost:3434/config.html",
         "canLinkExternalContent": false
       }
     },

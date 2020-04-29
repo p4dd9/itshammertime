@@ -17,6 +17,7 @@ export default abstract class WeaponEffect {
 	public images: Map<string, IGameImage> | null = null;
 	public audio: Map<string, IAudio> | null = null;
 
+	private gameAudio: GameAudio;
 	protected contexts: CanvasRenderingContext2D[];
 	protected effectPosition: IPosition;
 	protected effectSettings: IEffectSettings;
@@ -27,6 +28,7 @@ export default abstract class WeaponEffect {
 		contexts: CanvasRenderingContext2D[],
 		position: IPosition,
 		effectSettings: IEffectSettings,
+		gameAudio: GameAudio,
 		imageAssets: Map<string, IGameImageAsset>,
 		audioAssets: Map<string, IAudioAsset>,
 		audioAlias?: string,
@@ -34,6 +36,7 @@ export default abstract class WeaponEffect {
 	) {
 		this.contexts = contexts;
 		this.effectSettings = effectSettings;
+		this.gameAudio = gameAudio;
 
 		this.effectPosition = {
 			x: position.x,
@@ -65,7 +68,8 @@ export default abstract class WeaponEffect {
 				: this.setWeaponEffectImage();
 
 		if (this.currentAudio !== undefined) {
-			GameAudio.playSoundOverlap(this.currentAudio.audio);
+			this.currentAudio.audio.volume = GameAudio.volumeRange[this.gameAudio.volumeIndex];
+			this.gameAudio.playSoundOverlap(this.currentAudio.audio);
 		}
 	}
 

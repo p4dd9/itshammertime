@@ -7,6 +7,7 @@ import { degToRad } from '../../util/commonUtil';
 import IPosition from '../../interfaces/IPosition';
 import IEffectSettings from '../../interfaces/IEffectSettings';
 import LAYERS from '../../config/layers';
+import GameAudio from '../GameAudio';
 
 export default class HammerWeapon extends Weapon {
 	public imageAssets = hammerImageAssets;
@@ -21,7 +22,8 @@ export default class HammerWeapon extends Weapon {
 	constructor(
 		contexts: CanvasRenderingContext2D[],
 		position: IPosition,
-		effectSettings: IEffectSettings
+		effectSettings: IEffectSettings,
+		gameAudio: GameAudio
 	) {
 		super(
 			contexts,
@@ -30,7 +32,8 @@ export default class HammerWeapon extends Weapon {
 			hammerImageAssets,
 			hammerAudioAssets,
 			hammerImageAlias.HAMMER,
-			hammerAudioAlias.HAMMER_SHATTER_01
+			hammerAudioAlias.HAMMER_SHATTER_01,
+			gameAudio,
 		);
 
 		this.removeActiveEffect = this.removeActiveEffect.bind(this);
@@ -136,7 +139,8 @@ export default class HammerWeapon extends Weapon {
 				x: this.position.x - scaledWidth / 2 - 80, // -80 hammer effect related
 				y: this.position.y - scaledHeight / 2,
 			},
-			this.effectSettings
+			this.effectSettings,
+			this.gameAudio
 		);
 		newGameWeaponEffect.selfDestruct = this.removeActiveEffect;
 		this.effects.push(newGameWeaponEffect);

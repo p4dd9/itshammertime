@@ -53,13 +53,14 @@ export default class LocalStorageUtil {
 		return null;
 	}
 
-	public static setVolumeIndex(item: number): void {
+	public static setVolumeIndex(item: number): number  {
 		if (LocalStorageUtil.available()) {
 			window.localStorage.setItem(
 				LOCAL_STORAGE.volumeIndex,
 				String(item)
 			);
-		}
+		} 
+		return item;
 	}
 
 	public static getVolumeIndex(): number | null {

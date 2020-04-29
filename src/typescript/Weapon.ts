@@ -7,6 +7,7 @@ import IAudioAsset from '../interfaces/IAudioAsset';
 import IPosition from '../interfaces/IPosition';
 import IEffectSettings from '../interfaces/IEffectSettings';
 import LAYERS from '../config/layers';
+import GameAudio from './GameAudio';
 
 export default abstract class Weapon {
 	private moveDistance = 9;
@@ -18,6 +19,7 @@ export default abstract class Weapon {
 	public audio: Map<string, IAudio> | null = null;
 
 	public position: IPosition;
+	protected gameAudio: GameAudio;
 	protected contexts: CanvasRenderingContext2D[];
 	protected effects: WeaponEffect[] = [] as WeaponEffect[];
 	protected effectSettings: IEffectSettings;
@@ -32,11 +34,13 @@ export default abstract class Weapon {
 		imageAssets: Map<string, IGameImageAsset>,
 		audioAssets: Map<string, IAudioAsset>,
 		imageAlias: string,
-		audioAlias: string
+		audioAlias: string,
+		gameAudio: GameAudio
 	) {
 		this.position = position;
 		this.contexts = contexts;
 		this.effectSettings = effectSettings;
+		this.gameAudio = gameAudio;
 
 		this.loadAssets(imageAssets, audioAssets, imageAlias, audioAlias);
 	}

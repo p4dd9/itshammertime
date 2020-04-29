@@ -9,6 +9,11 @@ How to test:
 -   The Book underneath the audio icon allows users to change the shape and color of the particles.
 -   The letter image opens an option to copy the contact address to the clipboard
 
+#### v.1.0.0
+
+- Fixed a bug which caused hammer audio playback to be silent for clients who block localstorage access
+- Cleaned up audio handling
+
 #### v.0.2
 
 -   Fix: enable user select on config page and remove mailto: protocol in a tag

@@ -11,8 +11,8 @@ How to test:
 
 #### v.1.0.0
 
-- Fixed a bug which caused hammer audio playback to be silent for clients who block localstorage access
-- Cleaned up audio handling
+-   Fixed a bug which caused hammer audio playback to be silent for clients who block localstorage access
+-   Cleaned up audio handling
 
 #### v.0.2
 

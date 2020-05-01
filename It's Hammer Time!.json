@@ -1,78 +1,79 @@
 {
-  "allowHttpBackend": false,
-  "backendCommand": "",
-  "backendFolderName": "",
-  "certificateExceptions": [
-    {
-      "isAllowed": true,
-      "isEphemeral": false,
-      "isOrigin": true,
-      "value": "https://localhost:3434"
-    },
-    {
-      "isAllowed": true,
-      "isEphemeral": false,
-      "isOrigin": true,
-      "value": "wss://localhost:3434"
-    }
-  ],
-  "manifest": {
-    "anchor": "video_overlay",
-    "assetUrls": [],
-    "authorName": "Patrick Obermueller",
-    "bitsEnabled": false,
-    "canInstall": true,
-    "configUrl": "https://localhost:3434/config.html",
-    "configurationLocation": "none",
-    "description": "Do you feel an inner pressure? Have you ever wanted to smash the screen? Do you know what time it is? IT'S HAMMER TIME!\nPick up the hammer and smash the streamer's livestream window. Relief your inner stress or create fun screenshots with your favourite streamer.",
-    "eulaTosUrl": "",
-    "hasChatSupport": false,
-    "iconUrl": "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/logoc45fc302-28d6-46c3-a15d-9d18d1436883",
-    "iconUrls": {
-      "100x100": "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/logoc45fc302-28d6-46c3-a15d-9d18d1436883",
-      "24x24": "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/taskbar2ecf6e9d-0c77-4073-b6ec-05d11f86de2c",
-      "300x200": "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/discovery12804e1c-3c35-4f1c-9b54-d6765afa2107"
-    },
-    "id": "uikhtmhdgzgwoq7e1vnlw7pryqajji",
-    "installationCount": -42,
-    "liveConfigUrl": "",
-    "name": "It's Hammer Time!",
-    "panelHeight": 0,
-    "privacyPolicyUrl": "",
-    "requestIdentityLink": false,
-    "requiredBroadcasterAbilities": [],
-    "screenshotUrls": [
-      "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/screenshot3b0d0fad-9216-44b3-89c6-cd1461cc8ff9",
-      "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/screenshot2fd27d4d-715a-41c5-8eaa-4dfece4c6f71",
-      "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/screenshot47fa6241-5f80-4d27-a110-d20deb76358c"
-    ],
-    "sku": "",
-    "state": "Testing",
-    "subscriptionsSupportLevel": "none",
-    "summary": "Pick up the hammer and smash the streamer's livestream window",
-    "supportEmail": "pat.obermueller@gmail.com",
-    "vendorCode": "",
-    "version": "1.0.0",
-    "viewerSummary": "Pick up the hammer and smash the streamer's livestream window",
-    "viewerUrl": "",
-    "viewerUrls": {
-      "videoOverlay": "https://localhost:3434/video_overlay.html"
-    },
-    "views": {
-      "videoOverlay": {
-        "viewerUrl": "https://localhost:3434/video_overlay.html",
-        "canLinkExternalContent": false
-      },
-      "config": {
-        "viewerUrl": "https://localhost:3434/config.html",
-        "canLinkExternalContent": false
-      }
-    },
-    "whitelistedConfigUrls": [],
-    "whitelistedPanelUrls": []
-  },
-  "frontendCommand": "",
-  "frontendFolderName": "",
-  "name": "It's Hammer Time!",
-  "version": 1
+	"allowHttpBackend": false,
+	"backendCommand": "",
+	"backendFolderName": "",
+	"certificateExceptions": [
+		{
+			"isAllowed": true,
+			"isEphemeral": false,
+			"isOrigin": true,
+			"value": "https://localhost:3434"
+		},
+		{
+			"isAllowed": true,
+			"isEphemeral": false,
+			"isOrigin": true,
+			"value": "wss://localhost:3434"
+		}
+	],
+	"extensionViews": [],
+	"manifest": {
+		"anchor": "video_overlay",
+		"assetUrls": [],
+		"authorName": "Patrick Obermueller",
+		"bitsEnabled": false,
+		"canInstall": true,
+		"configUrl": "https://localhost:3434/config.html",
+		"configurationLocation": "none",
+		"description": "Do you feel an inner pressure? Have you ever wanted to smash the screen? Do you know what time it is? IT'S HAMMER TIME!\nPick up the hammer and smash the streamer's livestream window. Relief your inner stress or create fun screenshots with your favourite streamer.",
+		"eulaTosUrl": "",
+		"hasChatSupport": false,
+		"iconUrl": "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/logoc45fc302-28d6-46c3-a15d-9d18d1436883",
+		"iconUrls": {
+			"100x100": "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/logoc45fc302-28d6-46c3-a15d-9d18d1436883",
+			"24x24": "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/taskbar2ecf6e9d-0c77-4073-b6ec-05d11f86de2c",
+			"300x200": "https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/discovery12804e1c-3c35-4f1c-9b54-d6765afa2107"
+		},
+		"id": "uikhtmhdgzgwoq7e1vnlw7pryqajji",
+		"installationCount": -42,
+		"liveConfigUrl": "",
+		"name": "It's Hammer Time!",
+		"panelHeight": 0,
+		"privacyPolicyUrl": "",
+		"requestIdentityLink": false,
+		"requiredBroadcasterAbilities": [],
+		"screenshotUrls": [
+			"https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/screenshot3b0d0fad-9216-44b3-89c6-cd1461cc8ff9",
+			"https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/screenshot2fd27d4d-715a-41c5-8eaa-4dfece4c6f71",
+			"https://extensions-discovery-images.twitch.tv/uikhtmhdgzgwoq7e1vnlw7pryqajji/0.0.1/screenshot47fa6241-5f80-4d27-a110-d20deb76358c"
+		],
+		"sku": "",
+		"state": "Testing",
+		"subscriptionsSupportLevel": "none",
+		"summary": "Pick up the hammer and smash the streamer's livestream window",
+		"supportEmail": "pat.obermueller@gmail.com",
+		"vendorCode": "",
+		"version": "1.0.0",
+		"viewerSummary": "Pick up the hammer and smash the streamer's livestream window",
+		"viewerUrl": "",
+		"viewerUrls": {
+			"videoOverlay": "https://localhost:3434/video_overlay.html"
+		},
+		"views": {
+			"videoOverlay": {
+				"viewerUrl": "https://localhost:3434/video_overlay.html",
+				"canLinkExternalContent": false
+			},
+			"config": {
+				"viewerUrl": "https://localhost:3434/config.html",
+				"canLinkExternalContent": false
+			}
+		},
+		"whitelistedConfigUrls": [],
+		"whitelistedPanelUrls": []
+	},
+	"frontendCommand": "",
+	"frontendFolderName": "",
+	"name": "It's Hammer Time!",
+	"version": 1
 }

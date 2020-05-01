@@ -34,8 +34,6 @@ Available at https://dashboard.twitch.tv/extensions/uikhtmhdgzgwoq7e1vnlw7pryqaj
 
 ## Credits
 
--   **Thanks** to David, Flo and Laura for playtesting.
--   **Thanks** to Mat and Jan for rubberducking and code reviews.
--   **Thanks** to Mira for the scatter images.
+Thanks to David, Flo, Mat and Mira
 
 ##### My [twitter](https://twitter.com/p4dd9).

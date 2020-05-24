@@ -10,12 +10,15 @@ import LAYERS from '../config/layers';
 import { isScreenSizeSupported } from '../util/commonUtil';
 import { Extension, ExtensionContext } from '../types/twitch';
 import IPosition from '../interfaces/IPosition';
+import Authentication from './Authentication';
 
 export default class Game {
 	public ui: UI;
 	public audio: GameAudio;
 	public effectSettings = effectSettings;
 	public contexts: CanvasRenderingContext2D[];
+	public twitch: Extension | null;
+	public authentication: Authentication | null = null;
 
 	private controller: Controller;
 
@@ -24,16 +27,15 @@ export default class Game {
 	private debug = false;
 	private debugger: Debugger;
 
-	private twitch: Extension | null;
 	private frameId: number | undefined = undefined;
 
 	constructor(contexts: CanvasRenderingContext2D[]) {
 		this.contexts = contexts;
 
 		this.debugger = new Debugger(contexts[LAYERS.BACK]);
-		this.ui = new UI(this, this.effectSettings);
 		this.audio = new GameAudio(this);
 		this.twitch = window.Twitch ? window.Twitch.ext : null;
+		this.ui = new UI(this, this.effectSettings);
 
 		const weapon = new ClassicHammer(
 			contexts,
@@ -50,6 +52,19 @@ export default class Game {
 		this.twitch?.onContext((context, delta) => {
 			this.contextUpdate(context, delta);
 		});
+
+		this.twitch?.onAuthorized((auth) => {
+			this.onAuthorizedChanged(auth);
+		});
+	}
+
+	private onAuthorizedChanged(auth: {
+		token: string;
+		userId: string;
+		clientId: string;
+		channelId: string;
+	}): void {
+		this.authentication?.setToken(auth.token, auth.userId);
 	}
 
 	public get weapon(): Weapon {

@@ -36,11 +36,39 @@ body {
 }
 
 // USER INTERFACE //
+.ui-button-use-bits-content-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 3px 6px 3px 3px;
+}
+
+#ui-button-use-bits-bit-icon {
+	width: 19px;
+}
+
+.ui-button-use-bits-wrapper {
+	background-color: #905535;
+	color: #f5c89e;
+	border: 1px solid #f5c89e;
+	position: absolute;
+	border-radius: 4px;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 10px;
+}
+
+// #ui-hammer-options-button-hint {
+// 	display: flex; // toggle to perma display page hints
+// }
+
 .ui-hammer-options-preview-image {
 	height: 90px;
 }
 
 .ui-button-hint-page {
+	position: relative;
+
 	&:hover {
 		cursor: pointer;
 	}
@@ -63,7 +91,7 @@ body {
 	top: 0;
 	padding-top: 110px;
 	height: 100%;
-	opacity: 0;
+	opacity: 0; // toggle to show
 	transition: all 0.25s;
 	left: 8px;
 }

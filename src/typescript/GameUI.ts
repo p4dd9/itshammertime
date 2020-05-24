@@ -35,12 +35,13 @@ export default class UI {
 
 	private start(): void {
 		this.initHammerOptions();
+		this.initProducts();
+
 		this.initMenuButton();
 		this.initAudioButton();
 		this.initFaqButton();
 		this.initCanvasEvents();
 		this.initEnchantmentsButton();
-
 		this.showUI();
 	}
 
@@ -188,10 +189,18 @@ export default class UI {
 		);
 
 		const classicHammerPreviewImage = document.getElementById(
+			'ui-hammer-options-preview-classic-image'
+		);
+
+		const classicHammerPreview = document.getElementById(
 			'ui-hammer-options-preview-classic'
 		);
 
 		const greenHammerPreviewImage = document.getElementById(
+			'ui-hammer-options-preview-green-image'
+		);
+
+		const greenHammerPreview = document.getElementById(
 			'ui-hammer-options-preview-green'
 		);
 
@@ -199,16 +208,8 @@ export default class UI {
 		setImg(classicHammerPreviewImage, HammerImage);
 		setImg(greenHammerPreviewImage, GreenHammerImage);
 
-		const classicHammerPage = document.getElementById(
-			'ui-hammer-options-classic-hammer-page'
-		);
-
-		const plantHammerPage = document.getElementById(
-			'ui-hammer-options-classic-plant-page'
-		);
-
-		if (classicHammerPage) {
-			classicHammerPage.addEventListener('click', () => {
+		if (classicHammerPreview) {
+			classicHammerPreview.addEventListener('click', () => {
 				this.effectSettings.particleTheme = 'glass';
 				this.effectSettings.shape = 'square';
 				this.game.weapon = new ClassicHammer(
@@ -220,8 +221,8 @@ export default class UI {
 			});
 		}
 
-		if (plantHammerPage) {
-			plantHammerPage.addEventListener('click', () => {
+		if (greenHammerPreview) {
+			greenHammerPreview.addEventListener('click', () => {
 				this.effectSettings.particleTheme = 'plant';
 				this.effectSettings.shape = 'leaf';
 				this.game.weapon = new PlantHammer(
@@ -231,6 +232,65 @@ export default class UI {
 					this.game.audio
 				);
 			});
+		}
+	}
+
+	private async initProducts(): Promise<void> {
+		const products = await this.game.twitch?.bits.getProducts();
+
+		if (products !== undefined) {
+			for (const product of products) {
+				if (product.sku === 'planthammer') {
+					const amountDisplayPlantHammer = document.getElementById(
+						'ui-button-use-bits-planthammer'
+					);
+
+					const useBitsImage = document.getElementById(
+						'ui-button-use-bits-bit-icon'
+					);
+
+					const useBitsWrapper = document.getElementById(
+						'ui-button-use-bits-plant-wrapper'
+					);
+
+					this.game.twitch?.onAuthorized(async (auth) => {
+						const twitchBitsActionsResponse = await fetch(
+							'https://api.twitch.tv/v5/bits/actions',
+							{
+								headers: {
+									'Client-ID': auth.clientId,
+								},
+							}
+						);
+
+						const twitchBitsActions = await twitchBitsActionsResponse.json();
+
+						if (useBitsWrapper instanceof HTMLElement) {
+							useBitsWrapper.addEventListener(
+								'mouseenter',
+								() => {
+									this.game.twitch?.bits.showBitsBalance();
+								}
+							);
+
+							useBitsWrapper.addEventListener('click', () => {
+								this.game.twitch?.bits.useBits(product.sku);
+							});
+						}
+
+						if (useBitsImage instanceof HTMLElement) {
+							(useBitsImage as HTMLImageElement).src =
+								twitchBitsActions.actions[0].tiers[1].images.light.static[1];
+						}
+
+						if (amountDisplayPlantHammer) {
+							amountDisplayPlantHammer.innerText = String(
+								product.cost.amount
+							);
+						}
+					});
+				}
+			}
 		}
 	}
 

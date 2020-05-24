@@ -9,6 +9,7 @@
 		"lint": "npx eslint . --ext .ts"
 	},
 	"devDependencies": {
+		"@types/jwt-decode": "^2.2.1",
 		"@typescript-eslint/eslint-plugin": "^2.25.0",
 		"@typescript-eslint/parser": "^2.25.0",
 		"awesome-typescript-loader": "^5.2.1",
@@ -19,14 +20,14 @@
 		"html-webpack-plugin": "^4.0.3",
 		"imagemin-webpack-plugin": "^2.4.2",
 		"mini-css-extract-plugin": "^0.9.0",
-		"node-sass": "^4.13.1",
+		"node-sass": "^4.14.1",
 		"prettier": "^2.0.2",
 		"sass-loader": "^8.0.2",
 		"style-loader": "^1.1.3",
 		"typescript": "^3.8.3",
 		"webpack": "^4.42.1",
 		"webpack-cli": "^3.3.11",
-		"webpack-dev-server": "^3.10.3"
+		"webpack-dev-server": "^3.11.0"
 	},
 	"repository": {
 		"type": "git",
@@ -39,6 +40,7 @@
 	},
 	"homepage": "https://github.com/p4dd9/itshammertime#readme",
 	"dependencies": {
+		"jwt-decode": "^2.2.0",
 		"vanilla-picker": "^2.10.1"
 	}
 }

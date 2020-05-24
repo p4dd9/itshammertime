@@ -10,6 +10,16 @@ declare global {
 	}
 }
 
+export interface Product {
+	cost: {
+		type: string; // bits
+		amount: number;
+	};
+	displayName: string;
+	inDevelopment: boolean | undefined;
+	sku: string;
+}
+
 export interface Extension {
 	onAuthorized(
 		cb: (auth: {
@@ -36,6 +46,21 @@ export interface Extension {
 	rig: ExtensionRig;
 	actions: ExtensionActions;
 	configuration: ExtensionConfiguration;
+	bits: BitsInExtension;
+	features: ExtensionFlags;
+}
+
+export interface ExtensionFlags {
+	isBitsEnabled: boolean;
+	isChatEnabled: boolean;
+	onChanged: (callback: () => [string]) => void;
+}
+
+export interface BitsInExtension {
+	getProducts: () => Promise<Product[]>;
+	useBits: (sku: string) => void;
+	showBitsBalance: () => void;
+	setUseLoopback: () => void;
 }
 
 export interface ExtensionContext {

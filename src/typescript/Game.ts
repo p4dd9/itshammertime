@@ -4,7 +4,7 @@ import Debugger from './Debugger';
 import UI from './GameUI';
 import GameAudio from './GameAudio';
 import Weapon from './Weapon';
-import HammerWeapon from './weapons/HammerWeapon';
+import ClassicHammer from './weapons/ClassicHammer';
 import effectSettings from '../config/effectSettings';
 import LAYERS from '../config/layers';
 import { isScreenSizeSupported } from '../util/commonUtil';
@@ -14,12 +14,12 @@ import IPosition from '../interfaces/IPosition';
 export default class Game {
 	public ui: UI;
 	public audio: GameAudio;
+	public effectSettings = effectSettings;
+	public contexts: CanvasRenderingContext2D[];
 
 	private controller: Controller;
-	private effectSettings = effectSettings;
 
 	private _weapon: Weapon;
-	private contexts: CanvasRenderingContext2D[];
 
 	private debug = false;
 	private debugger: Debugger;
@@ -35,11 +35,11 @@ export default class Game {
 		this.audio = new GameAudio(this);
 		this.twitch = window.Twitch ? window.Twitch.ext : null;
 
-		const weapon = new HammerWeapon(
+		const weapon = new ClassicHammer(
 			contexts,
 			this.center(),
 			this.effectSettings,
-			this.audio,
+			this.audio
 		);
 		this._weapon = weapon;
 		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);
@@ -57,8 +57,10 @@ export default class Game {
 	}
 
 	public set weapon(weapon: Weapon) {
+		this.controller.stop();
 		this._weapon = weapon;
 		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);
+		this.controller.start();
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

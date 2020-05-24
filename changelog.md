@@ -9,6 +9,12 @@ How to test:
 -   The Book underneath the audio icon allows users to change the shape and color of the particles.
 -   The letter image opens an option to copy the contact address to the clipboard
 
+#### v.1.1.0
+
+-   Add BitsSupport (not implemented) to extension json
+-   Add new planthammer
+-   Remove contact button in menu
+
 #### v.1.0.0
 
 -   Fixed a bug which caused hammer audio playback to be silent for clients who block localstorage access

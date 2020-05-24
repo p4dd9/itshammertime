@@ -1,27 +1,28 @@
 import Game from './Game';
 import GameAudio from './GameAudio';
 import LocalStorageUtil from '../util/LocalStorageUtil';
+import { setImg } from '../util/commonUtil';
 import IEffectSettings from '../interfaces/IEffectSettings';
 
-import VolumeOffImage from '../assets/icons/volume-mute.svg';
+import VolumeOn from '../assets/audio/volume-on.wav';
 import VolumeLowImage from '../assets/icons/volume-low.svg';
+import VolumeOffImage from '../assets/icons/volume-mute.svg';
 import VolumeMediumImage from '../assets/icons/volume-medium.svg';
 import VolumeHighImage from '../assets/icons/volume-high.svg';
 
 import PlankBackgroundImage from '../assets/images/plank.png';
-import LetterImage from '../assets/images/letter.png';
+import HammerImage from '../assets/images/hammer_preview.png';
+import GreenHammerImage from '../assets/images/planthammer_preview.png';
 import FaqImage from '../assets/images/faq_questionmark.png';
 import BookImage from '../assets/images/book.png';
-import Picker from 'vanilla-picker';
 
-import VolumeOn from '../assets/audio/volume-on.wav';
-
-import { copyTextToClipboard } from '../util/commonUtil';
 import { IVanillaColor } from '../interfaces/IVanillaPickerColor';
+import Picker from 'vanilla-picker';
+import ClassicHammer from './weapons/ClassicHammer';
+import PlantHammer from './weapons/PlantHammer';
 
 export default class UI {
 	private game: Game;
-	private static timeOutId: undefined | number = undefined;
 	private effectSettings: IEffectSettings;
 	private throttleId: undefined | number = undefined;
 	private delay = 55;
@@ -33,12 +34,11 @@ export default class UI {
 	}
 
 	private start(): void {
-		this.initContactButton();
+		this.initHammerOptions();
 		this.initMenuButton();
 		this.initAudioButton();
 		this.initFaqButton();
 		this.initCanvasEvents();
-		this.initHintPageEvents();
 		this.initEnchantmentsButton();
 
 		this.showUI();
@@ -131,28 +131,6 @@ export default class UI {
 		}
 	}
 
-	private initHintPageEvents(): void {
-		const hintPageButton = document.getElementById(
-			'ui-hint-page-contact-button'
-		);
-
-		if (hintPageButton instanceof HTMLElement) {
-			hintPageButton.addEventListener('click', () => {
-				copyTextToClipboard('pat.obermueller@gmail.com');
-				hintPageButton.textContent = `Copied!`;
-
-				if (UI.timeOutId !== undefined) {
-					clearTimeout(UI.timeOutId);
-				}
-
-				UI.timeOutId = window.setTimeout(() => {
-					hintPageButton.textContent = `Copy Mail`;
-					UI.timeOutId = undefined;
-				}, 2000);
-			});
-		}
-	}
-
 	private initCanvasEvents(): void {
 		const optionsContainer = document.getElementById('ui-options');
 
@@ -204,13 +182,55 @@ export default class UI {
 		}
 	}
 
-	private initContactButton(): void {
-		const contactButtonImage = document.getElementById(
-			'ui-contact-button-image'
+	private initHammerOptions(): void {
+		const hammerOptionsButtonImage = document.getElementById(
+			'ui-hammer-options-button-image'
 		);
 
-		if (contactButtonImage instanceof HTMLImageElement) {
-			contactButtonImage.src = LetterImage;
+		const classicHammerPreviewImage = document.getElementById(
+			'ui-hammer-options-preview-classic'
+		);
+
+		const greenHammerPreviewImage = document.getElementById(
+			'ui-hammer-options-preview-green'
+		);
+
+		setImg(hammerOptionsButtonImage, HammerImage);
+		setImg(classicHammerPreviewImage, HammerImage);
+		setImg(greenHammerPreviewImage, GreenHammerImage);
+
+		const classicHammerPage = document.getElementById(
+			'ui-hammer-options-classic-hammer-page'
+		);
+
+		const plantHammerPage = document.getElementById(
+			'ui-hammer-options-classic-plant-page'
+		);
+
+		if (classicHammerPage) {
+			classicHammerPage.addEventListener('click', () => {
+				this.effectSettings.particleTheme = 'glass';
+				this.effectSettings.shape = 'square';
+				this.game.weapon = new ClassicHammer(
+					this.game.contexts,
+					this.game.center(),
+					this.effectSettings,
+					this.game.audio
+				);
+			});
+		}
+
+		if (plantHammerPage) {
+			plantHammerPage.addEventListener('click', () => {
+				this.effectSettings.particleTheme = 'plant';
+				this.effectSettings.shape = 'leaf';
+				this.game.weapon = new PlantHammer(
+					this.game.contexts,
+					this.game.center(),
+					this.effectSettings,
+					this.game.audio
+				);
+			});
 		}
 	}
 
@@ -230,7 +250,7 @@ export default class UI {
 
 				this.game.audio.volumeIndex = newVolumeIndex;
 				volumeSound.volume =
-				GameAudio.volumeRange[newVolumeIndex] +
+					GameAudio.volumeRange[newVolumeIndex] +
 					(newVolumeIndex === 0 ? 0 : 0.35);
 				LocalStorageUtil.setVolumeIndex(newVolumeIndex);
 				this.game.audio.playSoundOverlap(volumeSound);

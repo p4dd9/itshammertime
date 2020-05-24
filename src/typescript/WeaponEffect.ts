@@ -5,7 +5,6 @@ import IGameImageAsset from '../interfaces/IGameImageAsset';
 import IAudioAsset from '../interfaces/IAudioAsset';
 import IAudio from '../interfaces/IAudio';
 import GameAudio from './GameAudio';
-import { hammerImageAlias } from '../assets/imageAssets';
 import IEffectSettings from '../interfaces/IEffectSettings';
 import { getRandomInt } from '../util/commonUtil';
 import { hammerAudioAlias } from '../assets/audioAssets';
@@ -68,7 +67,8 @@ export default abstract class WeaponEffect {
 				: this.setWeaponEffectImage();
 
 		if (this.currentAudio !== undefined) {
-			this.currentAudio.audio.volume = GameAudio.volumeRange[this.gameAudio.volumeIndex];
+			this.currentAudio.audio.volume =
+				GameAudio.volumeRange[this.gameAudio.volumeIndex];
 			this.gameAudio.playSoundOverlap(this.currentAudio.audio);
 		}
 	}
@@ -88,21 +88,28 @@ export default abstract class WeaponEffect {
 	}
 
 	private setWeaponEffectImage(): IGameImage | undefined {
+		if (this.images === null) {
+			return;
+		}
+
 		if (WeaponEffect.effectCount === 2) {
 			WeaponEffect.effectCount = 0;
 		}
+
+		// TODO: refactor
+		const keys = Array.from(this.images?.keys());
 		switch (WeaponEffect.effectCount) {
 			case 0: {
 				WeaponEffect.effectCount++;
-				return this.images?.get(hammerImageAlias.HAMMER_EFFECT_01);
+				return this.images?.get(keys[1]);
 			}
 			case 1: {
 				WeaponEffect.effectCount++;
-				return this.images?.get(hammerImageAlias.HAMMER_EFFECT_02);
+				return this.images?.get(keys[2]);
 			}
 			case 2: {
 				WeaponEffect.effectCount++;
-				return this.images?.get(hammerImageAlias.HAMMER_EFFECT_03);
+				return this.images?.get(keys[3]);
 			}
 		}
 	}

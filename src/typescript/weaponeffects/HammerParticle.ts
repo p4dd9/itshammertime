@@ -1,6 +1,8 @@
 import IPosition from '../../interfaces/IPosition';
 import IVelocity from '../../interfaces/IVelocity';
 
+import LeafImage from '../../assets/images/leaf.png';
+
 export default class HammerParticle {
 	public id: number;
 	public life = 0;
@@ -13,6 +15,8 @@ export default class HammerParticle {
 	private theme: string | string[];
 	private color: string | CanvasGradient;
 	private shape: string;
+
+	private leafImage = new Image();
 
 	constructor(
 		context: CanvasRenderingContext2D,
@@ -33,6 +37,7 @@ export default class HammerParticle {
 		this.gravity = gravity;
 		this.color = this.setColorAndFillStyles();
 		this.shape = shape;
+		this.leafImage.src = LeafImage;
 		this.velocity = {
 			vx: Math.random() * vxMultiplier - 10,
 			vy: Math.random() * vyMultiplier - 5,
@@ -71,9 +76,19 @@ export default class HammerParticle {
 			this.drawCircle();
 		} else if (this.shape === 'square') {
 			this.drawSquare();
+		} else if (this.shape === 'leaf') {
+			this.drawLeaf();
 		} else if (this.shape === 'star') {
 			this.drawStar();
 		}
+	}
+
+	private drawLeaf(): void {
+		this.context.drawImage(
+			this.leafImage,
+			this.position.x,
+			this.position.y
+		);
 	}
 
 	private drawCircle(): void {

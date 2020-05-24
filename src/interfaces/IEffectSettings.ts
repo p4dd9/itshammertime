@@ -1,4 +1,4 @@
 export default interface IEffectSettings {
 	particleTheme: string | string[];
-	shape: 'circle' | 'star' | 'square';
+	shape: 'circle' | 'star' | 'square' | 'leaf';
 }

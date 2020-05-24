@@ -21,7 +21,7 @@ body {
 	}
 
 	&:hover #ui-options {
-		opacity: 1; // Toggle to Debug
+		opacity: 1;
 	}
 }
 
@@ -36,8 +36,18 @@ body {
 }
 
 // USER INTERFACE //
+.ui-hammer-options-preview-image {
+	height: 90px;
+}
+
+.ui-button-hint-page {
+	&:hover {
+		cursor: pointer;
+	}
+}
+
 #ui-layer {
-	visibility: 'hidden';
+	visibility: hidden;
 }
 
 #ui-enchantments-color-picker {

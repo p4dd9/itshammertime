@@ -1,16 +1,15 @@
 import WeaponEffect from '../WeaponEffect';
 import IPosition from '../../interfaces/IPosition';
-import { hammerImageAssets } from '../../assets/imageAssets';
 import { hammerAudioAssets } from '../../assets/audioAssets';
 import HammerParticle from './HammerParticle';
 import IEffectSettings from '../../interfaces/IEffectSettings';
 import LAYERS from '../../config/layers';
 import GameAudio from '../GameAudio';
+import IGameImageAsset from '../../interfaces/IGameImageAsset';
 
 export default class HammerEffect extends WeaponEffect {
 	public static lifeTime = 2000; // ms
 
-	public imageAssets = hammerImageAssets;
 	public audioAssets = hammerAudioAssets;
 
 	private particles: { [key: string]: HammerParticle } = {};
@@ -33,7 +32,8 @@ export default class HammerEffect extends WeaponEffect {
 		contexts: CanvasRenderingContext2D[],
 		position: IPosition,
 		effectSettings: IEffectSettings,
-		gameAudio: GameAudio
+		gameAudio: GameAudio,
+		hammerImageAssets: Map<string, IGameImageAsset>
 	) {
 		super(
 			contexts,
@@ -41,7 +41,7 @@ export default class HammerEffect extends WeaponEffect {
 			effectSettings,
 			gameAudio,
 			hammerImageAssets,
-			hammerAudioAssets,
+			hammerAudioAssets
 		);
 	}
 

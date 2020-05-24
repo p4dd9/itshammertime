@@ -1,9 +1,15 @@
 import IGameImageAsset from '../interfaces/IGameImageAsset';
 
 import hammerImage from './images/hammer.png';
+import plantHammerImage from './images/planthammer.png';
+
 import hammerEffectImage01 from './images/shatter_01.png';
 import hammerEffectImage02 from './images/shatter_02.png';
 import hammerEffectImage03 from './images/shatter_03.png';
+
+import hammerEffectImage01Brown from './images/shatter_01_brown.png';
+import hammerEffectImage02Brown from './images/shatter_02_brown.png';
+import hammerEffectImage03Brown from './images/shatter_03_brown.png';
 
 import gearImage from './images/gear.png';
 
@@ -15,9 +21,15 @@ import gearImage from './images/gear.png';
 // ASSET ALIAS
 export const hammerImageAlias = {
 	HAMMER: 'HAMMER_STATIC',
+	HAMMER_PLANT: 'HAMMER_PLANT',
+
 	HAMMER_EFFECT_01: 'HAMMER_EFFECT_01',
 	HAMMER_EFFECT_02: 'HAMMER_EFFECT_02',
 	HAMMER_EFFECT_03: 'HAMMER_EFFECT_03',
+
+	HAMMER_EFFECT_01_BROWN: 'HAMMER_EFFECT_01_BROWN',
+	HAMMER_EFFECT_02_BROWN: 'HAMMER_EFFECT_02_BROWN',
+	HAMMER_EFFECT_03_BROWN: 'HAMMER_EFFECT_03_BROWN',
 };
 
 export const uiImageAlias = {
@@ -34,7 +46,38 @@ export const uiImageAssets: Map<string, IGameImageAsset> = new Map([
 	],
 ]);
 
-export const hammerImageAssets: Map<string, IGameImageAsset> = new Map([
+export const plantHammerImageAssets: Map<string, IGameImageAsset> = new Map([
+	[
+		hammerImageAlias.HAMMER_PLANT,
+		{
+			src: plantHammerImage,
+			scaleOnCanvas: 5.5,
+		},
+	],
+	[
+		hammerImageAlias.HAMMER_EFFECT_01_BROWN,
+		{
+			src: hammerEffectImage01Brown,
+			scaleOnCanvas: 2.5,
+		},
+	],
+	[
+		hammerImageAlias.HAMMER_EFFECT_02_BROWN,
+		{
+			src: hammerEffectImage02Brown,
+			scaleOnCanvas: 2.5,
+		},
+	],
+	[
+		hammerImageAlias.HAMMER_EFFECT_03_BROWN,
+		{
+			src: hammerEffectImage03Brown,
+			scaleOnCanvas: 2.5,
+		},
+	],
+]);
+
+export const classicHammerImageAssets: Map<string, IGameImageAsset> = new Map([
 	[
 		hammerImageAlias.HAMMER,
 		{
@@ -42,6 +85,7 @@ export const hammerImageAssets: Map<string, IGameImageAsset> = new Map([
 			scaleOnCanvas: 3.5,
 		},
 	],
+
 	[
 		hammerImageAlias.HAMMER_EFFECT_01,
 		{

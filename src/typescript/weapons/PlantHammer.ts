@@ -1,16 +1,18 @@
 import Weapon from '../Weapon';
-import { hammerImageAssets } from '../../assets/imageAssets';
+import {
+	hammerImageAlias,
+	plantHammerImageAssets,
+} from '../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
-import { hammerImageAlias } from '../../assets/imageAssets';
-import HammerEffect from '../weaponeffects/HammerEffect';
-import { degToRad } from '../../util/commonUtil';
 import IPosition from '../../interfaces/IPosition';
 import IEffectSettings from '../../interfaces/IEffectSettings';
-import LAYERS from '../../config/layers';
 import GameAudio from '../GameAudio';
+import LAYERS from '../../config/layers';
+import { degToRad } from '../../util/commonUtil';
+import HammerEffect from '../weaponeffects/HammerEffect';
 
-export default class HammerWeapon extends Weapon {
-	public imageAssets = hammerImageAssets;
+export default class PlantHammer extends Weapon {
+	public imageAssets = plantHammerImageAssets;
 	public audioAssets = hammerAudioAssets;
 
 	private rotateSpeed = 12;
@@ -29,11 +31,11 @@ export default class HammerWeapon extends Weapon {
 			contexts,
 			position,
 			effectSettings,
-			hammerImageAssets,
+			plantHammerImageAssets,
 			hammerAudioAssets,
-			hammerImageAlias.HAMMER,
+			hammerImageAlias.HAMMER_PLANT,
 			hammerAudioAlias.HAMMER_SHATTER_01,
-			gameAudio,
+			gameAudio
 		);
 
 		this.removeActiveEffect = this.removeActiveEffect.bind(this);
@@ -136,11 +138,12 @@ export default class HammerWeapon extends Weapon {
 		const newGameWeaponEffect = new HammerEffect(
 			this.contexts,
 			{
-				x: this.position.x - scaledWidth / 2 - 80, // -80 hammer effect related
+				x: this.position.x - scaledWidth / 2 - 180, // -80 hammer effect related
 				y: this.position.y - scaledHeight / 2,
 			},
 			this.effectSettings,
-			this.gameAudio
+			this.gameAudio,
+			this.imageAssets
 		);
 		newGameWeaponEffect.selfDestruct = this.removeActiveEffect;
 		this.effects.push(newGameWeaponEffect);

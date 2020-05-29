@@ -6,6 +6,8 @@
 	"scripts": {
 		"build:frontend": "webpack --mode production",
 		"build:backend": "tsc --esModuleInterop ./app/backend/server.ts",
+		"dev:backend": "tsc --esModuleInterop --watch ./app/backend/server.ts --outDir ./app/backend/dist",
+		"start:backend:server": "nodemon ./app/backend/dist/server.js",
 		"dev:frontend": "webpack-dev-server --mode development --hot",
 		"lint": "npx eslint . --ext .ts"
 	},
@@ -23,6 +25,7 @@
 		"imagemin-webpack-plugin": "^2.4.2",
 		"mini-css-extract-plugin": "^0.9.0",
 		"node-sass": "^4.14.1",
+		"nodemon": "^2.0.4",
 		"prettier": "^2.0.2",
 		"sass-loader": "^8.0.2",
 		"style-loader": "^1.1.3",

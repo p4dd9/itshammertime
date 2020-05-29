@@ -45,6 +45,8 @@
 	},
 	"homepage": "https://github.com/p4dd9/itshammertime#readme",
 	"dependencies": {
+		"@types/mongodb": "^3.5.18",
+		"body-parser": "^1.19.0",
 		"express": "^4.17.1",
 		"jwt-decode": "^2.2.0",
 		"mongodb": "^3.5.8",

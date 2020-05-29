@@ -1,7 +1,7 @@
 import IAudioAsset from '../interfaces/IAudioAsset';
-import heavyGlassShatter1 from '../assets/audio/heavy_glass_shatter_1.wav';
-import heavyGlassShatter2 from '../assets/audio/heavy_glass_shatter_2.wav';
-import heavyGlassShatter3 from '../assets/audio/heavy_glass_shatter_3.wav';
+import heavyGlassShatter1 from './audio/heavy_glass_shatter_1.wav';
+import heavyGlassShatter2 from './audio/heavy_glass_shatter_2.wav';
+import heavyGlassShatter3 from './audio/heavy_glass_shatter_3.wav';
 
 // How to add new Audio
 // 1. add alias here

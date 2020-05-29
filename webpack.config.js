@@ -7,28 +7,30 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // defines where the bundle file will live
-const bundlePath = path.resolve(__dirname, 'dist/');
 const imagePattern = /\.(jpe?g|png|gif|svg)$/i;
+
+const frontendSrcPath = path.resolve(__dirname, 'app/frontend/src');
+const frontendDistPath = path.resolve(__dirname, 'app/frontend/dist');
 
 module.exports = (_env, argv) => {
 	const mode = argv.mode;
 	const isProduction = mode === 'production';
 
 	let entry = {
-		main: './src/views/VideoOverlay.ts',
-		config: './src/views/Config.ts',
+		main: `${frontendSrcPath}/views/VideoOverlay.ts`,
+		config: `${frontendSrcPath}/views/Config.ts`,
 	};
 
 	let plugins = [
 		new HtmlWebpackPlugin({
 			inject: true,
-			template: './src/video_overlay.html',
+			template: `${frontendSrcPath}/video_overlay.html`,
 			filename: 'video_overlay.html',
 			chunks: ['main'],
 			title: "It's Hammer Time!",
 		}),
 		new HtmlWebpackPlugin({
-			template: './src/static_config.html',
+			template: `${frontendSrcPath}/static_config.html`,
 			filename: 'config.html',
 			chunks: ['config'],
 			title: "It's Hammer Time!",
@@ -82,14 +84,14 @@ module.exports = (_env, argv) => {
 		},
 		output: {
 			filename: '[name].bundle.js',
-			path: bundlePath,
+			path: frontendDistPath,
 		},
 		plugins,
 	};
 
 	if (!isProduction) {
 		config.devServer = {
-			contentBase: path.join(__dirname, 'dist'),
+			contentBase: path.join(__dirname, 'app/frontend/dist'),
 			host: 'localhost',
 			headers: {
 				'Access-Control-Allow-Origin': '*',

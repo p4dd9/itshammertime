@@ -5,10 +5,10 @@
 	"main": "webpack.config.js",
 	"scripts": {
 		"build:frontend": "webpack --mode production",
-		"build:backend": "tsc --esModuleInterop ./app/backend/src/server.ts --outDir ./app/backend/dist",
-		"dev:backend": "tsc --esModuleInterop --watch ./app/backend/src/server.ts --outDir ./app/backend/dist",
+		"build:backend": "tsc --esModuleInterop ./app/backend/src/index.ts --outDir ./app/backend/dist",
+		"dev:backend": "tsc --esModuleInterop --watch ./app/backend/src/index.ts --outDir ./app/backend/dist",
 		"dev:frontend": "webpack-dev-server --mode development --hot",
-		"start:backend:server": "nodemon ./app/backend/dist/server.js",
+		"start:backend:server": "nodemon ./app/backend/dist/index.js",
 		"lint": "npx eslint . --ext .ts"
 	},
 	"devDependencies": {

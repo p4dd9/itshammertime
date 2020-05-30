@@ -1,40 +1,54 @@
 import express from 'express';
-import mongodb from 'mongodb';
+import DBClient from './DBClient';
 import bodyParser from 'body-parser';
-import { s } from './utils';
 
-const mongoClient = mongodb.MongoClient;
+export default class Server {
+	private express: express.Express;
+	private dbClient: DBClient;
 
-const server = express();
-server.use(bodyParser.json());
+	constructor(dbClient: DBClient) {
+		this.dbClient = dbClient;
+		this.express = express();
 
-server.listen(3535, function () {
-	console.log('listening on 3535');
-});
+		this.start();
+	}
 
-server.get('/', (req, res) => {
-	res.send(s);
-});
+	private start(): void {
+		this.middleware();
+		this.listen();
+		this.controller();
+	}
 
-const mongoClientConnectionString = 'mongodb://localhost:27017';
+	private middleware(): void {
+		this.express.use(bodyParser.json());
+	}
 
-mongoClient
-	.connect(mongoClientConnectionString, {
-		useUnifiedTopology: true,
-	})
-	.then((client) => {
-		const db = client.db('itshammertime');
-		const usersCollection = db.collection('users');
-
-		server.post('/users', (req, res) => {
-			console.log(req.body);
-
-			usersCollection
-				.insertOne(req.body)
-				.then(() => {
-					res.send({ message: 'nice' });
-				})
-				.catch(() => res.send({ message: 'shit' }));
+	private listen(): void {
+		this.express.listen(3535, () => {
+			console.log('listening on 3535');
 		});
-	})
-	.catch(console.error);
+	}
+
+	private controller(): void {
+		this.express.get('/', async (req, res) => {
+			try {
+				const usersCollection = this.dbClient.db().collection('users');
+				usersCollection.find().toArray((error, users) => {
+					res.send(users);
+				});
+			} catch (e) {
+				res.send({ message: 'couldnt get users' });
+			}
+		});
+
+		this.express.post('/users', async (req, res) => {
+			try {
+				const usersCollection = this.dbClient.db().collection('users');
+				await usersCollection.insertOne(req.body);
+				res.send({ message: 'success' });
+			} catch (e) {
+				res.send({ message: 'error: couldnt write to users' });
+			}
+		});
+	}
+}

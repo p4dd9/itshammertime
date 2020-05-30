@@ -6,15 +6,15 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-// defines where the bundle file will live
 const imagePattern = /\.(jpe?g|png|gif|svg)$/i;
-
-const frontendSrcPath = path.resolve(__dirname, 'app/frontend/src');
+const frontendSrcPath = './frontend/src';
 const frontendDistPath = path.resolve(__dirname, 'app/frontend/dist');
 
 module.exports = (_env, argv) => {
 	const mode = argv.mode;
 	const isProduction = mode === 'production';
+
+	let context = path.resolve(__dirname, 'app');
 
 	let entry = {
 		main: `${frontendSrcPath}/views/VideoOverlay.ts`,
@@ -38,6 +38,7 @@ module.exports = (_env, argv) => {
 	];
 
 	let config = {
+		context,
 		entry,
 		optimization: {
 			minimize: false, // do not minimize due to twitch review process

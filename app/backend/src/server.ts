@@ -1,6 +1,7 @@
 import express from 'express';
 import mongodb from 'mongodb';
 import bodyParser from 'body-parser';
+import { s } from './utils';
 
 const mongoClient = mongodb.MongoClient;
 
@@ -12,7 +13,7 @@ server.listen(3535, function () {
 });
 
 server.get('/', (req, res) => {
-	res.send('Hello World!!!!!!!');
+	res.send(s);
 });
 
 const mongoClientConnectionString = 'mongodb://localhost:27017';

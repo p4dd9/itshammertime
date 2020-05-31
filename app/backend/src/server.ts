@@ -1,18 +1,21 @@
 import express from 'express';
 import DBClient from './DBClient';
 import bodyParser from 'body-parser';
+import UserController from './UserController';
 
 export default class Server {
 	private express: express.Express;
 	private dbClient: DBClient;
+	private userController: UserController;
 
 	constructor(dbClient: DBClient) {
 		this.dbClient = dbClient;
 		this.express = express();
-
 		this.start();
 
-		// this.express.post("/", UserController.handlePost);
+		this.userController = new UserController(this.dbClient);
+
+		this.express.get('/', this.userController.handleGetUsers);
 	}
 
 	private start(): void {
@@ -32,17 +35,6 @@ export default class Server {
 	}
 
 	private controller(): void {
-		this.express.get('/', async (req, res) => {
-			try {
-				const usersCollection = this.dbClient.db().collection('users');
-				usersCollection.find().toArray((error, users) => {
-					res.send(users);
-				});
-			} catch (e) {
-				res.send({ message: 'couldnt get users' });
-			}
-		});
-
 		this.express.post('/users', async (req, res) => {
 			try {
 				const usersCollection = this.dbClient.db().collection('users');

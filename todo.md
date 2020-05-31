@@ -1,0 +1,7 @@
+-   feature: hover on hammer triggers showbalance (not only the label)
+-   feature: user can switch hammer-swing side
+-   feature: hammer smash effects interact with each other and can merge
+-   !feature: use bitsEnabled flag to support eligible buyer/viewers/streamer and also does who cannot use bits (hide icon in menu)
+-   research: only authorize if bits enabled
+-   research: write to local db in test env
+-   research: deploy and install mongodb on virtual server

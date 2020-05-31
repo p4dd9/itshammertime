@@ -36,4 +36,4 @@ Available at https://dashboard.twitch.tv/extensions/uikhtmhdgzgwoq7e1vnlw7pryqaj
 
 Thanks to David, Flo, Mat and Mira
 
-##### My [twitter](https://twitter.com/p4dd9).
+##### [twitter](https://twitter.com/p4dd9).

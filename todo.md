@@ -5,3 +5,9 @@
 -   research: only authorize if bits enabled
 -   research: write to local db in test env
 -   research: deploy and install mongodb on virtual server
+-   feature: enable hammer on click/action
+-   note: request limitation, watch out (isBitsEnabled + Action required to trigger info for hammer-buy-menu)
+-   feature: maintenance mode (config service)
+-   note: care async express route handler (req open until res sent) --> express not so sexy with async handlers
+-   feature: logging backend framework (sentry or so) --> https://www.npmjs.com/package/winston
+-   feature: chat recognition

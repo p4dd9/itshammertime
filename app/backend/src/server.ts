@@ -11,6 +11,8 @@ export default class Server {
 		this.express = express();
 
 		this.start();
+
+		// this.express.post("/", UserController.handlePost);
 	}
 
 	private start(): void {

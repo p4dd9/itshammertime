@@ -12,6 +12,7 @@
 		"lint": "npx eslint . --ext .ts"
 	},
 	"devDependencies": {
+		"@types/mongodb": "^3.5.18",
 		"@types/express": "^4.17.6",
 		"@types/jwt-decode": "^2.2.1",
 		"@typescript-eslint/eslint-plugin": "^2.25.0",
@@ -45,7 +46,6 @@
 	},
 	"homepage": "https://github.com/p4dd9/itshammertime#readme",
 	"dependencies": {
-		"@types/mongodb": "^3.5.18",
 		"body-parser": "^1.19.0",
 		"express": "^4.17.1",
 		"jwt-decode": "^2.2.0",

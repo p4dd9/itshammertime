@@ -236,7 +236,7 @@ export default class UI {
 	}
 
 	private async initProducts(): Promise<void> {
-		const products = await this.game.twitch?.bits.getProducts();
+		const products = await this.game.transaction?.getProducts();
 
 		if (products !== undefined) {
 			for (const product of products) {
@@ -269,12 +269,12 @@ export default class UI {
 							useBitsWrapper.addEventListener(
 								'mouseenter',
 								() => {
-									this.game.twitch?.bits.showBitsBalance();
+									this.game.transaction?.showBitsBalance();
 								}
 							);
 
 							useBitsWrapper.addEventListener('click', () => {
-								this.game.twitch?.bits.useBits(product.sku);
+								this.game.transaction?.useBits(product.sku);
 							});
 						}
 

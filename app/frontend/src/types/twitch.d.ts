@@ -1,5 +1,6 @@
 // Types for the twitch extension helper.
 // Reference: https://dev.twitch.tv/docs/extensions/reference#javascript-helper
+// https://dev.twitch.tv/docs/extensions/reference/#helper-extensions
 
 // tslint:disable:interface-name
 declare global {
@@ -56,11 +57,34 @@ export interface ExtensionFlags {
 	onChanged: (callback: () => [string]) => void;
 }
 
+export interface TransactionObject {
+	displayName: string;
+	initiator: 'current_user' | 'other';
+	product: {
+		broadcast: boolean;
+		cost: {
+			amount: number;
+			type: string; // bits
+		};
+		displayName: string;
+		domain: string;
+		inDevelopment: boolean | undefined;
+		sku: string;
+	};
+	transactionId: string;
+	transactionReceipt: string;
+	userId: string;
+}
+
 export interface BitsInExtension {
 	getProducts: () => Promise<Product[]>;
 	useBits: (sku: string) => void;
 	showBitsBalance: () => void;
-	setUseLoopback: () => void;
+	setUseLoopback: () => boolean;
+	onTransactionCancelled: (callback: () => void) => void;
+	onTransactionComplete: (
+		callback: (transactionObject: TransactionObject) => void
+	) => void;
 }
 
 export interface ExtensionContext {

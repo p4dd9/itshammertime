@@ -11,6 +11,7 @@ import { isScreenSizeSupported } from '../util/commonUtil';
 import { Extension, ExtensionContext } from '../types/twitch';
 import IPosition from '../interfaces/IPosition';
 import Authentication from './Authentication';
+import Transaction from './Transaction';
 
 export default class Game {
 	public ui: UI;
@@ -19,6 +20,7 @@ export default class Game {
 	public contexts: CanvasRenderingContext2D[];
 	public twitch: Extension | null;
 	public authentication: Authentication | null = null;
+	public transaction: Transaction | null;
 
 	private controller: Controller;
 
@@ -31,10 +33,11 @@ export default class Game {
 
 	constructor(contexts: CanvasRenderingContext2D[]) {
 		this.contexts = contexts;
+		this.twitch = window.Twitch ? window.Twitch.ext : null;
+		this.transaction = this.twitch ? new Transaction(this.twitch) : null;
 
 		this.debugger = new Debugger(contexts[LAYERS.BACK]);
 		this.audio = new GameAudio(this);
-		this.twitch = window.Twitch ? window.Twitch.ext : null;
 		this.ui = new UI(this, this.effectSettings);
 
 		const weapon = new ClassicHammer(

@@ -1,4 +1,5 @@
 import { Extension, Product, TransactionObject } from '../types/twitch';
+import { sendBits } from './services/userServices';
 
 export default class Transaction {
 	private twitch: Extension;
@@ -30,8 +31,7 @@ export default class Transaction {
 		// it must do something ...
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public onTransactionComplete(transactionObject: TransactionObject): void {
-		// it must do something ...
+		sendBits(transactionObject);
 	}
 }

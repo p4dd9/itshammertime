@@ -11,6 +11,11 @@ export default class UserController {
 
 		this.handleGetUsers = this.handleGetUsers.bind(this);
 		this.handleUseBits = this.handleUseBits.bind(this);
+
+		this.insertUser = this.insertUser.bind(this);
+		this.findUser = this.findUser.bind(this);
+		this.updateUser = this.updateUser.bind(this);
+		this.userExists = this.userExists.bind(this);
 	}
 
 	public async handleGetUsers(

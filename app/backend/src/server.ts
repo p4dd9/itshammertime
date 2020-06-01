@@ -2,6 +2,7 @@ import express from 'express';
 import DBClient from './DBClient';
 import bodyParser from 'body-parser';
 import UserController from './UserController';
+import cors from 'cors';
 import { logger } from './logger';
 
 export default class Server {
@@ -26,6 +27,7 @@ export default class Server {
 	}
 
 	private middleware(): void {
+		this.express.use(cors());
 		this.express.use(bodyParser.json());
 	}
 

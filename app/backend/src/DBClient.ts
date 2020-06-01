@@ -1,4 +1,5 @@
 import { MongoClient, Db } from 'mongodb';
+import { logger } from './logger';
 
 export default class DBClient {
 	private uri = 'mongodb://localhost:27017';
@@ -19,9 +20,9 @@ export default class DBClient {
 	private async connect(): Promise<void> {
 		try {
 			await this.mongo.connect();
-			console.log('mongoclient connected');
+			logger.info('mongoclient connected');
 		} catch (e) {
-			console.log(e);
+			logger.error(e);
 		}
 	}
 

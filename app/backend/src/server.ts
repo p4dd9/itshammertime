@@ -2,6 +2,7 @@ import express from 'express';
 import DBClient from './DBClient';
 import bodyParser from 'body-parser';
 import UserController from './UserController';
+import { logger } from './logger';
 
 export default class Server {
 	private express: express.Express;
@@ -16,12 +17,12 @@ export default class Server {
 		this.userController = new UserController(this.dbClient);
 
 		this.express.get('/', this.userController.handleGetUsers);
+		this.express.post('/usebits', this.userController.handleUseBits);
 	}
 
 	private start(): void {
 		this.middleware();
 		this.listen();
-		this.controller();
 	}
 
 	private middleware(): void {
@@ -30,19 +31,7 @@ export default class Server {
 
 	private listen(): void {
 		this.express.listen(3535, () => {
-			console.log('listening on 3535');
-		});
-	}
-
-	private controller(): void {
-		this.express.post('/users', async (req, res) => {
-			try {
-				const usersCollection = this.dbClient.db().collection('users');
-				await usersCollection.insertOne(req.body);
-				res.send({ message: 'success' });
-			} catch (e) {
-				res.send({ message: 'error: couldnt write to users' });
-			}
+			logger.info('listening on 3535');
 		});
 	}
 }

@@ -58,6 +58,9 @@ export default class Game {
 
 		this.twitch?.onAuthorized((auth) => {
 			this.onAuthorizedChanged(auth);
+			if (this.twitch?.features.isBitsEnabled) {
+				this.ui.initHammerOptions();
+			}
 		});
 	}
 

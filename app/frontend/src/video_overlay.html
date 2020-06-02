@@ -11,10 +11,8 @@
 	</head>
 	<body>
 		<div id="root">
-			<!-- Game Layer-->
 			<div id="game-layer"></div>
 
-			<!-- UI Layer-->
 			<div id="ui-layer">
 				<div id="ui-options">
 					<div id="ui-menu-button-cursor-wrapper">
@@ -23,7 +21,6 @@
 
 					<ul id="ui-menu-item-list">
 						<li class="ui-menu-item">
-							<!-- UI AUDIO BUTTON-->
 							<button id="ui-audio-button" class="ui-button">
 								<img
 									id="ui-audio-button-image"
@@ -31,8 +28,7 @@
 								/>
 							</button>
 
-							<!-- UI ENCHANTMENTS BUTTON-->
-							<div class="ui-hint-container">
+							<div id="ui-enchantments" class="ui-hint-container">
 								<button
 									id="ui-enchantments-button"
 									class="ui-button"
@@ -106,74 +102,7 @@
 								</div>
 							</div>
 
-							<!-- UI CONTACT BUTTON-->
-							<div class="ui-hint-container">
-								<button
-									id="ui-hammer-options-button"
-									class="ui-button"
-								>
-									<img
-										id="ui-hammer-options-button-image"
-										alt="contact makers"
-									/>
-								</button>
-								<div
-									id="ui-hammer-options-button-hint"
-									class="ui-button-hint"
-								>
-									<div
-										id="ui-hammer-options-classic-hammer-page"
-										class="ui-button-hint-page"
-									>
-										<h5 class="ui-button-hintpage-title">
-											Classic
-										</h5>
-										<div
-											id="ui-hammer-options-preview-classic"
-										>
-											<img
-												id="ui-hammer-options-preview-classic-image"
-												class="ui-hammer-options-preview-image"
-												alt="hammer-classic"
-											/>
-										</div>
-									</div>
-									<div
-										id="ui-hammer-options-classic-plant-page"
-										class="ui-button-hint-page"
-									>
-										<h5 class="ui-button-hintpage-title">
-											Green
-										</h5>
-										<div
-											id="ui-hammer-options-preview-green"
-										>
-											<img
-												id="ui-hammer-options-preview-green-image"
-												class="ui-hammer-options-preview-image"
-												alt="hammer-green"
-											/>
-										</div>
-
-										<div
-											id="ui-button-use-bits-plant-wrapper"
-											class="ui-button-use-bits-wrapper"
-										>
-											<div
-												class="ui-button-use-bits-content-wrapper"
-											>
-												<img
-													id="ui-button-use-bits-bit-icon"
-													alt="use-bits"
-												/>
-												<div
-													id="ui-button-use-bits-planthammer"
-												></div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							<div id="ui-hammer-options"></div>
 						</li>
 
 						<li class="ui-menu-item">

@@ -20,7 +20,6 @@ import { IVanillaColor } from '../interfaces/IVanillaPickerColor';
 import Picker from 'vanilla-picker';
 import ClassicHammer from './weapons/ClassicHammer';
 import PlantHammer from './weapons/PlantHammer';
-
 export default class UI {
 	private game: Game;
 	private effectSettings: IEffectSettings;
@@ -34,15 +33,18 @@ export default class UI {
 	}
 
 	private start(): void {
-		this.initHammerOptions();
-		this.initProducts();
-
 		this.initMenuButton();
 		this.initAudioButton();
 		this.initFaqButton();
 		this.initCanvasEvents();
 		this.initEnchantmentsButton();
 		this.showUI();
+	}
+
+	public async initHammerOptions(): Promise<void> {
+		await this.renderHammerOptions();
+		this.initHammerBits();
+		this.initProducts();
 	}
 
 	private showUI(): void {
@@ -183,7 +185,7 @@ export default class UI {
 		}
 	}
 
-	private initHammerOptions(): void {
+	private initHammerBits(): void {
 		const hammerOptionsButtonImage = document.getElementById(
 			'ui-hammer-options-button-image'
 		);
@@ -343,4 +345,91 @@ export default class UI {
 			}
 		}
 	}
+
+	private async renderHammerOptions(): Promise<void> {
+		const hammerOptionsAnchor = document.getElementById(
+			'ui-hammer-options'
+		);
+		const templateString = (): string => {
+			return `
+				<div id="ui-hammer-options" class="ui-hint-container" >
+					<button
+							id="ui-hammer-options-button"
+							class="ui-button"
+						>
+							<img
+								id="ui-hammer-options-button-image"
+								alt="contact makers"
+							/>
+					</button>
+					<div
+						id="ui-hammer-options-button-hint"
+						class="ui-button-hint"
+					>
+						<div
+							id="ui-hammer-options-classic-hammer-page"
+							class="ui-button-hint-page"
+						>
+							<h5 class="ui-button-hintpage-title">
+								Classic
+							</h5>
+							<div
+								id="ui-hammer-options-preview-classic"
+							>
+								<img
+									id="ui-hammer-options-preview-classic-image"
+									class="ui-hammer-options-preview-image"
+									alt="hammer-classic"
+								/>
+							</div>
+						</div>
+						<div
+							id="ui-hammer-options-classic-plant-page"
+							class="ui-button-hint-page"
+						>
+							<h5 class="ui-button-hintpage-title">
+								Green
+							</h5>
+							<div
+								id="ui-hammer-options-preview-green"
+							>
+								<img
+									id="ui-hammer-options-preview-green-image"
+									class="ui-hammer-options-preview-image"
+									alt="hammer-green"
+								/>
+							</div>
+
+							<div
+								id="ui-button-use-bits-plant-wrapper"
+								class="ui-button-use-bits-wrapper"
+							>
+								<div
+									class="ui-button-use-bits-content-wrapper"
+								>
+									<img
+										id="ui-button-use-bits-bit-icon"
+										alt="use-bits"
+									/>
+									<div
+										id="ui-button-use-bits-planthammer"
+									></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				<div>
+			`;
+		};
+
+		this.render(templateString, hammerOptionsAnchor);
+	}
+
+	private render = (
+		template: () => string,
+		node: HTMLElement | null
+	): void => {
+		if (!(node instanceof HTMLElement)) return;
+		node.innerHTML = typeof template === 'function' ? template() : template;
+	};
 }

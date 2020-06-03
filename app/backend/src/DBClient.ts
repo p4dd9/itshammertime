@@ -2,7 +2,7 @@ import { MongoClient, Db } from 'mongodb';
 import { logger } from './logger';
 
 export default class DBClient {
-	private uri = 'mongodb://localhost:27017';
+	private uri = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`;
 	private config = {
 		useUnifiedTopology: true,
 	};

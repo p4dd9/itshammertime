@@ -18,6 +18,7 @@ export default class Server {
 		this.userController = new UserController(this.dbClient);
 
 		this.express.get('/', this.userController.handleGetUsers);
+		this.express.get('/user/:id', this.userController.handleGetUser);
 		this.express.post('/usebits', this.userController.handleUseBits);
 	}
 

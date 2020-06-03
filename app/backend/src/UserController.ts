@@ -16,6 +16,7 @@ export default class UserController {
 		this.findUser = this.findUser.bind(this);
 		this.updateUser = this.updateUser.bind(this);
 		this.userExists = this.userExists.bind(this);
+		this.handleGetUser = this.handleGetUser.bind(this);
 	}
 
 	public async handleGetUsers(
@@ -31,6 +32,23 @@ export default class UserController {
 		} catch (e) {
 			logger.error(e);
 			res.send({ message: 'couldnt get users' });
+		}
+	}
+
+	public async handleGetUser(
+		req: express.Request,
+		res: express.Response
+	): Promise<UserDTO | null | undefined> {
+		try {
+			const user = await this.findUser(req.params.id);
+			const userString = JSON.stringify(user);
+
+			logger.info(`looked up user ${req.params.id}`);
+			res.send(userString);
+			return user;
+		} catch (e) {
+			logger.error(e);
+			res.send({ message: 'couldnt get user' });
 		}
 	}
 

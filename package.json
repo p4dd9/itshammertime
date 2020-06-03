@@ -57,8 +57,5 @@
 		"node-fetch": "^2.6.0",
 		"vanilla-picker": "^2.10.1",
 		"whatwg-fetch": "^3.0.0"
-	},
-	"eslintIgnore": [
-		"server.js"
-	]
+	}
 }

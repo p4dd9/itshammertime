@@ -160,10 +160,16 @@ export default class UI {
 			});
 
 			optionsContainer.addEventListener('mouseenter', async () => {
-				if (this.game.authentication?.isLoggedIn()) {
+				if (
+					this.game.authentication?.isLoggedIn() &&
+					this.game.authentication.isAuthenticated()
+				) {
 					const userID = this.game.authentication?.getOpaqueId();
 					if (typeof userID === 'string') {
-						const user = await loadUserData(userID);
+						const user = await loadUserData(
+							userID,
+							this.game.authentication.state.token
+						);
 						console.log(user);
 					}
 				}

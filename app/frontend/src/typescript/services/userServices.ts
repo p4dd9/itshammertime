@@ -10,7 +10,7 @@ export const sendBits = async (
 			bit_count: Number(transactionObject.product.cost),
 		});
 
-		await window.fetch('http://localhost:3535/usebits', {
+		await window.fetch('https://localhost:3535/usebits', {
 			method: 'POST',
 			body,
 			headers: {
@@ -23,15 +23,17 @@ export const sendBits = async (
 };
 
 export const loadUserData = async (
-	id: string
+	id: string,
+	token: string
 ): Promise<UserDTO | null | undefined> => {
 	try {
 		const response = await window.fetch(
-			`http://localhost:3535/user/${id}`,
+			`https://localhost:3535/user/${id}`,
 			{
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
+					Authorization: 'Bearer' + token,
 				},
 			}
 		);

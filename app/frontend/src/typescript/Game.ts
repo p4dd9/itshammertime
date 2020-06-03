@@ -34,6 +34,7 @@ export default class Game {
 	constructor(contexts: CanvasRenderingContext2D[]) {
 		this.contexts = contexts;
 		this.twitch = window.Twitch ? window.Twitch.ext : null;
+		this.authentication = new Authentication();
 		this.transaction = this.twitch ? new Transaction(this.twitch) : null;
 
 		this.debugger = new Debugger(contexts[LAYERS.BACK]);

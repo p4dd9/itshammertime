@@ -20,6 +20,8 @@ import { IVanillaColor } from '../interfaces/IVanillaPickerColor';
 import Picker from 'vanilla-picker';
 import ClassicHammer from './weapons/ClassicHammer';
 import PlantHammer from './weapons/PlantHammer';
+import { loadUserData } from './services/userServices';
+
 export default class UI {
 	private game: Game;
 	private effectSettings: IEffectSettings;
@@ -154,6 +156,16 @@ export default class UI {
 					document
 						.getElementById('ui-menu-button-image')
 						?.classList.toggle('rotate');
+				}
+			});
+
+			optionsContainer.addEventListener('mouseenter', async () => {
+				if (this.game.authentication?.isLoggedIn()) {
+					const userID = this.game.authentication?.getOpaqueId();
+					if (typeof userID === 'string') {
+						const user = await loadUserData(userID);
+						console.log(user);
+					}
 				}
 			});
 		}

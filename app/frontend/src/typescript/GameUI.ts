@@ -10,7 +10,6 @@ import { IVanillaColor } from '../interfaces/IVanillaPickerColor';
 import Picker from 'vanilla-picker';
 import ClassicHammer from './weapons/ClassicHammer';
 import PlantHammer from './weapons/PlantHammer';
-import { loadUserData } from './services/userServices';
 import Menu from './ui/Menu';
 import AudioButton from './ui/AudioButton';
 import FaqButton from './ui/FaqButton';
@@ -29,10 +28,9 @@ export default class UI {
 		this.game = game;
 		this.effectSettings = effectSettings;
 
-		this.menu = new Menu();
+		this.menu = new Menu(this.game.authentication);
 		this.audioButton = new AudioButton(this.game.audio);
 		this.faqButton = new FaqButton();
-		this.initCanvasEvents();
 		this.initEnchantmentsButton();
 		this.showUI();
 	}
@@ -127,47 +125,6 @@ export default class UI {
 					}
 				);
 			}
-		}
-	}
-
-	private initCanvasEvents(): void {
-		const optionsContainer = document.getElementById('ui-options');
-
-		if (optionsContainer instanceof HTMLElement) {
-			window.addEventListener('click', (event: MouseEvent) => {
-				const isMenuOpen = document
-					.getElementById('ui-menu-item-list')
-					?.classList.contains('open');
-				if (!isMenuOpen) return;
-
-				const clickedOutSideOptionsContainer = optionsContainer.contains(
-					event.target as Node
-				);
-				if (!clickedOutSideOptionsContainer) {
-					document
-						.getElementById('ui-menu-item-list')
-						?.classList.remove('open');
-					document
-						.getElementById('ui-menu-button-image')
-						?.classList.toggle('rotate');
-				}
-			});
-
-			optionsContainer.addEventListener('mouseenter', async () => {
-				if (
-					this.game.authentication?.isLoggedIn() &&
-					this.game.authentication.isAuthenticated()
-				) {
-					const userID = this.game.authentication?.getOpaqueId();
-					if (typeof userID === 'string') {
-						const user = await loadUserData(
-							userID,
-							this.game.authentication.state.token
-						);
-						console.log(user);
-					}
-				}
-			});
 		}
 	}
 

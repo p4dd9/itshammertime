@@ -17,7 +17,7 @@ export default class GameAudio {
 
 	set volumeIndex(volumeIndex: number) {
 		this._volumeIndex = volumeIndex;
-		this.game.ui.setAudioButtonImage(volumeIndex);
+		this.game.ui.audiobutton.setAudioButtonImage(volumeIndex);
 	}
 
 	public playSoundOverlap(audio: HTMLAudioElement): void {

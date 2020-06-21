@@ -1,16 +1,7 @@
 import Game from './Game';
-import GameAudio from './GameAudio';
-import LocalStorageUtil from '../util/LocalStorageUtil';
 import { setImg } from '../util/commonUtil';
 import IEffectSettings from '../interfaces/IEffectSettings';
 
-import VolumeOn from '../assets/audio/volume-on.wav';
-import VolumeLowImage from '../assets/icons/volume-low.svg';
-import VolumeOffImage from '../assets/icons/volume-mute.svg';
-import VolumeMediumImage from '../assets/icons/volume-medium.svg';
-import VolumeHighImage from '../assets/icons/volume-high.svg';
-
-import PlankBackgroundImage from '../assets/images/plank.png';
 import HammerImage from '../assets/images/hammer_preview.png';
 import GreenHammerImage from '../assets/images/planthammer_preview.png';
 import FaqImage from '../assets/images/faq_questionmark.png';
@@ -21,6 +12,8 @@ import Picker from 'vanilla-picker';
 import ClassicHammer from './weapons/ClassicHammer';
 import PlantHammer from './weapons/PlantHammer';
 import { loadUserData } from './services/userServices';
+import Menu from './ui/Menu';
+import AudioButton from './ui/AudioButton';
 
 export default class UI {
 	private game: Game;
@@ -28,15 +21,15 @@ export default class UI {
 	private throttleId: undefined | number = undefined;
 	private delay = 55;
 
+	public menu: Menu;
+	public audiobutton: AudioButton;
+
 	constructor(game: Game, effectSettings: IEffectSettings) {
 		this.game = game;
 		this.effectSettings = effectSettings;
-		this.start();
-	}
 
-	private start(): void {
-		this.initMenuButton();
-		this.initAudioButton();
+		this.menu = new Menu();
+		this.audiobutton = new AudioButton(this.game.audio);
 		this.initFaqButton();
 		this.initCanvasEvents();
 		this.initEnchantmentsButton();
@@ -186,23 +179,6 @@ export default class UI {
 		}
 	}
 
-	private initMenuButton(): void {
-		const menuButton = document.getElementById('ui-menu-button');
-
-		if (menuButton instanceof HTMLButtonElement) {
-			const menuList = document.getElementById(
-				'ui-menu-item-list'
-			) as HTMLUListElement;
-
-			menuList.style.backgroundImage = `url("${PlankBackgroundImage}")`;
-
-			menuButton.addEventListener('click', () => {
-				menuButton.classList.toggle('rotate');
-				menuList.classList.toggle('open');
-			});
-		}
-	}
-
 	private initHammerBits(): void {
 		const hammerOptionsButtonImage = document.getElementById(
 			'ui-hammer-options-button-image'
@@ -309,56 +285,6 @@ export default class UI {
 							);
 						}
 					});
-				}
-			}
-		}
-	}
-
-	private initAudioButton(): void {
-		const audioButton = document.getElementById('ui-audio-button');
-
-		const volumeIndex = LocalStorageUtil.initVolumeIndex();
-		this.setAudioButtonImage(volumeIndex);
-		const volumeSound = new Audio();
-		volumeSound.src = VolumeOn;
-
-		if (audioButton instanceof HTMLButtonElement) {
-			audioButton.addEventListener('click', () => {
-				const newVolumeIndex: number =
-					(this.game.audio.volumeIndex + 1) %
-					GameAudio.volumeRange.length;
-
-				this.game.audio.volumeIndex = newVolumeIndex;
-				volumeSound.volume =
-					GameAudio.volumeRange[newVolumeIndex] +
-					(newVolumeIndex === 0 ? 0 : 0.35);
-				LocalStorageUtil.setVolumeIndex(newVolumeIndex);
-				this.game.audio.playSoundOverlap(volumeSound);
-			});
-		}
-	}
-
-	public setAudioButtonImage(volumeIndex: number): void {
-		const audioButtonImage = document.getElementById(
-			'ui-audio-button-image'
-		);
-		if (audioButtonImage instanceof HTMLImageElement) {
-			switch (volumeIndex) {
-				case 0: {
-					audioButtonImage.src = VolumeOffImage;
-					break;
-				}
-				case 1: {
-					audioButtonImage.src = VolumeLowImage;
-					break;
-				}
-				case 2: {
-					audioButtonImage.src = VolumeMediumImage;
-					break;
-				}
-				case 3: {
-					audioButtonImage.src = VolumeHighImage;
-					break;
 				}
 			}
 		}

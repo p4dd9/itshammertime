@@ -32,7 +32,7 @@ export default class UI {
 		this.audioButton = new AudioButton(this.game.audio);
 		this.faqButton = new FaqButton();
 		this.initEnchantmentsButton();
-		this.showUI();
+		this.show();
 	}
 
 	public async initHammerOptions(): Promise<void> {
@@ -41,11 +41,10 @@ export default class UI {
 		this.initProducts();
 	}
 
-	private showUI(): void {
-		const ui = document.getElementById('ui-layer');
-		if (ui instanceof HTMLDivElement) {
-			ui.style.visibility = 'visible';
-		}
+	private show(): void {
+		(document.getElementById(
+			'ui-layer'
+		) as HTMLDivElement).style.visibility = 'visible';
 	}
 
 	private throttle = (callback: () => void, delay: number): void => {

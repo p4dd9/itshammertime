@@ -37,6 +37,11 @@ export default class Menu {
 
 	public stop(): void {
 		this.button.removeEventListener('click', this.onButtonClick);
+		this.listWrapper.removeEventListener(
+			'mouseenter',
+			this.onListWrapperMouseEnter
+		);
+		window.removeEventListener('click', this.onWindowClick);
 	}
 
 	private async onListWrapperMouseEnter(): Promise<void> {

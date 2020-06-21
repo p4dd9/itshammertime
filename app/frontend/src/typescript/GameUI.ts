@@ -4,7 +4,6 @@ import IEffectSettings from '../interfaces/IEffectSettings';
 
 import HammerImage from '../assets/images/hammer_preview.png';
 import GreenHammerImage from '../assets/images/planthammer_preview.png';
-import FaqImage from '../assets/images/faq_questionmark.png';
 import BookImage from '../assets/images/book.png';
 
 import { IVanillaColor } from '../interfaces/IVanillaPickerColor';
@@ -14,6 +13,7 @@ import PlantHammer from './weapons/PlantHammer';
 import { loadUserData } from './services/userServices';
 import Menu from './ui/Menu';
 import AudioButton from './ui/AudioButton';
+import FaqButton from './ui/FaqButton';
 
 export default class UI {
 	private game: Game;
@@ -22,15 +22,16 @@ export default class UI {
 	private delay = 55;
 
 	public menu: Menu;
-	public audiobutton: AudioButton;
+	public audioButton: AudioButton;
+	public faqButton: FaqButton;
 
 	constructor(game: Game, effectSettings: IEffectSettings) {
 		this.game = game;
 		this.effectSettings = effectSettings;
 
 		this.menu = new Menu();
-		this.audiobutton = new AudioButton(this.game.audio);
-		this.initFaqButton();
+		this.audioButton = new AudioButton(this.game.audio);
+		this.faqButton = new FaqButton();
 		this.initCanvasEvents();
 		this.initEnchantmentsButton();
 		this.showUI();
@@ -167,15 +168,6 @@ export default class UI {
 					}
 				}
 			});
-		}
-	}
-
-	private initFaqButton(): void {
-		const faqButton = document.getElementById('ui-faq-button');
-
-		if (faqButton instanceof HTMLButtonElement) {
-			const faqButtonImage = faqButton.firstElementChild as HTMLImageElement;
-			faqButtonImage.src = FaqImage;
 		}
 	}
 

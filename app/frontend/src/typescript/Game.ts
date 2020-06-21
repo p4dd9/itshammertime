@@ -63,6 +63,15 @@ export default class Game {
 				this.ui.initHammerOptions();
 			}
 		});
+
+		document.addEventListener('mouseleave', () => {
+			this.stop();
+		});
+
+		document.addEventListener('mouseenter', () => {
+			this.stop();
+			this.start();
+		});
 	}
 
 	private onAuthorizedChanged(auth: {

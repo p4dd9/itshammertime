@@ -4,34 +4,31 @@ import IEffectSettings from '../interfaces/IEffectSettings';
 
 import HammerImage from '../assets/images/hammer_preview.png';
 import GreenHammerImage from '../assets/images/planthammer_preview.png';
-import BookImage from '../assets/images/book.png';
 
-import { IVanillaColor } from '../interfaces/IVanillaPickerColor';
-import Picker from 'vanilla-picker';
 import ClassicHammer from './weapons/ClassicHammer';
 import PlantHammer from './weapons/PlantHammer';
 import Menu from './ui/Menu';
 import AudioButton from './ui/AudioButton';
 import FaqButton from './ui/FaqButton';
+import Enchantments from './ui/Enchantments';
 
 export default class UI {
 	private game: Game;
 	private effectSettings: IEffectSettings;
-	private throttleId: undefined | number = undefined;
-	private delay = 55;
 
 	public menu: Menu;
 	public audioButton: AudioButton;
 	public faqButton: FaqButton;
+	public enchantments: Enchantments;
 
 	constructor(game: Game, effectSettings: IEffectSettings) {
 		this.game = game;
 		this.effectSettings = effectSettings;
 
-		this.menu = new Menu(this.game.authentication);
-		this.audioButton = new AudioButton(this.game.audio);
+		this.menu = new Menu(game.authentication);
+		this.audioButton = new AudioButton(game.audio);
 		this.faqButton = new FaqButton();
-		this.initEnchantmentsButton();
+		this.enchantments = new Enchantments(game, effectSettings);
 		this.show();
 	}
 
@@ -45,86 +42,6 @@ export default class UI {
 		(document.getElementById(
 			'ui-layer'
 		) as HTMLDivElement).style.visibility = 'visible';
-	}
-
-	private throttle = (callback: () => void, delay: number): void => {
-		if (this.throttleId) {
-			return;
-		}
-
-		this.throttleId = window.setTimeout(() => {
-			callback();
-			this.throttleId = undefined;
-		}, delay);
-	};
-
-	private initEnchantmentsButton(): void {
-		const enchantmentsButton = document.getElementById(
-			'ui-enchantments-button'
-		);
-		const enchantmentColorButtons = document.getElementsByClassName(
-			'ui-enchantments-color-button'
-		);
-		const enchantmentShapeButtons = document.getElementsByClassName(
-			'ui-hintpage-enchantment-button'
-		);
-
-		const enchantmentColorPicker = document.getElementById(
-			'ui-enchantments-color-picker'
-		);
-
-		if (enchantmentsButton instanceof HTMLButtonElement) {
-			const enchantmentsButtonImage = enchantmentsButton.firstElementChild as HTMLImageElement;
-			enchantmentsButtonImage.src = BookImage;
-		}
-
-		if (enchantmentColorPicker instanceof HTMLDivElement) {
-			const picker = new Picker(enchantmentColorPicker);
-			picker.onChange = (color: IVanillaColor): void => {
-				this.throttle(() => {
-					enchantmentColorPicker.style.backgroundColor =
-						color.rgbaString;
-					this.effectSettings.particleTheme = color.rgbaString;
-					this.game.weapon.moveTo(this.game.center());
-					this.game.weapon.use();
-				}, this.delay);
-			};
-
-			picker.onClose = (): void => {
-				clearTimeout(this.throttleId);
-			};
-		}
-
-		for (const enchantmentColorButton of Array.from(
-			enchantmentColorButtons
-		)) {
-			if (enchantmentColorButton instanceof HTMLButtonElement) {
-				enchantmentColorButton.addEventListener(
-					'click',
-					(event: MouseEvent) => {
-						this.effectSettings.particleTheme = (event.target as HTMLButtonElement).value;
-						this.game.weapon.moveTo(this.game.center());
-						this.game.weapon.use();
-					}
-				);
-			}
-		}
-
-		for (const enchantmentShapeButton of Array.from(
-			enchantmentShapeButtons
-		)) {
-			if (enchantmentShapeButton instanceof HTMLButtonElement) {
-				enchantmentShapeButton.addEventListener(
-					'click',
-					(event: MouseEvent) => {
-						this.effectSettings.shape = (event.target as HTMLButtonElement)
-							.value as 'circle' | 'star' | 'square';
-						this.game.weapon.moveTo(this.game.center());
-						this.game.weapon.use();
-					}
-				);
-			}
-		}
 	}
 
 	private initHammerBits(): void {

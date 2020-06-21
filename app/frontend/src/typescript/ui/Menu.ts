@@ -6,9 +6,6 @@ export default class Menu {
 	private button: HTMLButtonElement = document.getElementById(
 		'ui-menu-button'
 	) as HTMLButtonElement;
-	private buttonImage: HTMLButtonElement = document.getElementById(
-		'ui-menu-button-image'
-	) as HTMLButtonElement;
 	private list: HTMLUListElement = document.getElementById(
 		'ui-menu-item-list'
 	) as HTMLUListElement;
@@ -27,6 +24,7 @@ export default class Menu {
 	}
 
 	public start(): void {
+		this.list.style.backgroundImage = `url("${PlankBackgroundImage}")`;
 		this.button.addEventListener('click', this.onButtonClick);
 		this.listWrapper.addEventListener(
 			'mouseenter',
@@ -70,12 +68,11 @@ export default class Menu {
 
 		if (!clickedOutSideOptionsContainer) {
 			this.list.classList.remove('open');
-			this.buttonImage.classList.toggle('rotate');
+			this.button.classList.toggle('rotate');
 		}
 	}
 
 	private onButtonClick(): void {
-		this.list.style.backgroundImage = `url("${PlankBackgroundImage}")`;
 		this.button.classList.toggle('rotate');
 		this.list.classList.toggle('open');
 	}

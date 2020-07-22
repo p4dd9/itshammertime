@@ -12,11 +12,7 @@ export default class CursorManager implements Input {
 	private mouseDownID: number | undefined;
 	private delay = 55;
 
-	constructor(
-		gameInput: Controller,
-		weapon: Weapon,
-		context: CanvasRenderingContext2D
-	) {
+	constructor(gameInput: Controller, weapon: Weapon, context: CanvasRenderingContext2D) {
 		this.context = context;
 
 		this.position = {
@@ -39,37 +35,22 @@ export default class CursorManager implements Input {
 		this.context.canvas.addEventListener('mousemove', this.handleMouseMove);
 		this.context.canvas.addEventListener('mousedown', this.handleMouseDown);
 		this.context.canvas.addEventListener('mouseup', this.handleMouseUp);
-		this.context.canvas.addEventListener(
-			'mouseleave',
-			this.handleMouseLeave
-		);
+		this.context.canvas.addEventListener('mouseleave', this.handleMouseLeave);
 	}
 
 	public stop(): void {
-		this.context.canvas.removeEventListener(
-			'mousemove',
-			this.handleMouseMove
-		);
+		this.context.canvas.removeEventListener('mousemove', this.handleMouseMove);
 
-		this.context.canvas.removeEventListener(
-			'mousedown',
-			this.handleMouseDown
-		);
+		this.context.canvas.removeEventListener('mousedown', this.handleMouseDown);
 
 		this.context.canvas.removeEventListener('mouseup', this.handleMouseUp);
-		this.context.canvas.removeEventListener(
-			'mouseleave',
-			this.handleMouseLeave
-		);
+		this.context.canvas.removeEventListener('mouseleave', this.handleMouseLeave);
 		clearInterval(this.mouseDownID);
 	}
 
 	private handleMouseDown(): void {
 		if (this.mouseDownID === undefined) {
-			this.mouseDownID = window.setInterval(
-				() => this.weapon.use(),
-				this.delay
-			);
+			this.mouseDownID = window.setInterval(() => this.weapon.use(), this.delay);
 		}
 	}
 

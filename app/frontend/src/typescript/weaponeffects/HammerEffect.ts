@@ -8,7 +8,7 @@ import GameAudio from '../GameAudio';
 import IGameImageAsset from '../../interfaces/IGameImageAsset';
 
 export default class HammerEffect extends WeaponEffect {
-	public static lifeTime = 2000; // ms
+	public static lifeTime = 2000;
 
 	public audioAssets = hammerAudioAssets;
 
@@ -35,14 +35,7 @@ export default class HammerEffect extends WeaponEffect {
 		gameAudio: GameAudio,
 		hammerImageAssets: Map<string, IGameImageAsset>
 	) {
-		super(
-			contexts,
-			position,
-			effectSettings,
-			gameAudio,
-			hammerImageAssets,
-			hammerAudioAssets
-		);
+		super(contexts, position, effectSettings, gameAudio, hammerImageAssets, hammerAudioAssets);
 	}
 
 	private getRandomAlphaValue(min = 0.5, max = 0.8): number {
@@ -59,10 +52,8 @@ export default class HammerEffect extends WeaponEffect {
 			this.generateParticles();
 		}
 
-		const scaledWidth =
-			this.currentImage.image.width / this.currentImage.scaleOnCanvas;
-		const scaledHeight =
-			this.currentImage.image.height / this.currentImage.scaleOnCanvas;
+		const scaledWidth = this.currentImage.image.width / this.currentImage.scaleOnCanvas;
+		const scaledHeight = this.currentImage.image.height / this.currentImage.scaleOnCanvas;
 
 		const canvasX = this.effectPosition.x - scaledWidth / 2;
 		const canvasY = this.effectPosition.y - scaledHeight / 2;
@@ -85,10 +76,7 @@ export default class HammerEffect extends WeaponEffect {
 	private getColorFromTheme(index: number): string | string[] {
 		switch (this.effectSettings.particleTheme) {
 			case 'party': {
-				return this.getRandomDistinctColorCode(
-					this.particleSettings.density,
-					index
-				);
+				return this.getRandomDistinctColorCode(this.particleSettings.density, index);
 			}
 			case 'glass': {
 				return ['white', '#66A0D0'];
@@ -106,10 +94,8 @@ export default class HammerEffect extends WeaponEffect {
 		}
 		let particlesIndex = 0;
 
-		const scaledWidth =
-			this.currentImage.image.width / this.currentImage.scaleOnCanvas;
-		const scaledHeight =
-			this.currentImage.image.height / this.currentImage.scaleOnCanvas;
+		const scaledWidth = this.currentImage.image.width / this.currentImage.scaleOnCanvas;
+		const scaledHeight = this.currentImage.image.height / this.currentImage.scaleOnCanvas;
 
 		const canvasX = this.effectPosition.x - scaledWidth / 2;
 		const canvasY = this.effectPosition.y - scaledHeight / 2;
@@ -134,10 +120,7 @@ export default class HammerEffect extends WeaponEffect {
 		this.particlesLoaded = true;
 	}
 
-	private getRandomDistinctColorCode(
-		numOfSteps: number,
-		step: number
-	): string {
+	private getRandomDistinctColorCode(numOfSteps: number, step: number): string {
 		let r, g, b;
 		const h = step / numOfSteps;
 		const i = ~~(h * 6);
@@ -189,9 +172,7 @@ export default class HammerEffect extends WeaponEffect {
 	private drawParticles(): void {
 		if (this.effectSettings.particleTheme === 'glass') {
 			this.contexts[LAYERS.FRONT].save();
-			this.contexts[
-				LAYERS.FRONT
-			].globalAlpha = this.getRandomAlphaValue();
+			this.contexts[LAYERS.FRONT].globalAlpha = this.getRandomAlphaValue();
 		}
 
 		for (const particleKey in this.particles) {

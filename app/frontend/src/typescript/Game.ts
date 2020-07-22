@@ -21,6 +21,7 @@ export default class Game {
 	public twitch: Extension | null;
 	public authentication: Authentication | null = null;
 	public transaction: Transaction | null;
+	public activated = false;
 
 	private controller: Controller;
 
@@ -41,18 +42,14 @@ export default class Game {
 		this.audio = new GameAudio(this);
 		this.ui = new UI(this, this.effectSettings);
 
-		const weapon = new ClassicHammer(
-			contexts,
-			this.center(),
-			this.effectSettings,
-			this.audio
-		);
+		const weapon = new ClassicHammer(contexts, this.center(), this.effectSettings, this.audio);
 		this._weapon = weapon;
 		this.controller = new Controller(weapon, this.contexts[LAYERS.FRONT]);
 		this.step = this.step.bind(this);
 
 		// TODO: refactor this
 		this.addOnResizeListener();
+
 		this.twitch?.onContext((context, delta) => {
 			this.contextUpdate(context, delta);
 		});
@@ -107,6 +104,8 @@ export default class Game {
 	}
 
 	public resize(): void {
+		if (!this.activated) return;
+
 		const resizeWidth = window.innerWidth;
 		const resizeHeight = window.innerHeight;
 
@@ -148,8 +147,11 @@ export default class Game {
 	}
 
 	public start(): void {
-		this.frameId = window.requestAnimationFrame(this.step);
-		this.controller.start();
+		console.log(this.activated);
+		if (this.activated) {
+			this.frameId = window.requestAnimationFrame(this.step);
+			this.controller.start();
+		}
 	}
 
 	public stop(): void {

@@ -10,6 +10,7 @@ import Menu from './ui/Menu';
 import AudioButton from './ui/AudioButton';
 import FaqButton from './ui/FaqButton';
 import Enchantments from './ui/Enchantments';
+import GameStartStopButton from './ui/GameStartStopButton';
 
 export default class UI {
 	private game: Game;
@@ -19,6 +20,7 @@ export default class UI {
 	public audioButton: AudioButton;
 	public faqButton: FaqButton;
 	public enchantments: Enchantments;
+	public gameStartStopButton: GameStartStopButton;
 
 	constructor(game: Game, effectSettings: IEffectSettings) {
 		this.game = game;
@@ -27,6 +29,7 @@ export default class UI {
 		this.menu = new Menu(game.authentication);
 		this.audioButton = new AudioButton(game.audio);
 		this.faqButton = new FaqButton();
+		this.gameStartStopButton = new GameStartStopButton(game);
 		this.enchantments = new Enchantments(game, effectSettings);
 		this.show();
 	}

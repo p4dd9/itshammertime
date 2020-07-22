@@ -2,10 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1, shrink-to-fit=no"
-		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
 		<title><%= htmlWebpackPlugin.options.title %></title>
 	</head>
@@ -13,6 +10,9 @@
 		<div id="root">
 			<div id="game-layer"></div>
 
+			<div>
+				<button id="ui-activate-button"></button>
+			</div>
 			<div id="ui-layer">
 				<div id="ui-options">
 					<div id="ui-menu-button-cursor-wrapper">
@@ -22,27 +22,15 @@
 					<ul id="ui-menu-item-list">
 						<li class="ui-menu-item">
 							<button id="ui-audio-button" class="ui-button">
-								<img
-									id="ui-audio-button-image"
-									alt="audio control"
-								/>
+								<img id="ui-audio-button-image" alt="audio control" />
 							</button>
 
 							<div id="ui-enchantments" class="ui-hint-container">
-								<button
-									id="ui-enchantments-button"
-									class="ui-button"
-								>
-									<img
-										id="ui-enchantments-button-image"
-										alt="enchantments"
-									/>
+								<button id="ui-enchantments-button" class="ui-button">
+									<img id="ui-enchantments-button-image" alt="enchantments" />
 								</button>
 
-								<div
-									id="ui-enchantments-button-hint"
-									class="ui-button-hint"
-								>
+								<div id="ui-enchantments-button-hint" class="ui-button-hint">
 									<div class="ui-button-hint-page">
 										<h5 class="ui-button-hintpage-title">
 											Color
@@ -111,10 +99,7 @@
 									<img id="ui-faq-button-image" alt="faq" />
 								</button>
 
-								<div
-									id="ui-faq-button-hint"
-									class="ui-button-hint"
-								>
+								<div id="ui-faq-button-hint" class="ui-button-hint">
 									<div class="ui-button-hint-page">
 										<h5 class="ui-button-hintpage-title">
 											Guide

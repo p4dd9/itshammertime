@@ -5,6 +5,6 @@ import { create2DRenderingContexts } from '../util/commonUtil';
 
 window.onload = (): void => {
 	const contexts = create2DRenderingContexts();
-	const game: Game = new Game(contexts);
-	game.start();
+	new Game(contexts);
+	// game.start();
 };

@@ -4,10 +4,8 @@ import LetterImage from '../assets/images/letter.png';
 
 window.onload = (): void => {
 	const logoImage = document.getElementById('logo') as HTMLImageElement;
-	logoImage.src = LogoImage;
+	const letterImage = document.getElementById('contact-image') as HTMLImageElement;
 
-	const letterImage = document.getElementById(
-		'contact-image'
-	) as HTMLImageElement;
+	logoImage.src = LogoImage;
 	letterImage.src = LetterImage;
 };

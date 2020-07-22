@@ -7,9 +7,7 @@ import LocalStorageUtil from '../../util/LocalStorageUtil';
 import GameAudio from '../GameAudio';
 
 export default class AudioButton {
-	private button: HTMLElement = document.getElementById(
-		'ui-audio-button'
-	) as HTMLButtonElement;
+	private button: HTMLElement = document.getElementById('ui-audio-button') as HTMLButtonElement;
 	private buttonImage: HTMLImageElement = document.getElementById(
 		'ui-audio-button-image'
 	) as HTMLImageElement;
@@ -31,13 +29,11 @@ export default class AudioButton {
 	private onClick(): void {
 		const volumeSound = new Audio();
 		volumeSound.src = VolumeOn;
-		const newVolumeIndex: number =
-			(this.audio.volumeIndex + 1) % GameAudio.volumeRange.length;
+		const newVolumeIndex: number = (this.audio.volumeIndex + 1) % GameAudio.volumeRange.length;
 
 		this.audio.volumeIndex = newVolumeIndex;
 		volumeSound.volume =
-			GameAudio.volumeRange[newVolumeIndex] +
-			(newVolumeIndex === 0 ? 0 : 0.35);
+			GameAudio.volumeRange[newVolumeIndex] + (newVolumeIndex === 0 ? 0 : 0.35);
 		LocalStorageUtil.setVolumeIndex(newVolumeIndex);
 		this.audio.playSoundOverlap(volumeSound);
 	}

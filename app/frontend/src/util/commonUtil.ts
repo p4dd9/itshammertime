@@ -68,9 +68,3 @@ export function create2DRenderingContexts(): CanvasRenderingContext2D[] {
 
 	return contexts;
 }
-
-export function setImg(element: HTMLElement | null, image: string): void {
-	if (element instanceof HTMLImageElement) {
-		element.src = image;
-	}
-}

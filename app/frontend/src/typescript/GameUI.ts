@@ -1,5 +1,4 @@
 import Game from './Game';
-import { setImg } from '../util/commonUtil';
 import IEffectSettings from '../interfaces/IEffectSettings';
 
 import HammerImage from '../assets/images/hammer_preview.png';
@@ -39,35 +38,28 @@ export default class UI {
 	}
 
 	private show(): void {
-		(document.getElementById(
-			'ui-layer'
-		) as HTMLDivElement).style.visibility = 'visible';
+		(document.getElementById('ui-layer') as HTMLDivElement).style.visibility = 'visible';
 	}
 
 	private initHammerBits(): void {
 		const hammerOptionsButtonImage = document.getElementById(
 			'ui-hammer-options-button-image'
-		);
+		) as HTMLImageElement;
 
 		const classicHammerPreviewImage = document.getElementById(
 			'ui-hammer-options-preview-classic-image'
-		);
-
-		const classicHammerPreview = document.getElementById(
-			'ui-hammer-options-preview-classic'
-		);
+		) as HTMLImageElement;
 
 		const greenHammerPreviewImage = document.getElementById(
 			'ui-hammer-options-preview-green-image'
-		);
+		) as HTMLImageElement;
 
-		const greenHammerPreview = document.getElementById(
-			'ui-hammer-options-preview-green'
-		);
+		hammerOptionsButtonImage.src = HammerImage;
+		classicHammerPreviewImage.src = HammerImage;
+		greenHammerPreviewImage.src = GreenHammerImage;
 
-		setImg(hammerOptionsButtonImage, HammerImage);
-		setImg(classicHammerPreviewImage, HammerImage);
-		setImg(greenHammerPreviewImage, GreenHammerImage);
+		const classicHammerPreview = document.getElementById('ui-hammer-options-preview-classic');
+		const greenHammerPreview = document.getElementById('ui-hammer-options-preview-green');
 
 		if (classicHammerPreview) {
 			classicHammerPreview.addEventListener('click', () => {
@@ -106,9 +98,7 @@ export default class UI {
 						'ui-button-use-bits-planthammer'
 					);
 
-					const useBitsImage = document.getElementById(
-						'ui-button-use-bits-bit-icon'
-					);
+					const useBitsImage = document.getElementById('ui-button-use-bits-bit-icon');
 
 					const useBitsWrapper = document.getElementById(
 						'ui-button-use-bits-plant-wrapper'
@@ -127,12 +117,9 @@ export default class UI {
 						const twitchBitsActions = await twitchBitsActionsResponse.json();
 
 						if (useBitsWrapper instanceof HTMLElement) {
-							useBitsWrapper.addEventListener(
-								'mouseenter',
-								() => {
-									this.game.transaction?.showBitsBalance();
-								}
-							);
+							useBitsWrapper.addEventListener('mouseenter', () => {
+								this.game.transaction?.showBitsBalance();
+							});
 
 							useBitsWrapper.addEventListener('click', () => {
 								this.game.transaction?.useBits(product.sku);
@@ -145,9 +132,7 @@ export default class UI {
 						}
 
 						if (amountDisplayPlantHammer) {
-							amountDisplayPlantHammer.innerText = String(
-								product.cost.amount
-							);
+							amountDisplayPlantHammer.innerText = String(product.cost.amount);
 						}
 					});
 				}
@@ -156,9 +141,7 @@ export default class UI {
 	}
 
 	private async renderHammerOptions(): Promise<void> {
-		const hammerOptionsAnchor = document.getElementById(
-			'ui-hammer-options'
-		);
+		const hammerOptionsAnchor = document.getElementById('ui-hammer-options');
 		const templateString = (): string => {
 			return `
 				<div id="ui-hammer-options" class="ui-hint-container" >
@@ -234,10 +217,7 @@ export default class UI {
 		this.render(templateString, hammerOptionsAnchor);
 	}
 
-	private render = (
-		template: () => string,
-		node: HTMLElement | null
-	): void => {
+	private render = (template: () => string, node: HTMLElement | null): void => {
 		if (!(node instanceof HTMLElement)) return;
 		node.innerHTML = typeof template === 'function' ? template() : template;
 	};

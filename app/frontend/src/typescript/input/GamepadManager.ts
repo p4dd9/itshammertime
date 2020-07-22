@@ -23,9 +23,7 @@ export default class GamepadManager implements Input {
 		this.compatible = supportsGamepads();
 
 		this.handleGamepadConnected = this.handleGamepadConnected.bind(this);
-		this.handleGamepadDisconnected = this.handleGamepadDisconnected.bind(
-			this
-		);
+		this.handleGamepadDisconnected = this.handleGamepadDisconnected.bind(this);
 	}
 
 	public start(): void {
@@ -103,30 +101,18 @@ export default class GamepadManager implements Input {
 	}
 
 	private addGamepadConnectListener(): void {
-		window.addEventListener(
-			'gamepadconnected',
-			this.handleGamepadConnected
-		);
+		window.addEventListener('gamepadconnected', this.handleGamepadConnected);
 	}
 
 	private addGamepadDisconnectListener(): void {
-		window.addEventListener(
-			'gamepaddisconnected',
-			this.handleGamepadDisconnected
-		);
+		window.addEventListener('gamepaddisconnected', this.handleGamepadDisconnected);
 	}
 
 	private removeGamepadConnectListener(): void {
-		window.removeEventListener(
-			'gamepadconnected',
-			this.handleGamepadConnected
-		);
+		window.removeEventListener('gamepadconnected', this.handleGamepadConnected);
 	}
 
 	private removeGamepadDisconnectListener(): void {
-		window.removeEventListener(
-			'gamepaddisconnected',
-			this.handleGamepadDisconnected
-		);
+		window.removeEventListener('gamepaddisconnected', this.handleGamepadDisconnected);
 	}
 }

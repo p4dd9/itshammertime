@@ -53,22 +53,17 @@ export default class LocalStorageUtil {
 		return null;
 	}
 
-	public static setVolumeIndex(item: number): number  {
+	public static setVolumeIndex(item: number): number {
 		if (LocalStorageUtil.available()) {
-			window.localStorage.setItem(
-				LOCAL_STORAGE.volumeIndex,
-				String(item)
-			);
-		} 
+			window.localStorage.setItem(LOCAL_STORAGE.volumeIndex, String(item));
+		}
 		return item;
 	}
 
 	public static getVolumeIndex(): number | null {
 		if (LocalStorageUtil.available()) {
 			if (LocalStorageUtil.itemExists(LOCAL_STORAGE.volumeIndex)) {
-				return Number(
-					window.localStorage.getItem(LOCAL_STORAGE.volumeIndex)
-				);
+				return Number(window.localStorage.getItem(LOCAL_STORAGE.volumeIndex));
 			}
 		}
 		return null;
@@ -79,8 +74,7 @@ export default class LocalStorageUtil {
 			const volumeIndex = LocalStorageUtil.getVolumeIndex();
 
 			if (typeof volumeIndex !== 'number') {
-				LocalStorageUtil.setVolumeIndex(0);
-				return 0;
+				return LocalStorageUtil.setVolumeIndex(0);
 			} else {
 				return volumeIndex;
 			}

@@ -1,9 +1,7 @@
 import { TransactionObject } from '../../types/twitch';
 import UserDTO from '../../../../backend/src/dto/UserDTO';
 
-export const sendBits = async (
-	transactionObject: TransactionObject
-): Promise<void> => {
+export const sendBits = async (transactionObject: TransactionObject): Promise<void> => {
 	try {
 		const body = JSON.stringify({
 			id: String(transactionObject.userId),
@@ -27,16 +25,13 @@ export const loadUserData = async (
 	token: string
 ): Promise<UserDTO | null | undefined> => {
 	try {
-		const response = await window.fetch(
-			`https://localhost:3535/user/${id}`,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer' + token,
-				},
-			}
-		);
+		const response = await window.fetch(`https://localhost:3535/user/${id}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer' + token,
+			},
+		});
 
 		const user = await response.json();
 		return user;

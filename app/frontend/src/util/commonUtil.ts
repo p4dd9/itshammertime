@@ -41,9 +41,7 @@ export function isScreenSizeSupported(width: number, height: number): boolean {
 	return true;
 }
 
-export function getDisplayResolution(
-	displayResolution: string
-): IDisplayResolution {
+export function getDisplayResolution(displayResolution: string): IDisplayResolution {
 	const split = displayResolution.split('x');
 	return {
 		width: Number(split[0]),
@@ -51,10 +49,8 @@ export function getDisplayResolution(
 	};
 }
 
-export function injectCanvas(): CanvasRenderingContext2D[] {
-	const root: HTMLElement = document.getElementById(
-		'game-layer'
-	) as HTMLElement;
+export function create2DRenderingContexts(): CanvasRenderingContext2D[] {
+	const root: HTMLElement = document.getElementById('game-layer') as HTMLElement;
 	const height = window.innerHeight;
 	const width = window.innerWidth;
 
@@ -67,9 +63,7 @@ export function injectCanvas(): CanvasRenderingContext2D[] {
 		canvas.id = `layer-${i}`;
 		canvas.style.position = 'absolute';
 		const domElementAppened = root.appendChild(canvas);
-		contexts.push(
-			domElementAppened.getContext('2d') as CanvasRenderingContext2D
-		);
+		contexts.push(domElementAppened.getContext('2d') as CanvasRenderingContext2D);
 	}
 
 	return contexts;

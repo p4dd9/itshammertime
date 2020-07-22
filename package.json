@@ -4,8 +4,8 @@
 	"description": "",
 	"main": "webpack.config.js",
 	"scripts": {
-		"dev:frontend": "webpack-dev-server --mode development --hot",
-		"build:frontend": "webpack --mode production",
+		"dev:frontend": "webpack-dev-server --mode development --hot --colors",
+		"build:frontend": "webpack --mode production --colors",
 		"dev:backend": "tsc --esModuleInterop --watch ./app/backend/src/index.ts --outDir ./app/backend/dist",
 		"build:backend": "tsc --esModuleInterop ./app/backend/src/index.ts --outDir ./app/backend/dist",
 		"start:backend:server": "nodemon ./app/backend/dist/index.js",

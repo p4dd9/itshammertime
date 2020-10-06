@@ -51,19 +51,17 @@ export function getDisplayResolution(displayResolution: string): IDisplayResolut
 
 export function create2DRenderingContexts(): CanvasRenderingContext2D[] {
 	const root: HTMLElement = document.getElementById('game-layer') as HTMLElement;
-	const height = window.innerHeight;
-	const width = window.innerWidth;
+	const {innerHeight, innerWidth} = window;
 
 	const contexts = [];
 
 	for (let i = 0; i < 3; i++) {
 		const canvas = document.createElement('canvas');
-		canvas.width = width;
-		canvas.height = height;
+		canvas.width = innerHeight;
+		canvas.height = innerWidth;
 		canvas.id = `layer-${i}`;
 		canvas.style.position = 'absolute';
-		const domElementAppened = root.appendChild(canvas);
-		contexts.push(domElementAppened.getContext('2d') as CanvasRenderingContext2D);
+		contexts.push(root.appendChild(canvas).getContext('2d') as CanvasRenderingContext2D);
 	}
 
 	return contexts;

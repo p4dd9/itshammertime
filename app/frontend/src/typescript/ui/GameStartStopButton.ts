@@ -14,8 +14,6 @@ export default class GameStartStopButton {
 	}
 
 	private onClick(): void {
-		console.log('hi');
-
 		if (this.game.activated) {
 			this.game.activated = !this.game.activated;
 			this.button.innerText = 'show';

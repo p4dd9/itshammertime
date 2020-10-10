@@ -1,6 +1,10 @@
 import { TransactionObject } from '../../types/twitch';
 import UserDTO from '../../../../backend/src/dto/UserDTO';
 
+const protocol = 'https';
+const baseUrl = 'localhost';
+const port = 3535;
+
 export const sendBits = async (transactionObject: TransactionObject): Promise<void> => {
 	try {
 		const body = JSON.stringify({
@@ -8,7 +12,7 @@ export const sendBits = async (transactionObject: TransactionObject): Promise<vo
 			bit_count: Number(transactionObject.product.cost),
 		});
 
-		await window.fetch('https://localhost:3535/usebits', {
+		await window.fetch(`${protocol}://${baseUrl}:${port}/usebits`, {
 			method: 'POST',
 			body,
 			headers: {
@@ -25,7 +29,7 @@ export const loadUserData = async (
 	token: string
 ): Promise<UserDTO | null | undefined> => {
 	try {
-		const response = await window.fetch(`https://localhost:3535/user/${id}`, {
+		const response = await window.fetch(`${protocol}://${baseUrl}:${port}/user/${id}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -33,8 +37,7 @@ export const loadUserData = async (
 			},
 		});
 
-		const user = await response.json();
-		return user;
+		return await response.json();
 	} catch (e) {
 		throw new Error(e);
 	}

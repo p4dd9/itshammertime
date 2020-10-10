@@ -1,18 +1,19 @@
 import FaqImage from '../../assets/images/faq_questionmark.png';
 
 export default class FaqButton {
-	private button: HTMLElement = document.getElementById(
+	private button: HTMLButtonElement = document.getElementById(
 		'ui-faq-button'
 	) as HTMLButtonElement;
+	private buttonImage: HTMLImageElement = document.getElementById(
+		'ui-faq-button-image'
+	) as HTMLImageElement;
 
 	constructor() {
 		this.start();
 	}
 
 	public start(): void {
-		const faqButtonImage = this.button
-			.firstElementChild as HTMLImageElement;
-		faqButtonImage.src = FaqImage;
+		this.buttonImage.src = FaqImage
 	}
 
 	public hide(): void {

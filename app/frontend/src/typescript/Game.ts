@@ -54,7 +54,7 @@ export default class Game {
 			this.contextUpdate(context, delta);
 		});
 
-		this.twitch?.onAuthorized((auth) => {
+		this.twitch?.onAuthorized(async (auth) => {
 			this.onAuthorizedChanged(auth);
 			if (this.twitch?.features.isBitsEnabled) {
 				this.ui.initShop();

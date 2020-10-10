@@ -37,6 +37,10 @@ body {
 	}
 }
 
+#ui-shop-preview-green {
+	filter: grayscale(1);
+}
+
 #ui-activate-button {
 	background-color: red;
 	color: green;
@@ -75,7 +79,7 @@ body {
 	border-radius: 4px;
 	left: 50%;
 	transform: translateX(-50%);
-	top: 10px;
+	bottom: 17px;
 }
 
 #ui-shop-sidemenu {
@@ -207,7 +211,6 @@ body {
 		width: 50%;
 	}
 }
-
 
 .ui-sidemenu-page-title {
 	margin-bottom: 7px;

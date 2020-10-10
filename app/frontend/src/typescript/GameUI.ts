@@ -11,6 +11,7 @@ import AudioButton from './ui/AudioButton';
 import FaqButton from './ui/FaqButton';
 import Enchantments from './ui/Enchantments';
 import GameStartStopButton from './ui/GameStartStopButton';
+import { hasUsedBits } from './services/userServices';
 
 export default class UI {
 	private game: Game;
@@ -46,10 +47,8 @@ export default class UI {
 		this.addGreenHammerShopProduct();
 	}
 
-	private initProductPreviewImageSources(): void  {
-		(document.getElementById(
-			'ui-shop-button-image'
-		) as HTMLImageElement).src = HammerImage;
+	private initProductPreviewImageSources(): void {
+		(document.getElementById('ui-shop-button-image') as HTMLImageElement).src = HammerImage;
 
 		(document.getElementById(
 			'ui-shop-preview-classic-image'
@@ -58,7 +57,6 @@ export default class UI {
 		(document.getElementById(
 			'ui-shop-preview-green-image'
 		) as HTMLImageElement).src = GreenHammerImage;
-
 	}
 
 	private addClassicHammerShopProduct(): void {
@@ -96,18 +94,41 @@ export default class UI {
 					const useBitsWrapper = document.getElementById(
 						'ui-button-use-bits-plant-wrapper'
 					);
-
-					this.game.twitch?.onAuthorized(async (auth) => {
-						const twitchBitsActions = await this.fetchCheerEmotes(auth.clientId);
-						if (useBitsWrapper instanceof HTMLElement) {
-							this.renderProductBitImage(twitchBitsActions.actions[0].tiers[1].images.light.static[1])
-							this.renderProductCost(document.getElementById(
-								'ui-button-use-bits-planthammer'
-							), product.cost.amount);
-							this.addBitsBalanceListener(useBitsWrapper);
-							this.addUseBitsListener(useBitsWrapper, product.sku);
+					let usedBits = false;
+					if (
+						this.game.authentication?.isLoggedIn() &&
+						this.game.authentication.isAuthenticated()
+					) {
+						const userID = this.game.authentication?.getOpaqueId();
+						if (typeof userID === 'string') {
+							usedBits = await hasUsedBits(
+								userID,
+								this.game.authentication.state.token
+							);
 						}
-					});
+					}
+
+					if (usedBits) {
+						(document.getElementById(
+							'ui-shop-preview-green'
+						) as HTMLElement).style.filter = 'none';
+					} else {
+						this.game.twitch?.onAuthorized(async (auth) => {
+							const twitchBitsActions = await this.fetchCheerEmotes(auth.clientId);
+							if (useBitsWrapper instanceof HTMLElement) {
+								await this.renderUseBitsButton();
+								this.renderProductBitImage(
+									twitchBitsActions.actions[0].tiers[1].images.light.static[1]
+								);
+								this.renderProductCost(
+									document.getElementById('ui-button-use-bits-planthammer'),
+									product.cost.amount
+								);
+								this.addBitsBalanceListener(useBitsWrapper);
+								this.addUseBitsListener(useBitsWrapper, product.sku);
+							}
+						});
+					}
 				}
 			}
 		}
@@ -118,7 +139,7 @@ export default class UI {
 	}
 
 	private renderProductCost(element: HTMLElement | null, price: number): void {
-		if(element) {
+		if (element) {
 			element.innerText = String(price);
 		}
 	}
@@ -131,13 +152,13 @@ export default class UI {
 				{
 					headers: {
 						'Client-ID': clientId,
-						'Accept':' application/vnd.twitchtv.v5+json'
+						Accept: ' application/vnd.twitchtv.v5+json',
 					},
 				}
 			);
-	
+
 			return await twitchBitsActionsResponse.json();
-		} catch(e) {
+		} catch (e) {
 			console.log(e);
 		}
 	}
@@ -152,6 +173,24 @@ export default class UI {
 		element.addEventListener('mouseenter', () => {
 			this.game.transaction?.showBitsBalance();
 		});
+	}
+
+	private async renderUseBitsButton(): Promise<void> {
+		const useBitsButtonAnchor = document.getElementById('ui-button-use-bits-plant-wrapper');
+
+		const templateString = (): string => {
+			return `
+					<div class="ui-button-use-bits-content-wrapper">
+						<img
+							id="ui-button-use-bits-bit-icon"
+							alt="use-bits"
+						/>
+						<div id="ui-button-use-bits-planthammer"></div>
+					</div>
+			`;
+		};
+
+		this.render(templateString, useBitsButtonAnchor);
 	}
 
 	private async renderShop(): Promise<void> {
@@ -209,19 +248,7 @@ export default class UI {
 							<div
 								id="ui-button-use-bits-plant-wrapper"
 								class="ui-button-use-bits-wrapper"
-							>
-								<div
-									class="ui-button-use-bits-content-wrapper"
-								>
-									<img
-										id="ui-button-use-bits-bit-icon"
-										alt="use-bits"
-									/>
-									<div
-										id="ui-button-use-bits-planthammer"
-									></div>
-								</div>
-							</div>
+							></div>
 						</div>
 					</div>
 				<div>

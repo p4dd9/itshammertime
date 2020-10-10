@@ -1,7 +1,7 @@
 import { TransactionObject } from '../../types/twitch';
 import UserDTO from '../../../../backend/src/dto/UserDTO';
 
-const protocol = 'https';
+const protocol = 'http';
 const baseUrl = 'localhost';
 const port = 3535;
 
@@ -38,6 +38,18 @@ export const loadUserData = async (
 		});
 
 		return await response.json();
+	} catch (e) {
+		throw new Error(e);
+	}
+};
+
+export const hasUsedBits = async (id: string, token: string): Promise<boolean> => {
+	try {
+		const user = await loadUserData(id, token);
+		if (user) {
+			return user.bit_count > 0 ? true : false;
+		}
+		return false;
 	} catch (e) {
 		throw new Error(e);
 	}

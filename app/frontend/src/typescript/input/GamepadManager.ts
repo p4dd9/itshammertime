@@ -7,7 +7,7 @@ import Input from '../../interfaces/Input';
 import { supportsGamepads } from '../../util/commonUtil';
 
 export default class GamepadManager implements Input {
-	private gamepad: Gamepad | null = null;
+	private gamepad?: Gamepad | null = null;
 
 	private throttleId: undefined | number = undefined;
 	private delay = 95;

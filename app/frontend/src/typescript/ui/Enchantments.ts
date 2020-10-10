@@ -8,20 +8,24 @@ export default class Enchantments {
 	private game: Game;
 	private effectSettings: IEffectSettings;
 	private throttleId: undefined | number = undefined;
-	private delay = 55;
+	private static readonly colorOnChangeDelay = 55;
 
 	private menuButton = document.getElementById(
 		'ui-enchantments-button'
 	) as HTMLButtonElement;
+	private menuButtonImage = document.getElementById(
+		'ui-enchantments-button-image'
+	) as HTMLImageElement;
 	private colorButtons = document.getElementsByClassName(
 		'ui-enchantments-color-button'
 	) as HTMLCollectionOf<Element>;
 	private shapeButtons = document.getElementsByClassName(
 		'ui-hintpage-enchantment-button'
 	) as HTMLCollectionOf<Element>;
-	private colorPicker = document.getElementById(
+	private colorPickerElement = document.getElementById(
 		'ui-enchantments-color-picker'
 	) as HTMLElement;
+	private colorPicker = new Picker(this.colorPickerElement);
 
 	constructor(game: Game, effectSettings: IEffectSettings) {
 		this.game = game;
@@ -30,24 +34,33 @@ export default class Enchantments {
 	}
 
 	public start(): void {
-		const enchantmentsButtonImage = this.menuButton
-			.firstElementChild as HTMLImageElement;
-		enchantmentsButtonImage.src = BookImage;
+		this.menuButtonImage.src = BookImage;
+		
+		this.addColorPickerChangeListener();
+		this.addColorPickerOnCloseListener();
 
-		const picker = new Picker(this.colorPicker);
-		picker.onChange = (color: IVanillaColor): void => {
+		this.addColorChangePreviewListener();
+		this.addShapeChangePreviewListener();
+	}
+
+	private addColorPickerOnCloseListener(): void {
+		this.colorPicker.onClose = (): void => {
+			clearTimeout(this.throttleId);
+		};
+	}
+
+	private addColorPickerChangeListener(): void {
+		this.colorPicker.onChange = (color: IVanillaColor): void => {
 			this.throttle(() => {
-				this.colorPicker.style.backgroundColor = color.rgbaString;
+				this.colorPickerElement.style.backgroundColor = color.rgbaString;
 				this.effectSettings.particleTheme = color.rgbaString;
 				this.game.weapon.moveTo(this.game.center());
 				this.game.weapon.use();
-			}, this.delay);
+			}, Enchantments.colorOnChangeDelay);
 		};
+	}
 
-		picker.onClose = (): void => {
-			clearTimeout(this.throttleId);
-		};
-
+	private addColorChangePreviewListener(): void {
 		for (const enchantmentColorButton of Array.from(this.colorButtons)) {
 			if (enchantmentColorButton instanceof HTMLButtonElement) {
 				enchantmentColorButton.addEventListener(
@@ -60,7 +73,9 @@ export default class Enchantments {
 				);
 			}
 		}
+	}
 
+	private addShapeChangePreviewListener(): void {
 		for (const enchantmentShapeButton of Array.from(this.shapeButtons)) {
 			if (enchantmentShapeButton instanceof HTMLButtonElement) {
 				enchantmentShapeButton.addEventListener(
@@ -76,11 +91,11 @@ export default class Enchantments {
 		}
 	}
 
-	public hide(): void {
+	public hideMenuButton(): void {
 		this.menuButton.style.display = 'none';
 	}
 
-	public show(): void {
+	public showMenuButton(): void {
 		this.menuButton.style.display = 'block';
 	}
 

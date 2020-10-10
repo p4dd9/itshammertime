@@ -5,6 +5,18 @@ $gearImage: url('../assets/images/gear.png');
 $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
 
+// DebugOptions
+$showHammerUI: false;
+$showHammerUIHammers: false;
+$showHammerUIEnchantments: false;
+$showHammerUIFaq: false;
+
+@mixin showFlex($show: false) {
+	@if $show {
+		display: flex;
+	}
+}
+
 body {
 	@media only screen and (max-height: 450px) {
 		#ui-layer {
@@ -66,24 +78,33 @@ body {
 	top: 10px;
 }
 
-// #ui-hammer-options-button-hint {
-// 	display: flex; // toggle to perma display page hints
-// }
+#ui-shop-sidemenu {
+	@include showFlex($showHammerUIHammers);
+}
 
-.ui-hammer-options-preview-image {
+#ui-enchantments-sidemenu {
+	@include showFlex($showHammerUIEnchantments);
+}
+
+#ui-faq-sidemenu {
+	@include showFlex($showHammerUIFaq);
+}
+
+#ui-layer {
+	visibility: hidden;
+}
+
+.ui-shop-preview-image {
 	height: 90px;
 }
 
-.ui-button-hint-page {
+.ui-sidemenu-page {
+	padding: 15px;
 	position: relative;
 
 	&:hover {
 		cursor: pointer;
 	}
-}
-
-#ui-layer {
-	visibility: hidden;
 }
 
 #ui-enchantments-color-picker {
@@ -99,7 +120,11 @@ body {
 	top: 0;
 	padding-top: 110px;
 	height: 100%;
-	opacity: 0; // toggle to show
+	@if $showHammerUI {
+		opacity: 1;
+	} @else {
+		opacity: 0;
+	}
 	transition: all 0.25s;
 	left: 8px;
 }
@@ -163,7 +188,7 @@ body {
 }
 
 // HINT PAGE RELATED //
-.ui-button-hint {
+.ui-sidemenu {
 	position: absolute;
 	transform: translateX(70px) translateY(-50%);
 	background-image: $openBookImage;
@@ -183,17 +208,14 @@ body {
 	}
 }
 
-.ui-button-hint-page {
-	padding: 15px;
-}
 
-.ui-button-hintpage-title {
+.ui-sidemenu-page-title {
 	margin-bottom: 7px;
 	font-size: 16px;
 	color: $darkBrown;
 }
 
-.ui-button-hintpage-text {
+.ui-sidemenu-page-text {
 	color: $darkBrown;
 	text-align: left;
 	margin-bottom: 7px;
@@ -232,10 +254,10 @@ body {
 	font-weight: bold;
 }
 
-.ui-hint-container {
+.ui-menu-item-container {
 	width: 80px;
 
-	&:hover > .ui-button-hint {
+	&:hover > .ui-sidemenu {
 		display: flex;
 	}
 }

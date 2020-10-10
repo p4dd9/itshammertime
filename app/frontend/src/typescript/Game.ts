@@ -147,7 +147,6 @@ export default class Game {
 	}
 
 	public start(): void {
-		console.log(this.activated);
 		if (this.activated) {
 			this.frameId = window.requestAnimationFrame(this.step);
 			this.controller.start();

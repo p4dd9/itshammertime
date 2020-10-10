@@ -46,23 +46,23 @@ export default class UI {
 
 	private initHammerBits(): void {
 		const hammerOptionsButtonImage = document.getElementById(
-			'ui-hammer-options-button-image'
+			'ui-shop-button-image'
 		) as HTMLImageElement;
 
 		const classicHammerPreviewImage = document.getElementById(
-			'ui-hammer-options-preview-classic-image'
+			'ui-shop-preview-classic-image'
 		) as HTMLImageElement;
 
 		const greenHammerPreviewImage = document.getElementById(
-			'ui-hammer-options-preview-green-image'
+			'ui-shop-preview-green-image'
 		) as HTMLImageElement;
 
 		hammerOptionsButtonImage.src = HammerImage;
 		classicHammerPreviewImage.src = HammerImage;
 		greenHammerPreviewImage.src = GreenHammerImage;
 
-		const classicHammerPreview = document.getElementById('ui-hammer-options-preview-classic');
-		const greenHammerPreview = document.getElementById('ui-hammer-options-preview-green');
+		const classicHammerPreview = document.getElementById('ui-shop-preview-classic');
+		const greenHammerPreview = document.getElementById('ui-shop-preview-green');
 
 		if (classicHammerPreview) {
 			classicHammerPreview.addEventListener('click', () => {
@@ -144,53 +144,53 @@ export default class UI {
 	}
 
 	private async renderHammerOptions(): Promise<void> {
-		const hammerOptionsAnchor = document.getElementById('ui-hammer-options');
+		const hammerOptionsAnchor = document.getElementById('ui-shop');
 		const templateString = (): string => {
 			return `
-				<div id="ui-hammer-options" class="ui-hint-container" >
+				<div id="ui-shop" class="ui-menu-item-container" >
 					<button
-							id="ui-hammer-options-button"
+							id="ui-shop-button"
 							class="ui-button"
 						>
 							<img
-								id="ui-hammer-options-button-image"
+								id="ui-shop-button-image"
 								alt="contact makers"
 							/>
 					</button>
 					<div
-						id="ui-hammer-options-button-hint"
-						class="ui-button-hint"
+						id="ui-shop-sidemenu"
+						class="ui-sidemenu"
 					>
 						<div
-							id="ui-hammer-options-classic-hammer-page"
-							class="ui-button-hint-page"
+							id="ui-shop-classic-hammer-page"
+							class="ui-sidemenu-page"
 						>
-							<h5 class="ui-button-hintpage-title">
+							<h5 class="ui-sidemenu-page-title">
 								Classic
 							</h5>
 							<div
-								id="ui-hammer-options-preview-classic"
+								id="ui-shop-preview-classic"
 							>
 								<img
-									id="ui-hammer-options-preview-classic-image"
-									class="ui-hammer-options-preview-image"
+									id="ui-shop-preview-classic-image"
+									class="ui-shop-preview-image"
 									alt="hammer-classic"
 								/>
 							</div>
 						</div>
 						<div
-							id="ui-hammer-options-classic-plant-page"
-							class="ui-button-hint-page"
+							id="ui-shop-classic-plant-page"
+							class="ui-sidemenu-page"
 						>
-							<h5 class="ui-button-hintpage-title">
+							<h5 class="ui-sidemenu-page-title">
 								Green
 							</h5>
 							<div
-								id="ui-hammer-options-preview-green"
+								id="ui-shop-preview-green"
 							>
 								<img
-									id="ui-hammer-options-preview-green-image"
-									class="ui-hammer-options-preview-image"
+									id="ui-shop-preview-green-image"
+									class="ui-shop-preview-image"
 									alt="hammer-green"
 								/>
 							</div>

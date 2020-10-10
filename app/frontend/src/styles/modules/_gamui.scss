@@ -1,6 +1,7 @@
 $openBookImage: url('../assets/images/open_book.png');
 $colorPaletteImage: url('../assets/icons/color-palette-outline.svg');
 $gearImage: url('../assets/images/gear.png');
+$circle: url('../assets/images/circle_01.png');
 
 $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
@@ -37,16 +38,28 @@ body {
 	}
 }
 
+#ui-activate-button-image {
+	width: 30px;
+	height: auto;
+}
+
 #ui-shop-preview-green {
 	filter: grayscale(1);
 }
 
 #ui-activate-button {
-	background-color: red;
-	color: green;
 	position: absolute;
-	right: 0;
-	padding: 30px;
+	bottom: 50px;
+	padding: 10px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-image: $circle;
+	opacity: 0.5;
+	transition: opacity 0.15s;
+
+	&:hover {
+		opacity: 1;
+	}
 }
 
 // TRANSFORMATIONS //

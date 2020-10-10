@@ -34,108 +34,78 @@ export default class UI {
 		this.show();
 	}
 
-	public async initHammerOptions(): Promise<void> {
-		await this.renderHammerOptions();
-		this.initHammerBits();
+	public async initShop(): Promise<void> {
+		await this.renderShop();
 		this.initProducts();
+		this.initProductBitIntegration();
 	}
 
-	private show(): void {
-		(document.getElementById('ui-layer') as HTMLDivElement).style.visibility = 'visible';
+	private initProducts(): void {
+		this.initProductPreviewImageSources();
+		this.addClassicHammerShopProduct();
+		this.addGreenHammerShopProduct();
 	}
 
-	private initHammerBits(): void {
-		const hammerOptionsButtonImage = document.getElementById(
+	private initProductPreviewImageSources(): void  {
+		(document.getElementById(
 			'ui-shop-button-image'
-		) as HTMLImageElement;
+		) as HTMLImageElement).src = HammerImage;
 
-		const classicHammerPreviewImage = document.getElementById(
+		(document.getElementById(
 			'ui-shop-preview-classic-image'
-		) as HTMLImageElement;
+		) as HTMLImageElement).src = HammerImage;
 
-		const greenHammerPreviewImage = document.getElementById(
+		(document.getElementById(
 			'ui-shop-preview-green-image'
-		) as HTMLImageElement;
+		) as HTMLImageElement).src = GreenHammerImage;
 
-		hammerOptionsButtonImage.src = HammerImage;
-		classicHammerPreviewImage.src = HammerImage;
-		greenHammerPreviewImage.src = GreenHammerImage;
-
-		const classicHammerPreview = document.getElementById('ui-shop-preview-classic');
-		const greenHammerPreview = document.getElementById('ui-shop-preview-green');
-
-		if (classicHammerPreview) {
-			classicHammerPreview.addEventListener('click', () => {
-				this.effectSettings.particleTheme = 'glass';
-				this.effectSettings.shape = 'square';
-				this.game.weapon = new ClassicHammer(
-					this.game.contexts,
-					this.game.center(),
-					this.effectSettings,
-					this.game.audio
-				);
-			});
-		}
-
-		if (greenHammerPreview) {
-			greenHammerPreview.addEventListener('click', () => {
-				this.effectSettings.particleTheme = 'plant';
-				this.effectSettings.shape = 'leaf';
-				this.game.weapon = new PlantHammer(
-					this.game.contexts,
-					this.game.center(),
-					this.effectSettings,
-					this.game.audio
-				);
-			});
-		}
 	}
 
-	private async initProducts(): Promise<void> {
+	private addClassicHammerShopProduct(): void {
+		document.getElementById('ui-shop-preview-classic')?.addEventListener('click', () => {
+			this.effectSettings.particleTheme = 'glass';
+			this.effectSettings.shape = 'square';
+			this.game.weapon = new ClassicHammer(
+				this.game.contexts,
+				this.game.center(),
+				this.effectSettings,
+				this.game.audio
+			);
+		});
+	}
+
+	private addGreenHammerShopProduct(): void {
+		document.getElementById('ui-shop-preview-green')?.addEventListener('click', () => {
+			this.effectSettings.particleTheme = 'plant';
+			this.effectSettings.shape = 'leaf';
+			this.game.weapon = new PlantHammer(
+				this.game.contexts,
+				this.game.center(),
+				this.effectSettings,
+				this.game.audio
+			);
+		});
+	}
+
+	private async initProductBitIntegration(): Promise<void> {
 		const products = await this.game.transaction?.getProducts();
 
 		if (products !== undefined) {
 			for (const product of products) {
 				if (product.sku === 'planthammer') {
-					const amountDisplayPlantHammer = document.getElementById(
-						'ui-button-use-bits-planthammer'
-					);
-
-					const useBitsImage = document.getElementById('ui-button-use-bits-bit-icon');
-
 					const useBitsWrapper = document.getElementById(
 						'ui-button-use-bits-plant-wrapper'
 					);
 
 					this.game.twitch?.onAuthorized(async (auth) => {
-						const twitchBitsActionsResponse = await fetch(
-							'https://api.twitch.tv/v5/bits/actions',
-							{
-								headers: {
-									'Client-ID': auth.clientId,
-								},
-							}
-						);
-
-						const twitchBitsActions = await twitchBitsActionsResponse.json();
-
+						const twitchBitsActions = await this.fetchCheerEmotes(auth.clientId);
 						if (useBitsWrapper instanceof HTMLElement) {
-							useBitsWrapper.addEventListener('mouseenter', () => {
-								this.game.transaction?.showBitsBalance();
-							});
-
-							useBitsWrapper.addEventListener('click', () => {
-								this.game.transaction?.useBits(product.sku);
-							});
-						}
-
-						if (useBitsImage instanceof HTMLElement) {
-							(useBitsImage as HTMLImageElement).src =
-								twitchBitsActions.actions[0].tiers[1].images.light.static[1];
-						}
-
-						if (amountDisplayPlantHammer) {
-							amountDisplayPlantHammer.innerText = String(product.cost.amount);
+							this.renderProductBitImage(twitchBitsActions.actions[0].tiers[1].images.light.static[1])
+							this.renderProductCost(document.getElementById(
+								'ui-button-use-bits-planthammer'
+							), product.cost.amount);
+							this.addBitsBalanceListener(useBitsWrapper);
+							this.addUseBitsListener(useBitsWrapper, product.sku);
 						}
 					});
 				}
@@ -143,7 +113,48 @@ export default class UI {
 		}
 	}
 
-	private async renderHammerOptions(): Promise<void> {
+	private renderProductBitImage(src: string): void {
+		(document.getElementById('ui-button-use-bits-bit-icon') as HTMLImageElement).src = src;
+	}
+
+	private renderProductCost(element: HTMLElement | null, price: number): void {
+		if(element) {
+			element.innerText = String(price);
+		}
+	}
+
+	// write typings fpr cheerEmotes response
+	private async fetchCheerEmotes(clientId: string): Promise<any> {
+		try {
+			const twitchBitsActionsResponse = await fetch(
+				'https://api.twitch.tv/kraken/bits/actions',
+				{
+					headers: {
+						'Client-ID': clientId,
+						'Accept':' application/vnd.twitchtv.v5+json'
+					},
+				}
+			);
+	
+			return await twitchBitsActionsResponse.json();
+		} catch(e) {
+			console.log(e);
+		}
+	}
+
+	private addUseBitsListener(element: HTMLElement, sku: string): void {
+		element.addEventListener('click', () => {
+			this.game.transaction?.useBits(sku);
+		});
+	}
+
+	private addBitsBalanceListener(element: HTMLElement): void {
+		element.addEventListener('mouseenter', () => {
+			this.game.transaction?.showBitsBalance();
+		});
+	}
+
+	private async renderShop(): Promise<void> {
 		const hammerOptionsAnchor = document.getElementById('ui-shop');
 		const templateString = (): string => {
 			return `
@@ -224,4 +235,8 @@ export default class UI {
 		if (!(node instanceof HTMLElement)) return;
 		node.innerHTML = typeof template === 'function' ? template() : template;
 	};
+
+	private show(): void {
+		(document.getElementById('ui-layer') as HTMLDivElement).style.visibility = 'visible';
+	}
 }

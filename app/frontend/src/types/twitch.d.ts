@@ -18,7 +18,7 @@ export interface Product {
 	};
 	displayName: string;
 	inDevelopment: boolean | undefined;
-	sku: string;
+	sku: string; // unique product id
 }
 
 export interface Extension {

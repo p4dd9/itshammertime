@@ -12,6 +12,7 @@ export default class AudioButton {
 		'ui-audio-button-image'
 	) as HTMLImageElement;
 	private audio: GameAudio;
+	private static sound: HTMLAudioElement = new Audio(VolumeOn);
 
 	constructor(audio: GameAudio) {
 		this.audio = audio;
@@ -20,22 +21,18 @@ export default class AudioButton {
 	}
 
 	public start(): void {
-		const volumeIndex = LocalStorageUtil.initVolumeIndex();
-		this.setAudioButtonImage(volumeIndex);
-
+		this.setAudioButtonImage(LocalStorageUtil.initVolumeIndex());
 		this.button.addEventListener('click', this.onClick);
 	}
 
 	private onClick(): void {
-		const volumeSound = new Audio();
-		volumeSound.src = VolumeOn;
 		const newVolumeIndex: number = (this.audio.volumeIndex + 1) % GameAudio.volumeRange.length;
 
 		this.audio.volumeIndex = newVolumeIndex;
-		volumeSound.volume =
+		AudioButton.sound.volume =
 			GameAudio.volumeRange[newVolumeIndex] + (newVolumeIndex === 0 ? 0 : 0.35);
 		LocalStorageUtil.setVolumeIndex(newVolumeIndex);
-		this.audio.playSoundOverlap(volumeSound);
+		this.audio.playSoundOverlap(AudioButton.sound);
 	}
 
 	public stop(): void {

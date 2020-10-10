@@ -22,7 +22,7 @@ export default class DBClient {
 			await this.mongo.connect();
 			logger.info('mongoclient connected');
 		} catch (e) {
-			logger.error(e);
+			logger.error('couldnt connect to server: ', e);
 		}
 	}
 

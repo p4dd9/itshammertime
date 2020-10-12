@@ -9,6 +9,54 @@ Pick up the hammer and smash the streamer's livestream window.
 
 Available at https://dashboard.twitch.tv/extensions/uikhtmhdgzgwoq7e1vnlw7pryqajji-0.0.1
 
+## Frontend `/app/frontend/`
+
+More TBA
+
+build
+
+```
+npm run build:frontend
+```
+
+dev
+
+```
+npm run dev:frontend
+```
+
+## Backend `/app/backend/`
+
+### https-server
+
+Generate `cert` and `key` using openSSH via:
+
+```
+openssl req -nodes -new -x509 -keyout server.key -out server.cert
+```
+
+and store them in the root directory of this project.
+
+### build, dev and start backend server
+
+build
+
+```
+npm run build:backend
+```
+
+dev
+
+```
+npm run dev:backend
+```
+
+start
+
+```
+npm run start:backend:server
+```
+
 ## Mentionable Codesnippets
 
 [vanilla-picker](https://vanilla-picker.js.org/) vanilla color picker  

@@ -3,3 +3,5 @@ dist/
 *.log
 settings.json
 .env
+*.cert
+*.key

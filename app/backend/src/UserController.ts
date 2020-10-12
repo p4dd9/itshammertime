@@ -19,10 +19,7 @@ export default class UserController {
 		this.handleGetUser = this.handleGetUser.bind(this);
 	}
 
-	public async handleGetUsers(
-		req: express.Request,
-		res: express.Response
-	): Promise<void> {
+	public async handleGetUsers(req: express.Request, res: express.Response): Promise<void> {
 		try {
 			const usersCollection = this.dbClient.db().collection('users');
 			usersCollection.find().toArray((error, users) => {
@@ -53,18 +50,17 @@ export default class UserController {
 	}
 
 	// check if body is userdto sheme
-	public async handleUseBits(
-		req: express.Request,
-		res: express.Response
-	): Promise<void> {
+	public async handleUseBits(req: express.Request, res: express.Response): Promise<void> {
 		try {
 			const body: UserDTO = req.body;
 			const userExists = await this.userExists(body.id);
 
 			if (userExists) {
 				this.updateUser(body.id, body.bit_count);
+				logger.info(`updated existing user ${body.id} using ${body.bit_count} bits`);
 			} else {
 				this.insertUser(body);
+				logger.info(`created new user ${body.id}`);
 			}
 
 			const user = await this.findUser(body.id);
@@ -81,11 +77,7 @@ export default class UserController {
 	// also could do an upsert: true option in the updateUser function instead of checking
 	private async userExists(id: string): Promise<boolean> {
 		try {
-			return (await this.dbClient
-				.db()
-				.collection('users')
-				.find({ id })
-				.count()) > 0
+			return (await this.dbClient.db().collection('users').find({ id }).count()) > 0
 				? true
 				: false;
 		} catch (e) {
@@ -99,11 +91,8 @@ export default class UserController {
 			await this.dbClient
 				.db()
 				.collection('users')
-				.findOneAndUpdate(
-					{ id },
-					{ $inc: { bit_count: Number(bits) } }
-				);
-			logger.info(`updated user ${id}`);
+				.findOneAndUpdate({ id }, { $inc: { bit_count: Number(bits) } });
+			logger.info(`updated user ${id} by ${bits} bits`);
 		} catch (e) {
 			logger.error(e);
 			throw new Error(e);

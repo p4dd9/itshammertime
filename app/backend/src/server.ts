@@ -4,15 +4,32 @@ import bodyParser from 'body-parser';
 import UserController from './UserController';
 import cors from 'cors';
 import { logger } from './logger';
+import https from 'https';
+import fs from 'fs';
+
+const serverOptions = {
+	key: fs.readFileSync('server.key'),
+	cert: fs.readFileSync('server.cert'),
+	port: 3535,
+};
 
 export default class Server {
 	private express: express.Express;
 	private dbClient: DBClient;
 	private userController: UserController;
+	private httpsServer: https.Server;
 
 	constructor(dbClient: DBClient) {
 		this.dbClient = dbClient;
 		this.express = express();
+
+		this.httpsServer = https.createServer(
+			{
+				key: serverOptions.key,
+				cert: serverOptions.cert,
+			},
+			this.express
+		);
 		this.start();
 
 		this.userController = new UserController(this.dbClient);
@@ -33,8 +50,8 @@ export default class Server {
 	}
 
 	private listen(): void {
-		this.express.listen(3535, () => {
-			logger.info('listening on 3535');
+		this.httpsServer.listen(serverOptions.port, () => {
+			logger.info(`listening to post ${serverOptions.port}`);
 		});
 	}
 }

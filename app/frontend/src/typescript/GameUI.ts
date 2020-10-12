@@ -99,7 +99,7 @@ export default class UI {
 						this.game.authentication?.isLoggedIn() &&
 						this.game.authentication.isAuthenticated()
 					) {
-						const userID = this.game.authentication?.getOpaqueId();
+						const userID = this.game.authentication?.getUserId();
 						if (typeof userID === 'string') {
 							usedBits = await hasUsedBits(
 								userID,

@@ -1,7 +1,7 @@
 import { TransactionObject } from '../../types/twitch';
 import UserDTO from '../../../../backend/src/dto/UserDTO';
 
-const protocol = 'http';
+const protocol = 'https';
 const baseUrl = 'localhost';
 const port = 3535;
 

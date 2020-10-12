@@ -66,9 +66,7 @@ module.exports = (_env, argv) => {
 				{
 					test: /\.s(a|c)ss$/,
 					loader: [
-						isProduction
-							? MiniCssExtractPlugin.loader
-							: 'style-loader',
+						isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
 						'css-loader',
 						{
 							loader: 'sass-loader',
@@ -92,6 +90,7 @@ module.exports = (_env, argv) => {
 
 	if (!isProduction) {
 		config.devServer = {
+			https: true,
 			contentBase: path.join(__dirname, 'app/frontend/dist'),
 			host: 'localhost',
 			headers: {

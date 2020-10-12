@@ -2,7 +2,7 @@ import BookImage from '../../assets/images/book.png';
 import { IVanillaColor } from '../../interfaces/IVanillaPickerColor';
 import Picker from 'vanilla-picker';
 import Game from '../Game';
-import IEffectSettings from '../../interfaces/IEffectSettings';
+import IEffectSettings, { EffectShape } from '../../interfaces/IEffectSettings';
 
 export default class Enchantments {
 	private game: Game;
@@ -10,9 +10,7 @@ export default class Enchantments {
 	private throttleId: undefined | number = undefined;
 	private static readonly colorOnChangeDelay = 55;
 
-	private menuButton = document.getElementById(
-		'ui-enchantments-button'
-	) as HTMLButtonElement;
+	private menuButton = document.getElementById('ui-enchantments-button') as HTMLButtonElement;
 	private menuButtonImage = document.getElementById(
 		'ui-enchantments-button-image'
 	) as HTMLImageElement;
@@ -35,7 +33,7 @@ export default class Enchantments {
 
 	public start(): void {
 		this.menuButtonImage.src = BookImage;
-		
+
 		this.addColorPickerChangeListener();
 		this.addColorPickerOnCloseListener();
 
@@ -63,14 +61,11 @@ export default class Enchantments {
 	private addColorChangePreviewListener(): void {
 		for (const enchantmentColorButton of Array.from(this.colorButtons)) {
 			if (enchantmentColorButton instanceof HTMLButtonElement) {
-				enchantmentColorButton.addEventListener(
-					'click',
-					(event: MouseEvent) => {
-						this.effectSettings.particleTheme = (event.target as HTMLButtonElement).value;
-						this.game.weapon.moveTo(this.game.center());
-						this.game.weapon.use();
-					}
-				);
+				enchantmentColorButton.addEventListener('click', (event: MouseEvent) => {
+					this.effectSettings.particleTheme = (event.target as HTMLButtonElement).value;
+					this.game.weapon.moveTo(this.game.center());
+					this.game.weapon.use();
+				});
 			}
 		}
 	}
@@ -78,15 +73,12 @@ export default class Enchantments {
 	private addShapeChangePreviewListener(): void {
 		for (const enchantmentShapeButton of Array.from(this.shapeButtons)) {
 			if (enchantmentShapeButton instanceof HTMLButtonElement) {
-				enchantmentShapeButton.addEventListener(
-					'click',
-					(event: MouseEvent) => {
-						this.effectSettings.shape = (event.target as HTMLButtonElement)
-							.value as 'circle' | 'star' | 'square';
-						this.game.weapon.moveTo(this.game.center());
-						this.game.weapon.use();
-					}
-				);
+				enchantmentShapeButton.addEventListener('click', (event: MouseEvent) => {
+					this.effectSettings.shape = (event.target as HTMLButtonElement)
+						.value as EffectShape;
+					this.game.weapon.moveTo(this.game.center());
+					this.game.weapon.use();
+				});
 			}
 		}
 	}

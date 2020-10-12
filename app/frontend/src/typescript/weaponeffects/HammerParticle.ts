@@ -2,6 +2,7 @@ import IPosition from '../../interfaces/IPosition';
 import IVelocity from '../../interfaces/IVelocity';
 
 import LeafImage from '../../assets/images/leaf.png';
+import { EffectShape } from '../../interfaces/IEffectSettings';
 
 export default class HammerParticle {
 	public id: number;
@@ -14,7 +15,7 @@ export default class HammerParticle {
 	private size: number;
 	private theme: string | string[];
 	private color: string | CanvasGradient;
-	private shape: string;
+	private shape: EffectShape;
 
 	private leafImage = new Image();
 
@@ -25,7 +26,7 @@ export default class HammerParticle {
 		particleSize: number,
 		gravity: number,
 		theme: string | string[],
-		shape: string,
+		shape: EffectShape,
 		vxMultiplier: number,
 		vyMultiplier: number
 	) {
@@ -68,9 +69,7 @@ export default class HammerParticle {
 
 		this.velocity.vy += this.gravity;
 		this.life++;
-		this.color = Array.isArray(this.theme)
-			? this.setColorAndFillStyles()
-			: this.theme;
+		this.color = Array.isArray(this.theme) ? this.setColorAndFillStyles() : this.theme;
 
 		if (this.shape === 'circle') {
 			this.drawCircle();
@@ -84,37 +83,21 @@ export default class HammerParticle {
 	}
 
 	private drawLeaf(): void {
-		this.context.drawImage(
-			this.leafImage,
-			this.position.x,
-			this.position.y
-		);
+		this.context.drawImage(this.leafImage, this.position.x, this.position.y);
 	}
 
 	private drawCircle(): void {
 		this.context.beginPath();
 		this.context.fillStyle = this.color;
 
-		this.context.arc(
-			this.position.x,
-			this.position.y,
-			this.size,
-			0,
-			Math.PI * 2,
-			true
-		);
+		this.context.arc(this.position.x, this.position.y, this.size, 0, Math.PI * 2, true);
 		this.context.closePath();
 		this.context.fill();
 	}
 
 	private drawSquare(): void {
 		this.context.fillStyle = this.color;
-		this.context.fillRect(
-			this.position.x,
-			this.position.y,
-			this.size,
-			this.size
-		);
+		this.context.fillRect(this.position.x, this.position.y, this.size, this.size);
 		this.context.fill();
 	}
 

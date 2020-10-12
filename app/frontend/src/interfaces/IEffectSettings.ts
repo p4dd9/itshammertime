@@ -1,4 +1,8 @@
+export type EffectShape = 'circle' | 'star' | 'square' | 'leaf';
+
+export type ParticleEffectTheme = string | string[];
+
 export default interface IEffectSettings {
-	particleTheme: string | string[];
-	shape: 'circle' | 'star' | 'square' | 'leaf';
+	particleTheme: ParticleEffectTheme;
+	shape: EffectShape;
 }

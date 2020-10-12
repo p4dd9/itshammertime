@@ -12,6 +12,7 @@ import FaqButton from './ui/FaqButton';
 import Enchantments from './ui/Enchantments';
 import GameStartStopButton from './ui/GameStartStopButton';
 import { hasUsedBits } from './services/userServices';
+import ICheerEmotesResponse from '../interfaces/ICheerEmotes';
 
 export default class UI {
 	private game: Game;
@@ -115,7 +116,7 @@ export default class UI {
 					} else {
 						this.game.twitch?.onAuthorized(async (auth) => {
 							const twitchBitsActions = await this.fetchCheerEmotes(auth.clientId);
-							if (useBitsWrapper instanceof HTMLElement) {
+							if (useBitsWrapper instanceof HTMLElement && twitchBitsActions) {
 								await this.renderUseBitsButton();
 								this.renderProductBitImage(
 									twitchBitsActions.actions[0].tiers[1].images.light.static[1]
@@ -144,8 +145,7 @@ export default class UI {
 		}
 	}
 
-	// write typings fpr cheerEmotes response
-	private async fetchCheerEmotes(clientId: string): Promise<any> {
+	private async fetchCheerEmotes(clientId: string): Promise<ICheerEmotesResponse | undefined> {
 		try {
 			const twitchBitsActionsResponse = await fetch(
 				'https://api.twitch.tv/kraken/bits/actions',

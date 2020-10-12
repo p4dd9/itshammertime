@@ -1,3 +1,5 @@
+-   ITS NOT A FEATURE ITS A MUST: add basic accessibility (discuss with adrian)
+
 -   feature: hover on hammer triggers showbalance (not only the label)
 -   feature: user can switch hammer-swing side
 -   feature: hammer smash effects interact with each other and can merge
@@ -8,3 +10,5 @@
 -   feature: maintenance mode (config service)
 -   note: care async express route handler (req open until res sent) --> express not so sexy with async handlers
 -   feature: chat recognition
+-   feature: connected/disconnected gamepad notification
+-   feature: make ui controllable by gamepad and maybe

@@ -118,8 +118,13 @@ export default class UI {
 							const twitchBitsActions = await this.fetchCheerEmotes(auth.clientId);
 							if (useBitsWrapper instanceof HTMLElement && twitchBitsActions) {
 								await this.renderUseBitsButton();
+								await this.renderBitsUsedCheer();
 								this.renderProductBitImage(
 									twitchBitsActions.actions[0].tiers[1].images.light.static[1]
+								);
+
+								this.renderBitUseSuccess(
+									twitchBitsActions.actions[2].tiers[1].images.light.animated[2]
 								);
 								this.renderProductCost(
 									document.getElementById('ui-button-use-bits-planthammer'),
@@ -133,6 +138,22 @@ export default class UI {
 				}
 			}
 		}
+	}
+
+	private async renderBitsUsedCheer(): Promise<void> {
+		const useBitsButtonAnchor = document.getElementById(
+			'ui-shop-classic-plant-page-cheer-anchor'
+		);
+
+		const templateString = (): string => {
+			return `<img id="ui-bit-used-cheer" src="" />`;
+		};
+
+		this.render(templateString, useBitsButtonAnchor);
+	}
+
+	private renderBitUseSuccess(src: string): void {
+		(document.getElementById('ui-bit-used-cheer') as HTMLImageElement).src = src;
 	}
 
 	private renderProductBitImage(src: string): void {
@@ -232,6 +253,7 @@ export default class UI {
 							id="ui-shop-classic-plant-page"
 							class="ui-sidemenu-page"
 						>
+							<div id="ui-shop-classic-plant-page-cheer-anchor"></div>
 							<h5 class="ui-sidemenu-page-title">
 								Green
 							</h5>

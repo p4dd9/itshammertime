@@ -31,7 +31,13 @@ export default class Transaction {
 		// it must do something ...
 	}
 
-	public onTransactionComplete(transactionObject: TransactionObject): void {
-		sendBits(transactionObject);
+	public async onTransactionComplete(transactionObject: TransactionObject): Promise<void> {
+		const success: boolean = await sendBits(transactionObject);
+		if (success) {
+			document
+				.getElementById('ui-shop-classic-plant-page-cheer-anchor')
+				?.classList.add('whirlOut');
+			console.log('yeah...');
+		}
 	}
 }

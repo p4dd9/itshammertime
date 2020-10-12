@@ -5,7 +5,7 @@ const protocol = 'https';
 const baseUrl = 'localhost';
 const port = 3535;
 
-export const sendBits = async (transactionObject: TransactionObject): Promise<void> => {
+export const sendBits = async (transactionObject: TransactionObject): Promise<boolean> => {
 	try {
 		const body = JSON.stringify({
 			id: String(transactionObject.userId),
@@ -19,6 +19,7 @@ export const sendBits = async (transactionObject: TransactionObject): Promise<vo
 				'Content-Type': 'application/json',
 			},
 		});
+		return true;
 	} catch (e) {
 		throw new Error(e);
 	}

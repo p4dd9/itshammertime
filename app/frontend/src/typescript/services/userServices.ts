@@ -9,7 +9,7 @@ export const sendBits = async (transactionObject: TransactionObject): Promise<vo
 	try {
 		const body = JSON.stringify({
 			id: String(transactionObject.userId),
-			bit_count: Number(transactionObject.product.cost),
+			bit_count: Number(transactionObject.product.cost.amount),
 		});
 
 		await window.fetch(`${protocol}://${baseUrl}:${port}/usebits`, {

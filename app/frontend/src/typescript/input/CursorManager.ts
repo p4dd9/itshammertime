@@ -32,6 +32,7 @@ export default class CursorManager implements Input {
 
 	public start(): void {
 		this.gameInput.controls = CONTROLS.MOUSE;
+		this.gameInput.hideCursor();
 		this.context.canvas.addEventListener('mousemove', this.handleMouseMove);
 		this.context.canvas.addEventListener('mousedown', this.handleMouseDown);
 		this.context.canvas.addEventListener('mouseup', this.handleMouseUp);
@@ -39,10 +40,9 @@ export default class CursorManager implements Input {
 	}
 
 	public stop(): void {
+		this.gameInput.showCursor();
 		this.context.canvas.removeEventListener('mousemove', this.handleMouseMove);
-
 		this.context.canvas.removeEventListener('mousedown', this.handleMouseDown);
-
 		this.context.canvas.removeEventListener('mouseup', this.handleMouseUp);
 		this.context.canvas.removeEventListener('mouseleave', this.handleMouseLeave);
 		clearInterval(this.mouseDownID);

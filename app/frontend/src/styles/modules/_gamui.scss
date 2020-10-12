@@ -63,6 +63,10 @@ body {
 	}
 }
 
+.hide-cursor {
+	cursor: none;
+}
+
 // TRANSFORMATIONS //
 .open {
 	transform: translateX(0) !important;

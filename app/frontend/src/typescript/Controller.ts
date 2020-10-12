@@ -4,6 +4,7 @@ import Weapon from './Weapon';
 import CursorManager from './input/CursorManager';
 
 export default class Controller {
+	private cursorLayer = document.getElementById('game-layer') as HTMLCanvasElement;
 	private controllerType: CONTROL_TYPE = CONTROL_TYPE.MOUSE;
 
 	private gamepadManager: GamepadManager;
@@ -35,5 +36,13 @@ export default class Controller {
 	public handleInput(): void {
 		this.gamepadManager.handleInput();
 		this.cursorManager.handleInput();
+	}
+
+	public hideCursor(): void {
+		this.cursorLayer.classList.add('hide-cursor');
+	}
+
+	public showCursor(): void {
+		this.cursorLayer.classList.remove('hide-cursor');
 	}
 }

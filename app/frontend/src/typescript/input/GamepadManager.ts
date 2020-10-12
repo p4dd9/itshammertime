@@ -28,6 +28,7 @@ export default class GamepadManager implements Input {
 
 	public start(): void {
 		if (this.compatible) {
+			this.input.hideCursor();
 			this.addGamepadConnectListener();
 			this.addGamepadDisconnectListener();
 		}
@@ -35,6 +36,7 @@ export default class GamepadManager implements Input {
 
 	public stop(): void {
 		if (this.compatible) {
+			this.input.showCursor();
 			this.removeGamepadConnectListener();
 			this.removeGamepadDisconnectListener();
 		}

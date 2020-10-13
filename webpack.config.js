@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
 
 const imagePattern = /\.(jpe?g|png|gif|svg)$/i;
 const frontendSrcPath = './frontend/src';
@@ -65,9 +66,28 @@ module.exports = (_env, argv) => {
 				},
 				{
 					test: /\.s(a|c)ss$/,
-					loader: [
-						isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-						'css-loader',
+					use: [
+						{
+							loader: isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+						},
+						{
+							loader: 'css-loader',
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								postcssOptions: {
+									plugins: [
+										[
+											'postcss-preset-env',
+											{
+												// Options
+											},
+										],
+									],
+								},
+							},
+						},
 						{
 							loader: 'sass-loader',
 							options: {

@@ -23,3 +23,5 @@
 -   feature: make ui controllable by gamepad and maybe
 -   feature: panel-extension for buyers (hammer-hit count and bit used)
 -   feature: items to smash
+
+*   refactor: split config + overview specific css code

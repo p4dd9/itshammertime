@@ -1,4 +1,5 @@
 import { Extension, Product, TransactionObject } from '../types/twitch';
+import { onSuccessfulClassicPlantHammerTransaction } from '../util/commonUtil';
 import { sendBits } from './services/userServices';
 
 export default class Transaction {
@@ -33,11 +34,10 @@ export default class Transaction {
 
 	public async onTransactionComplete(transactionObject: TransactionObject): Promise<void> {
 		const success: boolean = await sendBits(transactionObject);
+
+		// refactor
 		if (success) {
-			document
-				.getElementById('ui-shop-classic-plant-page-cheer-anchor')
-				?.classList.add('whirlOut');
-			console.log('yeah...');
+			onSuccessfulClassicPlantHammerTransaction();
 		}
 	}
 }

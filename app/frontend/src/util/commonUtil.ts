@@ -30,6 +30,16 @@ export function copyTextToClipboard(text: string): void {
 	input.remove();
 }
 
+export function onSuccessfulClassicPlantHammerTransaction(): void {
+	document
+		.getElementById('ui-button-use-bits-plant-wrapper')
+		?.classList.add('usedBitsPogChampEmote');
+	(document.getElementById('ui-shop-preview-green') as HTMLElement).style.filter = 'none';
+	document
+		.getElementById('ui-shop-classic-plant-page-cheer-anchor')
+		?.classList.add('whirlOutUsedBitsButton');
+}
+
 export function supportsGamepads(): boolean {
 	return navigator.getGamepads() !== null;
 }
@@ -51,7 +61,7 @@ export function getDisplayResolution(displayResolution: string): IDisplayResolut
 
 export function create2DRenderingContexts(): CanvasRenderingContext2D[] {
 	const root: HTMLElement = document.getElementById('game-layer') as HTMLElement;
-	const {innerHeight, innerWidth} = window;
+	const { innerHeight, innerWidth } = window;
 
 	const contexts = [];
 

@@ -13,6 +13,7 @@ import Enchantments from './ui/Enchantments';
 import GameStartStopButton from './ui/GameStartStopButton';
 import { hasUsedBits } from './services/userServices';
 import ICheerEmotesResponse from '../interfaces/ICheerEmotes';
+import { onSuccessfulClassicPlantHammerTransaction } from '../util/commonUtil';
 
 export default class UI {
 	private game: Game;
@@ -108,7 +109,6 @@ export default class UI {
 							);
 						}
 					}
-
 					if (usedBits) {
 						(document.getElementById(
 							'ui-shop-preview-green'
@@ -117,12 +117,12 @@ export default class UI {
 						this.game.twitch?.onAuthorized(async (auth) => {
 							const twitchBitsActions = await this.fetchCheerEmotes(auth.clientId);
 							if (useBitsWrapper instanceof HTMLElement && twitchBitsActions) {
+								// render not-used-bits user ui
 								await this.renderUseBitsButton();
 								await this.renderBitsUsedCheer();
 								this.renderProductBitImage(
 									twitchBitsActions.actions[0].tiers[1].images.light.static[1]
 								);
-
 								this.renderBitUseSuccess(
 									twitchBitsActions.actions[2].tiers[1].images.light.animated[2]
 								);
@@ -130,6 +130,8 @@ export default class UI {
 									document.getElementById('ui-button-use-bits-planthammer'),
 									product.cost.amount
 								);
+
+								// add shop ui specific listeners
 								this.addBitsBalanceListener(useBitsWrapper);
 								this.addUseBitsListener(useBitsWrapper, product.sku);
 							}
@@ -186,6 +188,8 @@ export default class UI {
 
 	private addUseBitsListener(element: HTMLElement, sku: string): void {
 		element.addEventListener('click', () => {
+			// TODO remove for hosted env
+			onSuccessfulClassicPlantHammerTransaction();
 			this.game.transaction?.useBits(sku);
 		});
 	}

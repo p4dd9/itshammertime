@@ -6,12 +6,6 @@ $circle: url('../assets/images/circle_01.png');
 $menuTransitionDistance: -250px;
 $menuTranistionTime: 0.5s;
 
-// DebugOptions
-$showHammerUI: false;
-$showHammerUIHammers: false;
-$showHammerUIEnchantments: false;
-$showHammerUIFaq: false;
-
 @mixin showFlex($show: false) {
 	@if $show {
 		display: flex;
@@ -46,36 +40,16 @@ body {
 	transform: translateX(-50%);
 }
 
-.whirlOut {
-	visibility: visible !important;
-	animation: swirl-out-bck 0.6s ease-in 3s both;
+.usedBitsPogChampEmote {
+	-webkit-animation: scale-out-used-bits-plant-hammer-emote 0.5s
+		cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+	animation: scale-out-used-bits-plant-hammer-emote 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+		both;
 }
 
-@-webkit-keyframes swirl-out-bck {
-	0% {
-		-webkit-transform: rotate(0) scale(1);
-		transform: rotate(0) scale(1);
-		opacity: 1;
-	}
-	100% {
-		-webkit-transform: rotate(-540deg) scale(0);
-		transform: rotate(-540deg) scale(0);
-		opacity: 0;
-		display: none;
-	}
-}
-@keyframes swirl-out-bck {
-	0% {
-		-webkit-transform: rotate(0) scale(1);
-		transform: rotate(0) scale(1);
-		opacity: 1;
-	}
-	100% {
-		-webkit-transform: rotate(-540deg) scale(0);
-		transform: rotate(-540deg) scale(0);
-		opacity: 0;
-		display: none;
-	}
+.whirlOutUsedBitsButton {
+	visibility: visible !important;
+	animation: swirl-out-usebits-plant-hammer-button 0.6s ease-in 3s both;
 }
 
 #ui-activate-button-image {
@@ -84,6 +58,7 @@ body {
 }
 
 #ui-shop-preview-green {
+	transition: filter 2s;
 	filter: grayscale(1);
 }
 
@@ -130,6 +105,7 @@ body {
 }
 
 .ui-button-use-bits-wrapper {
+	transform-origin: center;
 	background-color: #905535;
 	color: #f5c89e;
 	border: 1px solid #f5c89e;

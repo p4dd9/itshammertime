@@ -14,6 +14,12 @@
       "isEphemeral": false,
       "isOrigin": true,
       "value": "wss://localhost:3434"
+    },
+    {
+      "isAllowed": true,
+      "isEphemeral": false,
+      "isOrigin": true,
+      "value": "https://localhost:3535"
     }
   ],
   "extensionViews": [],
@@ -75,5 +81,5 @@
   "frontendCommand": "",
   "frontendFolderName": "app\\frontend\\dist",
   "name": "It's Hammer Time!",
-  "version": 1
+  "version": 2
 }

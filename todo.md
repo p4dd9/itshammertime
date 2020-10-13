@@ -4,7 +4,7 @@
 -   feature: fullscreen hammer size change (green hammer)
 -   feature: cursor position on impact center of effect
 -   feature: audio fetter punch hammer
--   feature: reward/give feedback on successfull bit use --> enable hammer selection --> use it
+-   feature: reward/give feedback on successfull bit use --> enable hammer selection --> DONE => remaing: keep hammer page open until transaction and animation complete
 -   feature: leafes + root impact of green hammer update
 
 -   feature: user can switch hammer-swing side
@@ -23,5 +23,7 @@
 -   feature: make ui controllable by gamepad and maybe
 -   feature: panel-extension for buyers (hammer-hit count and bit used)
 -   feature: items to smash
+
+-   improve: hammer effect hitbox (same as cursor)
 
 *   refactor: split config + overview specific css code

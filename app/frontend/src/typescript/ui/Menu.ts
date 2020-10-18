@@ -1,4 +1,5 @@
 import PlankBackgroundImage from '../../assets/images/plank.png';
+import { clickedOutSide } from '../../util/commonUtil';
 import Authentication from '../Authentication';
 
 export default class Menu {
@@ -34,9 +35,7 @@ export default class Menu {
 		const isMenuOpen = this.list.classList.contains('open');
 		if (!isMenuOpen) return;
 
-		const clickedOutSideOptionsContainer = this.listWrapper.contains(event.target as Node);
-
-		if (!clickedOutSideOptionsContainer) {
+		if (clickedOutSide(this.listWrapper, event)) {
 			this.list.classList.remove('open');
 			this.button.classList.toggle('rotate');
 		}

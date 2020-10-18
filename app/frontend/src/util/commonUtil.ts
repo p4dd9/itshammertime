@@ -8,6 +8,10 @@ export function getRandomInt(max = 1): number {
 	return Math.floor(Math.random() * max);
 }
 
+export function clickedOutSide(element: HTMLElement, event: MouseEvent): boolean {
+	return !element.contains(event.target as Node);
+}
+
 export function isIE(): boolean {
 	const ua = window.navigator.userAgent;
 	const msie = ua.indexOf('MSIE ');

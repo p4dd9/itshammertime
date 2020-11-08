@@ -1,6 +1,6 @@
 # [It's Hammer Time!](https://dashboard.twitch.tv/extensions/uikhtmhdgzgwoq7e1vnlw7pryqajji-0.0.1)
 
-## A Client-Side Twitch Extension (and some backend)
+## A Client-Side Twitch Extension (and some Backend)
 
 #### Pick up the hammer and smash the streamer's livestream window
 

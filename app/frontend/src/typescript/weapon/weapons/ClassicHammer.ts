@@ -1,18 +1,16 @@
 import Weapon from '../Weapon';
-import {
-	hammerImageAlias,
-	plantHammerImageAssets,
-} from '../../assets/imageAssets';
-import { hammerAudioAssets, hammerAudioAlias } from '../../assets/audioAssets';
-import IPosition from '../../interfaces/IPosition';
-import IEffectSettings from '../../interfaces/IEffectSettings';
-import GameAudio from '../GameAudio';
-import LAYERS from '../../config/layers';
-import { degToRad } from '../../util/commonUtil';
+import { classicHammerImageAssets } from '../../../assets/imageAssets';
+import { hammerAudioAssets, hammerAudioAlias } from '../../../assets/audioAssets';
+import { hammerImageAlias } from '../../../assets/imageAssets';
 import HammerEffect from '../weaponeffects/HammerEffect';
+import { degToRad } from '../../../util/commonUtil';
+import IPosition from '../../../interfaces/IPosition';
+import IEffectSettings from '../../../interfaces/IEffectSettings';
+import LAYERS from '../../../config/layers';
+import GameAudio from '../../GameAudio';
 
-export default class PlantHammer extends Weapon {
-	public imageAssets = plantHammerImageAssets;
+export default class ClassicHammer extends Weapon {
+	public imageAssets = classicHammerImageAssets;
 	public audioAssets = hammerAudioAssets;
 
 	private rotateSpeed = 12;
@@ -31,9 +29,9 @@ export default class PlantHammer extends Weapon {
 			contexts,
 			position,
 			effectSettings,
-			plantHammerImageAssets,
+			classicHammerImageAssets,
 			hammerAudioAssets,
-			hammerImageAlias.HAMMER_PLANT,
+			hammerImageAlias.HAMMER,
 			hammerAudioAlias.HAMMER_SHATTER_01,
 			gameAudio
 		);
@@ -76,10 +74,8 @@ export default class PlantHammer extends Weapon {
 		const sourceImageWidth = this.currentImage.image.width;
 		const sourceImageHeight = this.currentImage.image.height;
 
-		const scaledWidth =
-			this.currentImage.image.width / this.currentImage.scaleOnCanvas;
-		const scaledHeight =
-			this.currentImage.image.height / this.currentImage.scaleOnCanvas;
+		const scaledWidth = this.currentImage.image.width / this.currentImage.scaleOnCanvas;
+		const scaledHeight = this.currentImage.image.height / this.currentImage.scaleOnCanvas;
 
 		this.contexts[LAYERS.FRONT].drawImage(
 			this.currentImage.image,
@@ -95,17 +91,11 @@ export default class PlantHammer extends Weapon {
 	}
 
 	private setRotPivotToMouse(): void {
-		this.contexts[LAYERS.FRONT].translate(
-			1 * this.position.x,
-			1 * this.position.y
-		);
+		this.contexts[LAYERS.FRONT].translate(1 * this.position.x, 1 * this.position.y);
 	}
 
 	private resetRotPivotToMouse(): void {
-		this.contexts[LAYERS.FRONT].translate(
-			-1 * this.position.x,
-			-1 * this.position.y
-		);
+		this.contexts[LAYERS.FRONT].translate(-1 * this.position.x, -1 * this.position.y);
 	}
 
 	private updateHammerAnimation(): void {
@@ -130,15 +120,13 @@ export default class PlantHammer extends Weapon {
 		}
 		this.animateHammer = true;
 
-		const scaledWidth =
-			this.currentImage.image.width / this.currentImage.scaleOnCanvas;
-		const scaledHeight =
-			this.currentImage.image.height / this.currentImage.scaleOnCanvas;
+		const scaledWidth = this.currentImage.image.width / this.currentImage.scaleOnCanvas;
+		const scaledHeight = this.currentImage.image.height / this.currentImage.scaleOnCanvas;
 
 		const newGameWeaponEffect = new HammerEffect(
 			this.contexts,
 			{
-				x: this.position.x - scaledWidth / 2 - 180, // -80 hammer effect related
+				x: this.position.x - scaledWidth / 2 - 80, // -80 hammer effect related
 				y: this.position.y - scaledHeight / 2,
 			},
 			this.effectSettings,

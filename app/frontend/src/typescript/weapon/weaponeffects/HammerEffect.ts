@@ -1,11 +1,11 @@
+import { hammerAudioAssets } from '../../../assets/audioAssets';
+import LAYERS from '../../../config/layers';
+import IEffectSettings from '../../../interfaces/IEffectSettings';
+import IGameImageAsset from '../../../interfaces/IGameImageAsset';
+import IPosition from '../../../interfaces/IPosition';
+import GameAudio from '../../GameAudio';
 import WeaponEffect from '../WeaponEffect';
-import IPosition from '../../interfaces/IPosition';
-import { hammerAudioAssets } from '../../assets/audioAssets';
 import HammerParticle from './HammerParticle';
-import IEffectSettings from '../../interfaces/IEffectSettings';
-import LAYERS from '../../config/layers';
-import GameAudio from '../GameAudio';
-import IGameImageAsset from '../../interfaces/IGameImageAsset';
 
 export default class HammerEffect extends WeaponEffect {
 	public static lifeTime = 2000;

@@ -2,7 +2,7 @@ import Controller from '../Controller';
 import CONTROLS from '../../enums/controls';
 import IGamepadEvent from '../../interfaces/IGamepadEvent';
 import { XBOX360_AXIS, XBOX360_BUTTONS } from '../../enums/xbox360controls';
-import Weapon from '../Weapon';
+import Weapon from '../weapon/Weapon';
 import Input from '../../interfaces/Input';
 import { supportsGamepads } from '../../util/commonUtil';
 

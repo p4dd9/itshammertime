@@ -1,8 +1,7 @@
-import IPosition from '../../interfaces/IPosition';
-import IVelocity from '../../interfaces/IVelocity';
-
-import LeafImage from '../../assets/images/leaf.png';
-import { EffectShape } from '../../interfaces/IEffectSettings';
+import { EffectShape } from '../../../interfaces/IEffectSettings';
+import IPosition from '../../../interfaces/IPosition';
+import IVelocity from '../../../interfaces/IVelocity';
+import LeafImage from '../../../assets/images/leaf.png';
 
 export default class HammerParticle {
 	public id: number;

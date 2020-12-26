@@ -1,6 +1,6 @@
 import GamepadManager from './input/GamepadManager';
 import CONTROL_TYPE from '../enums/controls';
-import Weapon from './Weapon';
+import Weapon from './weapon/Weapon';
 import CursorManager from './input/CursorManager';
 
 export default class Controller {

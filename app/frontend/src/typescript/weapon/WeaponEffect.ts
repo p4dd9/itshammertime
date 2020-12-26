@@ -1,13 +1,13 @@
-import IGameImage from '../interfaces/IGameImage';
-import AssetLoader from './AssetLoader';
-import IPosition from '../interfaces/IPosition';
-import IGameImageAsset from '../interfaces/IGameImageAsset';
-import IAudioAsset from '../interfaces/IAudioAsset';
-import IAudio from '../interfaces/IAudio';
-import GameAudio from './GameAudio';
-import IEffectSettings from '../interfaces/IEffectSettings';
-import { getRandomInt } from '../util/commonUtil';
-import { hammerAudioAlias } from '../assets/audioAssets';
+import IGameImage from '../../interfaces/IGameImage';
+import AssetLoader from '../AssetLoader';
+import IPosition from '../../interfaces/IPosition';
+import IGameImageAsset from '../../interfaces/IGameImageAsset';
+import IAudioAsset from '../../interfaces/IAudioAsset';
+import IAudio from '../../interfaces/IAudio';
+import GameAudio from '../GameAudio';
+import IEffectSettings from '../../interfaces/IEffectSettings';
+import { getRandomInt } from '../../util/commonUtil';
+import { hammerAudioAlias } from '../../assets/audioAssets';
 
 export default abstract class WeaponEffect {
 	public currentImage: IGameImage | undefined = undefined;
@@ -58,17 +58,12 @@ export default abstract class WeaponEffect {
 		this.audio = audio;
 
 		this.currentAudio =
-			typeof audioAlias === 'string'
-				? audio.get(audioAlias)
-				: this.setRandomAudioEffect();
+			typeof audioAlias === 'string' ? audio.get(audioAlias) : this.setRandomAudioEffect();
 		this.currentImage =
-			typeof imageAlias === 'string'
-				? images.get(imageAlias)
-				: this.setWeaponEffectImage();
+			typeof imageAlias === 'string' ? images.get(imageAlias) : this.setWeaponEffectImage();
 
 		if (this.currentAudio !== undefined) {
-			this.currentAudio.audio.volume =
-				GameAudio.volumeRange[this.gameAudio.volumeIndex];
+			this.currentAudio.audio.volume = GameAudio.volumeRange[this.gameAudio.volumeIndex];
 			this.gameAudio.playSoundOverlap(this.currentAudio.audio);
 		}
 	}

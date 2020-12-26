@@ -4,8 +4,8 @@ import IEffectSettings from '../interfaces/IEffectSettings';
 import HammerImage from '../assets/images/hammer_preview.png';
 import GreenHammerImage from '../assets/images/planthammer_preview.png';
 
-import ClassicHammer from './weapons/ClassicHammer';
-import PlantHammer from './weapons/PlantHammer';
+import ClassicHammer from './weapon/weapons/ClassicHammer';
+import PlantHammer from './weapon/weapons/PlantHammer';
 import Menu from './ui/Menu';
 import AudioButton from './ui/AudioButton';
 import FaqButton from './ui/FaqButton';

@@ -1,5 +1,5 @@
 import IPosition from '../../interfaces/IPosition';
-import Weapon from '../Weapon';
+import Weapon from '../weapon/Weapon';
 import Controller from '../Controller';
 import Input from '../../interfaces/Input';
 import CONTROLS from '../../enums/controls';

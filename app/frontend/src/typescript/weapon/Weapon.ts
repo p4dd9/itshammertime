@@ -1,13 +1,13 @@
-import IGameImage from '../interfaces/IGameImage';
-import AssetLoader from './AssetLoader';
-import IAudio from '../interfaces/IAudio';
+import IGameImage from '../../interfaces/IGameImage';
+import AssetLoader from '../AssetLoader';
+import IAudio from '../../interfaces/IAudio';
 import WeaponEffect from './WeaponEffect';
-import IGameImageAsset from '../interfaces/IGameImageAsset';
-import IAudioAsset from '../interfaces/IAudioAsset';
-import IPosition from '../interfaces/IPosition';
-import IEffectSettings from '../interfaces/IEffectSettings';
-import LAYERS from '../config/layers';
-import GameAudio from './GameAudio';
+import IGameImageAsset from '../../interfaces/IGameImageAsset';
+import IAudioAsset from '../../interfaces/IAudioAsset';
+import IPosition from '../../interfaces/IPosition';
+import IEffectSettings from '../../interfaces/IEffectSettings';
+import LAYERS from '../../config/layers';
+import GameAudio from '../GameAudio';
 
 export default abstract class Weapon {
 	private moveDistance = 9;
@@ -96,9 +96,7 @@ export default abstract class Weapon {
 		}
 		const destinationX =
 			this.position.x -
-			(this.moveDistance +
-				this.currentImage.image.width /
-					this.currentImage.scaleOnCanvas) /
+			(this.moveDistance + this.currentImage.image.width / this.currentImage.scaleOnCanvas) /
 				2;
 
 		if (destinationX >= 0) {
@@ -113,9 +111,7 @@ export default abstract class Weapon {
 		}
 		const destinationY =
 			this.position.y -
-			(this.moveDistance +
-				this.currentImage.image.height /
-					this.currentImage.scaleOnCanvas);
+			(this.moveDistance + this.currentImage.image.height / this.currentImage.scaleOnCanvas);
 
 		if (destinationY >= 0) {
 			this.position.y += -this.moveDistance;

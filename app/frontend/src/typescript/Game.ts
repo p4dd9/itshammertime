@@ -11,7 +11,7 @@ import { isScreenSizeSupported } from '../util/commonUtil';
 import { Extension, ExtensionContext } from '../types/twitch';
 import IPosition from '../interfaces/IPosition';
 import Authentication from './Authentication';
-import Transaction from './Transaction';
+import Transaction from './transactions/Transaction';
 
 export default class Game {
 	public ui: UI;

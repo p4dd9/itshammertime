@@ -13,11 +13,12 @@ import Enchantments from './ui/Enchantments';
 import GameStartStopButton from './ui/GameStartStopButton';
 import { hasUsedBits } from './services/userServices';
 import ICheerEmotesResponse from '../interfaces/ICheerEmotes';
-import { onSuccessfulClassicPlantHammerTransaction } from '../util/commonUtil';
+import TransactionListener from './transactions/TransactionListener';
 
 export default class UI {
 	private game: Game;
 	private effectSettings: IEffectSettings;
+	private transactionListener: TransactionListener;
 
 	public menu: Menu;
 	public audioButton: AudioButton;
@@ -34,6 +35,7 @@ export default class UI {
 		this.faqButton = new FaqButton();
 		this.gameStartStopButton = new GameStartStopButton(game);
 		this.enchantments = new Enchantments(game, effectSettings);
+		this.transactionListener = new TransactionListener(game);
 		this.show();
 	}
 
@@ -132,8 +134,11 @@ export default class UI {
 								);
 
 								// add shop ui specific listeners
-								this.addBitsBalanceListener(useBitsWrapper);
-								this.addUseBitsListener(useBitsWrapper, product.sku);
+								this.transactionListener.addBitsBalanceListener(useBitsWrapper);
+								this.transactionListener.addUseBitsListener(
+									useBitsWrapper,
+									product.sku
+								);
 							}
 						});
 					}
@@ -184,20 +189,6 @@ export default class UI {
 		} catch (e) {
 			console.log(e);
 		}
-	}
-
-	private addUseBitsListener(element: HTMLElement, sku: string): void {
-		element.addEventListener('click', () => {
-			// TODO remove for hosted env
-			onSuccessfulClassicPlantHammerTransaction();
-			this.game.transaction?.useBits(sku);
-		});
-	}
-
-	private addBitsBalanceListener(element: HTMLElement): void {
-		element.addEventListener('mouseenter', () => {
-			this.game.transaction?.showBitsBalance();
-		});
 	}
 
 	private async renderUseBitsButton(): Promise<void> {

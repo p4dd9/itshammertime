@@ -40,7 +40,7 @@ export default class UI {
 	}
 
 	public async initShop(): Promise<void> {
-		await this.renderShop();
+		this.renderShop();
 		this.initProducts();
 		this.initProductBitIntegration();
 	}
@@ -120,8 +120,8 @@ export default class UI {
 							const twitchBitsActions = await fetchCheerEmotes(auth.clientId);
 							if (useBitsWrapper instanceof HTMLElement && twitchBitsActions) {
 								// render not-used-bits user ui
-								await this.renderUseBitsButton();
-								await this.renderBitsUsedCheer();
+								this.renderUseBitsButton();
+								this.renderBitsUsedCheer();
 								this.renderProductBitImage(
 									twitchBitsActions.actions[0].tiers[1].images.light.static[1]
 								);
@@ -147,15 +147,13 @@ export default class UI {
 		}
 	}
 
-	private async renderBitsUsedCheer(): Promise<void> {
+	private renderBitsUsedCheer(): void {
 		const useBitsButtonAnchor = document.getElementById(
 			'ui-shop-classic-plant-page-cheer-anchor'
 		);
-
 		const templateString = (): string => {
 			return `<img id="ui-bit-used-cheer" src="" />`;
 		};
-
 		this.render(templateString, useBitsButtonAnchor);
 	}
 
@@ -173,9 +171,8 @@ export default class UI {
 		}
 	}
 
-	private async renderUseBitsButton(): Promise<void> {
+	private renderUseBitsButton(): void {
 		const useBitsButtonAnchor = document.getElementById('ui-button-use-bits-plant-wrapper');
-
 		const templateString = (): string => {
 			return `
 					<div class="ui-button-use-bits-content-wrapper">
@@ -191,7 +188,7 @@ export default class UI {
 		this.render(templateString, useBitsButtonAnchor);
 	}
 
-	private async renderShop(): Promise<void> {
+	private renderShop(): void {
 		const hammerOptionsAnchor = document.getElementById('ui-shop');
 		const templateString = (): string => {
 			return `

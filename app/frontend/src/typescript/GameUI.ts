@@ -12,8 +12,8 @@ import FaqButton from './ui/FaqButton';
 import Enchantments from './ui/Enchantments';
 import GameStartStopButton from './ui/GameStartStopButton';
 import { hasUsedBits } from './services/userServices';
-import ICheerEmotesResponse from '../interfaces/ICheerEmotes';
 import TransactionListener from './transactions/TransactionListener';
+import { fetchCheerEmotes } from './services/twitchServices';
 
 export default class UI {
 	private game: Game;
@@ -117,7 +117,7 @@ export default class UI {
 						) as HTMLElement).style.filter = 'none';
 					} else {
 						this.game.twitch?.onAuthorized(async (auth) => {
-							const twitchBitsActions = await this.fetchCheerEmotes(auth.clientId);
+							const twitchBitsActions = await fetchCheerEmotes(auth.clientId);
 							if (useBitsWrapper instanceof HTMLElement && twitchBitsActions) {
 								// render not-used-bits user ui
 								await this.renderUseBitsButton();
@@ -170,24 +170,6 @@ export default class UI {
 	private renderProductCost(element: HTMLElement | null, price: number): void {
 		if (element) {
 			element.innerText = String(price);
-		}
-	}
-
-	private async fetchCheerEmotes(clientId: string): Promise<ICheerEmotesResponse | undefined> {
-		try {
-			const twitchBitsActionsResponse = await fetch(
-				'https://api.twitch.tv/kraken/bits/actions',
-				{
-					headers: {
-						'Client-ID': clientId,
-						Accept: ' application/vnd.twitchtv.v5+json',
-					},
-				}
-			);
-
-			return await twitchBitsActionsResponse.json();
-		} catch (e) {
-			console.log(e);
 		}
 	}
 

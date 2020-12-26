@@ -1,4 +1,4 @@
--   ITS NOT A FEATURE ITS A MUST: add basic accessibility (discuss with adrian)
+-   ITS NOT A FEATURE ITS A MUST: add basic accessibility
 -   feature: add prefixer to webpack
 -   feature: replace start/stop game button
 -   feature: fullscreen hammer size change (green hammer)

@@ -104,6 +104,7 @@ module.exports = (_env, argv) => {
 		output: {
 			filename: '[name].bundle.js',
 			path: frontendDistPath,
+			publicPath: '/',
 		},
 		plugins,
 	};

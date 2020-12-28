@@ -14,6 +14,7 @@ import GameStartStopButton from './ui/GameStartStopButton';
 import { hasUsedBits } from './services/userServices';
 import TransactionListener from './transactions/TransactionListener';
 import { fetchCheerEmotes } from './services/twitchServices';
+import Renderer from './Renderer';
 
 export default class UI {
 	private game: Game;
@@ -40,7 +41,7 @@ export default class UI {
 	}
 
 	public async initShop(): Promise<void> {
-		this.renderShop();
+		Renderer.renderShop();
 		this.initProducts();
 		this.initProductBitIntegration();
 	}
@@ -120,15 +121,15 @@ export default class UI {
 							const twitchBitsActions = await fetchCheerEmotes(auth.clientId);
 							if (useBitsWrapper instanceof HTMLElement && twitchBitsActions) {
 								// render not-used-bits user ui
-								this.renderUseBitsButton();
-								this.renderBitsUsedCheer();
-								this.renderProductBitImage(
+								Renderer.renderUseBitsButton();
+								Renderer.renderBitsUsedCheer();
+								this.setProductBitImage(
 									twitchBitsActions.actions[0].tiers[1].images.light.static[1]
 								);
-								this.renderBitUseSuccess(
+								this.setBitUseSuccessImage(
 									twitchBitsActions.actions[2].tiers[1].images.light.animated[2]
 								);
-								this.renderProductCost(
+								this.setProductCost(
 									document.getElementById('ui-button-use-bits-planthammer'),
 									product.cost.amount
 								);
@@ -147,117 +148,19 @@ export default class UI {
 		}
 	}
 
-	private renderBitsUsedCheer(): void {
-		const useBitsButtonAnchor = document.getElementById(
-			'ui-shop-classic-plant-page-cheer-anchor'
-		);
-		const templateString = (): string => {
-			return `<img id="ui-bit-used-cheer" src="" />`;
-		};
-		this.render(templateString, useBitsButtonAnchor);
-	}
-
-	private renderBitUseSuccess(src: string): void {
+	private setBitUseSuccessImage(src: string): void {
 		(document.getElementById('ui-bit-used-cheer') as HTMLImageElement).src = src;
 	}
 
-	private renderProductBitImage(src: string): void {
+	private setProductBitImage(src: string): void {
 		(document.getElementById('ui-button-use-bits-bit-icon') as HTMLImageElement).src = src;
 	}
 
-	private renderProductCost(element: HTMLElement | null, price: number): void {
+	private setProductCost(element: HTMLElement | null, price: number): void {
 		if (element) {
 			element.innerText = String(price);
 		}
 	}
-
-	private renderUseBitsButton(): void {
-		const useBitsButtonAnchor = document.getElementById('ui-button-use-bits-plant-wrapper');
-		const templateString = (): string => {
-			return `
-					<div class="ui-button-use-bits-content-wrapper">
-						<img
-							id="ui-button-use-bits-bit-icon"
-							alt="use-bits"
-						/>
-						<div id="ui-button-use-bits-planthammer"></div>
-					</div>
-			`;
-		};
-
-		this.render(templateString, useBitsButtonAnchor);
-	}
-
-	private renderShop(): void {
-		const hammerOptionsAnchor = document.getElementById('ui-shop');
-		const templateString = (): string => {
-			return `
-				<div id="ui-shop" class="ui-menu-item-container" >
-					<button
-							id="ui-shop-button"
-							class="ui-button"
-						>
-							<img
-								id="ui-shop-button-image"
-								alt="contact makers"
-							/>
-					</button>
-					<div
-						id="ui-shop-sidemenu"
-						class="ui-sidemenu"
-					>
-						<div
-							id="ui-shop-classic-hammer-page"
-							class="ui-sidemenu-page"
-						>
-							<h5 class="ui-sidemenu-page-title">
-								Classic
-							</h5>
-							<div
-								id="ui-shop-preview-classic"
-							>
-								<img
-									id="ui-shop-preview-classic-image"
-									class="ui-shop-preview-image"
-									alt="hammer-classic"
-								/>
-							</div>
-						</div>
-						<div
-							id="ui-shop-classic-plant-page"
-							class="ui-sidemenu-page"
-						>
-							<div id="ui-shop-classic-plant-page-cheer-anchor"></div>
-							<h5 class="ui-sidemenu-page-title">
-								Green
-							</h5>
-							<div
-								id="ui-shop-preview-green"
-							>
-								<img
-									id="ui-shop-preview-green-image"
-									class="ui-shop-preview-image"
-									alt="hammer-green"
-								/>
-							</div>
-
-							<div
-								id="ui-button-use-bits-plant-wrapper"
-								class="ui-button-use-bits-wrapper"
-							></div>
-						</div>
-					</div>
-				<div>
-			`;
-		};
-
-		this.render(templateString, hammerOptionsAnchor);
-	}
-
-	private render = (template: () => string, node: HTMLElement | null): void => {
-		if (!(node instanceof HTMLElement)) return;
-		node.innerHTML = typeof template === 'function' ? template() : template;
-	};
 
 	private show(): void {
 		(document.getElementById('ui-layer') as HTMLDivElement).style.visibility = 'visible';

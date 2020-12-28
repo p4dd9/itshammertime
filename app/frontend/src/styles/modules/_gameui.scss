@@ -14,14 +14,14 @@ $menuTranistionTime: 0.5s;
 
 body {
 	@media only screen and (max-height: 450px) {
-		#ui-layer {
+		#game-ui-layer {
 			display: none;
 			cursor: default;
 		}
 	}
 
 	@media only screen and (max-width: 300px) {
-		#ui-layer {
+		#game-ui-layer {
 			display: none;
 			cursor: default;
 		}
@@ -126,7 +126,7 @@ body {
 	@include showFlex($showHammerUIFaq);
 }
 
-#ui-layer {
+#game-ui-layer {
 	visibility: hidden;
 }
 

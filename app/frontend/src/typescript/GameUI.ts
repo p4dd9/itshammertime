@@ -143,6 +143,6 @@ export default class UI {
 	}
 
 	private showUI() {
-		setVisibilityById('ui-layer', 'visible');
+		setVisibilityById('game-ui-layer', 'visible');
 	}
 }

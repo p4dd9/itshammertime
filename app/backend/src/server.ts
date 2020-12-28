@@ -1,7 +1,7 @@
 import express from 'express';
 import DBClient from './DBClient';
 import bodyParser from 'body-parser';
-import UserController from './UserController';
+import UserController from './controller/UserController';
 import cors from 'cors';
 import { logger } from './logger';
 import https from 'https';

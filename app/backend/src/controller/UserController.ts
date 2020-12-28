@@ -1,7 +1,7 @@
 import express from 'express';
-import DBClient from './DBClient';
-import { logger } from './logger';
-import UserDTO from './dto/UserDTO';
+import DBClient from '../DBClient';
+import { logger } from '../logger';
+import UserDTO from '../dto/UserDTO';
 
 export default class UserController {
 	private dbClient: DBClient;

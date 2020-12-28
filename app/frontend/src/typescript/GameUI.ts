@@ -54,15 +54,9 @@ export default class UI {
 	}
 
 	private initProductPreviewImageSources(): void {
-		(document.getElementById('ui-shop-button-image') as HTMLImageElement).src = HammerImage;
-
-		(document.getElementById(
-			'ui-shop-preview-classic-image'
-		) as HTMLImageElement).src = HammerImage;
-
-		(document.getElementById(
-			'ui-shop-preview-green-image'
-		) as HTMLImageElement).src = GreenHammerImage;
+		setImageSrcById('ui-shop-button-image', HammerImage);
+		setImageSrcById('ui-shop-preview-classic-image', HammerImage);
+		setImageSrcById('ui-shop-preview-green-image', GreenHammerImage);
 	}
 
 	private addClassicHammerShopProduct(): void {

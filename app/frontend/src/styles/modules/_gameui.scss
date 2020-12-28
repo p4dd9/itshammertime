@@ -27,7 +27,7 @@ body {
 		}
 	}
 
-	&:hover #ui-options {
+	&:hover #game-ui-wrapper {
 		opacity: 1;
 	}
 }
@@ -151,7 +151,7 @@ body {
 	background-position: center;
 }
 
-#ui-options {
+#game-ui-wrapper {
 	position: absolute;
 	top: 0;
 	padding-top: 110px;

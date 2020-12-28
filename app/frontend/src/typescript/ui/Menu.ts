@@ -9,7 +9,9 @@ export default class Menu {
 	private list: HTMLUListElement = document.getElementById(
 		'ui-menu-item-list'
 	) as HTMLUListElement;
-	private listWrapper: HTMLDivElement = document.getElementById('ui-options') as HTMLDivElement;
+	private listWrapper: HTMLDivElement = document.getElementById(
+		'game-ui-wrapper'
+	) as HTMLDivElement;
 	public authentication: Authentication | null = null;
 
 	constructor(authentication: Authentication | null) {

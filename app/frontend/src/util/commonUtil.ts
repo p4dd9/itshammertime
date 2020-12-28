@@ -23,6 +23,21 @@ export function isIE(): boolean {
 	}
 }
 
+export function setImageSrcById(id: string, src: string): void {
+	(document.getElementById(id) as HTMLImageElement).src = src;
+}
+
+export function setVisibilityById(id: string, visibility: 'visible' | 'hidden'): void {
+	(document.getElementById(id) as HTMLDivElement).style.visibility = visibility;
+}
+
+export function setProductCostById(id: string, price: number): void {
+	const element = document.getElementById(id);
+	if (element) {
+		element.innerText = String(price);
+	}
+}
+
 export function copyTextToClipboard(text: string): void {
 	const input = document.createElement('input');
 	input.style.position = 'fixed';

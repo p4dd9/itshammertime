@@ -15,6 +15,7 @@ import { hasUsedBits } from './services/userServices';
 import TransactionListener from './transactions/TransactionListener';
 import { fetchCheerEmotes } from './services/twitchServices';
 import Renderer from './Renderer';
+import { setImageSrcById, setProductCostById, setVisibilityById } from '../util/commonUtil';
 
 export default class UI {
 	private game: Game;
@@ -37,7 +38,7 @@ export default class UI {
 		this.gameStartStopButton = new GameStartStopButton(game);
 		this.enchantments = new Enchantments(game, effectSettings);
 		this.transactionListener = new TransactionListener(game);
-		this.show();
+		this.showUI();
 	}
 
 	public async initShop(): Promise<void> {
@@ -119,27 +120,26 @@ export default class UI {
 					} else {
 						this.game.twitch?.onAuthorized(async (auth) => {
 							const twitchBitsActions = await fetchCheerEmotes(auth.clientId);
+
 							if (useBitsWrapper instanceof HTMLElement && twitchBitsActions) {
-								// render not-used-bits user ui
 								Renderer.renderUseBitsButton();
 								Renderer.renderBitsUsedCheer();
-								this.setProductBitImage(
-									twitchBitsActions.actions[0].tiers[1].images.light.static[1]
-								);
-								this.setBitUseSuccessImage(
-									twitchBitsActions.actions[2].tiers[1].images.light.animated[2]
-								);
-								this.setProductCost(
-									document.getElementById('ui-button-use-bits-planthammer'),
-									product.cost.amount
-								);
 
-								// add shop ui specific listeners
+								const useBitsIcon =
+									twitchBitsActions.actions[0].tiers[1].images.light.static[1];
+								const usedBitsCheerIcon =
+									twitchBitsActions.actions[2].tiers[1].images.light.animated[2];
+								setImageSrcById('ui-button-use-bits-bit-icon', useBitsIcon);
+								setImageSrcById('ui-bit-used-cheer', usedBitsCheerIcon);
+
+								const {
+									sku,
+									cost: { amount },
+								} = product;
+								setProductCostById('ui-button-use-bits-planthammer', amount);
+
 								this.transactionListener.addBitsBalanceListener(useBitsWrapper);
-								this.transactionListener.addUseBitsListener(
-									useBitsWrapper,
-									product.sku
-								);
+								this.transactionListener.addUseBitsListener(useBitsWrapper, sku);
 							}
 						});
 					}
@@ -148,21 +148,7 @@ export default class UI {
 		}
 	}
 
-	private setBitUseSuccessImage(src: string): void {
-		(document.getElementById('ui-bit-used-cheer') as HTMLImageElement).src = src;
-	}
-
-	private setProductBitImage(src: string): void {
-		(document.getElementById('ui-button-use-bits-bit-icon') as HTMLImageElement).src = src;
-	}
-
-	private setProductCost(element: HTMLElement | null, price: number): void {
-		if (element) {
-			element.innerText = String(price);
-		}
-	}
-
-	private show(): void {
-		(document.getElementById('ui-layer') as HTMLDivElement).style.visibility = 'visible';
+	private showUI() {
+		setVisibilityById('ui-layer', 'visible');
 	}
 }

@@ -1,8 +1,6 @@
 export default class Renderer {
 	public static renderBitsUsedCheer(): void {
-		const useBitsButtonAnchor = document.getElementById(
-			'ui-shop-classic-plant-page-cheer-anchor'
-		);
+		const useBitsButtonAnchor = document.getElementById('ui-shop-planthammer-onbuy-cheeremote');
 		const templateString = (): string => {
 			return `<img id="ui-bit-used-cheer" src="" />`;
 		};
@@ -10,7 +8,9 @@ export default class Renderer {
 	}
 
 	public static renderUseBitsButton(): void {
-		const useBitsButtonAnchor = document.getElementById('ui-button-use-bits-plant-wrapper');
+		const useBitsButtonAnchor = document.getElementById(
+			'ui-button-usebits-planthammer-button-wrapper'
+		);
 		const templateString = (): string => {
 			return `
 					<div class="ui-button-use-bits-content-wrapper">
@@ -65,7 +65,7 @@ export default class Renderer {
 							id="ui-shop-classic-plant-page"
 							class="ui-sidemenu-page"
 						>
-							<div id="ui-shop-classic-plant-page-cheer-anchor"></div>
+							<div id="ui-shop-planthammer-onbuy-cheeremote"></div>
 							<h5 class="ui-sidemenu-page-title">
 								Green
 							</h5>
@@ -80,7 +80,7 @@ export default class Renderer {
 							</div>
 
 							<div
-								id="ui-button-use-bits-plant-wrapper"
+								id="ui-button-usebits-planthammer-button-wrapper"
 								class="ui-button-use-bits-wrapper"
 							></div>
 						</div>

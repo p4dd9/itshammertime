@@ -98,7 +98,9 @@ export default class Shop {
 
 		for (const product of this.products) {
 			if (product.sku === 'planthammer') {
-				const useBitsWrapper = document.getElementById('ui-button-use-bits-plant-wrapper');
+				const useBitsWrapper = document.getElementById(
+					'ui-button-usebits-planthammer-button-wrapper'
+				);
 
 				if (this.userHasUsedBits) {
 					(document.getElementById('ui-shop-preview-green') as HTMLElement).style.filter =

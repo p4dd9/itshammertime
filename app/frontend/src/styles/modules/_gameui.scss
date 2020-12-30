@@ -32,7 +32,7 @@ body {
 	}
 }
 
-#ui-shop-classic-plant-page-cheer-anchor {
+#ui-shop-planthammer-onbuy-cheeremote {
 	visibility: hidden;
 	position: absolute;
 	top: -43%;
@@ -40,12 +40,12 @@ body {
 	transform: translateX(-50%);
 }
 
-.usedBitsPogChampEmote {
+.scale-out {
 	animation: scale-out-used-bits-plant-hammer-emote 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)
 		both;
 }
 
-.whirlOutUsedBitsButton {
+.whirl-out {
 	visibility: visible !important;
 	animation: swirl-out-usebits-plant-hammer-button 0.6s ease-in 3s both;
 }

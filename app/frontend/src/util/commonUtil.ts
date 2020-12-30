@@ -50,13 +50,25 @@ export function copyTextToClipboard(text: string): void {
 }
 
 export function onSuccessfulClassicPlantHammerTransaction(): void {
-	document
-		.getElementById('ui-button-use-bits-plant-wrapper')
-		?.classList.add('usedBitsPogChampEmote');
 	(document.getElementById('ui-shop-preview-green') as HTMLElement).style.filter = 'none';
-	document
-		.getElementById('ui-shop-classic-plant-page-cheer-anchor')
-		?.classList.add('whirlOutUsedBitsButton');
+
+	const useBitsButton = document.getElementById('ui-button-usebits-planthammer-button-wrapper');
+	useBitsButton?.addEventListener('animationend', () => {
+		useBitsButton.remove();
+	});
+	useBitsButton?.addEventListener('animationcancel', () => {
+		useBitsButton.remove();
+	});
+	useBitsButton?.classList.add('scale-out');
+
+	const onBuyCheerEmote = document.getElementById('ui-shop-planthammer-onbuy-cheeremote');
+	onBuyCheerEmote?.classList.add('whirl-out');
+	onBuyCheerEmote?.addEventListener('animationend', () => {
+		onBuyCheerEmote.remove();
+	});
+	onBuyCheerEmote?.addEventListener('animationcancel', () => {
+		onBuyCheerEmote.remove();
+	});
 }
 
 export function supportsGamepads(): boolean {

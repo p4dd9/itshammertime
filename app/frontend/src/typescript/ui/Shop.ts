@@ -11,6 +11,7 @@ import HammerImage from '../../assets/images/hammer_preview.png';
 import GreenHammerImage from '../../assets/images/planthammer_preview.png';
 import { Product } from '../../types/twitch';
 import Renderer from '../Renderer';
+import GameStartStopButton from './GameStartStopButton';
 
 export default class Shop {
 	private game: Game;
@@ -18,11 +19,17 @@ export default class Shop {
 	private effectSettings: IEffectSettings;
 	private products: Product[] | undefined;
 	private userHasUsedBits = false;
+	private gameStartStopButton: GameStartStopButton;
 
-	constructor(game: Game, effectSettings: IEffectSettings) {
+	constructor(
+		game: Game,
+		effectSettings: IEffectSettings,
+		gameStartStopButton: GameStartStopButton
+	) {
 		this.game = game;
 		this.transactionListener = new TransactionListener(game);
 		this.effectSettings = effectSettings;
+		this.gameStartStopButton = gameStartStopButton;
 	}
 
 	private async fetchProducts() {
@@ -42,6 +49,8 @@ export default class Shop {
 
 	private addEventListeners(): void {
 		this.addClassicHammerEventListeners();
+
+		// TODO: only if bought by user
 		this.addPlantHammerEventListeners();
 	}
 
@@ -53,6 +62,7 @@ export default class Shop {
 
 	private addClassicHammerEventListeners(): void {
 		document.getElementById('ui-shop-preview-classic')?.addEventListener('click', () => {
+			this.gameStartStopButton.startGame();
 			this.effectSettings.particleTheme = 'glass';
 			this.effectSettings.shape = 'square';
 			this.game.weapon = new ClassicHammer(
@@ -66,6 +76,7 @@ export default class Shop {
 
 	private addPlantHammerEventListeners(): void {
 		document.getElementById('ui-shop-preview-green')?.addEventListener('click', () => {
+			this.gameStartStopButton.startGame();
 			this.effectSettings.particleTheme = 'plant';
 			this.effectSettings.shape = 'leaf';
 			this.game.weapon = new PlantHammer(

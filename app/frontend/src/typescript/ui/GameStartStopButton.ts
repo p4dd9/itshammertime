@@ -14,12 +14,12 @@ export default class GameStartStopButton {
 
 	constructor(game: Game) {
 		this.game = game;
-		this.onClick = this.onClick.bind(this);
+		this.toggleGameRunning = this.toggleGameRunning.bind(this);
 
 		this.start();
 	}
 
-	private onClick(): void {
+	public toggleGameRunning(): void {
 		if (this.game.activated) {
 			this.game.activated = !this.game.activated;
 			this.buttonImage.src = EyeOff;
@@ -32,12 +32,21 @@ export default class GameStartStopButton {
 		}
 	}
 
+	public startGame(): void {
+		if (!this.game.activated) {
+			this.game.activated = !this.game.activated;
+			this.buttonImage.src = EyeOn;
+			this.game.start();
+			this.game.resize(); // remove listener, wtf how does this work
+		}
+	}
+
 	public start(): void {
 		this.buttonImage.src = EyeOff;
-		this.button.addEventListener('click', this.onClick);
+		this.button.addEventListener('click', this.toggleGameRunning);
 	}
 
 	public stop(): void {
-		this.button.removeEventListener('click', this.onClick);
+		this.button.removeEventListener('click', this.toggleGameRunning);
 	}
 }

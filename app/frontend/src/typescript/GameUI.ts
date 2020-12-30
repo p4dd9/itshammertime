@@ -23,7 +23,7 @@ export default class UI {
 		this.faqButton = new FaqButton();
 		this.gameStartStopButton = new GameStartStopButton(game);
 		this.enchantments = new Enchantments(game, effectSettings);
-		this.shop = new Shop(game, effectSettings);
+		this.shop = new Shop(game, effectSettings, this.gameStartStopButton);
 		this.display();
 	}
 

@@ -125,8 +125,8 @@ module.exports = (_env, argv) => {
 	if (isProduction) {
 		plugins.push(
 			new MiniCssExtractPlugin({
-				filename: '[name].[hash].css',
-				chunkFilename: '[id].[hash].css',
+				filename: '[name].[fullhash].css',
+				chunkFilename: '[id].[fullhash].css',
 			})
 		);
 		plugins.push(new ImageminPlugin({ test: imagePattern }));

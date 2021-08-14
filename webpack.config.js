@@ -2,7 +2,6 @@ const path = require('path');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
@@ -129,7 +128,6 @@ module.exports = (_env, argv) => {
 				chunkFilename: '[id].[fullhash].css',
 			})
 		);
-		plugins.push(new ImageminPlugin({ test: imagePattern }));
 		plugins.push(new CleanWebpackPlugin());
 
 		config.optimization.splitChunks = {

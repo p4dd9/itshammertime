@@ -54,15 +54,15 @@ module.exports = (_env, argv) => {
 				},
 				{
 					test: imagePattern,
-					loader: 'file-loader',
+					type: 'asset/resource',
 				},
 				{
 					test: /\.(eot|ttf|woff|woff2)$/i,
-					loader: 'file-loader',
+					type: 'asset/resource',
 				},
 				{
 					test: /\.(ogg|mp3|wav|mpe?g)$/i,
-					loader: 'file-loader',
+					type: 'asset/resource',
 				},
 				{
 					test: /\.s(a|c)ss$/,

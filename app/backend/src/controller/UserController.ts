@@ -114,7 +114,12 @@ export default class UserController {
 
 	private async findUser(id: string): Promise<UserDTO | null> {
 		try {
-			return await this.dbClient.db().collection('users').findOne({ id });
+			const user = await this.dbClient.db().collection('users').findOne({ id });
+			if (user) {
+				return user as UserDTO;
+			} else {
+				return null;
+			}
 		} catch (e) {
 			logger.error(e);
 			throw new Error(e);

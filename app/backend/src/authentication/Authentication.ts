@@ -19,7 +19,7 @@ interface AppAccessToken {
 }
 
 export class Authentication {
-	private appAccessToken: AppAccessToken | null = null;
+	public appAccessToken: AppAccessToken | null = null;
 	private client_id: string = process.env.TWITCH_CLIENT_ID as string;
 	private api_client_secret: string = process.env.TWITCH_API_CLIENT_SECRET as string;
 
@@ -27,6 +27,7 @@ export class Authentication {
 		await this.fetchAppAccessToken();
 		await this.isValidToken();
 
+		console.log(this.appAccessToken);
 		cron.job('0 * * * *', async () => {
 			const isValidToken = await this.isValidToken();
 			if (!isValidToken) {

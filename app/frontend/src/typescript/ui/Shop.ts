@@ -117,17 +117,15 @@ export default class Shop {
 					(document.getElementById('ui-shop-preview-green') as HTMLElement).style.filter =
 						'none';
 				} else {
-					this.game.twitch?.onAuthorized(async (auth) => {
-						const twitchBitsActions = await fetchCheerEmotes(auth.clientId);
+					this.game.twitch?.onAuthorized(async () => {
+						const twitchBitsActions = await fetchCheerEmotes();
 
 						if (useBitsWrapper instanceof HTMLElement && twitchBitsActions) {
 							Renderer.renderUseBitsButton();
 							Renderer.renderBitsUsedCheer();
 
-							const useBitsIcon =
-								twitchBitsActions.actions[0].tiers[1].images.light.static[1];
-							const usedBitsCheerIcon =
-								twitchBitsActions.actions[2].tiers[1].images.light.animated[2];
+							const useBitsIcon = twitchBitsActions.tier1.bit;
+							const usedBitsCheerIcon = twitchBitsActions.tier1.cheer;
 							setImageSrcById('ui-button-use-bits-bit-icon', useBitsIcon);
 							setImageSrcById('ui-bit-used-cheer', usedBitsCheerIcon);
 

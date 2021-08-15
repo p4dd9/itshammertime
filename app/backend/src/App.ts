@@ -13,10 +13,10 @@ export default class App {
 
 	async start(): Promise<void> {
 		this.dbClient = new DBClient();
-		new Server(this.dbClient!);
-
 		this.authentication = new Authentication();
 		await this.authentication.init();
+
+		new Server(this.dbClient!, this.authentication!);
 
 		logger.info('running ... ');
 	}

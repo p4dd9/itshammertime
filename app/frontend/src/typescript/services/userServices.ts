@@ -1,9 +1,9 @@
 import { TransactionObject } from '../../types/twitch';
 import UserDTO from '../../../../backend/src/dto/UserDTO';
 
-const protocol = 'https';
-const baseUrl = 'localhost';
-const port = 3535;
+export const protocol = 'https';
+export const baseUrl = 'localhost';
+export const port = 3535;
 
 export const sendBits = async (transactionObject: TransactionObject): Promise<boolean> => {
 	try {

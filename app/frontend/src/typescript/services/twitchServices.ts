@@ -1,15 +1,21 @@
-import ICheerEmotesResponse from '../../interfaces/ICheerEmotes';
+import { protocol, baseUrl, port } from './userServices';
 
-export const fetchCheerEmotes = async (
-	clientId: string
-): Promise<ICheerEmotesResponse | undefined> => {
+interface BitEmote {
+	tier1: { bit: string; cheer: string };
+	tier2: { bit: string; cheer: string };
+	tier3: { bit: string; cheer: string };
+	tier4: { bit: string; cheer: string };
+}
+export const fetchCheerEmotes = async (): Promise<BitEmote | undefined> => {
 	try {
-		const twitchBitsActionsResponse = await fetch('https://api.twitch.tv/kraken/bits/actions', {
-			headers: {
-				'Client-ID': clientId,
-				Accept: ' application/vnd.twitchtv.v5+json',
-			},
-		});
+		const twitchBitsActionsResponse = await fetch(
+			`${protocol}://${baseUrl}:${port}/twitch/emotes`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
 		return await twitchBitsActionsResponse.json();
 	} catch (e) {

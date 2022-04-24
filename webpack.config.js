@@ -49,7 +49,7 @@ module.exports = (_env, argv) => {
 				{
 					test: /\.(ts)$/,
 					exclude: /(node_modules)/,
-					loader: 'awesome-typescript-loader',
+					loader: 'ts-loader',
 				},
 				{
 					test: imagePattern,

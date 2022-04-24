@@ -118,7 +118,6 @@ module.exports = (_env, argv) => {
 			},
 			port: 3434,
 		};
-		config.devServer.https = true;
 	}
 
 	if (isProduction) {

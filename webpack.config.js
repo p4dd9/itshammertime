@@ -111,7 +111,7 @@ module.exports = (_env, argv) => {
 	if (!isProduction) {
 		config.devServer = {
 			https: true,
-			contentBase: path.join(__dirname, 'app/frontend/dist'),
+			static: path.join(__dirname, 'app/frontend/dist'),
 			host: 'localhost',
 			headers: {
 				'Access-Control-Allow-Origin': '*',

@@ -110,7 +110,7 @@ module.exports = (_env, argv) => {
 
 	if (!isProduction) {
 		config.devServer = {
-			https: true,
+			server: 'https',
 			static: path.join(__dirname, 'app/frontend/dist'),
 			host: 'localhost',
 			headers: {

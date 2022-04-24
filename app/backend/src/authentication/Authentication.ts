@@ -1,6 +1,6 @@
 import { logger } from '../logger';
-import fetch from 'node-fetch';
 import cron from 'cron';
+import 'node-fetch';
 
 /**
  * No refresh_token for AppAccessToken available.
@@ -46,7 +46,7 @@ export class Authentication {
 				this.appAccessToken = token;
 				logger.info('Successfully fetched AppAccessToken');
 			} else {
-				logger.error(`Unable to fetch AppAcessToken ${res.status}: ${res.statusText}`);
+				throw new Error(`Unable to fetch AppAcessToken ${res.status}: ${res.statusText}`);
 			}
 		} catch (e) {
 			logger.error(e);

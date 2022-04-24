@@ -1,6 +1,6 @@
-import fetch from 'node-fetch';
 import { Authentication } from '../authentication/Authentication';
 import { logger } from '../logger';
+import 'node-fetch';
 
 interface GlobalTwitchBadgeEmote {
 	data: [

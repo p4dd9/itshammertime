@@ -21,7 +21,9 @@ export const sendBits = async (transactionObject: TransactionObject): Promise<bo
 		});
 		return true;
 	} catch (e) {
-		throw new Error(e);
+		throw new Error(
+			`Couldn't send bit for user ${transactionObject.userId} for product ${transactionObject.displayName} `
+		);
 	}
 };
 
@@ -40,7 +42,7 @@ export const loadUserData = async (
 
 		return await response.json();
 	} catch (e) {
-		throw new Error(e);
+		throw new Error(`Couldn't load UserData for userId ${id}`);
 	}
 };
 
@@ -52,6 +54,6 @@ export const hasUsedBits = async (id: string, token: string): Promise<boolean> =
 		}
 		return false;
 	} catch (e) {
-		throw new Error(e);
+		throw new Error(`Couldn't check for usedBits for userId ${id}`);
 	}
 };

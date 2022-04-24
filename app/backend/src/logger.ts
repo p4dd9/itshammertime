@@ -6,8 +6,7 @@ const createLogger = (label: string): Logger =>
 			format.timestamp(),
 			format.label({ label }),
 			format.printf(
-				(info) =>
-					`${info.timestamp} - [${info.level}] - [${info.label}] - ${info.message}`
+				(info) => `${info.timestamp} - [${info.level}] - [${info.label}] - ${info.message}`
 			)
 		),
 		level: process.env.LOG_LEVEL || 'info',

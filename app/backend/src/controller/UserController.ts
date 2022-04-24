@@ -77,12 +77,12 @@ export default class UserController {
 	// also could do an upsert: true option in the updateUser function instead of checking
 	private async userExists(id: string): Promise<boolean> {
 		try {
-			return (await this.dbClient.db().collection('users').find({ id }).count()) > 0
-				? true
-				: false;
+			const response =
+				(await this.dbClient.db().collection('users').find({ id }).count()) > 0;
+			return response;
 		} catch (e) {
 			logger.error(e);
-			throw new Error(e);
+			throw new Error("Couldn't check if user exists");
 		}
 	}
 
@@ -95,7 +95,7 @@ export default class UserController {
 			logger.info(`updated user ${id} by ${bits} bits`);
 		} catch (e) {
 			logger.error(e);
-			throw new Error(e);
+			throw new Error(`Couldn't update if user with id ${id}`);
 		}
 	}
 
@@ -108,7 +108,7 @@ export default class UserController {
 			logger.info(`inserted user ${user.id}`);
 		} catch (e) {
 			logger.error(e);
-			throw new Error(e);
+			throw new Error(`Failed inserting user with ${user.id}`);
 		}
 	}
 
@@ -122,7 +122,7 @@ export default class UserController {
 			}
 		} catch (e) {
 			logger.error(e);
-			throw new Error(e);
+			throw new Error(`Failed finding user with id ${id}`);
 		}
 	}
 }

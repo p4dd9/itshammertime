@@ -2,7 +2,7 @@ import IEffectSettings from '../../interfaces/IEffectSettings';
 import { setImageSrcById, setProductCostById } from '../../util/commonUtil';
 import Game from '../Game';
 import { fetchCheerEmotes } from '../services/twitchServices';
-import { hasUsedBits } from '../services/userServices';
+import { loadUserData } from '../services/userServices';
 import TransactionListener from '../transactions/TransactionListener';
 import ClassicHammer from '../weapon/weapons/ClassicHammer';
 import PlantHammer from '../weapon/weapons/PlantHammer';
@@ -12,6 +12,7 @@ import GreenHammerImage from '../../assets/images/planthammer_preview.png';
 import { Product } from '../../types/twitch';
 import Renderer from '../Renderer';
 import GameStartStopButton from './GameStartStopButton';
+import UserDTO from '../../../../backend/src/dto/UserDTO';
 
 export default class Shop {
 	private game: Game;
@@ -92,10 +93,28 @@ export default class Shop {
 		if (this.game.authentication?.isLoggedIn() && this.game.authentication.isAuthenticated()) {
 			const userID = this.game.authentication?.getUserId();
 			if (typeof userID === 'string') {
-				return await hasUsedBits(userID, this.game.authentication.state.token);
+				const userData = await loadUserData(userID, this.game.authentication.state.token);
+				if (userData) {
+					this.renderDebugLayer(userData);
+				}
+				if (!userData?.bit_count) return false;
+				return userData.bit_count > 0;
 			}
 		}
 		return false;
+	}
+
+	private renderDebugLayer(userData: UserDTO) {
+		const debugUserBitsElement = document.getElementById('debug-user-bits');
+		const debugUserIdElement = document.getElementById('debug-user-id');
+
+		if (debugUserBitsElement) {
+			debugUserBitsElement.textContent = `${userData.bit_count ?? '-'}`;
+		}
+
+		if (debugUserIdElement) {
+			debugUserIdElement.textContent = `${userData.id ?? '-'}`;
+		}
 	}
 
 	/**

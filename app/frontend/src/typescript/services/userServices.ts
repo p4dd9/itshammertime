@@ -45,15 +45,3 @@ export const loadUserData = async (
 		throw new Error(`Couldn't load UserData for userId ${id}`);
 	}
 };
-
-export const hasUsedBits = async (id: string, token: string): Promise<boolean> => {
-	try {
-		const user = await loadUserData(id, token);
-		if (user) {
-			return user.bit_count > 0 ? true : false;
-		}
-		return false;
-	} catch (e) {
-		throw new Error(`Couldn't check for usedBits for userId ${id}`);
-	}
-};

@@ -78,6 +78,20 @@ export default class Game {
 		channelId: string;
 	}): void {
 		this.authentication?.setToken(auth.token, auth.userId);
+		this.renderAuthenticationDebugInfo();
+	}
+
+	private renderAuthenticationDebugInfo() {
+		const debugIsBitsEnabledElement = document.getElementById('debug-is-bits-enabled');
+		const debugIsLoggedInElement = document.getElementById('debug-is-logged-in');
+
+		if (debugIsBitsEnabledElement) {
+			debugIsBitsEnabledElement.textContent = `${this.twitch?.features.isBitsEnabled ?? '-'}`;
+		}
+
+		if (debugIsLoggedInElement) {
+			debugIsLoggedInElement.textContent = `${this.authentication?.isLoggedIn() ?? '-'}`;
+		}
 	}
 
 	public get weapon(): Weapon {

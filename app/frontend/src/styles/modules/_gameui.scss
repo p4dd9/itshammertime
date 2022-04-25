@@ -132,17 +132,6 @@ body {
 	@include showFlex($showHammerUIFaq);
 }
 
-#debug-layer {
-	display: none;
-	position: absolute;
-	background-color: white;
-	left: 12px;
-	top: 12px;
-	border: 1px solid black;
-
-	@include showBlock($showDebug)
-}
-
 #game-ui-layer {
 	visibility: hidden;
 }

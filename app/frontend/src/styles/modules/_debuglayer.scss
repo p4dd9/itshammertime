@@ -1,0 +1,25 @@
+#debug-layer {
+	display: none;
+	position: absolute;
+	background-color: white;
+	right: 12px;
+	top: 12px;
+	border: 1px solid black;
+	padding: 12px;
+
+    .debug-layer-heading:not(:first-child) {
+        margin-top: 6px;
+    }
+
+	@include showBlock($enableDebugLayer)
+}
+
+.debug-layer-info {
+    font-size: 12px;
+    padding-left: 8px;
+}
+
+.debug-layer-heading {
+    margin-bottom: 6px;
+    font-size: 14px;
+}

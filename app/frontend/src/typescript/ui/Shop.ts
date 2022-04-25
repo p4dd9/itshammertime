@@ -95,7 +95,7 @@ export default class Shop {
 			if (typeof userID === 'string') {
 				const userData = await loadUserData(userID, this.game.authentication.state.token);
 				if (userData) {
-					this.renderDebugLayer(userData);
+					this.renderUserDebugInfo(userData);
 				}
 				if (!userData?.bit_count) return false;
 				return userData.bit_count > 0;
@@ -104,16 +104,16 @@ export default class Shop {
 		return false;
 	}
 
-	private renderDebugLayer(userData: UserDTO) {
+	private renderUserDebugInfo(userData: UserDTO) {
 		const debugUserBitsElement = document.getElementById('debug-user-bits');
 		const debugUserIdElement = document.getElementById('debug-user-id');
 
 		if (debugUserBitsElement) {
-			debugUserBitsElement.textContent = `${userData.bit_count ?? '-'}`;
+			debugUserBitsElement.textContent = `${userData.bit_count}`;
 		}
 
 		if (debugUserIdElement) {
-			debugUserIdElement.textContent = `${userData.id ?? '-'}`;
+			debugUserIdElement.textContent = `${userData.id}`;
 		}
 	}
 

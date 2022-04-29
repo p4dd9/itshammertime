@@ -28,7 +28,8 @@ export function setImageSrcById(id: string, src: string): void {
 }
 
 export function setVisibilityById(id: string, visibility: 'visible' | 'hidden'): void {
-	(document.getElementById(id) as HTMLDivElement).style.visibility = visibility;
+	const element = document.getElementById(id);
+	if (element) element.style.visibility = visibility;
 }
 
 export function setProductCostById(id: string, price: number): void {
@@ -60,15 +61,6 @@ export function onSuccessfulClassicPlantHammerTransaction(): void {
 		useBitsButton.remove();
 	});
 	useBitsButton?.classList.add('scale-out');
-
-	const onBuyCheerEmote = document.getElementById('ui-shop-planthammer-onbuy-cheeremote');
-	onBuyCheerEmote?.classList.add('whirl-out');
-	onBuyCheerEmote?.addEventListener('animationend', () => {
-		onBuyCheerEmote.remove();
-	});
-	onBuyCheerEmote?.addEventListener('animationcancel', () => {
-		onBuyCheerEmote.remove();
-	});
 }
 
 export function supportsGamepads(): boolean {

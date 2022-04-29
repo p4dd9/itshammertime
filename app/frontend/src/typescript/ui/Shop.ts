@@ -141,12 +141,9 @@ export default class Shop {
 
 						if (useBitsWrapper instanceof HTMLElement && twitchBitsActions) {
 							Renderer.renderUseBitsButton();
-							Renderer.renderBitsUsedCheer();
 
 							const useBitsIcon = twitchBitsActions.tier1.bit;
-							const usedBitsCheerIcon = twitchBitsActions.tier1.cheer;
 							setImageSrcById('ui-button-use-bits-bit-icon', useBitsIcon);
-							setImageSrcById('ui-bit-used-cheer', usedBitsCheerIcon);
 
 							const {
 								sku,

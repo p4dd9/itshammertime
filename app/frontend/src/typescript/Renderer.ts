@@ -58,7 +58,7 @@ export default class Renderer {
 							class="ui-sidemenu-page"
 						>
 							<h5 class="ui-sidemenu-page-title">
-								Green
+								Woody
 							</h5>
 							<div
 								id="ui-shop-preview-green"

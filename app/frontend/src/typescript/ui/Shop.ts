@@ -19,7 +19,7 @@ export default class Shop {
 	private transactionListener: TransactionListener;
 	private effectSettings: IEffectSettings;
 	private products: Product[] | undefined;
-	private userHasUsedBits = false;
+	private user: UserDTO | null | undefined = null;
 	private gameStartStopButton: GameStartStopButton;
 
 	constructor(
@@ -41,7 +41,7 @@ export default class Shop {
 		Renderer.renderShop();
 
 		this.products = await this.fetchProducts();
-		this.userHasUsedBits = await this.fetchUserHasUsedBits();
+		this.user = await this.fetchUser();
 
 		this.initProductPreviewImageSources();
 		this.initProductBitIntegration();
@@ -89,19 +89,26 @@ export default class Shop {
 		});
 	}
 
-	private async fetchUserHasUsedBits() {
+	private async fetchUser() {
 		if (this.game.authentication?.isLoggedIn() && this.game.authentication.isAuthenticated()) {
 			const userID = this.game.authentication?.getUserId();
 			if (typeof userID === 'string') {
-				const userData = await loadUserData(userID, this.game.authentication.state.token);
-				if (userData) {
-					this.renderUserDebugInfo(userData);
+				try {
+					const userData = await loadUserData(
+						userID,
+						this.game.authentication.state.token
+					);
+					this.user = userData;
+					if (this.user) {
+						this.renderUserDebugInfo(this.user);
+					}
+				} catch (e) {
+					console.log(e);
+					return null;
 				}
-				if (!userData?.bit_count) return false;
-				return userData.bit_count > 0;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	private renderUserDebugInfo(userData: UserDTO) {
@@ -132,7 +139,7 @@ export default class Shop {
 					'ui-button-usebits-woodyhammer-button-wrapper'
 				);
 
-				if (this.userHasUsedBits) {
+				if (this.user?.products.includes('woodyhammer')) {
 					(document.getElementById('ui-shop-preview-woody') as HTMLElement).style.filter =
 						'none';
 				} else {

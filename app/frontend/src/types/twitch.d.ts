@@ -1,6 +1,7 @@
 // Types for the twitch extension helper.
 // Reference: https://dev.twitch.tv/docs/extensions/reference#javascript-helper
 // https://dev.twitch.tv/docs/extensions/reference/#helper-extensions
+import { ProductSku } from './products';
 
 // tslint:disable:interface-name
 declare global {
@@ -18,23 +19,16 @@ export interface Product {
 	};
 	displayName: string;
 	inDevelopment: boolean | undefined;
-	sku: string; // unique product id
+	sku: ProductSku; // unique product id
 }
 
 export interface Extension {
 	onAuthorized(
-		cb: (auth: {
-			token: string;
-			userId: string;
-			clientId: string;
-			channelId: string;
-		}) => void
+		cb: (auth: { token: string; userId: string; clientId: string; channelId: string }) => void
 	): void;
 	onContext(cb: (context: ExtensionContext, delta: [string]) => void): void;
 	onError(cb: (error: string) => void): void;
-	onVisibilityChanged(
-		cb: (isVisible: boolean, context: ExtensionContext) => void
-	): void;
+	onVisibilityChanged(cb: (isVisible: boolean, context: ExtensionContext) => void): void;
 	send(target: string, contentType: string, message: object | string): void;
 	listen(
 		event: 'broadcast' | 'global' | string,
@@ -82,9 +76,7 @@ export interface BitsInExtension {
 	showBitsBalance: () => void;
 	setUseLoopback: () => boolean;
 	onTransactionCancelled: (callback: () => void) => void;
-	onTransactionComplete: (
-		callback: (transactionObject: TransactionObject) => void
-	) => void;
+	onTransactionComplete: (callback: (transactionObject: TransactionObject) => void) => void;
 }
 
 export interface ExtensionContext {

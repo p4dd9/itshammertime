@@ -1,5 +1,5 @@
 import { Extension, Product, TransactionObject } from '../../types/twitch';
-import { onSuccessfulClassicPlantHammerTransaction } from '../../util/commonUtil';
+import { onSuccessfullWoodyHammerTransaction } from '../../util/commonUtil';
 import { sendBits } from '../services/userServices';
 
 export default class Transaction {
@@ -41,7 +41,7 @@ export default class Transaction {
 
 		// refactor
 		if (success) {
-			onSuccessfulClassicPlantHammerTransaction();
+			onSuccessfullWoodyHammerTransaction();
 		}
 	}
 }

@@ -1,5 +1,5 @@
 import Weapon from '../Weapon';
-import { hammerImageAlias, plantHammerImageAssets } from '../../../assets/imageAssets';
+import { hammerImageAlias, woodyHammerImageAssets } from '../../../assets/imageAssets';
 import { hammerAudioAssets, hammerAudioAlias } from '../../../assets/audioAssets';
 import IPosition from '../../../interfaces/IPosition';
 import IEffectSettings from '../../../interfaces/IEffectSettings';
@@ -8,8 +8,8 @@ import LAYERS from '../../../config/layers';
 import { degToRad } from '../../../util/commonUtil';
 import HammerEffect from '../weaponeffects/HammerEffect';
 
-export default class PlantHammer extends Weapon {
-	public imageAssets = plantHammerImageAssets;
+export default class WoodyHammer extends Weapon {
+	public imageAssets = woodyHammerImageAssets;
 	public audioAssets = hammerAudioAssets;
 
 	private rotateSpeed = 12;
@@ -28,7 +28,7 @@ export default class PlantHammer extends Weapon {
 			contexts,
 			position,
 			effectSettings,
-			plantHammerImageAssets,
+			woodyHammerImageAssets,
 			hammerAudioAssets,
 			hammerImageAlias.HAMMER_PLANT,
 			hammerAudioAlias.HAMMER_SHATTER_01,

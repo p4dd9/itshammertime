@@ -1,7 +1,7 @@
 import IGameImageAsset from '../interfaces/IGameImageAsset';
 
 import hammerImage from './images/hammer.png';
-import plantHammerImage from './images/planthammer.png';
+import woodyHammerImage from './images/woodyhammer.png';
 
 import hammerEffectImage01 from './images/shatter_01.png';
 import hammerEffectImage02 from './images/shatter_02.png';
@@ -46,11 +46,11 @@ export const uiImageAssets: Map<string, IGameImageAsset> = new Map([
 	],
 ]);
 
-export const plantHammerImageAssets: Map<string, IGameImageAsset> = new Map([
+export const woodyHammerImageAssets: Map<string, IGameImageAsset> = new Map([
 	[
 		hammerImageAlias.HAMMER_PLANT,
 		{
-			src: plantHammerImage,
+			src: woodyHammerImage,
 			scaleOnCanvas: 5.5,
 		},
 	],

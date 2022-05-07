@@ -1,4 +1,4 @@
-import { onSuccessfulClassicPlantHammerTransaction } from '../../util/commonUtil';
+import { onSuccessfullWoodyHammerTransaction } from '../../util/commonUtil';
 import Game from '../Game';
 
 export default class TransactionListener {
@@ -10,7 +10,7 @@ export default class TransactionListener {
 	public addUseBitsListener(element: HTMLElement, sku: string): void {
 		element.addEventListener('click', () => {
 			// TODO remove for hosted env
-			onSuccessfulClassicPlantHammerTransaction();
+			onSuccessfullWoodyHammerTransaction();
 			this.game.transaction?.useBits(sku);
 		});
 	}

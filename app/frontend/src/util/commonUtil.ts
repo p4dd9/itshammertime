@@ -50,10 +50,10 @@ export function copyTextToClipboard(text: string): void {
 	input.remove();
 }
 
-export function onSuccessfulClassicPlantHammerTransaction(): void {
-	(document.getElementById('ui-shop-preview-green') as HTMLElement).style.filter = 'none';
+export function onSuccessfullWoodyHammerTransaction(): void {
+	(document.getElementById('ui-shop-preview-woody') as HTMLElement).style.filter = 'none';
 
-	const useBitsButton = document.getElementById('ui-button-usebits-planthammer-button-wrapper');
+	const useBitsButton = document.getElementById('ui-button-usebits-woodyhammer-button-wrapper');
 	useBitsButton?.addEventListener('animationend', () => {
 		useBitsButton.remove();
 	});

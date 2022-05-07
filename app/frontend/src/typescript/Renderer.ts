@@ -1,7 +1,7 @@
 export default class Renderer {
 	public static renderUseBitsButton(): void {
 		const useBitsButtonAnchor = document.getElementById(
-			'ui-button-usebits-planthammer-button-wrapper'
+			'ui-button-usebits-woodyhammer-button-wrapper'
 		);
 		const templateString = (): string => {
 			return `
@@ -10,7 +10,7 @@ export default class Renderer {
 							id="ui-button-use-bits-bit-icon"
 							alt="use-bits"
 						/>
-						<div id="ui-button-use-bits-planthammer"></div>
+						<div id="ui-button-use-bits-woodyhammer"></div>
 					</div>
 			`;
 		};
@@ -61,17 +61,17 @@ export default class Renderer {
 								Woody
 							</h5>
 							<div
-								id="ui-shop-preview-green"
+								id="ui-shop-preview-woody"
 							>
 								<img
-									id="ui-shop-preview-green-image"
+									id="ui-shop-preview-woody-image"
 									class="ui-shop-preview-image"
-									alt="hammer-green"
+									alt="woody-hammer"
 								/>
 							</div>
 
 							<div
-								id="ui-button-usebits-planthammer-button-wrapper"
+								id="ui-button-usebits-woodyhammer-button-wrapper"
 								class="ui-button-use-bits-wrapper"
 							></div>
 						</div>

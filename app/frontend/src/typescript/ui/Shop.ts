@@ -5,10 +5,10 @@ import { fetchCheerEmotes } from '../services/twitchServices';
 import { loadUserData } from '../services/userServices';
 import TransactionListener from '../transactions/TransactionListener';
 import ClassicHammer from '../weapon/weapons/ClassicHammer';
-import PlantHammer from '../weapon/weapons/PlantHammer';
+import WoodyHammer from '../weapon/weapons/WoodyHammer';
 
-import HammerImage from '../../assets/images/hammer_preview.png';
-import GreenHammerImage from '../../assets/images/planthammer_preview.png';
+import ClassicHammerPreviewImage from '../../assets/images/hammer_preview.png';
+import WoodyHammerPreviewImage from '../../assets/images/woodyhammer_preview.png';
 import { Product } from '../../types/twitch';
 import Renderer from '../Renderer';
 import GameStartStopButton from './GameStartStopButton';
@@ -52,13 +52,13 @@ export default class Shop {
 		this.addClassicHammerEventListeners();
 
 		// TODO: only if bought by user
-		this.addPlantHammerEventListeners();
+		this.addWoodyHammerEventListeners();
 	}
 
 	private initProductPreviewImageSources(): void {
-		setImageSrcById('ui-shop-button-image', HammerImage);
-		setImageSrcById('ui-shop-preview-classic-image', HammerImage);
-		setImageSrcById('ui-shop-preview-green-image', GreenHammerImage);
+		setImageSrcById('ui-shop-button-image', ClassicHammerPreviewImage);
+		setImageSrcById('ui-shop-preview-classic-image', ClassicHammerPreviewImage);
+		setImageSrcById('ui-shop-preview-woody-image', WoodyHammerPreviewImage);
 	}
 
 	private addClassicHammerEventListeners(): void {
@@ -75,12 +75,12 @@ export default class Shop {
 		});
 	}
 
-	private addPlantHammerEventListeners(): void {
-		document.getElementById('ui-shop-preview-green')?.addEventListener('click', () => {
+	private addWoodyHammerEventListeners(): void {
+		document.getElementById('ui-shop-preview-woody')?.addEventListener('click', () => {
 			this.gameStartStopButton.startGame();
 			this.effectSettings.particleTheme = 'plant';
 			this.effectSettings.shape = 'leaf';
-			this.game.weapon = new PlantHammer(
+			this.game.weapon = new WoodyHammer(
 				this.game.contexts,
 				this.game.center(),
 				this.effectSettings,
@@ -127,13 +127,13 @@ export default class Shop {
 		if (this.products === undefined) return;
 
 		for (const product of this.products) {
-			if (product.sku === 'planthammer') {
+			if (product.sku === 'woodyhammer') {
 				const useBitsWrapper = document.getElementById(
-					'ui-button-usebits-planthammer-button-wrapper'
+					'ui-button-usebits-woodyhammer-button-wrapper'
 				);
 
 				if (this.userHasUsedBits) {
-					(document.getElementById('ui-shop-preview-green') as HTMLElement).style.filter =
+					(document.getElementById('ui-shop-preview-woody') as HTMLElement).style.filter =
 						'none';
 				} else {
 					this.game.twitch?.onAuthorized(async () => {
@@ -149,7 +149,7 @@ export default class Shop {
 								sku,
 								cost: { amount },
 							} = product;
-							setProductCostById('ui-button-use-bits-planthammer', amount);
+							setProductCostById('ui-button-use-bits-woodyhammer', amount);
 
 							this.transactionListener.addBitsBalanceListener(useBitsWrapper);
 							this.transactionListener.addUseBitsListener(useBitsWrapper, sku);

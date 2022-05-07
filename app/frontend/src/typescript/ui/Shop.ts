@@ -123,7 +123,7 @@ export default class Shop {
 	 *      - function identifier
 	 *      - communication
 	 */
-	private initProductBitIntegration() {
+	private async initProductBitIntegration() {
 		if (this.products === undefined) return;
 
 		for (const product of this.products) {

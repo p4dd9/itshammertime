@@ -1,15 +1,15 @@
-import { TransactionObject } from '../../types/twitch';
 import UserDTO from '../../../../backend/src/dto/UserDTO';
 
 export const protocol = 'https';
 export const baseUrl = 'localhost';
 export const port = 3535;
 
-export const sendBits = async (transactionObject: TransactionObject): Promise<boolean> => {
+export const sendBits = async (id: string, bit_count: number, sku: string): Promise<boolean> => {
 	try {
 		const body = JSON.stringify({
-			id: String(transactionObject.userId),
-			bit_count: Number(transactionObject.product.cost.amount),
+			id,
+			bit_count,
+			sku,
 		});
 
 		await window.fetch(`${protocol}://${baseUrl}:${port}/usebits`, {
@@ -21,9 +21,7 @@ export const sendBits = async (transactionObject: TransactionObject): Promise<bo
 		});
 		return true;
 	} catch (e) {
-		throw new Error(
-			`Couldn't send bit for user ${transactionObject.userId} for product ${transactionObject.displayName} `
-		);
+		throw new Error(`Couldn't send bit for user: ${id} for product sku: ${sku} `);
 	}
 };
 

@@ -33,7 +33,11 @@ export default class Transaction {
 	}
 
 	public async onTransactionComplete(transactionObject: TransactionObject): Promise<void> {
-		const success: boolean = await sendBits(transactionObject);
+		const success: boolean = await sendBits(
+			transactionObject.userId,
+			transactionObject.product.cost.amount,
+			transactionObject.product.sku
+		);
 
 		// refactor
 		if (success) {

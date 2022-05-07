@@ -1,12 +1,13 @@
 import express from 'express';
+import { Authentication } from '../authentication/Authentication';
 import { logger } from '../logger';
 import { CheerEmoteService } from '../services/EmotesService';
 
 export class TwitchController {
-	private emoteService: CheerEmoteService;
+	private cheerEmoteService: CheerEmoteService;
 
-	constructor(emoteService: CheerEmoteService) {
-		this.emoteService = emoteService;
+	constructor(authentication: Authentication) {
+		this.cheerEmoteService = new CheerEmoteService(authentication);
 
 		this.handleGlobalCheerEmotes = this.handleGlobalCheerEmotes.bind(this);
 	}
@@ -16,7 +17,7 @@ export class TwitchController {
 		res: express.Response
 	): Promise<void> {
 		try {
-			res.send(await this.emoteService.fetchBitEmotes());
+			res.send(await this.cheerEmoteService.fetchBitEmotes());
 			logger.info(`fetch GlobalEmotes`);
 		} catch (e) {
 			logger.error(`Couldn't fetch global cheer emotes: ${e}`);

@@ -7,7 +7,6 @@ import { logger } from './logger';
 import https from 'https';
 import fs from 'fs';
 import { TwitchController } from './controller/TwitchController';
-import { CheerEmoteService } from './services/EmotesService';
 import { Authentication } from './authentication/Authentication';
 
 const serverOptions = {
@@ -21,8 +20,6 @@ export default class Server {
 	private httpsServer: https.Server;
 	private dbClient: DBClient;
 	private authentication: Authentication;
-
-	private cheerEmoteService: CheerEmoteService;
 
 	private userController: UserController;
 	private twitchController: TwitchController;
@@ -42,10 +39,8 @@ export default class Server {
 		);
 		this.start();
 
-		this.cheerEmoteService = new CheerEmoteService(this.authentication);
-
 		this.userController = new UserController(this.dbClient);
-		this.twitchController = new TwitchController(this.cheerEmoteService);
+		this.twitchController = new TwitchController(this.authentication);
 
 		this.express.get('/', this.userController.handleGetUsers);
 		this.express.get('/user/:id', this.userController.handleGetUser);

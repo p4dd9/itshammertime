@@ -50,6 +50,7 @@ export default class UserController {
 	}
 
 	// TODO: check if body is userdto sheme
+	// TODO: validate user authenticity
 	public async handleUseBits(req: express.Request, res: express.Response): Promise<void> {
 		try {
 			const body: UserTransactionDTO = req.body;

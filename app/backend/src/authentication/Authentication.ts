@@ -27,7 +27,6 @@ export class Authentication {
 		await this.fetchAppAccessToken();
 		await this.isValidToken();
 
-		console.log(this.appAccessToken);
 		cron.job('0 * * * *', async () => {
 			const isValidToken = await this.isValidToken();
 			if (!isValidToken) {

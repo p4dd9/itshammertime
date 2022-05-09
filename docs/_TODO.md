@@ -6,6 +6,7 @@
 -   feature: audio fetter punch hammer
 -   feature: reward/give feedback on successfull bit use --> enable hammer selection --> DONE => remaing: keep hammer page open until transaction and animation complete
 -   feature: leafes + root impact of green hammer update
+-   feature: fly swatter with flies on face (face recognition)
 
 -   feature: user can switch hammer-swing side
 -   feature: full customizeable hammers (leafs, impact/effects)

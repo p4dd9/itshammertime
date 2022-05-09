@@ -1,3 +1,4 @@
+import Game from '../Game';
 import { protocol, baseUrl, port } from './userServices';
 
 interface BitEmote {
@@ -18,6 +19,13 @@ export const fetchCheerEmotes = async (): Promise<BitEmote | undefined> => {
 		);
 
 		return await twitchBitsActionsResponse.json();
+	} catch (e) {
+		console.log(e);
+	}
+};
+export const fetchProducts = async (game: Game) => {
+	try {
+		return await game.transaction?.getProducts();
 	} catch (e) {
 		console.log(e);
 	}

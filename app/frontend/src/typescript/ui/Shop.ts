@@ -1,7 +1,7 @@
 import IEffectSettings from '../../interfaces/IEffectSettings';
 import { setImageSrcById, setProductCostById } from '../../util/commonUtil';
 import Game from '../Game';
-import { fetchCheerEmotes } from '../services/twitchServices';
+import { fetchCheerEmotes, fetchProducts } from '../services/twitchServices';
 import { loadUserData } from '../services/userServices';
 import TransactionListener from '../transactions/TransactionListener';
 import ClassicHammer from '../weapon/weapons/ClassicHammer';
@@ -33,35 +33,31 @@ export default class Shop {
 		this.gameStartStopButton = gameStartStopButton;
 	}
 
-	private async fetchProducts() {
-		return await this.game.transaction?.getProducts();
-	}
-
 	public async init(): Promise<void> {
 		Renderer.renderShop();
 
-		this.products = await this.fetchProducts();
+		this.products = await fetchProducts(this.game);
 		this.user = await this.fetchUser();
 
-		this.initProductPreviewImageSources();
-		this.initProductBitIntegration();
-		this.addEventListeners();
+		this.enableProducts();
 	}
 
-	private addEventListeners(): void {
-		this.addClassicHammerEventListeners();
+	private enableProducts(): void {
+		this.setProductsPreviewImages();
+		this.enableProductsBitIntegration();
 
+		this.enableClassicHammer();
 		// TODO: only if bought by user
-		this.addWoodyHammerEventListeners();
+		this.enableWoodyHammer();
 	}
 
-	private initProductPreviewImageSources(): void {
+	private setProductsPreviewImages(): void {
 		setImageSrcById('ui-shop-button-image', ClassicHammerPreviewImage);
 		setImageSrcById('ui-shop-preview-classic-image', ClassicHammerPreviewImage);
 		setImageSrcById('ui-shop-preview-woody-image', WoodyHammerPreviewImage);
 	}
 
-	private addClassicHammerEventListeners(): void {
+	private enableClassicHammer(): void {
 		document.getElementById('ui-shop-preview-classic')?.addEventListener('click', () => {
 			this.gameStartStopButton.startGame();
 			this.effectSettings.particleTheme = 'glass';
@@ -75,7 +71,7 @@ export default class Shop {
 		});
 	}
 
-	private addWoodyHammerEventListeners(): void {
+	private enableWoodyHammer(): void {
 		document.getElementById('ui-shop-preview-woody')?.addEventListener('click', () => {
 			this.gameStartStopButton.startGame();
 			this.effectSettings.particleTheme = 'plant';
@@ -130,7 +126,7 @@ export default class Shop {
 	 *      - function identifier
 	 *      - communication
 	 */
-	private async initProductBitIntegration() {
+	private async enableProductsBitIntegration() {
 		if (this.products === undefined) return;
 
 		for (const product of this.products) {

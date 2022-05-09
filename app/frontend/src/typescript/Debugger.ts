@@ -7,11 +7,7 @@ export default class Debugger {
 	private fps = '';
 	private times: number[] = [];
 
-	constructor(
-		context: CanvasRenderingContext2D,
-		color = '#f00',
-		font = '25px Arial'
-	) {
+	constructor(context: CanvasRenderingContext2D, color = '#f00', font = '25px Arial') {
 		this.context = context;
 
 		this.color = color;
@@ -27,12 +23,7 @@ export default class Debugger {
 	private drawCanvasBorder(): void {
 		this.context.strokeStyle = this.color;
 		this.context.lineWidth = 2;
-		this.context.strokeRect(
-			0,
-			0,
-			this.context.canvas.width,
-			this.context.canvas.height
-		);
+		this.context.strokeRect(0, 0, this.context.canvas.width, this.context.canvas.height);
 	}
 
 	private drawCenterLines(): void {
@@ -40,15 +31,9 @@ export default class Debugger {
 		this.context.lineWidth = 1;
 		this.context.beginPath();
 		this.context.moveTo(0, this.context.canvas.height * 0.5);
-		this.context.lineTo(
-			this.context.canvas.width,
-			this.context.canvas.height * 0.5
-		);
+		this.context.lineTo(this.context.canvas.width, this.context.canvas.height * 0.5);
 		this.context.moveTo(this.context.canvas.width * 0.5, 0);
-		this.context.lineTo(
-			this.context.canvas.width * 0.5,
-			this.context.canvas.height
-		);
+		this.context.lineTo(this.context.canvas.width * 0.5, this.context.canvas.height);
 		this.context.stroke();
 	}
 
@@ -65,10 +50,6 @@ export default class Debugger {
 		this.calculateFPS();
 		this.context.fillStyle = this.color;
 		this.context.font = this.font;
-		this.context.fillText(
-			`${this.fps} fps`,
-			this.context.canvas.width - 80,
-			30
-		);
+		this.context.fillText(`${this.fps} fps`, this.context.canvas.width - 80, 30);
 	}
 }

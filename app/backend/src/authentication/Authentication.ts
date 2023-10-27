@@ -1,5 +1,5 @@
 import { logger } from '../logger';
-import cron from 'cron';
+import { CronJob } from 'cron';
 import fetch from 'node-fetch';
 
 /**
@@ -27,7 +27,7 @@ export class Authentication {
 		await this.fetchAppAccessToken();
 		await this.isValidToken();
 
-		cron.job('0 * * * *', async () => {
+		new CronJob('0 * * * *', async () => {
 			const isValidToken = await this.isValidToken();
 			if (!isValidToken) {
 				this.fetchAppAccessToken();

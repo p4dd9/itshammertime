@@ -22,9 +22,8 @@ export default class UserController {
 	public async handleGetUsers(req: express.Request, res: express.Response): Promise<void> {
 		try {
 			const usersCollection = this.dbClient.db().collection('users');
-			usersCollection.find().toArray((error, users) => {
-				res.send(users);
-			});
+			const users = await usersCollection.find().toArray();
+			res.send(users);
 			logger.info(`looked up users`);
 		} catch (e) {
 			logger.error(e);

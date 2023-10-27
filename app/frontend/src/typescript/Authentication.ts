@@ -1,4 +1,4 @@
-import jwtDecode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 /**
  * Helper class for authentication against an EBS service. Allows the storage of
